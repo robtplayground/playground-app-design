@@ -1,0 +1,56 @@
+.submit-buttons{
+  display:flex;
+  justify-content: center;
+  // padding-right: 16%;
+  .lucid-Button{
+    padding: 1.5em 3em;
+    margin: 1rem;
+  }
+}
+
+.keyvalueform{
+  margin-top: 1rem;
+  display:flex;
+  flex-direction: column;
+  > div{
+    display:flex;
+    margin-bottom: 1rem;
+  }
+  label{
+    width: 10em;
+  }
+  .lucid-Button{
+    align-self: flex-end;
+  }
+}
+
+.pg__advertiser-form{
+  padding: 1rem 0;
+  background: @palegrey;
+  .lucid-Grid-Cell{
+    display: flex;
+    align-self: stretch;
+    flex-direction: column;
+    &:first-of-type{
+      border-right: 1px solid @midgrey;
+    }
+    &:nth-of-type(2){
+      padding-left: 1rem;
+    }
+  }
+  .labelled-input{
+    > label{
+      width: 15%;
+      justify-content: flex-start;
+    }
+    > div{
+      width: 60%;
+    }
+  }
+  .lucid-Button{
+    margin-top: auto; // part of flexbox spec to produce a 'justify-self' effect
+    width: 12em;
+    margin-left: 20%;
+    // align-self: center;
+  }
+}

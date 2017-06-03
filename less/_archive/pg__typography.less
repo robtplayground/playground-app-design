@@ -1,0 +1,189 @@
+//
+// Typography
+// --------------------------------------------------
+
+
+body {
+	color: @color-black;
+	font-family: @fontFamily;
+	-webkit-font-smoothing: antialiased;
+}
+
+
+// Headings
+// -------------------
+
+h1, .h1,
+h2, .h2,
+h3, .h3,
+h4, .h4,
+h5, .h5,
+h6, .h6{
+	margin:0;
+}
+
+
+h1, .h1 {
+	font-family: @fontFamily;
+    font-weight: 700;
+    font-size: 2rem;
+    line-height: 2.5rem;
+	// margin-top: 0.5rem;
+	// margin-bottom: 1rem;
+}
+h2, .h2 {
+	font-family: @fontFamily;
+    font-weight: 400;
+    font-size: 2rem;
+    line-height: 2.5rem;
+	// margin-top: 1rem;
+	// margin-bottom: 1rem;
+}
+h3, .h3 {
+	font-family: @fontFamily;
+    font-weight: 700;
+    font-size: 1.2rem;
+    line-height: 2.5rem;
+	// margin-top: 1rem;
+	// margin-bottom: 1rem;
+}
+h4, .h4 {
+	font-family: @fontFamily;
+    font-weight: 700;
+    font-size: 1rem;
+    line-height: 1.1rem;
+	// margin-top: 1rem;
+	// margin-bottom: 0.5rem;
+	color: lighten(@color-black, 30%);
+}
+h5, .h5 {
+	font-size: 0.9rem;
+    line-height: 2.5rem;
+		font-weight: normal;
+		text-transform: uppercase;
+	// margin-top: 0.5rem;
+	// margin-bottom: 0.5rem;
+}
+h6, .h6 {
+	font-size: 1rem;
+    line-height: 1.5rem;
+	// margin-top: 0.5rem;
+	// margin-bottom: 0.5rem;
+}
+
+// Paragraph
+// -------------------
+
+p, .p {
+	font-size: 0.9rem;
+    line-height: 1rem;
+    margin: 0.5rem 0 1rem;
+}
+a {
+	color: @color-darkGray;
+	text-decoration: underline;
+
+	&:hover {
+		text-decoration: underline;
+	}
+}
+
+// Basic Elements
+// -------------------
+
+abbr,
+acronym {
+	border-bottom: 1px dotted;
+	cursor: help;
+}
+
+address {
+	font-size: 1rem;
+	font-style: italic;
+}
+
+blockquote {
+	margin: 0.5rem 0;
+	padding: 0 0 0 1rem;
+}
+
+cite {
+	font-style: italic;
+}
+
+code {
+	font-size: 1em;
+	font-family: monospace;
+	background: @color-mediumGray;
+//	border: 1px solid darken(@color-mediumGray, 5%);
+//    padding: 0.5rem;
+//    line-height: 2rem;
+}
+
+pre{
+    margin: 0.5rem 0;
+    padding: 0.5rem;
+    background: @color-mediumGray;
+    font-size: 0.7em;
+	font-family: monospace;
+}
+
+em,
+i {
+	font-style: italic;
+}
+
+strong,
+b {
+	font-weight: bold;
+}
+
+hr {
+	outline: none;
+	border: none;
+	margin: 1rem 0;
+	padding: 0;
+	border-top: 1px solid @color-mediumGray;
+}
+
+ol,
+ul {
+	margin: 1rem 0;
+
+	li {
+        line-height: 1rem;
+        margin-bottom: 0.5rem;
+		list-style-position: outside;
+	}
+}
+ul li { list-style: disc; }
+ol li { list-style: decimal; }
+
+ul{
+    padding: 0 0 0 1.5em;
+}
+
+ol{
+    padding: 0 0 0 2em;
+}
+
+// Form
+// -------------------
+
+form {
+	margin: 1rem 0;
+}
+
+// Descriptions
+// -------------------
+
+dl {
+	margin: 1rem 0;
+
+	dt {
+		font-weight: bold;
+	}
+	dd {
+		margin: 0 0 0.5rem;
+	}
+}

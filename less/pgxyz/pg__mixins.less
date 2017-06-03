@@ -1,0 +1,75 @@
+/* =============================================================================
+   BORDER-BOX FTW
+   ========================================================================== */
+
+   *, *:before, *:after{
+       box-sizing: border-box;
+   }
+
+   /* =============================================================================
+      FIELDSET SET
+      ========================================================================== */
+
+   legend {
+       display: table;
+       float: left;
+       margin: 0;
+       padding: 0;
+       width: 100%;
+
+       + * {
+           clear: both;
+       }
+   }
+
+   fieldset {
+       border: 0;
+       padding: 0.01em 0 0 0;
+       margin: 0;
+       min-width: 0;
+   }
+
+   body:not(:-moz-handler-blocked) fieldset {
+       display: table-cell;
+   }
+
+   /* =============================================================================
+      COLORS
+      ========================================================================== */
+
+   // Useful greys
+
+   @black: #222222;
+   @white: #ffffff;
+
+   @palegrey: #fafafa;
+
+   @lightgrey: #efefef;
+   @midgrey:  #cccccc;
+   @darkgrey: #333333;
+
+   // brand colours
+
+   @pgxyz-pink: #e91e63;
+   @sp-teal: #005558;
+   @ss-blue: #0078d8;
+   @tt-purple: #5d3289;
+   @sc-red: #ff3333;
+
+   /* =============================================================================
+      MEDIA QUERIES
+      ========================================================================== */
+
+.media-small-device(@rules) {
+     @media (max-width: 899px) { @rules(); }
+ }
+.media-phone-portrait(@rules) {
+  // iPhone 7 portrait + below  or iPhone 5 landscape + below will trigger mobile stack
+     @media (max-width: 414px) and (orientation: portrait),
+     (max-width: 480px) and (orientation: landscape){ @rules(); }
+ }
+
+
+/* =============================================================================
+   BASELINE UNIT - REMs
+   ========================================================================== */

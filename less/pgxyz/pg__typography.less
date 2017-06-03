@@ -1,0 +1,152 @@
+//
+// Typography
+// --------------------------------------------------
+
+html{
+	height: 100%;
+}
+
+@gridColor: rgba(255, 0,0,0.1);
+
+@content-width: 30rem;
+
+
+body {
+	padding-top:0.1px; // collapsing margins fix
+	color: @black;
+	font-family: @fontFamily;
+	-webkit-font-smoothing: antialiased;
+	height: 100%;
+	position:relative;
+	// background-image:	linear-gradient(to bottom, #000 0%, #000 5%, transparent 5%, transparent 100%);
+	background-image:none;
+	background-size: 1rem 1rem;
+	background-repeat: repeat;
+	background-position: left top;
+	&:before{
+		content: '';
+		// display:block;
+		display:none;
+		position: absolute;
+		top:0;
+		left: 50%;
+		transform: translateX(-50%);
+		width: @content-width;
+		height: 100%;
+		background-image:
+		linear-gradient(to right, @gridColor 0%, @gridColor ~"calc(100% - 1rem)", transparent ~"calc(100% - 1rem)", transparent 100%);
+		background-size: ~"calc((100% + 1rem) / 12)";
+		background-repeat: repeat;
+		background-position: left top;
+		z-index:-1;
+	}
+}
+
+@import '../vendor/modular-scale.less';
+
+.parameters(media-desktop){
+	@block: 2vw; // line height of paragraph
+	@p-size: 0.5rem; // font-size in rem
+
+	// modular scale values - minor third - http://type-scale.com/
+	@size-4: 2.074;
+	@size-3: 1.728;
+	@size-2: 1.44;
+	@size-1: 1.2;
+	@size-0: 1;
+	@size-small: 0.833;
+	@size-xsmall: 0.694;
+}
+
+.parameters(media-small-device){
+	@block: 2vw; // line height of paragraph
+	@p-size: 0.9rem; // font-size in rem
+
+	// modular scale values - major second - http://type-scale.com/
+	@size-4: 1.602;
+	@size-3: 1.424;
+	@size-2: 1.266;
+	@size-1: 1.125;
+	@size-0: 1;
+	@size-small: 0.889;
+	@size-xsmall: 0.79;
+}
+
+.parameters(media-phone-portrait){
+	@block: 4vw; // line height of paragraph
+	@p-size: 0.9rem; // font-size in rem
+
+	// modular scale values - minor second - http://type-scale.com/
+	@size-4: 1.296;
+	@size-3: 1.215;
+	@size-2: 1.138;
+	@size-1: 1.067;
+	@size-0: 1;
+	@size-small: 0.937;
+	@size-xsmall: 0.878;
+}
+
+.make-headings(@device){
+	.parameters(@device);
+	h1{
+		font-size: @p-size * @size-4;
+		line-height: ceil(@p-size * @size-4);
+	}
+	h2{
+		font-size: @p-size * @size-3;
+		line-height: ceil(@p-size * @size-3);
+	}
+	h3{
+		font-size: @p-size * @size-2;
+		line-height: ceil(@p-size * @size-2);
+	}
+	h4{
+		font-size: @p-size * @size-1;
+		line-height: ceil(@p-size * @size-1);
+	}
+	p{
+		font-size: @p-size * @size-0;
+		line-height: ceil(@p-size * @size-0);
+	}
+	p.small{
+		font-size: @p-size * @size-small;
+		line-height: ceil(@p-size * @size-small);
+	}
+	p.xsmall{
+		font-size: @p-size * @size-xsmall;
+		line-height: ceil(@p-size * @size-xsmall);
+	}
+}
+
+// some base font-sizes, set in rems, sized according to modular scale for that media query
+
+html{
+	font-size: ~"calc(1em + @{block})";
+}
+.make-headings(media-desktop);
+
+.media-small-device({
+	.make-headings(media-small-device);
+	// params already invoked in mixin above
+	html{
+		font-size: ~"calc(0.5em + @{block})";
+	}
+});
+
+.media-phone-portrait({
+	.make-headings(media-phone-portrait);
+	// params already invoked in mixin above
+	html{
+		font-size: ~"calc(0.5em + @{block})";
+	}
+});
+
+h1, h2, h3, h4, p{
+	margin:0.5rem 0;
+}
+
+#content{
+	width: @content-width;
+	height: 100%;
+	margin: 0 auto;
+}

@@ -1,0 +1,179 @@
+// something for later - fix app footer to bottom
+
+// html{
+// 	height: 100%;
+// 	overflow:hidden;
+// }
+//
+// body, #app, .app-root {
+// 	display: flex;
+// 	min-height: 100vh;
+// 	flex-direction: column;
+// }
+
+@fontFamily: Ubuntu, Arial, sans-serif;
+
+
+.pg__container {
+	width: 100%;
+	min-width: 1000px;
+	margin: 0 auto;
+	padding: 0 1rem;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+	align-items:center;
+
+	// TO DO:  media queries - imagine default size is tablet landscape 900px+
+	// .laptop({
+	// 	width: 980px;
+	// });
+	//
+	// .desktop({
+	// 	width: 1200px;
+	// });
+}
+
+.pg__header {
+	  background: @lightgrey;
+		height: 4rem;
+		&__logo{
+	    display: block;
+	    width: auto;
+	    height: 50px;
+	    background-image: url('../../img/playground-logo.svg');
+	    background-size: auto 70%;
+	    background-repeat: no-repeat;
+	    background-position: left center;
+		}
+		.lucid-Grid{
+			height: 100%;
+		}
+		.lucid-Grid-Cell{
+			padding-top:0;
+			max-height: none;
+		}
+}
+
+.pg__footer{
+	// position: absolute;
+	// bottom:0;
+	// left:0;
+	// right:0;
+	margin-top: 2rem;
+	display:flex;
+	align-items: stretch;
+	height: 4rem;
+	background: @lightgrey;
+	color: @midgrey;
+}
+
+.pg__flex-component{ // wrapper for any react component
+	display:flex;
+	align-self: stretch; // go 100% of parent, most likely <Grid.Cell>
+}
+.pg__titlebar{
+	background: @darkgrey;
+	height: 6rem;
+	h1{
+		color: white;
+		flex-grow:1; // needed?
+	}
+	.lucid-Grid{
+		height: 100%;
+	}
+	.lucid-Grid-Cell{
+		padding-top:0;
+		max-height: none;
+	}
+}
+.labelled-input{
+	margin: 1rem 0;
+	display:flex;
+	width:100%;
+	> label{
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+		margin-right: 1.5rem;
+		width: 30%;
+	}
+	> div{
+		width: 50%;
+	}
+
+	> div.lucid-Checkbox{
+		width: 1.5em;
+	}
+}
+
+.pg__accounts__list{
+	h4{
+		margin: 0.5rem;
+	}
+	.lucid-Table-Td{
+		vertical-align: top;
+	}
+	ul{
+			margin: 0;
+			display:flex;
+			flex-wrap: wrap;
+			flex-direction: row;
+	}
+
+	li{
+			display:inline-flex;
+			align-items: center;
+			background: @lightgrey;
+			border-radius: 999px;
+			border: 1px solid @midgrey;
+			padding:0 1.5em;
+			margin: 1em;
+			width: auto;
+			font-size: 0.8rem;
+			height: 3rem;
+			white-space: nowrap;
+			cursor: move;
+			text-transform: uppercase;
+			position: relative;
+	}
+}
+
+.account-form{
+	align-items: center;
+	// flex-direction: column;
+	.labelled-input{
+		width: 60%;
+		> label{
+			justify-content: flex-start;
+			width: 10%;
+		}
+		> div{
+			width: 80%;
+		}
+	}
+}
+
+.lucid-Table{
+	width: 100%;
+}
+
+.pg__reporting-page__filters{
+	h4{
+		height: 2rem;
+	}
+	.filters{
+		display:flex;
+		> div {
+			width: 100%;
+		}
+	}
+	.filters__filter-nodes{
+		> div{
+			display:flex;
+		}
+		.Select{
+			margin: 0 1rem 1rem 0;
+		}
+	}
+}

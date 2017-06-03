@@ -1,0 +1,69 @@
+.metrics-dimensions{
+    h3{
+        flex: 1 0 20%;
+        margin: 1.5rem 0;
+        font-size: 1.1rem;
+    }
+
+    // items
+
+    ul{
+        margin: 0;
+        display:flex;
+        flex-wrap: wrap;
+    }
+
+    li{
+        display:flex;
+        align-items: center;
+        background: @lightgrey;
+        border-radius: 999px;
+        border: 1px solid @midgrey;
+        padding:0 1.5em;
+        margin: 1em;
+        width: auto;
+        font-size: 0.8rem;
+        height: 3rem;
+        white-space: nowrap;
+        cursor: move;
+        text-transform: uppercase;
+        position: relative;
+    }
+    li:last-of-type{
+        width: 16em;
+    }
+    .lucid-Button{
+        height: 100%;
+        top: 0.3em;
+        left: 0.6em;
+        border: 0;
+        background: transparent;
+    }
+    .add-metric-dimension{
+        position: absolute;
+        top:0;
+        left:0;
+        width: 100%;
+        height: 100%;
+        .Select{
+            height: 100%;
+        }
+        .Select-control{
+            border-radius: 999px;
+            border:0;
+            background: @black;
+            color: white;
+            height: 100%;
+            &:hover{
+                box-shadow: none;
+            }
+        }
+        .Select-placeholder{
+            color:white;
+            height: 100%;
+            line-height: 2.75rem;
+            text-align: center;
+        }
+    }
+
+}

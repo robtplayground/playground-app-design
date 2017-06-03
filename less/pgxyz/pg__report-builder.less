@@ -1,0 +1,107 @@
+.pg__report-builder__filters{
+	z-index: 100;
+	background: url(../../img/pinstripe.png);
+	overflow:hidden;
+	max-height: 999px;
+	transition: all 0.5s ease;
+	&.hidden{
+			max-height:0;
+			transition: all 0.8s ease;
+	}
+}
+.pg__report-builder__templates{
+	background: @palegrey;
+	height: 4rem;
+	.lucid-Grid{
+		height: 100%;
+	}
+	.lucid-Grid-Cell{
+		padding-top:0;
+	}
+}
+
+.pg__report-builder__metrics-dimensions{
+	h3{
+		margin-top: 1.5rem;
+		font-size: 1rem;
+	}
+	.pg__container{
+		align-items: flex-start;
+	}
+	svg{
+		fill: @black;
+		position: relative;
+		left: 0.8em;
+	}
+	.Select-arrow{
+		position:relative;
+		left:-0.3em;
+		top: 0.1em;
+	}
+}
+
+.pg__report-builder__metrics-dimensions__ad-part-metrics{
+	h3{
+		color: @pgxyz-pink;
+	}
+	.metrics-dimensions{
+		li{
+			color: @pgxyz-pink;
+			background: fade(@pgxyz-pink, 25%);
+			border-radius: 999px;
+			border: 1px solid fade(@pgxyz-pink, 80%);
+		}
+		svg{
+			fill: @pgxyz-pink;
+		}
+		.add-metric-dimension .Select-control{
+			background: @pgxyz-pink;
+		}
+		.Select-arrow{
+			border-color: @white transparent transparent;
+		}
+	}
+}
+
+.date-picker{
+	display:flex;
+	justify-content:flex-end;
+	align-items: center;
+	position: relative;
+	.labelled-input{
+		margin:0 0 0 1rem;
+		> label{
+			color: white;
+			width: 6.5em
+		}
+		&.smart{
+			.rdt{
+	        input{
+	            color: @midgrey;
+	        }
+	        &:after{
+	            content:'';
+	            position: absolute;
+	            right: 0;
+	            top:0;
+	            height:100%;
+	            width: 3em;
+	            background: @pgxyz-pink;
+	            background-image: url(../../img/smart-date.svg);
+	            background-size: contain;
+	            background-position: center;
+	            background-repeat: no-repeat;
+	        }
+	    }
+		}
+	}
+}
+
+.filters-button{
+	justify-content: flex-end;
+}
+
+.download-buttons{
+	display: flex;
+	justify-content: flex-end;
+}

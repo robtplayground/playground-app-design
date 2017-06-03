@@ -1,0 +1,77 @@
+.date-selector-underlay{
+  display: block;
+  position: fixed;
+  right: 0;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 99; // 1 below date selector
+  background: transparent;
+}
+
+.date-selector{
+    display:flex;
+    position: absolute;
+    right: 0;
+    top:2.8rem;
+    width: 59rem; // hacking around to make date-ranges fit exactly over each other
+    flex-wrap: wrap;
+    align-items: stretch;
+    z-index: 100;
+    box-shadow: 9px 7px 17px -4px rgba(0,0,0,0.16);
+    background:white;
+
+    > *{
+        width: 33.33%;
+    }
+
+    .rdt{
+        font-size: @size-font;
+        position:relative;
+
+        input{
+          height:1px;
+          opacity:0;
+        }
+    }
+
+    // Datetime
+
+    .rdtPicker{
+        display:block;
+        right: 0;
+        width: 20em;
+    }
+
+}
+
+.date-selector__date-input{
+    background: @darkgrey;
+}
+
+.date-selector__presets{
+    display:flex;
+    flex-direction: column;
+    padding-bottom: 1rem;
+    .lucid-Button{
+        margin: 1rem 1rem 0;
+    }
+}
+
+.date-selector__smart-range{
+    display:flex;
+    width: 100%;
+    background: @lightgrey;
+    justify-content: flex-start;
+    > *{
+      width: 33.33%;
+      padding: 1rem 2rem;
+    }
+    h4{
+      padding-left: 3rem;
+      background-image: url(../../img/smart-date-dark.svg);
+      background-size: 1.6em 1.6em;
+      background-position: left 0.8em top 0.6em;
+      background-repeat: no-repeat;
+    }
+}
