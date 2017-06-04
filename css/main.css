@@ -580,7 +580,8 @@ h3 {
   font-size: 0.72rem;
   line-height: 1rem;
 }
-h4 {
+h4,
+.size-1 {
   font-size: 0.6rem;
   line-height: 1rem;
 }
@@ -609,7 +610,8 @@ p.xsmall {
     font-size: 1.1394rem;
     line-height: 2rem;
   }
-  h4 {
+  h4,
+  .size-1 {
     font-size: 1.0125rem;
     line-height: 2rem;
   }
@@ -642,7 +644,8 @@ p.xsmall {
     font-size: 1.0242rem;
     line-height: 2rem;
   }
-  h4 {
+  h4,
+  .size-1 {
     font-size: 0.9603rem;
     line-height: 1rem;
   }
@@ -682,4 +685,15 @@ p {
 }
 .ct-chart path {
   stroke-width: 2vw !important;
+}
+.progress-bar {
+  width: 100vw;
+  height: 15vw;
+}
+.progress-bar-labels {
+  font-family: Roboto;
+  font-size: 0.6rem;
+  line-height: 1rem;
+  display: flex;
+  justify-content: space-between;
 }

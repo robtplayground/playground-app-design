@@ -16,6 +16,7 @@ $(document).ready(function() {
           // remove column headers
           var labels = csvData.shift();
           csvData.forEach(function(row){
+
             // create data Objects
 
             var placementObjName = row[1].replace(/\s+/g, '');
@@ -52,19 +53,19 @@ $(document).ready(function() {
             // date = date.substring(0, lastIndex);
             // date = date.replace('-', ' ');
             chartData[placementObjName].data.dates.push(date);
-            chartData[placementObjName].data.requestedImps.push(row[1]);
-            chartData[placementObjName].data.executedImps.push(row[2]);
-            chartData[placementObjName].data.clicks.push(row[5]);
+            chartData[placementObjName].data.requestedImps.push(parseInt(row[1]));
+            chartData[placementObjName].data.executedImps.push(parseInt(row[2]));
+            chartData[placementObjName].data.clicks.push(parseInt(row[5]));
             chartData[placementObjName].data.ctr.push(parseInt(row[4]) / 100);
             chartData[placementObjName].data.viewability.push(parseInt(row[6])/100);
-            chartData[placementObjName].data.bannerRenders.push(row[7]);
+            chartData[placementObjName].data.bannerRenders.push(parseInt(row[7]));
             chartData[placementObjName].data.bannerViewability.push(parseInt(row[8])/100);
-            chartData[placementObjName].data.heroRenders.push(row[9]);
+            chartData[placementObjName].data.heroRenders.push(parseInt(row[9]));
             chartData[placementObjName].data.heroViewability.push(parseInt(row[10])/100);
             chartData[placementObjName].data.videoPlayRate.push(parseInt(row[11])/100);
-            chartData[placementObjName].data.video25.push(row[12]);
-            chartData[placementObjName].data.video50.push(row[13]);
-            chartData[placementObjName].data.video75.push(row[14]);
+            chartData[placementObjName].data.video25.push(parseInt(row[12]));
+            chartData[placementObjName].data.video50.push(parseInt(row[13]));
+            chartData[placementObjName].data.video75.push(parseInt(row[14]));
             chartData[placementObjName].data.videoCompletionRate.push(parseInt(row[15])/100);
             // console.log(window[placementName]);
 
@@ -85,36 +86,83 @@ $(document).ready(function() {
 
           // progress bar
 
-
           var campaign = chartData[campaign] = {};
 
           campaign.dates = {start: new Date(2017, 2, 8), end: new Date(2017, 3, 20)};
           campaign.current = new Date (2017,3,11);
           campaign.progress = function(){
-            return Math.round((1*(campaign.current - campaign.dates.start)) / (1*(campaign.dates.end - campaign.dates.start)) * 100) + '%'
+            return Math.round((1*(campaign.current - campaign.dates.start)) / (1*(campaign.dates.end - campaign.dates.start)) * 100)
           };
 
+          var progressSeries = [[campaign.progress()], [(100 - campaign.progress())]];
 
+          // console.log(progressSeries);
 
-          // create bar chartist
-
-          var impsChartData = {
-            labels: dates,
-            series: [impsAccumulated]
-          };
-
-          var options = {
-            low:0,
-            showArea: true,
-            lineSmooth: false,
-            showPoint: false,
-            showLine:false,
-            chartPadding: {
-              left: 40
+          var progressChart = new Chartist.Bar('.progress-bar', {
+            series: progressSeries
+          }, {
+            stackBars: true,
+            horizontalBars: true,
+            chartPadding: 0,
+            axisX:{
+              offset:0,
+              showGrid: false
+            },
+            axisY:{
+              offset:0,
+              showGrid: false
             }
-          };
+          }).on('draw', function(data) {
+            console.log(data);
+            if(data.type === 'bar') {
+              data.element.attr({
+                style: 'stroke-width: 30px'
+              });
+            }
+          });
 
-          var impsChart = new Chartist.Line('.imps-chart', impsChartData, options);
+          $('.progress-bar-labels .start-date').html(moment(campaign.dates.start).format("dddd, D MMMM YYYY"));
+
+          $('.progress-bar-labels .end-date').html(moment(campaign.dates.end).format("dddd, D MMMM YYYY"));
+
+
+
+          // cumulative Imps
+
+          for (var placement in chartData) {
+            if(placement.indexOf('Adidas') > 0){
+              var lastAmount = 0;
+              var thisPlacement = chartData[placement];
+              thisPlacement.data.execImpsCumulative = [];
+              thisPlacement.data.executedImps.forEach(function(amount){
+                lastAmount += amount;
+                // console.log(placement, lastAmount);
+                thisPlacement.data.execImpsCumulative.push(lastAmount);
+              });
+            }
+          }
+
+          // console.log(chartData);
+
+          // create area line chartist
+
+          // var impsChartData = {
+          //   labels: dates,
+          //   series: [impsAccumulated]
+          // };
+          //
+          // var options = {
+          //   low:0,
+          //   showArea: true,
+          //   lineSmooth: false,
+          //   showPoint: false,
+          //   showLine:false,
+          //   chartPadding: {
+          //     left: 40
+          //   }
+          // };
+          //
+          // var impsChart = new Chartist.Line('.imps-chart', impsChartData, options);
 
 
           // Woohoo! Chartist API...
