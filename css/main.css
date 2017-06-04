@@ -686,15 +686,56 @@ p {
 .ct-chart path {
   stroke-width: 2vw !important;
 }
-.progress-bar {
-  width: 100vw;
-  height: 100px;
-}
-.progress-bar-labels {
-  font-family: Roboto;
-  font-size: 0.6rem;
-  line-height: 1rem;
+.progress__dates {
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
+}
+.progress__days {
+  position: absolute;
+  width: 10em;
+  height: 2rem;
+  overflow: hidden;
+  top: -2rem;
+  left: 79%;
+  margin-left: -10em;
+  text-align: right;
+  color: red;
+}
+.progress__bar {
+  position: relative;
+  height: 2rem;
+  background: #b4b4b4;
+  margin-top: 2rem;
+  overflow: visible;
+}
+.progress__bar__indicator {
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: blue;
+  height: 100%;
+}
+.progress__bar__integer {
+  position: absolute;
+  right: 0;
+  height: 2rem;
+  line-height: 2rem;
+  color: white;
+  margin: 0 0.4em 0 0.2em;
+  font-weight: 700;
+}
+.row {
+  display: flex;
+}
+.gauge {
+  width: 25%;
+  height: 25vw;
+  margin: 0.5rem;
+  background: #efefef;
+}
+.gauge h4 {
+  font-size: 0.5rem;
+  text-transform: uppercase;
+  margin: 0;
+  text-align: center;
 }

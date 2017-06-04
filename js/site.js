@@ -67,21 +67,10 @@ $(document).ready(function() {
             chartData[placementObjName].data.video50.push(parseInt(row[13]));
             chartData[placementObjName].data.video75.push(parseInt(row[14]));
             chartData[placementObjName].data.videoCompletionRate.push(parseInt(row[15])/100);
-            // console.log(window[placementName]);
 
-
-
-
-
-            // dates.push(date);
-
-            // impressions
-            // var impAmount = parseInt(row[1]);
-            // console.log('impAmount',impAmount);
-            // impsData.push(impAmount);
-            // lastImp += impAmount;
-            // impsAccumulated.push(lastImp);
           });
+
+          console.log(chartData);
 
 
           // progress bar
@@ -93,61 +82,22 @@ $(document).ready(function() {
           campaign.progress = function(){
             return Math.round((1*(campaign.current - campaign.dates.start)) / (1*(campaign.dates.end - campaign.dates.start)) * 100)
           };
+          campaign.benchmarks = {};
+          campaign.benchmarks.impressions = 450000;
 
-          var progressSeries = [[campaign.progress()], [(100 - campaign.progress())]];
+          var campaignDaysDuration = moment(campaign.dates.end).diff(moment(campaign.dates.start), 'days');
 
+          var campaignDaysCount = moment(campaign.dates.end).diff(moment(campaign.current), 'days');
+
+          $('.progress__days').html('day ' + campaignDaysCount + ' of ' + campaignDaysDuration);
           // console.log(progressSeries);
 
-          var progressChart = new Chartist.Bar('.progress-bar', {
-            series: progressSeries
-          }, {
-            stackBars: true,
-            horizontalBars: true,
-            chartPadding: 0,
-            axisX:{
-              offset:0,
-              showGrid: false
-            },
-            axisY:{
-              offset:0,
-              showGrid: false
-            }
-          }).on('draw', function(data) {
-            console.log(data);
-            if(data.type === 'bar') {
-              data.element.attr({
-                style: 'stroke-width: 30px'
-              });
-          }
-        }).on('created', function(data){
-          console.log(data);
-          if(data.type === 'bar') {
+          $('.progress__dates__start').html(moment(campaign.dates.start).format("dddd, D MMMM YYYY"));
 
-            // add value
-            var barHorizontalCenter, barVerticalCenter, label, value;
-            barHorizontalCenter = data.x2 + (data.element.height());
-            barVerticalCenter = data.y2 + (data.element.width()/2);
-            value = data.element.attr('ct:value');
-            if (value !== '0') {
-              label = new Chartist.Svg('text');
-              label.text('75');
-              label.addClass("ct-barlabel");
-              label.attr({
-                x: barHorizontalCenter,
-                y: barVerticalCenter,
-                'text-anchor': 'right'
-              });
-              return data.group.append(label);
-          }
-        }
-          // data.svg._node.attr('preserveAspectRatio', 'none');
-        });
+          $('.progress__dates__end').html(moment(campaign.dates.end).format("dddd, D MMMM YYYY"));
 
-          $('.progress-bar-labels .start-date').html(moment(campaign.dates.start).format("dddd, D MMMM YYYY"));
-
-          $('.progress-bar-labels .end-date').html(moment(campaign.dates.end).format("dddd, D MMMM YYYY"));
-
-
+          $('.progress__bar__indicator').css('width', campaign.progress() + '%');
+          $('.progress__bar__integer').html(campaign.progress() + '%');
 
           // cumulative Imps
 
@@ -163,6 +113,10 @@ $(document).ready(function() {
               });
             }
           }
+
+          $('.module--impressions .module__benchmark').html(campaign.benchmarks.impressions + ' booked');
+
+
 
           // console.log(chartData);
 

@@ -1,10 +1,47 @@
 <% include partials/header.html.ejs %>
 
-<div class="progress-bar-labels">
-  <div class="start-date"></div>
-  <div class="end-date"></div>
+<div class="progress">
+
+  <div class="progress__dates">
+    <div class="progress__dates__start"></div>
+    <div class="progress__dates__end"></div>
+  </div>
+
+
+  <div class="progress__bar">
+
+    <div class="progress__days"></div>
+    <div class="progress__bar__indicator">
+      <div class="progress__bar__integer"></div>
+    </div>
+
+  </div>
 </div>
-<div class="progress-bar"></div>
+
+<h1>Delivery</h1>
+
+<div class="row summary">
+
+<div class="module module--quarter module--impressions">
+  <h4>Impressions</h4>
+  <div class="chart--donut">
+    <div class="chart--donut__graphic"></div>
+    <div class="chart--donut__diff"></div>
+  </div>
+  <div class="module__benchmark"></div>
+</div>
+
+<div class="module module--quarter module--viewability">
+  <h4>Viewability</h4>
+  <div class="chart--donut">
+    <div class="chart--donut__graphic"></div>
+    <div class="chart--donut__diff"></div>
+  </div>
+  <div class="module__benchmark"></div>
+</div>
+
+</div>
+
 
 <div class="ct-chart ct-square"></div>
 
