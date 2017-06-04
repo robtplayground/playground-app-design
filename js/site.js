@@ -1,43 +1,104 @@
 var csvData;
-var impsData = [];
-var impsAccumulated = [];
-// var labelsData;
-var dates = [];
+var labels;
+
+// create namespace
+
+var chartData = {};
 
 $(document).ready(function() {
     $.ajax({
         type: "GET",
-        url: "/js/csv/ID.csv",
+        url: "/js/csv/Adidas-All.csv",
         dataType: "text",
         success: function(data) {
           // convert CSV to arrays
           csvData = $.csv.toArrays(data);
           // remove column headers
-          csvData.shift();
-          // remove totals
-          csvData.pop();
-          // get dates and impressions values
-          var lastImp = 0;
+          var labels = csvData.shift();
           csvData.forEach(function(row){
-            // dates without years
+            // create data Objects
+
+            var placementObjName = row[1].replace(/\s+/g, '');
+            // console.log(placementObjName);
+
+            if(!chartData[placementObjName]){
+              chartData[placementObjName] = {
+                name: "",
+                data: {
+                  dates: [],
+                  requestedImps: [],
+                  executedImps: [],
+                  clicks: [],
+                  ctr: [],
+                  viewability: [],
+                  bannerRenders: [],
+                  bannerViewability: [],
+                  heroRenders: [],
+                  heroViewability: [],
+                  videoPlayRate: [],
+                  video25: [],
+                  video50: [],
+                  video75: [],
+                  videoCompletionRate: []
+                }
+              };
+              // console.log(window[placementObjName]);
+            }
+
+            chartData[placementObjName].name = row[1];
             var date = row[0];
-            var lastIndex = date.lastIndexOf(" ");
-            date = date.substring(0, lastIndex);
-            dates.push(date);
+            // do this on chart render instead
+            // var lastIndex = date.lastIndexOf("-");
+            // date = date.substring(0, lastIndex);
+            // date = date.replace('-', ' ');
+            chartData[placementObjName].data.dates.push(date);
+            chartData[placementObjName].data.requestedImps.push(row[1]);
+            chartData[placementObjName].data.executedImps.push(row[2]);
+            chartData[placementObjName].data.clicks.push(row[5]);
+            chartData[placementObjName].data.ctr.push(parseInt(row[4]) / 100);
+            chartData[placementObjName].data.viewability.push(parseInt(row[6])/100);
+            chartData[placementObjName].data.bannerRenders.push(row[7]);
+            chartData[placementObjName].data.bannerViewability.push(parseInt(row[8])/100);
+            chartData[placementObjName].data.heroRenders.push(row[9]);
+            chartData[placementObjName].data.heroViewability.push(parseInt(row[10])/100);
+            chartData[placementObjName].data.videoPlayRate.push(parseInt(row[11])/100);
+            chartData[placementObjName].data.video25.push(row[12]);
+            chartData[placementObjName].data.video50.push(row[13]);
+            chartData[placementObjName].data.video75.push(row[14]);
+            chartData[placementObjName].data.videoCompletionRate.push(parseInt(row[15])/100);
+            // console.log(window[placementName]);
+
+
+
+
+
+            // dates.push(date);
 
             // impressions
-            var impAmount = parseInt(row[1]);
+            // var impAmount = parseInt(row[1]);
             // console.log('impAmount',impAmount);
             // impsData.push(impAmount);
-            lastImp += impAmount;
-            impsAccumulated.push(lastImp);
+            // lastImp += impAmount;
+            // impsAccumulated.push(lastImp);
           });
 
-          // console.log(impsAccumulated);
+
+          // progress bar
+
+
+          var campaign = chartData[campaign] = {};
+
+          campaign.dates = {start: new Date(2017, 2, 8), end: new Date(2017, 3, 20)};
+          campaign.current = new Date (2017,3,11);
+          campaign.progress = function(){
+            return Math.round((1*(campaign.current - campaign.dates.start)) / (1*(campaign.dates.end - campaign.dates.start)) * 100) + '%'
+          };
+
+
 
           // create bar chartist
 
-          var chartData = {
+          var impsChartData = {
             labels: dates,
             series: [impsAccumulated]
           };
@@ -53,28 +114,15 @@ $(document).ready(function() {
             }
           };
 
-          var impsChart = new Chartist.Line('.imps-chart', chartData, options);
+          var impsChart = new Chartist.Line('.imps-chart', impsChartData, options);
 
 
           // Woohoo! Chartist API...
 
-          impsChart.on('created', function(data){
-
-            var shape = new Chartist.Svg('circle', {cx:((data.chartRect.x2 - data.chartRect.x1)/2 + data.chartRect.x1), cy:((data.chartRect.y1 - data.chartRect.y2)/2 + data.chartRect.y2), r: 2, fill: '#000'}, 'dude', data.svg, true);
-
-          });
 
         }
      });
 });
-
-var $svg;
-
-// add centred circle to donut chart
-
-function svgEl(tagName) {
-    return document.createElementNS("http://www.w3.org/2000/svg", tagName);
-}
 
 var chart = new Chartist.Pie('.ct-square', {
   series: [10, 20, 50, 20, 5, 50, 15],
@@ -94,23 +142,19 @@ function circlePoint(data, angle) {
     var endAngleRadians = (endAngleDeg * Math.PI) / 180;
     // var largeArcFlag = (angle < 180 ? '0' : '1');
 
-    var lineWidth = Math.max(data.chartRect.width(), data.chartRect.height());
-    // console.log('lineWidth',lineWidth);
+    var radiusLength = data.chartRect.width();
 
-    var endX = Math.cos(endAngleRadians) * lineWidth / 2;
-    var endY = 100 + (Math.sin(endAngleRadians) * lineWidth / 2);
+    var endX = Math.cos(endAngleRadians) * radiusLength / 2;
+    var endY = data.chartRect.height() + (Math.sin(endAngleRadians) * radiusLength / 2);
 
     var startX = (data.chartRect.y1 - data.chartRect.y2)/2 + data.chartRect.y2;
     var startY = (data.chartRect.x2 - data.chartRect.x1)/2 + data.chartRect.x1;
 
     return {x1: startX, y1: startY, x2: endX, y2: endY, stroke:'#ff9900', strokeWidth: '5px'};
 
-    // $(target, docs.fixedFrame).attr('d', data);
 }
 
 chart.on('created', function(data){
-
-  circlePoint(data, 280);
 
   // console.log(data);
 
@@ -119,13 +163,3 @@ chart.on('created', function(data){
   var radialLine = new Chartist.Svg('line', circlePoint(data, 280), 'thingy', data.svg, false);
 
 });
-
-
-$(window).on('resize', function(){
-  console.log(($('.ct-chart-donut').width()) / ($('.ct-chart-donut path:nth-of-type(1)').width()));
-});
-
-
-function SVG(tag) {
-    return document.createElementNS('http://www.w3.org/2000/svg', tag);
-}
