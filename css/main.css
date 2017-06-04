@@ -688,7 +688,7 @@ p {
 }
 .progress-bar {
   width: 100vw;
-  height: 15vw;
+  height: 100px;
 }
 .progress-bar-labels {
   font-family: Roboto;
@@ -696,4 +696,5 @@ p {
   line-height: 1rem;
   display: flex;
   justify-content: space-between;
+  align-items: flex-end;
 }

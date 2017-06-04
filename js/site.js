@@ -118,8 +118,30 @@ $(document).ready(function() {
               data.element.attr({
                 style: 'stroke-width: 30px'
               });
-            }
-          });
+          }
+        }).on('created', function(data){
+          console.log(data);
+          if(data.type === 'bar') {
+
+            // add value
+            var barHorizontalCenter, barVerticalCenter, label, value;
+            barHorizontalCenter = data.x2 + (data.element.height());
+            barVerticalCenter = data.y2 + (data.element.width()/2);
+            value = data.element.attr('ct:value');
+            if (value !== '0') {
+              label = new Chartist.Svg('text');
+              label.text('75');
+              label.addClass("ct-barlabel");
+              label.attr({
+                x: barHorizontalCenter,
+                y: barVerticalCenter,
+                'text-anchor': 'right'
+              });
+              return data.group.append(label);
+          }
+        }
+          // data.svg._node.attr('preserveAspectRatio', 'none');
+        });
 
           $('.progress-bar-labels .start-date').html(moment(campaign.dates.start).format("dddd, D MMMM YYYY"));
 
