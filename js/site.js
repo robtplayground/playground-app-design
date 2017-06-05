@@ -70,7 +70,7 @@ $(document).ready(function() {
 
           });
 
-          console.log(chartData);
+          // console.log(chartData);
 
 
           // progress bar
@@ -83,7 +83,7 @@ $(document).ready(function() {
             return Math.round((1*(campaign.current - campaign.dates.start)) / (1*(campaign.dates.end - campaign.dates.start)) * 100)
           };
           campaign.benchmarks = {};
-          campaign.benchmarks.impressions = 450000;
+          campaign.benchmarks.impressions = 700000;
 
           var campaignDaysDuration = moment(campaign.dates.end).diff(moment(campaign.dates.start), 'days');
 
@@ -122,27 +122,53 @@ $(document).ready(function() {
 
           // create area line chartist
 
-          // var impsChartData = {
-          //   labels: dates,
-          //   series: [impsAccumulated]
-          // };
-          //
-          // var options = {
-          //   low:0,
-          //   showArea: true,
-          //   lineSmooth: false,
-          //   showPoint: false,
-          //   showLine:false,
-          //   chartPadding: {
-          //     left: 40
-          //   }
-          // };
-          //
-          // var impsChart = new Chartist.Line('.imps-chart', impsChartData, options);
+          var impsChartData = {
+            labels: chartData["147332360-AdidasTH"].data.dates,
+            series: [
+              chartData["147332360-AdidasTH"].data.execImpsCumulative,
+              chartData["147332363-AdidasDB-MY"].data.execImpsCumulative,
+              chartData["147333259-AdidasDB-SG"].data.execImpsCumulative,
+              chartData["147334429-AdidasDB-ID"].data.execImpsCumulative,
+              chartData["147334432-AdidasDB-PH"].data.execImpsCumulative,
+              chartData["147347247-AdidasDB-VN"].data.execImpsCumulative
+            ]
+          };
 
 
-          // Woohoo! Chartist API...
+          var options = {
+            low:0,
+            high: campaign.benchmarks.impressions,
+            showArea: true,
+            lineSmooth: false,
+            showPoint: false,
+            showLine:false,
+            fullWidth: true,
+            width: '100vw',
+            height: '40vw',
+            chartPadding: {
+              left: 40
+            },
+            axisX: {
+              // show only every third label OR last label
+              labelInterpolationFnc: function(value, index) {
+                return index % 3 === 0 || index === impsChart.data.labels.length - 1  ? value : null;
+              }
+            }
+          };
 
+          var impsChart = new Chartist.Line('.imps-chart', impsChartData, options).on('created', function(data){
+            // console.log('imps-chart', impsChart);
+            var horizGrids = impsChart.container.querySelectorAll('line.ct-grid.ct-horizontal');
+            var firstLine = horizGrids[0];
+            var lastLine = horizGrids[horizGrids.length - 1];
+            var startPoint = [firstLine.getAttribute('x2'), firstLine.getAttribute('y2')];
+            var endPoint = [lastLine.getAttribute('x1'), lastLine.getAttribute('y1')];
+
+            var impsExpected = new Chartist.Svg('line', {x1: startPoint[0], y1: startPoint[1], x2: endPoint[0], y2: endPoint[1], stroke: "#000", strokeWidth: "1"}, 'imps-expected', data.svg, false);
+
+            var impsExpected = new Chartist.Svg('line', {x1: startPoint[0], y1: startPoint[1], x2: endPoint[0], y2: endPoint[1], stroke: "#000"}, 'imps-expected', data.svg, false);
+
+          });
 
         }
      });
@@ -160,7 +186,7 @@ var chart = new Chartist.Pie('.ct-square', {
 // How do I get the width of the circle graph - that is the problem...
 // I need to do the reverse equation for plotting the point to get the donut center
 
-function circlePoint(data, angle) {
+function createRadial(data, angle) {
 
     var endAngleDeg = angle - 90;  // 30
     var endAngleRadians = (endAngleDeg * Math.PI) / 180;
@@ -180,10 +206,10 @@ function circlePoint(data, angle) {
 
 chart.on('created', function(data){
 
-  // console.log(data);
+  // console.log('donut', data);
 
   var shape = new Chartist.Svg('circle', {cx:((data.chartRect.x2 - data.chartRect.x1)/2 + data.chartRect.x1), cy:((data.chartRect.y1 - data.chartRect.y2)/2 + data.chartRect.y2), r: (data.chartRect.width() * 0.1), fill: '#000'}, 'dude', data.svg, true);
 
-  var radialLine = new Chartist.Svg('line', circlePoint(data, 280), 'thingy', data.svg, false);
+  var radialLine = new Chartist.Svg('line', createRadial(data, 280), 'thingy', data.svg, false);
 
 });
