@@ -5,10 +5,22 @@ var labels;
 
 var chartData = {};
 
+
 $(document).ready(function() {
+
+  // fileList defined in template
+
+  fileList.forEach(function(fileName){
+    dataToArray(fileName);
+  });
+
+
+
+  function dataToArray(csvFileName){
+
     $.ajax({
         type: "GET",
-        url: "/js/csv/Adidas-All.csv",
+        url: "/data/" + csvFileName,
         dataType: "text",
         success: function(data) {
           // convert CSV to arrays
@@ -19,7 +31,8 @@ $(document).ready(function() {
 
             // create data Objects
 
-            var placementObjName = row[1].replace(/\s+/g, '');
+            var placementObjName = csvFileName.replace(/\s+/g, '').replace('.csv', '');
+            // console.log('placementObjName', placementObjName);
             // console.log(placementObjName);
 
             if(!chartData[placementObjName]){
@@ -29,80 +42,58 @@ $(document).ready(function() {
                   dates: [],
                   requestedImps: [],
                   executedImps: [],
+                  viewableImps: [],
+                  viewability: [],
                   clicks: [],
                   ctr: [],
-                  viewability: [],
-                  bannerRenders: [],
-                  bannerViewability: [],
-                  heroRenders: [],
-                  heroViewability: [],
-                  videoPlayRate: [],
-                  video25: [],
-                  video50: [],
-                  video75: [],
+                  engagements: [],
+                  engagementRate: [],
+                  avgTIV: [],
                   videoCompletionRate: []
                 }
               };
               // console.log(window[placementObjName]);
             }
 
-            chartData[placementObjName].name = row[1];
+            chartData[placementObjName].name = placementObjName;
+            console.log('placementName', chartData[placementObjName].name);
             var date = row[0];
+            // date = moment.unix(date).format("DD-MM");
+            console.log('date', date);
             // do this on chart render instead
             // var lastIndex = date.lastIndexOf("-");
             // date = date.substring(0, lastIndex);
             // date = date.replace('-', ' ');
             chartData[placementObjName].data.dates.push(date);
-            chartData[placementObjName].data.requestedImps.push(parseInt(row[1]));
-            chartData[placementObjName].data.executedImps.push(parseInt(row[2]));
-            chartData[placementObjName].data.clicks.push(parseInt(row[5]));
-            chartData[placementObjName].data.ctr.push(parseInt(row[4]) / 100);
-            chartData[placementObjName].data.viewability.push(parseInt(row[6])/100);
-            chartData[placementObjName].data.bannerRenders.push(parseInt(row[7]));
-            chartData[placementObjName].data.bannerViewability.push(parseInt(row[8])/100);
-            chartData[placementObjName].data.heroRenders.push(parseInt(row[9]));
-            chartData[placementObjName].data.heroViewability.push(parseInt(row[10])/100);
-            chartData[placementObjName].data.videoPlayRate.push(parseInt(row[11])/100);
-            chartData[placementObjName].data.video25.push(parseInt(row[12]));
-            chartData[placementObjName].data.video50.push(parseInt(row[13]));
-            chartData[placementObjName].data.video75.push(parseInt(row[14]));
-            chartData[placementObjName].data.videoCompletionRate.push(parseInt(row[15])/100);
+            chartData[placementObjName].data.requestedImps.push(parseInt(row[2]));
+            chartData[placementObjName].data.executedImps.push(parseInt(row[3]));
+            chartData[placementObjName].data.viewableImps.push(parseInt(row[4]));
+            chartData[placementObjName].data.viewability.push(parseInt(row[5])/100);
+            chartData[placementObjName].data.clicks.push(parseInt(row[6]));
+            chartData[placementObjName].data.ctr.push(parseInt(row[7]) / 100);
+            chartData[placementObjName].data.engagements.push(parseInt(row[8]));
+            chartData[placementObjName].data.engagementRate.push(parseInt(row[9]) / 100);
+            chartData[placementObjName].data.avgTIV.push(parseInt(row[10]));
+            chartData[placementObjName].data.videoCompletionRate.push(parseInt(row[11])/100);
 
           });
 
           // console.log(chartData);
 
 
+
           // progress bar
 
-          var campaign = chartData[campaign] = {};
 
-          campaign.dates = {start: new Date(2017, 2, 8), end: new Date(2017, 3, 20)};
-          campaign.current = new Date (2017,3,11);
-          campaign.progress = function(){
-            return Math.round((1*(campaign.current - campaign.dates.start)) / (1*(campaign.dates.end - campaign.dates.start)) * 100)
-          };
-          campaign.benchmarks = {};
-          campaign.benchmarks.impressions = 700000;
 
-          var campaignDaysDuration = moment(campaign.dates.end).diff(moment(campaign.dates.start), 'days');
 
-          var campaignDaysCount = moment(campaign.dates.end).diff(moment(campaign.current), 'days');
-
-          $('.progress__days').html('day ' + campaignDaysCount + ' of ' + campaignDaysDuration);
-          // console.log(progressSeries);
-
-          $('.progress__dates__start').html(moment(campaign.dates.start).format("dddd, D MMMM YYYY"));
-
-          $('.progress__dates__end').html(moment(campaign.dates.end).format("dddd, D MMMM YYYY"));
-
-          $('.progress__bar__indicator').css('width', campaign.progress() + '%');
-          $('.progress__bar__integer').html(campaign.progress() + '%');
+          // end progress bar
 
           // cumulative Imps
 
           for (var placement in chartData) {
-            if(placement.indexOf('Adidas') > 0){
+            // console.log('PLACEMENT',placement);
+            if(placement.indexOf('Airwave') > 0){
               var lastAmount = 0;
               var thisPlacement = chartData[placement];
               thisPlacement.data.execImpsCumulative = [];
@@ -114,65 +105,94 @@ $(document).ready(function() {
             }
           }
 
-          $('.module--impressions .module__benchmark').html(campaign.benchmarks.impressions + ' booked');
+          console.log("chartData.length", Object.keys(chartData).length);
 
+          // callback, essentially
 
-
-          // console.log(chartData);
-
-          // create area line chartist
-
-          var impsChartData = {
-            labels: chartData["147332360-AdidasTH"].data.dates,
-            series: [
-              chartData["147332360-AdidasTH"].data.execImpsCumulative,
-              chartData["147332363-AdidasDB-MY"].data.execImpsCumulative,
-              chartData["147333259-AdidasDB-SG"].data.execImpsCumulative,
-              chartData["147334429-AdidasDB-ID"].data.execImpsCumulative,
-              chartData["147334432-AdidasDB-PH"].data.execImpsCumulative,
-              chartData["147347247-AdidasDB-VN"].data.execImpsCumulative
-            ]
-          };
-
-
-          var options = {
-            low:0,
-            high: campaign.benchmarks.impressions,
-            showArea: true,
-            lineSmooth: false,
-            showPoint: false,
-            showLine:false,
-            fullWidth: true,
-            width: '100vw',
-            height: '40vw',
-            chartPadding: {
-              left: 40
-            },
-            axisX: {
-              // show only every third label OR last label
-              labelInterpolationFnc: function(value, index) {
-                return index % 3 === 0 || index === impsChart.data.labels.length - 1  ? value : null;
-              }
-            }
-          };
-
-          var impsChart = new Chartist.Line('.imps-chart', impsChartData, options).on('created', function(data){
-            // console.log('imps-chart', impsChart);
-            var horizGrids = impsChart.container.querySelectorAll('line.ct-grid.ct-horizontal');
-            var firstLine = horizGrids[0];
-            var lastLine = horizGrids[horizGrids.length - 1];
-            var startPoint = [firstLine.getAttribute('x2'), firstLine.getAttribute('y2')];
-            var endPoint = [lastLine.getAttribute('x1'), lastLine.getAttribute('y1')];
-
-            var impsExpected = new Chartist.Svg('line', {x1: startPoint[0], y1: startPoint[1], x2: endPoint[0], y2: endPoint[1], stroke: "#000", strokeWidth: "1"}, 'imps-expected', data.svg, false);
-
-            var impsExpected = new Chartist.Svg('line', {x1: startPoint[0], y1: startPoint[1], x2: endPoint[0], y2: endPoint[1], stroke: "#000"}, 'imps-expected', data.svg, false);
-
-          });
+          if(Object.keys(chartData).length === fileList.length){
+              buildImpsChart();
+          }
 
         }
      });
+
+   } // end dataToArray
+
+   function buildImpsChart(){
+
+     console.log('chartData', chartData);
+
+     // create campaign Object
+     var campaign = chartData[campaign] = {};
+
+     campaign.dates = {start: new Date(2017, 2, 8), end: new Date(2017, 3, 20)};
+     campaign.current = new Date (2017,3,11);
+     campaign.progress = function(){
+       return Math.round((1*(campaign.current - campaign.dates.start)) / (1*(campaign.dates.end - campaign.dates.start)) * 100)
+     };
+     campaign.benchmarks = {};
+     campaign.benchmarks.impressions = 13000;
+
+     var campaignDaysDuration = moment(campaign.dates.end).diff(moment(campaign.dates.start), 'days');
+
+     var campaignDaysCount = moment(campaign.dates.end).diff(moment(campaign.current), 'days');
+
+     var impsChartData = {
+       labels: chartData["146560594_Airwave_GoPro_Target_MalesMetro18-44_PreLaunch"].data.dates,
+       series: [
+         chartData["146560605_Airwave_GoPro_Target_FemalesMetro18-44_Post"].data.executedImps,
+        //  chartData["146560595_Airwave_GoPro_Target_FemalesMetro18-44_PreLaunch"].data.execImpsCumulative,
+        //  chartData["146560596_Airwave_GoPro_Target_MalesMetro18-44_Post"].data.execImpsCumulative,
+        //  chartData["146560597_Airwave_GoPro_Target_FemalesMetro18-44_Post"].data.execImpsCumulative,
+        //  chartData["146560598_Airwave_GoPro_Target_MalesMetro18-44_PreLaunch"].data.execImpsCumulative,
+        //  chartData["146560599_Airwave_GoPro_Target_FemalesMetro18-44_PreLaunch"].data.execImpsCumulative
+       ]
+     };
+
+     var options = {
+       low:0,
+       high: campaign.benchmarks.impressions,
+       showArea: true,
+       lineSmooth: false,
+       showPoint: false,
+       showLine:false,
+       fullWidth: true,
+       width: '100vw',
+       height: '40vw',
+       chartPadding: {
+         left: 40
+       },
+       axisX: {
+         // show only every third label OR last label
+         labelInterpolationFnc: function(value, index) {
+           return index % 3 === 0 || index === impsChart.data.labels.length - 1  ? value : null;
+         }
+       }
+     };
+
+     var impsChart = new Chartist.Line('.imps-chart', impsChartData, options).on('created', function(data){
+       // console.log('imps-chart', impsChart);
+       var horizGrids = impsChart.container.querySelectorAll('line.ct-grid.ct-horizontal');
+       var firstLine = horizGrids[0];
+       var lastLine = horizGrids[horizGrids.length - 1];
+       var startPoint = [firstLine.getAttribute('x2'), firstLine.getAttribute('y2')];
+       var endPoint = [lastLine.getAttribute('x1'), lastLine.getAttribute('y1')];
+
+       var impsExpected = new Chartist.Svg('line', {x1: startPoint[0], y1: startPoint[1], x2: endPoint[0], y2: endPoint[1], stroke: "#000", strokeWidth: "1"}, 'imps-expected', data.svg, false);
+
+       var impsExpected = new Chartist.Svg('line', {x1: startPoint[0], y1: startPoint[1], x2: endPoint[0], y2: endPoint[1], stroke: "#000"}, 'imps-expected', data.svg, false);
+
+     });
+
+   }
+
+
+
 });
+
+// $('.module--impressions .module__benchmark').html(campaign.benchmarks.impressions + ' booked');
+
+
 
 var chart = new Chartist.Pie('.ct-square', {
   series: [10, 20, 50, 20, 5, 50, 15],
