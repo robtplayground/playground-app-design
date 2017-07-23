@@ -28,8 +28,12 @@ placement.booked = 500000;
 // errors present for reqImps;
 placement.reqImpsErrorDates = {start: new Date(2017,5,30), end:new Date(2017,6,30)};
 placement.positionErrors = function(errorDates){
-  if(!(errorDates.start instanceof Date)){
-    console.log('startDate must be a javascript Date');
+  if(typeof errorDate != 'undefined' && !(errorDates.start instanceof Date)){
+    console.log('start value must be a javascript Date');
+    return;
+  }
+  if(typeof errorDate != 'undefined' && !(errorDates.end instanceof Date)){
+    console.log('end value must be a javascript Date');
     return;
   }
   var startPos = moment(errorDates.start).diff(moment(this.dates.start), 'days');
@@ -44,13 +48,10 @@ placement.GEN_REQUESTED_IMPS = function(){
     var impsThisDate = Math.randMinMax((impsPortion - 500), (impsPortion + 150), true);
     reqImps.push(impsThisDate);
   }
-  if(errorDates != "undefined"){
-    console.log('doin the error');
+  if(typeof errorDates != "undefined"){
     var errorPos = this.positionErrors(errorDates);
-    console.log(errorPos);
     for(var i = errorPos.start; i < errorPos.end; i++){
       var newValue = Math.round(impsPortion / 2) - Math.randMinMax(500, 100, true);
-      console.log(newValue);
       reqImps[i] = newValue;
     }
   }
@@ -65,27 +66,5 @@ placement.GEN_EXECUTED_IMPS = function(){
   });
   return execImps;
 };
-placement.GEN_REQ_IMPS_ERROR = function(){
-  var errorDates = REQ_IMPS_ERROR_DATES;
-  var impsPortion = this.booked / this.duration();
-  if(!(errorDates.start instanceof Date)){
-    console.log('startDate must be a javascript Date');
-    return;
-  }
-  var errorStart = moment(errorDates.start).diff(moment(this.dates.start), 'days');
-  var errorEnd = moment(errorDates.end).diff(moment(this.dates.start), 'days');
-
-
-};
 
 console.log(placement.GEN_REQUESTED_IMPS());
-
-
-function GEN_DATES(dateCount){
-
-}
-
-
-function GEN_REQUESTED_IMPS(){
-
-}
