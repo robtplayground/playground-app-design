@@ -20,32 +20,21 @@ var superSkin = {
   }
 };
 
-var campaign = {};
-var today = new Date (2017,8,1)
-// campaign starts 1 May, ends 31 July ??
-campaign.dates = {start: new Date(2017, 4, 1), end: new Date(2017, 6, 32)};
-campaign.progress = function(currentDate){
-  // currentDate is a new javascript date eg ;
-  if(!(currentDate instanceof Date)){
-    console.log("Needs a javascript Date to get campaign.progress");
-    return;
-  }
-  return Math.round((1*(campaign.currentDate - campaign.dates.start)) / (1*(campaign.dates.end - campaign.dates.start)) * 100)
-};
-
-
-
+var today = new Date (2017,8,1);
 
 var placement = {};
-placement.name = '146560594_Airwave_GoPro_Target_MalesMetro18-44_PreLaunch';
-// placement starts 1 May, ends 15 June
-placement.dates = {start: new Date(2017, 4, 1), end: new Date(2017, 5, 16)};
-placement.duration = function(){return moment(this.dates.end).diff(moment(this.dates.start), 'days')};
+// default dates are full campaign
+placement.dates = {start: new Date(2017, 4, 1), end: new Date(2017, 6, 32)};
 placement.booked = 500000;
-// errors present for reqImps;
+// errors
 placement.reqImpsErrorDates = {start: new Date(2017,4,30), end:new Date(2017,5,5)};
 placement.execImpsErrorDates = {start: new Date(2017,4,5), end:new Date(2017,4,15)};
 placement.viewImpsErrorDates = {start: new Date(2017,4,5), end:new Date(2017,4,15)};
+
+placement.duration = function(){return moment(this.dates.end).diff(moment(this.dates.start), 'days')};
+placement.progress = function(){
+  return Math.round((1*(today - campaign.dates.start)) / (1*(campaign.dates.end - campaign.dates.start)) * 100);
+};
 placement.positionErrors = function(errorDates){
   if(typeof errorDate != 'undefined' && !(errorDates.start instanceof Date)){
     console.log('start value must be a javascript Date');
@@ -257,4 +246,56 @@ placement.data = function(){
   return data;
 };
 
-console.log(placement.data());
+// placements
+
+function makeZeros(){
+	var duration = placement.duration();
+	var array = [];
+	for(var i = 0; i < duration; i++){
+		array.push(0);
+	}
+	return array;
+}
+
+var campaign = {
+	name: 'campaign',
+	dates: placement.dates,
+	data: {
+		dates: placement.GEN_DATES(),
+    requestedImps: makeZeros(),
+    executedImps: makeZeros(),
+    viewableImps: makeZeros(),
+    viewability: makeZeros(),
+    clicks: makeZeros(),
+    ctr: makeZeros(),
+    engagements: makeZeros(),
+    engagementRate: makeZeros(),
+    avgTIV: makeZeros(),
+    vidViewables: makeZeros(),
+		video:{
+	    vid0: makeZeros(),
+	    vid25: makeZeros(),
+	    vid50: makeZeros(),
+	    vid75: makeZeros(),
+	    vid100: makeZeros()
+	  }
+	}
+};
+
+console.log(campaign.data);
+
+var SS1 = $.extend({}, placement, {
+	name: '146560594_Airwave_GoPro_Target_MalesMetro18-44_PreLaunch',
+	dates: {start: new Date(2017, 4, 1), end: new Date(2017, 5, 16)}
+});
+
+var SS2 = $.extend({}, placement, {
+	name: '146560595_Airwave_GoPro_Target_FemalesMetro18-44_PreLaunch',
+	dates: {start: new Date(2017, 4, 1), end: new Date(2017, 5, 16)}
+});
+
+var SS3 = $.extend({}, placement, {
+	name: '146560596_Airwave_GoPro_Target_MalesMetro18-44_Post',
+	// 11 June - 31 July
+	dates: {start: new Date(2017, 5, 11), end: new Date(2017, 6, 32)}
+});
