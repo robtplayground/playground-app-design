@@ -3,11 +3,14 @@ $(document).ready(function() {
    function buildImpsChart(){
 
      var impsChartData = {
-       labels: campaign.data.dates,
+       labels: campaign.dateList(),
        series: [
-         SS1.data().executedImps,
-         SS2.data().executedImps,
-         SS3.data().executedImps
+         SS1.data.execImpsAgg(),
+         SS2.data.execImpsAgg(),
+         SS3.data.execImpsAgg(),
+         SS1.data.viewImpsAgg(),
+         SS2.data.viewImpsAgg(),
+         SS3.data.viewImpsAgg()
         //  campaign.data.executedImps,
        ]
      };

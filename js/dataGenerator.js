@@ -4,39 +4,6 @@ Math.randMinMax = function(min, max, round) {
 	return val;
 };
 
-/***** CAMPAIGN  *****/
-
-// graphing will happen from 27 June 2017
-
-function generateCampaign(name, dates) {
-	return {
-		name: name,
-		dates: {
-			start: dates.start,
-			end: dates.end
-		},
-		duration: duration(dates)
-	}
-}
-
-var campaign = generateCampaign('campaign', {
-	start: new Date(2017, 4, 1),
-	end: new Date(2017, 6, 32)
-});
-
-var currentDate = new Date(2017, 5, 28);
-
-
-// BENCHMARKS
-
-var superSkin = {
-  benchmarks: {
-    viewability: 91,
-    er: 0.92,
-    ativ: 9.2
-  }
-};
-
 /***** HELPERS  *****/
 
 function duration(dates){
@@ -62,7 +29,6 @@ function makeZeros(duration){
 function listDates(dates){
 	// eg dates: {start: new Date(2017, 4, 1), end: new Date(2017, 6, 32)}
 	var datesArray = [];
-	// AAAGH ! JONO! How do I refer up the chain
 	for(var i=0; i < duration(dates); i++){
 		var thisStart = dates.start;
 		// console.log(thisStart);
@@ -72,6 +38,43 @@ function listDates(dates){
 	}
 	return datesArray;
 }
+
+/***** CAMPAIGN  *****/
+
+// graphing will happen from 27 June 2017
+
+function generateCampaign(name, dates) {
+	return {
+		name: name,
+		dates: {
+			start: dates.start,
+			end: dates.end
+		},
+		dateList: function(){
+			return listDates(this.dates);
+		},
+		duration: duration(dates)
+	}
+}
+
+var campaign = generateCampaign('campaign', {
+	start: new Date(2017, 4, 1),
+	end: new Date(2017, 6, 32)
+});
+
+var currentDate = new Date(2017, 5, 28);
+
+
+// BENCHMARKS
+
+var superSkin = {
+  benchmarks: {
+    viewability: 91,
+    er: 0.92,
+    ativ: 9.2
+  }
+};
+
 /***** METRICS  *****/
 
 function REQUESTED_IMPS(bookedImps, placementDates, errors){
@@ -122,8 +125,8 @@ function EXECUTED_IMPS(reqImpsArray, errors){
   });
 
 	function setError(value){
-		// only 1/3 imps are executing
-		return Math.round(value/3);
+		// only 1/4 imps are executing
+		return Math.round(value / 4);
 	}
 
 	// there are errors for this metric...
@@ -140,7 +143,6 @@ function EXECUTED_IMPS(reqImpsArray, errors){
 
 function VIEWABLE_IMPS(execImpsArray, errors){
 	// create zeros
-	console.log(errors);
   var values = execImpsArray;
 	values.forEach(function(value, i){
 		if(value != 0){
@@ -243,6 +245,17 @@ function VIDEO_VIEWABLE_IMPS(engagementsArray){
   return values;
 }
 
+function AGGREGATE(array){
+	// create zeros
+	var values = array;
+	var aggValue = 0;
+	values.forEach(function(value, i){
+		aggValue = aggValue + value;
+    values.splice(i, 1, aggValue);
+  });
+  return values;
+}
+
 function VIDEO_METRICS(executedImpsArray){
 	var values = executedImpsArray;
   var video = {
@@ -306,12 +319,21 @@ function createPlacement(options){
 			requestedImps: function(){
 				return REQUESTED_IMPS(options.bookedImps, options.dates, options.errors);
 			},
+			reqImpsAgg: function(){
+				return AGGREGATE(this.requestedImps());
+			},
 			executedImps: function(){
 				return EXECUTED_IMPS(this.requestedImps(), options.errors);
     	},
+			execImpsAgg: function(){
+				return AGGREGATE(this.executedImps());
+			},
 			viewableImps: function(){
 				return VIEWABLE_IMPS(this.executedImps(), options.errors);
     	},
+			viewImpsAgg: function(){
+				return AGGREGATE(this.viewableImps());
+			},
 			viewability: function(){
 				return PERCENT(this.viewableImps(), this.executedImps());
     	},
@@ -371,8 +393,8 @@ var SS2 = createPlacement({
 	},
 	errors: {
 		execImps:{
-			start: new Date(2017, 4, 1),
-			end: new Date(2017, 4, 16)
+			start: new Date(2017, 4, 10),
+			end: new Date(2017, 4, 30)
 		}
 	}
 });
@@ -392,4 +414,4 @@ var SS3 = createPlacement({
 	}
 });
 
-console.log(SS3.data.video());
+console.log(SS2.data.executedImps());
