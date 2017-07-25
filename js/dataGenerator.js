@@ -4,13 +4,30 @@ Math.randMinMax = function(min, max, round) {
 	return val;
 };
 
-// var chartData = {};
+/***** CAMPAIGN  *****/
 
 // graphing will happen from 27 June 2017
 
+function generateCampaign(name, dates) {
+	return {
+		name: name,
+		dates: {
+			start: dates.start,
+			end: dates.end
+		},
+		duration: duration(dates)
+	}
+}
+
+var campaign = generateCampaign('campaign', {
+	start: new Date(2017, 4, 1),
+	end: new Date(2017, 6, 32)
+});
+
 var currentDate = new Date(2017, 5, 28);
 
-// benchmarks
+
+// BENCHMARKS
 
 var superSkin = {
   benchmarks: {
@@ -20,173 +37,214 @@ var superSkin = {
   }
 };
 
-var today = new Date (2017,8,1);
+/***** HELPERS  *****/
 
-var placement = {};
-// default dates are full campaign
-placement.dates = {start: new Date(2017, 4, 1), end: new Date(2017, 6, 32)};
-placement.booked = 500000;
-// errors
-placement.reqImpsErrorDates = {start: new Date(2017,4,30), end:new Date(2017,5,5)};
-placement.execImpsErrorDates = {start: new Date(2017,4,5), end:new Date(2017,4,15)};
-placement.viewImpsErrorDates = {start: new Date(2017,4,5), end:new Date(2017,4,15)};
+function duration(dates){
+	// eg dates: {start: new Date(2017, 4, 1), end: new Date(2017, 6, 32)}
+	return moment(dates.end).diff(moment(dates.start), 'days')
+}
 
-placement.duration = function(){return moment(this.dates.end).diff(moment(this.dates.start), 'days')};
-placement.progress = function(){
-  return Math.round((1*(today - campaign.dates.start)) / (1*(campaign.dates.end - campaign.dates.start)) * 100);
-};
-placement.positionErrors = function(errorDates){
-  if(typeof errorDate != 'undefined' && !(errorDates.start instanceof Date)){
-    console.log('start value must be a javascript Date');
-    return;
+function arrayRange(segmentDates){
+	return {
+  	startPos: moment(segmentDates.start).diff(moment(campaign.dates.start), 'days'),
+  	endPos: moment(segmentDates.end).diff(moment(campaign.dates.start), 'days')
+	}
+}
+
+function makeZeros(duration){
+	var array = [];
+	for(var i = 0; i < duration; i++){
+		array.push(0);
+	}
+	return array;
+}
+
+function listDates(dates){
+	// eg dates: {start: new Date(2017, 4, 1), end: new Date(2017, 6, 32)}
+	var datesArray = [];
+	// AAAGH ! JONO! How do I refer up the chain
+	for(var i=0; i < duration(dates); i++){
+		var thisStart = dates.start;
+		// console.log(thisStart);
+		var value = moment(thisStart).add(i, 'days').format('D/M/Y');
+		// console.log(value);
+		datesArray.push(value);
+	}
+	return datesArray;
+}
+/***** METRICS  *****/
+
+function REQUESTED_IMPS(bookedImps, placementDates, errors){
+	// create zeros
+  var values = makeZeros(campaign.duration);
+	// work out where placement data sits in campaign metrics
+	var pDuration = duration(placementDates);
+	var pRange = arrayRange(placementDates);
+
+	function setMetric(){
+		// create random reqImps value
+		var min = (bookedImps / pDuration) - 500;
+		var max = (bookedImps / pDuration) + 150;
+		return Math.randMinMax(min, max, true);
+	}
+
+	function setError(){
+		// create random reqImps error value - delivery under half on errorDates
+		var min = Math.round((bookedImps / pDuration) / 2) - 500;
+		var max = Math.round((bookedImps / pDuration) / 2) - 100;
+		return Math.randMinMax(min, max, true);
+	}
+	// overwrite zeroes with impressions
+  for(var i = pRange.startPos; i < pRange.endPos; i++){
+		values.splice(i, 1, setMetric());
   }
-  if(typeof errorDate != 'undefined' && !(errorDates.end instanceof Date)){
-    console.log('end value must be a javascript Date');
-    return;
-  }
-  var startPos = moment(errorDates.start).diff(moment(this.dates.start), 'days');
-  var endPos = moment(errorDates.end).diff(moment(this.dates.start), 'days');
-  console.log(endPos, startPos);
-  return {start: startPos, end: endPos};
-};
-placement.GEN_DATES = function(){
-  // console.log(this.dates.start);
-  var datesArray = [];
-  for(var i=0; i < this.duration(); i++){
-    var thisStart = this.dates.start;
-    // console.log(thisStart);
-    var value = moment(thisStart).add(i, 'days').format('D/M/Y');
-    // console.log(value);
-    datesArray.push(value);
-  }
-  return datesArray;
-};
-placement.GEN_REQUESTED_IMPS = function(){
-  var reqImps = [];
-  var impsPortion = Math.round(this.booked / this.duration());
-  var errorDates = this.reqImpsErrorDates;
-  for(var i = 0; i < this.duration(); i++){
-    var impsThisDate = Math.randMinMax((impsPortion - 500), (impsPortion + 150), true);
-    reqImps.push(impsThisDate);
-  }
-  // requestedImps error - delivery under half on errorDates - needs better traffiking / adserver tag problem
-  if(typeof errorDates != "undefined"){
-    var errorPos = this.positionErrors(errorDates);
-    console.log('errorPos', errorPos);
-    for(var i = errorPos.start; i < errorPos.end; i++){
-      var newValue = Math.round(impsPortion / 2) - Math.randMinMax(500, 100, true);
-      reqImps.splice(i, 1, newValue);
-    }
-  }
-  return reqImps;
-};
-placement.GEN_EXECUTED_IMPS = function(){
-  var reqImps = this.GEN_REQUESTED_IMPS();
-  var execImps = [];
-  var errorDates = this.execImpsErrorDates;
-  reqImps.forEach(function(value){
-    var difference = Math.randMinMax(100, 1000, true);
-    execImps.push(value - difference);
+
+	// there are errors for this metric...
+	if(errors.reqImps){
+		var eRange = arrayRange(errors.reqImps);
+		// overwrite impressions with errors
+		for(var i = eRange.startPos; i < eRange.endPos; i++){
+			values.splice(i, 1, setError());
+	  }
+	}
+
+  return values;
+}
+
+function EXECUTED_IMPS(reqImpsArray, errors){
+	// create zeros
+  var values = reqImpsArray;
+	values.forEach(function(value, i){
+		if(value != 0){
+			var difference = Math.randMinMax(100, 1000, true);
+	    values.splice(i, 1, value - difference);
+		}
   });
-  // execImps error - ad only executing a third of the time - publisher onboarding issue
-  if(typeof errorDates != "undefined"){
-    var errorPos = this.positionErrors(errorDates);
-    // console.log('errorPos', errorPos);
-    for(var i = errorPos.start; i < errorPos.end; i++){
-      var newValue = Math.round(execImps[i]/3);
-      execImps.splice(i, 1, newValue);
-    }
-  }
-  return execImps;
-};
-placement.GEN_VIEWABLE_IMPS = function(){
-  var execImps = this.GEN_EXECUTED_IMPS();
-  var viewImps = [];
-  var errorDates = this.viewImpsErrorDates;
-  execImps.forEach(function(value){
-    var difference = Math.randMinMax(100, 1000, true);
-    viewImps.push(value - difference);
+
+	function setError(value){
+		// only 1/3 imps are executing
+		return Math.round(value/3);
+	}
+
+	// there are errors for this metric...
+	if(errors.execImps){
+		var eRange = arrayRange(errors.execImps);
+		// overwrite impressions with errors
+		for(var i = eRange.startPos; i < eRange.endPos; i++){
+			values.splice(i, 1, setError(values[i]));
+	  }
+	}
+
+  return values;
+}
+
+function VIEWABLE_IMPS(execImpsArray, errors){
+	// create zeros
+	console.log(errors);
+  var values = execImpsArray;
+	values.forEach(function(value, i){
+		if(value != 0){
+			var difference = Math.randMinMax(100, 1000, true);
+	    values.splice(i, 1, value - difference);
+		}
   });
-  // viewImps error - ad not becoming viewable - creative error?
-  if(typeof errorDates != "undefined"){
-    var errorPos = this.positionErrors(errorDates);
-    // console.log('errorPos', errorPos);
-    for(var i = errorPos.start; i < errorPos.end; i++){
-      var newValue = Math.randMinMax(100, 60, true);
-      execImps.splice(i, 1, newValue);
-    }
-  }
-  return viewImps;
-};
-placement.GEN_VIEWABILITY = function(){
-  var viewability = [];
-  var viewImps = this.GEN_VIEWABLE_IMPS();
-  var execImps = this.GEN_EXECUTED_IMPS();
-  viewImps.forEach(function(value, index){
-    var newValue = Number(((value / execImps[index]) * 100).toFixed(2));
-    viewability.push(newValue);
+
+	function setError(){
+		// ad not viewable - not rendering - creative error?
+		return Math.randMinMax(100, 60, true);
+	}
+
+	// there are errors for this metric...
+	if(errors.viewImps){
+
+		var eRange = arrayRange(errors.viewImps);
+		// overwrite impressions with errors
+		for(var i = eRange.startPos; i < eRange.endPos; i++){
+			values.splice(i, 1, setError());
+	  }
+	}
+
+  return values;
+}
+
+function PERCENT(array1, array2){
+	// create zeros
+	var values = array1;
+	values.forEach(function(value, i){
+		if(value != 0){
+			var newValue = Number(((value / array2[i]) * 100).toFixed(2));
+	    values.splice(i, 1, newValue);
+		}
   });
-  return viewability;
-};
-placement.GEN_CLICKS = function(){
-  var clicks = [];
-  var viewImps = this.GEN_VIEWABLE_IMPS();
-  viewImps.forEach(function(value, index){
-    var difference = Math.randMinMax(36/10000, 24/10000, false);
-    clicks.push(Math.round(value * difference));
+  return values;
+}
+
+function CLICKS(array){
+	// create zeros
+	var values = array;
+	values.forEach(function(value, i){
+		if(value != 0){
+			var min = 24/10000;
+			var max = 36/10000;
+			var newValue = Math.round(value * Math.randMinMax(min, max));
+	    values.splice(i, 1, newValue);
+		}
   });
-  return clicks;
-};
-placement.GEN_CTR = function(){
-  var ctr = [];
-  var clicks = this.GEN_CLICKS();
-  var execImps = this.GEN_EXECUTED_IMPS();
-  clicks.forEach(function(value, index){
-    var newValue = Number(((value / execImps[index]) * 100).toFixed(2));
-    ctr.push(newValue);
+  return values;
+}
+
+function ENGAGEMENTS(array){
+	// create zeros
+	var values = array;
+	values.forEach(function(value, i){
+		if(value != 0){
+			var min = 63/10000;
+			var max = 84/10000;
+			var newValue = Math.round(value * Math.randMinMax(min, max));
+	    values.splice(i, 1, newValue);
+		}
   });
-  return ctr;
-};
-placement.GEN_ENGAGEMENTS = function(){
-  var engagements = [];
-  var viewImps = this.GEN_VIEWABLE_IMPS();
-  var clicks = this.GEN_CLICKS();
-  viewImps.forEach(function(value, index){
-    var difference = Math.randMinMax(84/10000, 63/10000, false);
-    engagements.push((Math.round(value * difference)));
+  return values;
+}
+
+function CLICKENG(clicksArray, engagementsArray){
+	// create zeros
+	var values = clicksArray;
+	values.forEach(function(value, i){
+		if(value != 0){
+			var newValue = value + engagementsArray[i];
+	    values.splice(i, 1, newValue);
+		}
   });
-  return engagements;
-};
-placement.GEN_ENGAGEMENT_RATE = function(){
-  var er = [];
-  var clicks = this.GEN_CLICKS();
-  var execImps = this.GEN_EXECUTED_IMPS();
-  var engagements = this.GEN_ENGAGEMENTS();
-  engagements.forEach(function(value, index){
-    var newValue = Number((((value + clicks[index]) / execImps[index]) * 100).toFixed(2));
-    er.push(newValue);
+  return values;
+}
+
+function ATIV(executedImpsArray, ativBenchmark){
+	// create zeros
+	var values = executedImpsArray;
+	values.forEach(function(value, i){
+		if(value != 0){
+			var newValue = Number((ativBenchmark + Math.randMinMax(-1, 4)).toFixed(2));
+	    values.splice(i, 1, newValue);
+		}
   });
-  return er;
-};
-placement.GEN_ATIV = function(){
-  var ativ = [];
-  // var errorDates = this.ativErrorDates;
-  for(var i = 0; i < this.duration(); i++){
-    var newValue = Number((superSkin.benchmarks.ativ + Math.randMinMax(-1, 4)).toFixed(2));
-  }
-  return ativ;
-};
-placement.GEN_VIDEO_VIEWABLE_IMPS = function(){
-  var vidViewables = [];
-  var engagements = this.GEN_ENGAGEMENTS();
-  // var errorDates = this.ativErrorDates;
-  engagements.forEach(function(value, index){
-    var newValue = value + Math.randMinMax(-1, -3, true);
-    vidViewables.push(newValue);
+  return values;
+}
+
+function VIDEO_VIEWABLE_IMPS(engagementsArray){
+	// create zeros
+	var values = engagementsArray;
+	values.forEach(function(value, i){
+		if(value != 0){
+			var newValue = value + Math.randMinMax(-1, -3, true);
+	    values.splice(i, 1, newValue);
+		}
   });
-  return vidViewables;
-};
-placement.GEN_VIDEO_METRICS = function(){
+  return values;
+}
+
+function VIDEO_METRICS(executedImpsArray){
+	var values = executedImpsArray;
   var video = {
     vid0: [],
     vid25: [],
@@ -215,87 +273,123 @@ placement.GEN_VIDEO_METRICS = function(){
     return percents;
   }
 
-  for(var i=0; i < this.duration(); i++){
-    var values = splitPercent();
-    video.vid0.push(values[0]);
-    video.vid25.push(values[1]);
-    video.vid50.push(values[2]);
-    video.vid75.push(values[3]);
-    video.vid100.push(values[4]);
-  }
+	values.forEach(function(value, i){
+		if(value === 0){
+			video.vid0.push(0);
+	    video.vid25.push(0);
+	    video.vid50.push(0);
+	    video.vid75.push(0);
+	    video.vid100.push(0);
+		}else{
+			var percents = splitPercent();
+	    video.vid0.push(percents[0]);
+	    video.vid25.push(percents[1]);
+	    video.vid50.push(percents[2]);
+	    video.vid75.push(percents[3]);
+	    video.vid100.push(percents[4]);
+		}
+  });
 
   // generate videoMetrics
 
   return video;
-};
-placement.data = function(){
-  var data = {
-    dates: this.GEN_DATES(),
-    requestedImps: this.GEN_REQUESTED_IMPS(),
-    executedImps: this.GEN_EXECUTED_IMPS(),
-    viewableImps: this.GEN_VIEWABLE_IMPS(),
-    viewability: this.GEN_VIEWABILITY(),
-    clicks: this.GEN_CLICKS(),
-    ctr: this.GEN_CTR(),
-    engagements: this.GEN_ENGAGEMENTS(),
-    engagementRate: this.GEN_ENGAGEMENT_RATE(),
-    avgTIV: this.GEN_ATIV(),
-    vidViewables: this.GEN_VIDEO_VIEWABLE_IMPS(),
-    video: this.GEN_VIDEO_METRICS()
-  };
-  return data;
-};
-
-// placements
-
-function makeZeros(){
-	var duration = placement.duration();
-	var array = [];
-	for(var i = 0; i < duration; i++){
-		array.push(0);
-	}
-	return array;
 }
 
-var campaign = {
-	name: 'campaign',
-	dates: placement.dates,
-	data: {
-		dates: placement.GEN_DATES(),
-    requestedImps: makeZeros(),
-    executedImps: makeZeros(),
-    viewableImps: makeZeros(),
-    viewability: makeZeros(),
-    clicks: makeZeros(),
-    ctr: makeZeros(),
-    engagements: makeZeros(),
-    engagementRate: makeZeros(),
-    avgTIV: makeZeros(),
-    vidViewables: makeZeros(),
-		video:{
-	    vid0: makeZeros(),
-	    vid25: makeZeros(),
-	    vid50: makeZeros(),
-	    vid75: makeZeros(),
-	    vid100: makeZeros()
-	  }
+function createPlacement(options){
+	// name is string, dates = dates object, errors = errorsObject{}
+  return {
+    name: options.name,
+    dates: options.dates,
+		bookedImps: options.bookedImps,
+    data: {
+			// dates are always the campaign dates
+			requestedImps: function(){
+				return REQUESTED_IMPS(options.bookedImps, options.dates, options.errors);
+			},
+			executedImps: function(){
+				return EXECUTED_IMPS(this.requestedImps(), options.errors);
+    	},
+			viewableImps: function(){
+				return VIEWABLE_IMPS(this.executedImps(), options.errors);
+    	},
+			viewability: function(){
+				return PERCENT(this.viewableImps(), this.executedImps());
+    	},
+			clicks: function(){
+				return CLICKS(this.viewableImps());
+			},
+			clickRate: function(){
+				return PERCENT(this.clicks(), this.executedImps());
+			},
+			engagements: function(){
+				return ENGAGEMENTS(this.viewableImps());
+			},
+			clickEng: function(){
+				return CLICKENG(this.clicks(), this.engagements());
+			},
+			engagementRate: function(){
+				return PERCENT(this.clickEng(), this.executedImps());
+			},
+			ativ: function(){
+				return ATIV(this.executedImps(), superSkin.benchmarks.ativ);
+			},
+			videoViewableImps: function(){
+				return VIDEO_VIEWABLE_IMPS(this.engagements());
+			},
+			video: function(){
+				return VIDEO_METRICS(this.engagements());
+			}
+  	}
 	}
-};
+}
 
-console.log(campaign.data);
 
-var SS1 = $.extend({}, placement, {
+/***** GENERATE  *****/
+
+
+var SS1 = createPlacement({
 	name: '146560594_Airwave_GoPro_Target_MalesMetro18-44_PreLaunch',
-	dates: {start: new Date(2017, 4, 1), end: new Date(2017, 5, 16)}
+	bookedImps: 500000,
+	dates: {
+		start: new Date(2017, 4, 1),
+		end: new Date(2017, 5, 16)
+	},
+	errors: {
+		reqImps:{
+			start: new Date(2017, 4, 30),
+			end: new Date(2017, 5, 5)
+		}
+	}
 });
 
-var SS2 = $.extend({}, placement, {
+var SS2 = createPlacement({
 	name: '146560595_Airwave_GoPro_Target_FemalesMetro18-44_PreLaunch',
-	dates: {start: new Date(2017, 4, 1), end: new Date(2017, 5, 16)}
+	bookedImps: 500000,
+	dates: {
+		start: new Date(2017, 4, 1),
+		end: new Date(2017, 5, 16)
+	},
+	errors: {
+		execImps:{
+			start: new Date(2017, 4, 1),
+			end: new Date(2017, 4, 16)
+		}
+	}
 });
 
-var SS3 = $.extend({}, placement, {
+var SS3 = createPlacement({
 	name: '146560596_Airwave_GoPro_Target_MalesMetro18-44_Post',
-	// 11 June - 31 July
-	dates: {start: new Date(2017, 5, 11), end: new Date(2017, 6, 32)}
+	bookedImps: 500000,
+	dates: {
+		start: new Date(2017, 5, 11),
+		end: new Date(2017, 6, 32)
+	},
+	errors: {
+		viewImps:{
+			start: new Date(2017, 5, 11),
+			end: new Date(2017, 5, 16)
+		}
+	}
 });
+
+console.log(SS3.data.video());

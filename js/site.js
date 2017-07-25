@@ -1,47 +1,20 @@
-var csvData;
-var labels;
-
-// create namespace
-
-var chartData = {};
-
-
 $(document).ready(function() {
 
    function buildImpsChart(){
 
-     console.log('chartData', chartData);
-
-     // create campaign Object
-     var campaign = chartData[campaign] = {};
-
-     campaign.dates = {start: new Date(2017, 2, 8), end: new Date(2017, 3, 20)};
-     campaign.current = new Date (2017,3,11);
-     campaign.progress = function(){
-       return Math.round((1*(campaign.current - campaign.dates.start)) / (1*(campaign.dates.end - campaign.dates.start)) * 100)
-     };
-     campaign.benchmarks = {};
-     campaign.benchmarks.impressions = 13000;
-
-     var campaignDaysDuration = moment(campaign.dates.end).diff(moment(campaign.dates.start), 'days');
-
-     var campaignDaysCount = moment(campaign.dates.end).diff(moment(campaign.current), 'days');
-
      var impsChartData = {
-       labels: chartData["146560594_Airwave_GoPro_Target_MalesMetro18-44_PreLaunch"].data.dates,
+       labels: campaign.data.dates,
        series: [
-         chartData["146560605_Airwave_GoPro_Target_FemalesMetro18-44_Post"].data.executedImps,
-        //  chartData["146560595_Airwave_GoPro_Target_FemalesMetro18-44_PreLaunch"].data.execImpsCumulative,
-        //  chartData["146560596_Airwave_GoPro_Target_MalesMetro18-44_Post"].data.execImpsCumulative,
-        //  chartData["146560597_Airwave_GoPro_Target_FemalesMetro18-44_Post"].data.execImpsCumulative,
-        //  chartData["146560598_Airwave_GoPro_Target_MalesMetro18-44_PreLaunch"].data.execImpsCumulative,
-        //  chartData["146560599_Airwave_GoPro_Target_FemalesMetro18-44_PreLaunch"].data.execImpsCumulative
+         SS1.data().executedImps,
+         SS2.data().executedImps,
+         SS3.data().executedImps
+        //  campaign.data.executedImps,
        ]
      };
 
      var options = {
-       low:0,
-       high: campaign.benchmarks.impressions,
+      //  low:0,
+      //  high: campaign.benchmarks.impressions,
        showArea: true,
        lineSmooth: false,
        showPoint: false,
@@ -55,29 +28,29 @@ $(document).ready(function() {
        axisX: {
          // show only every third label OR last label
          labelInterpolationFnc: function(value, index) {
-           return index % 3 === 0 || index === impsChart.data.labels.length - 1  ? value : null;
+           return index % 8 === 0 || index === impsChart.data.labels.length - 1  ? value : null;
          }
        }
      };
 
-     var impsChart = new Chartist.Line('.imps-chart', impsChartData, options).on('created', function(data){
-       // console.log('imps-chart', impsChart);
-       var horizGrids = impsChart.container.querySelectorAll('line.ct-grid.ct-horizontal');
-       var firstLine = horizGrids[0];
-       var lastLine = horizGrids[horizGrids.length - 1];
-       var startPoint = [firstLine.getAttribute('x2'), firstLine.getAttribute('y2')];
-       var endPoint = [lastLine.getAttribute('x1'), lastLine.getAttribute('y1')];
+     var impsChart = new Chartist.Line('.imps-chart', impsChartData, options);
 
-       var impsExpected = new Chartist.Svg('line', {x1: startPoint[0], y1: startPoint[1], x2: endPoint[0], y2: endPoint[1], stroke: "#000", strokeWidth: "1"}, 'imps-expected', data.svg, false);
-
-       var impsExpected = new Chartist.Svg('line', {x1: startPoint[0], y1: startPoint[1], x2: endPoint[0], y2: endPoint[1], stroke: "#000"}, 'imps-expected', data.svg, false);
-
-     });
-
+    //  var impsChart = new Chartist.Line('.imps-chart', impsChartData, options).on('created', function(data){
+    //    // console.log('imps-chart', impsChart);
+    //    var horizGrids = impsChart.container.querySelectorAll('line.ct-grid.ct-horizontal');
+    //    var firstLine = horizGrids[0];
+    //    var lastLine = horizGrids[horizGrids.length - 1];
+    //    var startPoint = [firstLine.getAttribute('x2'), firstLine.getAttribute('y2')];
+    //    var endPoint = [lastLine.getAttribute('x1'), lastLine.getAttribute('y1')];
+    //
+    //    var impsExpected = new Chartist.Svg('line', {x1: startPoint[0], y1: startPoint[1], x2: endPoint[0], y2: endPoint[1], stroke: "#000", strokeWidth: "1"}, 'imps-expected', data.svg, false);
+    //
+    //    var impsExpected = new Chartist.Svg('line', {x1: startPoint[0], y1: startPoint[1], x2: endPoint[0], y2: endPoint[1], stroke: "#000"}, 'imps-expected', data.svg, false);
+    //
+    //  });
    }
 
-
-
+   buildImpsChart();
 });
 
 // $('.module--impressions .module__benchmark').html(campaign.benchmarks.impressions + ' booked');
