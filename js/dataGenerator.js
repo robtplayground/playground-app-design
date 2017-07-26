@@ -414,4 +414,4 @@ var SS3 = createPlacement({
 	}
 });
 
-console.log(SS2.data.executedImps());
+// console.log(SS2.data.viewability());

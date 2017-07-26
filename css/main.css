@@ -9,7 +9,7 @@ html {
   /* 1 */
   -ms-text-size-adjust: 100%;
   /* 2 */
-  -webkit-text-size-adjust: 100%; 
+  -webkit-text-size-adjust: 100%;
   /* 2 */
 }
 /**
@@ -739,13 +739,7 @@ p {
   margin: 0;
   text-align: center;
 }
-.imps-chart {
+#imps-chart,
+#viewability-chart {
   width: 800px;
-}
-.imps-chart .ct-label.ct-vertical {
-  font-size: 10px;
-}
-.imps-chart .ct-label.ct-horizontal {
-  font-size: 10px;
-  white-space: nowrap;
 }
