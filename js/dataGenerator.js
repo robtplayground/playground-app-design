@@ -311,13 +311,9 @@ function VIDEO_METRICS(executedImpsArray){
 function createPlacement(options){
 	// name is string, dates = dates object, errors = errorsObject{}
 	var requestedImps = REQUESTED_IMPS(options.bookedImps, options.dates, options.errors);
-	console.log(requestedImps);
 	var reqImpsAgg = AGGREGATE(requestedImps);
-	console.log('reqImps', requestedImps, reqImpsAgg);
 	var executedImps = EXECUTED_IMPS(requestedImps, options.errors);
-	console.log('reqImps', requestedImps, executedImps);
 	var execImpsAgg = AGGREGATE(executedImps);
-	console.log('execImps', executedImps, execImpsAgg);
 	var viewableImps = VIEWABLE_IMPS(executedImps, options.errors);
 	var viewImpsAgg = AGGREGATE(viewableImps);
 	var viewability = PERCENT(viewableImps, executedImps);
@@ -352,15 +348,18 @@ function createPlacement(options){
 			ativ: ativ,
 			videoViewableImps: videoViewableImps,
 			video: video
-  	}
+  	},
+		creative: options.creative,
+	  audience: options.audience
 	}
 }
 
 
 /***** GENERATE  *****/
 
+// SUPER SKIN, male, pre-launch,
 
-var SS1 = createPlacement({
+var SS1Pre = createPlacement({
 	name: '146560594_Airwave_GoPro_Target_MalesMetro18-44_PreLaunch',
 	bookedImps: 500000,
 	dates: {
@@ -372,10 +371,26 @@ var SS1 = createPlacement({
 			start: new Date(2017, 4, 30),
 			end: new Date(2017, 5, 5)
 		}
-	}
+	},
+	creative: {
+    format: 'super-skin',
+    features: ['expand-frame', 'video'],
+    content: 'GoPro Hero5 Males Festival'
+  },
+  audience: {
+    gender: 'male',
+    age: {
+      from: 18,
+      to: 44
+    },
+    interests: ['Entertainment', 'Tech', 'Lifestyle', 'News' ],
+    locations: ['AU Metro', 'AU Regional']
+  }
 });
 
-var SS2 = createPlacement({
+// SUPER SKIN, females, pre-launch
+
+var SS2Pre = createPlacement({
 	name: '146560595_Airwave_GoPro_Target_FemalesMetro18-44_PreLaunch',
 	bookedImps: 500000,
 	dates: {
@@ -383,26 +398,205 @@ var SS2 = createPlacement({
 		end: new Date(2017, 5, 16)
 	},
 	errors: {
-		execImps:{
-			start: new Date(2017, 4, 10),
-			end: new Date(2017, 4, 30)
-		}
-	}
+		// execImps:{
+		// 	start: new Date(2017, 4, 10),
+		// 	end: new Date(2017, 4, 30)
+		// }
+	},
+	creative: {
+    format: 'super-skin',
+    features: ['expand-frame', 'video'],
+    content: 'GoPro Hero5 Females Travel'
+  },
+  audience: {
+    gender: 'female',
+    age: {
+      from: 18,
+      to: 44
+    },
+    interests: ['Entertainment', 'Tech', 'Lifestyle', 'News' ],
+    locations: ['AU Metro', 'AU Regional']
+  }
 });
 
-var SS3 = createPlacement({
-	name: '146560596_Airwave_GoPro_Target_MalesMetro18-44_Post',
+// SIDE-PUSH, males, pre-launch
+
+var SP1Pre = createPlacement({
+	name: '146560596_Airwave_GoPro_Target_MalesMetro18-44_Pre',
 	bookedImps: 500000,
 	dates: {
-		start: new Date(2017, 5, 11),
+		start: new Date(2017, 4, 1),
+		end: new Date(2017, 5, 16)
+	},
+	errors: {
+		// viewImps:{
+		// 	start: new Date(2017, 4, 3),
+		// 	end: new Date(2017, 4, 16)
+		// }
+	},
+	creative: {
+    format: 'side-push',
+    features: ['expand-frame', 'video'],
+    content: 'GoPro Hero5 Males Festival'
+  },
+  audience: {
+    gender: 'male',
+    age: {
+      from: 18,
+      to: 44
+    },
+    interests: ['Entertainment', 'Tech', 'Lifestyle', 'News' ],
+    locations: ['AU Metro', 'AU Regional']
+  }
+});
+
+var SP2Pre = createPlacement({
+	name: '146560597_Airwave_GoPro_Target_FemalesMetro18-44_Pre',
+	bookedImps: 500000,
+	dates: {
+		start: new Date(2017, 4, 1),
+		end: new Date(2017, 5, 16)
+	},
+	errors: {
+		// viewImps:{
+		// 	start: new Date(2017, 4, 3),
+		// 	end: new Date(2017, 4, 16)
+		// }
+	},
+	creative: {
+    format: 'side-push',
+    features: ['expand-frame', 'video'],
+    content: 'GoPro Hero5 Females Travel'
+  },
+  audience: {
+    gender: 'female',
+    age: {
+      from: 18,
+      to: 44
+    },
+    interests: ['Entertainment', 'Tech', 'Lifestyle', 'News' ],
+    locations: ['AU Metro', 'AU Regional']
+  }
+});
+
+// SUPER SKIN, males, post-launch
+
+var SS1Post = createPlacement({
+	name: '146560598_Airwave_GoPro_Target_MalesMetro18-44_PreLaunch',
+	bookedImps: 500000,
+	dates: {
+		start: new Date(2017, 5, 17),
 		end: new Date(2017, 6, 32)
 	},
 	errors: {
-		viewImps:{
-			start: new Date(2017, 5, 11),
-			end: new Date(2017, 5, 16)
-		}
-	}
+		// reqImps:{
+		// 	start: new Date(2017, 4, 30),
+		// 	end: new Date(2017, 5, 5)
+		// }
+	},
+	creative: {
+    format: 'super-skin',
+    features: ['expand-frame', 'video'],
+    content: 'GoPro Hero5 Males Festival'
+  },
+  audience: {
+    gender: 'male',
+    age: {
+      from: 18,
+      to: 44
+    },
+    interests: ['Entertainment', 'Tech', 'Lifestyle', 'News' ],
+    locations: ['AU Metro', 'AU Regional']
+  }
 });
 
-// console.log(SS1.data.executedImps);
+// SUPER SKIN, females, post-launch
+
+var SS2Post = createPlacement({
+	name: '146560599_Airwave_GoPro_Target_FemalesMetro18-44_PreLaunch',
+	bookedImps: 500000,
+	dates: {
+		start: new Date(2017, 5, 17),
+		end: new Date(2017, 6, 32)
+	},
+	errors: {
+		// execImps:{
+		// 	start: new Date(2017, 4, 10),
+		// 	end: new Date(2017, 4, 30)
+		// }
+	},
+	creative: {
+    format: 'super-skin',
+    features: ['expand-frame', 'video'],
+    content: 'GoPro Hero5 Females Travel'
+  },
+  audience: {
+    gender: 'female',
+    age: {
+      from: 18,
+      to: 44
+    },
+    interests: ['Entertainment', 'Tech', 'Lifestyle', 'News' ],
+    locations: ['AU Metro', 'AU Regional']
+  }
+});
+
+// SIDE-PUSH, males, pre-launch
+
+var SP1Post = createPlacement({
+	name: '146560600_Airwave_GoPro_Target_MalesMetro18-44_Pre',
+	bookedImps: 500000,
+	dates: {
+		start: new Date(2017, 5, 17),
+		end: new Date(2017, 6, 32)
+	},
+	errors: {
+		// viewImps:{
+		// 	start: new Date(2017, 4, 3),
+		// 	end: new Date(2017, 4, 16)
+		// }
+	},
+	creative: {
+    format: 'side-push',
+    features: ['expand-frame', 'video'],
+    content: 'GoPro Hero5 Males Festival'
+  },
+  audience: {
+    gender: 'male',
+    age: {
+      from: 18,
+      to: 44
+    },
+    interests: ['Entertainment', 'Tech', 'Lifestyle', 'News' ],
+    locations: ['AU Metro', 'AU Regional']
+  }
+});
+
+var SP2Post = createPlacement({
+	name: '146560601_Airwave_GoPro_Target_FemalesMetro18-44_Pre',
+	bookedImps: 500000,
+	dates: {
+		start: new Date(2017, 5, 17),
+		end: new Date(2017, 6, 32)
+	},
+	errors: {
+		// viewImps:{
+		// 	start: new Date(2017, 4, 3),
+		// 	end: new Date(2017, 4, 16)
+		// }
+	},
+	creative: {
+    format: 'side-push',
+    features: ['expand-frame', 'video'],
+    content: 'GoPro Hero5 Females Travel'
+  },
+  audience: {
+    gender: 'female',
+    age: {
+      from: 18,
+      to: 44
+    },
+    interests: ['Entertainment', 'Tech', 'Lifestyle', 'News' ],
+    locations: ['AU Metro', 'AU Regional']
+  }
+});
