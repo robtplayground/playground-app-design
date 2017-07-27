@@ -18,14 +18,14 @@ function average(array, dates) {
 
 var ss1Imps = {
   x: campaign.dateList(),
-  y: SS1.data.execImpsAgg(),
+  y: SS1.data.execImpsAgg,
   type: 'scatter',
   fill: 'tozeroy'
 };
 
 var ss2Imps = {
   x: campaign.dateList(),
-  y: SS2.data.execImpsAgg(),
+  y: SS2.data.execImpsAgg,
   type: 'scatter',
   fill: 'tozeroy'
 };
@@ -34,7 +34,7 @@ var impsData = [ss1Imps, ss2Imps];
 
 Plotly.newPlot('imps-chart', impsData, {}, {displayModeBar: false});
 
-var ss2_viewb_Avg = average(SS2.data.viewability(), SS2.dates);
+var ss2_viewb_Avg = average(SS2.data.viewability, SS2.dates);
 
 var data = [{
   values: [ss2_viewb_Avg, 100 - ss2_viewb_Avg],

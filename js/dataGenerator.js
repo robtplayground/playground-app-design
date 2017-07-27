@@ -110,13 +110,12 @@ function REQUESTED_IMPS(bookedImps, placementDates, errors){
 			values.splice(i, 1, setError());
 	  }
 	}
-
   return values;
 }
 
 function EXECUTED_IMPS(reqImpsArray, errors){
 	// create zeros
-  var values = reqImpsArray;
+  var values = reqImpsArray.slice();
 	values.forEach(function(value, i){
 		if(value != 0){
 			var difference = Math.randMinMax(100, 1000, true);
@@ -143,7 +142,7 @@ function EXECUTED_IMPS(reqImpsArray, errors){
 
 function VIEWABLE_IMPS(execImpsArray, errors){
 	// create zeros
-  var values = execImpsArray;
+  var values = execImpsArray.slice();
 	values.forEach(function(value, i){
 		if(value != 0){
 			var difference = Math.randMinMax(100, 1000, true);
@@ -171,19 +170,20 @@ function VIEWABLE_IMPS(execImpsArray, errors){
 
 function PERCENT(array1, array2){
 	// create zeros
-	var values = array1;
+	var values = array1.slice();
 	values.forEach(function(value, i){
 		if(value != 0){
 			var newValue = Number(((value / array2[i]) * 100).toFixed(2));
 	    values.splice(i, 1, newValue);
 		}
   });
+	// console.log(values);
   return values;
 }
 
 function CLICKS(array){
 	// create zeros
-	var values = array;
+	var values = array.slice();
 	values.forEach(function(value, i){
 		if(value != 0){
 			var min = 24/10000;
@@ -197,7 +197,7 @@ function CLICKS(array){
 
 function ENGAGEMENTS(array){
 	// create zeros
-	var values = array;
+	var values = array.slice();
 	values.forEach(function(value, i){
 		if(value != 0){
 			var min = 63/10000;
@@ -211,7 +211,7 @@ function ENGAGEMENTS(array){
 
 function CLICKENG(clicksArray, engagementsArray){
 	// create zeros
-	var values = clicksArray;
+	var values = clicksArray.slice();
 	values.forEach(function(value, i){
 		if(value != 0){
 			var newValue = value + engagementsArray[i];
@@ -223,7 +223,7 @@ function CLICKENG(clicksArray, engagementsArray){
 
 function ATIV(executedImpsArray, ativBenchmark){
 	// create zeros
-	var values = executedImpsArray;
+	var values = executedImpsArray.slice();
 	values.forEach(function(value, i){
 		if(value != 0){
 			var newValue = Number((ativBenchmark + Math.randMinMax(-1, 4)).toFixed(2));
@@ -235,7 +235,7 @@ function ATIV(executedImpsArray, ativBenchmark){
 
 function VIDEO_VIEWABLE_IMPS(engagementsArray){
 	// create zeros
-	var values = engagementsArray;
+	var values = engagementsArray.slice();
 	values.forEach(function(value, i){
 		if(value != 0){
 			var newValue = value + Math.randMinMax(-1, -3, true);
@@ -247,7 +247,7 @@ function VIDEO_VIEWABLE_IMPS(engagementsArray){
 
 function AGGREGATE(array){
 	// create zeros
-	var values = array;
+	var values = array.slice();
 	var aggValue = 0;
 	values.forEach(function(value, i){
 		aggValue = aggValue + value;
@@ -257,7 +257,7 @@ function AGGREGATE(array){
 }
 
 function VIDEO_METRICS(executedImpsArray){
-	var values = executedImpsArray;
+	var values = executedImpsArray.slice();
   var video = {
     vid0: [],
     vid25: [],
@@ -310,57 +310,48 @@ function VIDEO_METRICS(executedImpsArray){
 
 function createPlacement(options){
 	// name is string, dates = dates object, errors = errorsObject{}
+	var requestedImps = REQUESTED_IMPS(options.bookedImps, options.dates, options.errors);
+	console.log(requestedImps);
+	var reqImpsAgg = AGGREGATE(requestedImps);
+	console.log('reqImps', requestedImps, reqImpsAgg);
+	var executedImps = EXECUTED_IMPS(requestedImps, options.errors);
+	console.log('reqImps', requestedImps, executedImps);
+	var execImpsAgg = AGGREGATE(executedImps);
+	console.log('execImps', executedImps, execImpsAgg);
+	var viewableImps = VIEWABLE_IMPS(executedImps, options.errors);
+	var viewImpsAgg = AGGREGATE(viewableImps);
+	var viewability = PERCENT(viewableImps, executedImps);
+	// console.log(requestedImps);
+	var clicks = CLICKS(viewableImps);
+	var clickRate = PERCENT(clicks, executedImps);
+	var engagements = ENGAGEMENTS(viewableImps);
+	var clickEng = CLICKENG(clicks, engagements);
+	var engagementRate = PERCENT(clickEng, executedImps);
+	var ativ = ATIV(executedImps, superSkin.benchmarks.ativ);
+	var videoViewableImps = VIDEO_VIEWABLE_IMPS(engagements);
+	var video = VIDEO_METRICS(engagements);
+
   return {
     name: options.name,
     dates: options.dates,
 		bookedImps: options.bookedImps,
     data: {
 			// dates are always the campaign dates
-			requestedImps: function(){
-				return REQUESTED_IMPS(options.bookedImps, options.dates, options.errors);
-			},
-			reqImpsAgg: function(){
-				return AGGREGATE(this.requestedImps());
-			},
-			executedImps: function(){
-				return EXECUTED_IMPS(this.requestedImps(), options.errors);
-    	},
-			execImpsAgg: function(){
-				return AGGREGATE(this.executedImps());
-			},
-			viewableImps: function(){
-				return VIEWABLE_IMPS(this.executedImps(), options.errors);
-    	},
-			viewImpsAgg: function(){
-				return AGGREGATE(this.viewableImps());
-			},
-			viewability: function(){
-				return PERCENT(this.viewableImps(), this.executedImps());
-    	},
-			clicks: function(){
-				return CLICKS(this.viewableImps());
-			},
-			clickRate: function(){
-				return PERCENT(this.clicks(), this.executedImps());
-			},
-			engagements: function(){
-				return ENGAGEMENTS(this.viewableImps());
-			},
-			clickEng: function(){
-				return CLICKENG(this.clicks(), this.engagements());
-			},
-			engagementRate: function(){
-				return PERCENT(this.clickEng(), this.executedImps());
-			},
-			ativ: function(){
-				return ATIV(this.executedImps(), superSkin.benchmarks.ativ);
-			},
-			videoViewableImps: function(){
-				return VIDEO_VIEWABLE_IMPS(this.engagements());
-			},
-			video: function(){
-				return VIDEO_METRICS(this.engagements());
-			}
+			requestedImps: requestedImps,
+			reqImpsAgg: reqImpsAgg,
+			executedImps: executedImps,
+			execImpsAgg: execImpsAgg,
+			viewableImps: viewableImps,
+			viewImpsAgg: viewImpsAgg,
+			viewability: viewability,
+			clicks: clicks,
+			clickRate: clickRate,
+			engagements: engagements,
+			clickEng: clickEng,
+			engagementRate: engagementRate,
+			ativ: ativ,
+			videoViewableImps: videoViewableImps,
+			video: video
   	}
 	}
 }
@@ -414,4 +405,4 @@ var SS3 = createPlacement({
 	}
 });
 
-// console.log(SS2.data.viewability());
+// console.log(SS1.data.executedImps);
