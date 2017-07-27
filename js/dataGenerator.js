@@ -1,59 +1,22 @@
-Math.randMinMax = function(min, max, round) {
-	var val = min + (Math.random() * (max - min));
-	if( round ) val = Math.round( val );
-	return val;
-};
-
-/***** HELPERS  *****/
-
-function duration(dates){
-	// eg dates: {start: new Date(2017, 4, 1), end: new Date(2017, 6, 32)}
-	return moment(dates.end).diff(moment(dates.start), 'days')
-}
-
-function arrayRange(segmentDates){
-	return {
-  	startPos: moment(segmentDates.start).diff(moment(campaign.dates.start), 'days'),
-  	endPos: moment(segmentDates.end).diff(moment(campaign.dates.start), 'days')
-	}
-}
-
-function makeZeros(duration){
-	var array = [];
-	for(var i = 0; i < duration; i++){
-		array.push(0);
-	}
-	return array;
-}
-
-function listDates(dates){
-	// eg dates: {start: new Date(2017, 4, 1), end: new Date(2017, 6, 32)}
-	var datesArray = [];
-	for(var i=0; i < duration(dates); i++){
-		var thisStart = dates.start;
-		// console.log(thisStart);
-		var value = moment(thisStart).add(i, 'days').format('D/M/Y');
-		// console.log(value);
-		datesArray.push(value);
-	}
-	return datesArray;
-}
+var moment = require('moment');
+var path = require('path');
+var helpers = require( path.resolve( __dirname, "helpers.js" ) );
 
 /***** CAMPAIGN  *****/
 
 // graphing will happen from 27 June 2017
 
 function generateCampaign(name, dates) {
+	var dateList = helpers.listDates(dates);
+	var dur = helpers.duration(dates);
 	return {
 		name: name,
 		dates: {
 			start: dates.start,
 			end: dates.end
 		},
-		dateList: function(){
-			return listDates(this.dates);
-		},
-		duration: duration(dates)
+		dateList: dateList,
+		duration: dur
 	}
 }
 
@@ -79,23 +42,23 @@ var superSkin = {
 
 function REQUESTED_IMPS(bookedImps, placementDates, errors){
 	// create zeros
-  var values = makeZeros(campaign.duration);
+  var values = helpers.makeZeros(campaign.duration);
 	// work out where placement data sits in campaign metrics
-	var pDuration = duration(placementDates);
-	var pRange = arrayRange(placementDates);
+	var pDuration = helpers.duration(placementDates);
+	var pRange = helpers.arrayRange(placementDates, campaign);
 
 	function setMetric(){
 		// create random reqImps value
 		var min = (bookedImps / pDuration) - 500;
 		var max = (bookedImps / pDuration) + 150;
-		return Math.randMinMax(min, max, true);
+		return helpers.randMinMax(min, max, true);
 	}
 
 	function setError(){
 		// create random reqImps error value - delivery under half on errorDates
 		var min = Math.round((bookedImps / pDuration) / 2) - 500;
 		var max = Math.round((bookedImps / pDuration) / 2) - 100;
-		return Math.randMinMax(min, max, true);
+		return helpers.randMinMax(min, max, true);
 	}
 	// overwrite zeroes with impressions
   for(var i = pRange.startPos; i < pRange.endPos; i++){
@@ -104,7 +67,7 @@ function REQUESTED_IMPS(bookedImps, placementDates, errors){
 
 	// there are errors for this metric...
 	if(errors.reqImps){
-		var eRange = arrayRange(errors.reqImps);
+		var eRange = helpers.arrayRange(errors.reqImps, campaign);
 		// overwrite impressions with errors
 		for(var i = eRange.startPos; i < eRange.endPos; i++){
 			values.splice(i, 1, setError());
@@ -118,7 +81,7 @@ function EXECUTED_IMPS(reqImpsArray, errors){
   var values = reqImpsArray.slice();
 	values.forEach(function(value, i){
 		if(value != 0){
-			var difference = Math.randMinMax(100, 1000, true);
+			var difference = helpers.randMinMax(100, 1000, true);
 	    values.splice(i, 1, value - difference);
 		}
   });
@@ -130,7 +93,7 @@ function EXECUTED_IMPS(reqImpsArray, errors){
 
 	// there are errors for this metric...
 	if(errors.execImps){
-		var eRange = arrayRange(errors.execImps);
+		var eRange = helpers.arrayRange(errors.execImps, campaign);
 		// overwrite impressions with errors
 		for(var i = eRange.startPos; i < eRange.endPos; i++){
 			values.splice(i, 1, setError(values[i]));
@@ -145,20 +108,20 @@ function VIEWABLE_IMPS(execImpsArray, errors){
   var values = execImpsArray.slice();
 	values.forEach(function(value, i){
 		if(value != 0){
-			var difference = Math.randMinMax(100, 1000, true);
+			var difference = helpers.randMinMax(100, 1000, true);
 	    values.splice(i, 1, value - difference);
 		}
   });
 
 	function setError(){
 		// ad not viewable - not rendering - creative error?
-		return Math.randMinMax(100, 60, true);
+		return helpers.randMinMax(100, 60, true);
 	}
 
 	// there are errors for this metric...
 	if(errors.viewImps){
 
-		var eRange = arrayRange(errors.viewImps);
+		var eRange = helpers.arrayRange(errors.viewImps, campaign);
 		// overwrite impressions with errors
 		for(var i = eRange.startPos; i < eRange.endPos; i++){
 			values.splice(i, 1, setError());
@@ -188,7 +151,7 @@ function CLICKS(array){
 		if(value != 0){
 			var min = 24/10000;
 			var max = 36/10000;
-			var newValue = Math.round(value * Math.randMinMax(min, max));
+			var newValue = Math.round(value * helpers.randMinMax(min, max));
 	    values.splice(i, 1, newValue);
 		}
   });
@@ -202,7 +165,7 @@ function ENGAGEMENTS(array){
 		if(value != 0){
 			var min = 63/10000;
 			var max = 84/10000;
-			var newValue = Math.round(value * Math.randMinMax(min, max));
+			var newValue = Math.round(value * helpers.randMinMax(min, max));
 	    values.splice(i, 1, newValue);
 		}
   });
@@ -226,7 +189,7 @@ function ATIV(executedImpsArray, ativBenchmark){
 	var values = executedImpsArray.slice();
 	values.forEach(function(value, i){
 		if(value != 0){
-			var newValue = Number((ativBenchmark + Math.randMinMax(-1, 4)).toFixed(2));
+			var newValue = Number((ativBenchmark + helpers.randMinMax(-1, 4)).toFixed(2));
 	    values.splice(i, 1, newValue);
 		}
   });
@@ -238,7 +201,7 @@ function VIDEO_VIEWABLE_IMPS(engagementsArray){
 	var values = engagementsArray.slice();
 	values.forEach(function(value, i){
 		if(value != 0){
-			var newValue = value + Math.randMinMax(-1, -3, true);
+			var newValue = value + helpers.randMinMax(-1, -3, true);
 	    values.splice(i, 1, newValue);
 		}
   });
@@ -271,7 +234,7 @@ function VIDEO_METRICS(executedImpsArray){
     var percents = [];
     // generate 5 random numbers
     for(var i = 0; i < 5; i++){
-      var value = Math.randMinMax(1, 10);
+      var value = helpers.randMinMax(1, 10);
       randoms.push(value);
     }
     // sum randoms
@@ -600,3 +563,17 @@ var SP2Post = createPlacement({
     locations: ['AU Metro', 'AU Regional']
   }
 });
+
+// console.log(SS1Pre);
+
+module.exports = {
+	campaign: campaign,
+  SS1Pre: SS1Pre,
+  SS2Pre: SS2Pre,
+  SP1Pre: SP1Pre,
+  SP2Pre: SP2Pre,
+  SS1Post: SS1Post,
+  SS2Post: SS2Post,
+  SP1Post: SP1Post,
+  SP2Post: SP2Post
+};

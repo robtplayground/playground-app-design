@@ -1,6 +1,7 @@
+
 function total(array, dates) {
   var rangeTotal = 0;
-  var arrayR = arrayRange(dates);
+  var arrayR = arrayRange(dates, campaign);
   // only add totals of array within this Range
   for (var i = arrayR.startPos; i < arrayR.endPos; i++){
     rangeTotal += array[i];
@@ -17,14 +18,14 @@ function average(array, dates) {
 
 
 var ss1Imps = {
-  x: campaign.dateList(),
+  x: campaign.dateList,
   y: SS1Pre.data.execImpsAgg,
   type: 'scatter',
   fill: 'tozeroy'
 };
 
 var ss2Imps = {
-  x: campaign.dateList(),
+  x: campaign.dateList,
   y: SS2Pre.data.execImpsAgg,
   type: 'scatter',
   fill: 'tozeroy'
