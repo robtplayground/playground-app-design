@@ -1,6 +1,6 @@
 //
 // Typography
-// --------------------------------------------------
+// -----------------
 
 html{
 	height: 100%;
@@ -8,7 +8,11 @@ html{
 
 @gridColor: rgba(255, 0,0,0.1);
 
-@content-width: 30rem;
+@baseWidth: 100vw;
+
+@content-width: ~"calc(" @baseWidth ~"- 1rem)";
+
+@numColumns:12;
 
 
 body {
@@ -29,24 +33,25 @@ body {
 		// display:none;
 		position: absolute;
 		top:0;
-		left: 50%;
-		transform: translateX(-50%);
-		width: @content-width;
+		left: 0;
+		right:0;
+		margin: 0 auto;
+		width: @baseWidth;
 		height: 100%;
 		background-image:
-		linear-gradient(to right, @gridColor 0%, @gridColor ~"calc(100% - 1rem)", transparent ~"calc(100% - 1rem)", transparent 100%);
-		background-size: ~"calc((100% + 1rem) / 12)";
-		background-repeat: repeat;
-		background-position: left top;
+		repeating-linear-gradient(to right, @gridColor 0px, @gridColor ~"calc(80vw/12 - 1rem)", transparent ~"calc(80vw/12 - 1rem)", transparent ~"calc(80vw/12)");
+		background-position: left 0.5rem top;
 		z-index:-1;
 	}
 }
 
 // @import '../vendor/modular-scale.less';
 
+
+
 .parameters(media-desktop){
-	@block: 2vw; // line height of paragraph
-	@p-size: 0.5rem; // font-size in rem
+	// @block: 2vw; // line height of paragraph
+	@p-size: 1rem; // font-size in rem
 
 	// modular scale values - minor third - http://type-scale.com/
 	@size-4: 2.074;
@@ -56,11 +61,13 @@ body {
 	@size-0: 1;
 	@size-small: 0.833;
 	@size-xsmall: 0.694;
+
+
 }
 
 .parameters(media-small-device){
-	@block: 2vw; // line height of paragraph
-	@p-size: 0.9rem; // font-size in rem
+	// @block: 2vw; // line height of paragraph
+	@p-size: 1rem; // font-size in rem
 
 	// modular scale values - major second - http://type-scale.com/
 	@size-4: 1.602;
@@ -70,11 +77,13 @@ body {
 	@size-0: 1;
 	@size-small: 0.889;
 	@size-xsmall: 0.79;
+
+
 }
 
 .parameters(media-phone-portrait){
-	@block: 4vw; // line height of paragraph
-	@p-size: 0.9rem; // font-size in rem
+	@block: 3vw; // line height of paragraph
+	@p-size: 1rem; // font-size in rem
 
 	// modular scale values - minor second - http://type-scale.com/
 	@size-4: 1.296;
@@ -84,6 +93,8 @@ body {
 	@size-0: 1;
 	@size-small: 0.937;
 	@size-xsmall: 0.878;
+
+
 }
 
 .make-headings(@device){
@@ -121,7 +132,7 @@ body {
 // some base font-sizes, set in rems, sized according to modular scale for that media query
 
 html{
-	font-size: ~"calc(1em + @{block})";
+	font-size: 18px;
 }
 .make-headings(media-desktop);
 
@@ -129,13 +140,14 @@ html{
 	.make-headings(media-small-device);
 	// params already invoked in mixin above
 	html{
-		font-size: ~"calc(0.5em + @{block})";
+		font-size: 14px;
 	}
 });
 
 .media-phone-portrait({
 	.make-headings(media-phone-portrait);
 	// params already invoked in mixin above
+	// fluid typography for portrait mobile devices - minor zooming and resizing possible due to em (8px + block size)
 	html{
 		font-size: ~"calc(0.5em + @{block})";
 	}
@@ -145,8 +157,62 @@ h1, h2, h3, h4, p{
 	margin:0.5rem 0;
 }
 
-#content{
-	width: @content-width;
-	height: 100%;
+//
+// Grid
+// -----------------
+
+.container{
+	width: @baseWidth;
 	margin: 0 auto;
+	display:flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+}
+
+.cell{
+	position:relative;
+	width: auto;
+	height: 100%;
+	margin: 0 0.5rem;
+	border: 1px solid red;
+	flex: 1;
+	height: 60px;
+	display:flex;
+	align-items: center;
+	justify-content: center;
+}
+
+section{
+	margin-top: 1rem;
+}
+
+.baseColumnWidths(@i: 1) when (@i <= (@numColumns)) {
+  .baseCol@{i} {
+    width: ~"calc(("@baseWidth~" * "@i/@numColumns~") - 1rem)";
+		flex:none;
+  }
+  .baseColumnWidths(@i + 1);
+}
+
+.baseColumnWidths();
+
+.row{
+	width:100%;
+	display:flex;
+	margin-top: 1rem;
+}
+
+.row.wrapper{
+	background:yellow;
+}
+
+.cell.callout-left:before{
+	content: '';
+	position:absolute;
+	width: 100vw;
+	height: 100%;
+	right:0;
+	top:0;
+	background: lime;
+	z-index: -1;
 }
