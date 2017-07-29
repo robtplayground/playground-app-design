@@ -536,14 +536,14 @@ body {
   -webkit-font-smoothing: antialiased;
   height: 100%;
   position: relative;
-  background-image: none;
+  background-image: linear-gradient(to bottom, #000 0%, #000 5%, transparent 5%, transparent 100%);
   background-size: 1rem 1rem;
   background-repeat: repeat;
   background-position: left top;
 }
 body:before {
   content: '';
-  display: none;
+  display: block;
   position: absolute;
   top: 0;
   left: 50%;
@@ -556,15 +556,6 @@ body:before {
   background-position: left top;
   z-index: -1;
 }
-/**
- * Modular Scale
- * @param  @pos    {Number} Position in the scale
- * @param  @sizes  {List/Number} List of two number (for double Stranded) or a single one
- * @param  @ratio  {Number} Ratio
- * @param  @unit   {String/Number} Result's unit
- *
- * @return @modular-scale-return {String/Integer/Float} Size at postion @pos
- */
 html {
   font-size: calc(1em + 2vw);
 }

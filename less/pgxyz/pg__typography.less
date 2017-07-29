@@ -18,15 +18,15 @@ body {
 	-webkit-font-smoothing: antialiased;
 	height: 100%;
 	position:relative;
-	// background-image:	linear-gradient(to bottom, #000 0%, #000 5%, transparent 5%, transparent 100%);
-	background-image:none;
+	background-image:	linear-gradient(to bottom, #000 0%, #000 5%, transparent 5%, transparent 100%);
+	// background-image:none;
 	background-size: 1rem 1rem;
 	background-repeat: repeat;
 	background-position: left top;
 	&:before{
 		content: '';
-		// display:block;
-		display:none;
+		display:block;
+		// display:none;
 		position: absolute;
 		top:0;
 		left: 50%;
@@ -42,7 +42,7 @@ body {
 	}
 }
 
-@import '../vendor/modular-scale.less';
+// @import '../vendor/modular-scale.less';
 
 .parameters(media-desktop){
 	@block: 2vw; // line height of paragraph
