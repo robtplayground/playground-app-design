@@ -39,7 +39,7 @@ body {
 		width: @baseWidth;
 		height: 100%;
 		background-image:
-		repeating-linear-gradient(to right, @gridColor 0px, @gridColor ~"calc(80vw/12 - 1rem)", transparent ~"calc(80vw/12 - 1rem)", transparent ~"calc(80vw/12)");
+		repeating-linear-gradient(to right, @gridColor 0px, @gridColor ~"calc(" @baseWidth ~"/" @numColumns ~"- 1rem)", transparent ~"calc(" @baseWidth ~"/" @numColumns ~"- 1rem)", transparent ~"calc(" @baseWidth ~"/" @numColumns ~")");
 		background-position: left 0.5rem top;
 		z-index:-1;
 	}
