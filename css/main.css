@@ -1148,6 +1148,13 @@ body {
 #imps-chart {
   height: 20rem;
 }
+#imps-chart text {
+  font-family: Roboto, Helvetica, Arial, sans-serif !important;
+}
+#imps-chart .xaxislayer-above .xtick text {
+  font-size: 8.5px !important;
+  letter-spacing: 0.05em;
+}
 #viewability-chart {
   height: 20rem;
 }

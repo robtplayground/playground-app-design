@@ -1,15 +1,7 @@
 <% include partials/header.html.ejs %>
 
   <script>
-    var campaign = <%- v_campaign %>;
-    var SS1Pre = <%- v_SS1Pre %>;
-    var SS2Pre = <%- v_SS2Pre %>;
-    var SP1Pre = <%- v_SP1Pre %>;
-    var SP2Pre = <%- v_SP2Pre %>;
-    var SS1Post = <%- v_SS1Post %>;
-    var SS2Post = <%- v_SS2Post %>;
-    var SP1Post = <%- v_SP1Post %>;
-    var SP2Post = <%- v_SP2Post %>;
+    var chartData = <%- v_chartData %>;
   </script>
 
   <header class="main-header"></header>
@@ -31,10 +23,10 @@
         <div class="checklist">
 
           <input type="checkbox" id="check-SS1" checked="checked" />
-          <label for="check-SS1"><%= SS1Pre.name %></label>
+          <label for="check-SS1"><%= chartData.SS1Pre.name %></label>
 
           <input type="checkbox" id="check-SS2" checked="checked" />
-          <label for="check-SS2"><%= SS2Pre.name %></label>
+          <label for="check-SS2"><%= chartData.SS2Pre.name %></label>
 
         </div>
 
@@ -45,11 +37,6 @@
     <div class="charts grid-cell grid10 no-gutter">
       <div id="imps-chart" class="grid-cell grid12"></div>
       <div id="viewability-chart" class="grid-cell grid6"></div>
-
-      <div id="viewability-chart2" class="grid-cell grid6"></div>
-
-
-
     </div>
 
     <div class="footer grid-cell grid12 no-gutter">

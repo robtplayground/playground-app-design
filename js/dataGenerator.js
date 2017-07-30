@@ -567,13 +567,15 @@ var SP2Post = createPlacement({
 // console.log(SS1Pre);
 
 module.exports = {
-	campaign: campaign,
-  SS1Pre: SS1Pre,
-  SS2Pre: SS2Pre,
-  SP1Pre: SP1Pre,
-  SP2Pre: SP2Pre,
-  SS1Post: SS1Post,
-  SS2Post: SS2Post,
-  SP1Post: SP1Post,
-  SP2Post: SP2Post
+	chartData: {
+		campaign: campaign,
+	  SS1Pre: SS1Pre,
+	  SS2Pre: SS2Pre,
+	  SP1Pre: SP1Pre,
+	  SP2Pre: SP2Pre,
+	  SS1Post: SS1Post,
+	  SS2Post: SS2Post,
+	  SP1Post: SP1Post,
+	  SP2Post: SP2Post
+	}
 };

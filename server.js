@@ -5,7 +5,7 @@ var data = require('./content/content.json');
 // var moment = require('moment');
 var dataGenerator = require('./js/dataGenerator.js');
 
-console.log(dataGenerator.campaign);
+console.log(dataGenerator.chartData.SS1Pre);
 
 app.set('port', (process.env.PORT || 5000));
 
@@ -22,24 +22,8 @@ app.get('/', function(request, response) {
 
 app.get('/graphs', function(request, response) {
   response.render('../views/graphs.html.ejs', {
-    t_campaign: dataGenerator.campaign,
-    SS1Pre: dataGenerator.SS1Pre,
-    SS2Pre: dataGenerator.SS2Pre,
-    SP1Pre: dataGenerator.SP1Pre,
-    SP2Pre: dataGenerator.SP2Pre,
-    SS1Post: dataGenerator.SS1Post,
-    SS2Post: dataGenerator.SS2Post,
-    SP1Post: dataGenerator.SP1Post,
-    SP2Post: dataGenerator.SP2Post,
-    v_campaign: JSON.stringify(dataGenerator.campaign),
-    v_SS1Pre: JSON.stringify(dataGenerator.SS1Pre),
-    v_SS2Pre: JSON.stringify(dataGenerator.SS2Pre),
-    v_SP1Pre: JSON.stringify(dataGenerator.SP1Pre),
-    v_SP2Pre: JSON.stringify(dataGenerator.SP2Pre),
-    v_SS1Post: JSON.stringify(dataGenerator.SS1Post),
-    v_SS2Post: JSON.stringify(dataGenerator.SS2Post),
-    v_SP1Post: JSON.stringify(dataGenerator.SP1Post),
-    v_SP2Post: JSON.stringify(dataGenerator.SP2Post)
+    chartData: dataGenerator.chartData,
+    v_chartData: JSON.stringify(dataGenerator.chartData)
   });
 });
 
