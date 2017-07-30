@@ -65,3 +65,4 @@ var layout = {
 };
 
 Plotly.newPlot('viewability-chart', data, layout, {displayModeBar: false});
+Plotly.newPlot('viewability-chart2', data, layout, {displayModeBar: false});

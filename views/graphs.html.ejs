@@ -12,19 +12,51 @@
     var SP2Post = <%- v_SP2Post %>;
   </script>
 
-<div class="grid">
+  <header class="main-header"></header>
 
-  <div class="nav grid-cell grid4 no-gutter">
+  <div class="main grid">
 
-    <div class="grid-cell">
-      <div class="fieldset">
-        <input type="checkbox">
+    <div class="side-left grid-cell grid2 no-gutter">
+
+      <div class="grid-cell">
+
+        <select name="" id="comparison-select" class="chosen-select">
+          <option value="Delivery">Delivery</option>
+          <option value="Audience">Audience</option>
+          <option value="Category">Category</option>
+          <option value="Format">Format</option>
+        </select>
+
+        <h2>Placements</h2>
+        <div class="checklist">
+
+          <input type="checkbox" id="check-SS1" checked="checked" />
+          <label for="check-SS1"><%= SS1Pre.name %></label>
+
+          <input type="checkbox" id="check-SS2" checked="checked" />
+          <label for="check-SS2"><%= SS2Pre.name %></label>
+
+        </div>
+
       </div>
+
+    </div>
+
+    <div class="charts grid-cell grid10 no-gutter">
+      <div id="imps-chart" class="grid-cell grid12"></div>
+      <div id="viewability-chart" class="grid-cell grid6"></div>
+
+      <div id="viewability-chart2" class="grid-cell grid6"></div>
+
+
+
+    </div>
+
+    <div class="footer grid-cell grid12 no-gutter">
+        Footer
     </div>
 
   </div>
-
-</div>
 
 
 

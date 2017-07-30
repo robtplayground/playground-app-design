@@ -1,8 +1,79 @@
-.nav{
-	background: @pgxyz-pink;
-	color: white;
+body{
+	display:flex;
+	min-height: 100vh;
+	flex-direction:column;
 }
 
-#imps-chart, #viewability-chart{
-	width: 800px;
+.main-header{
+	height: 10rem;
+	background: black;
+	&:before{
+		content: 'Header here';
+		color: white;
+		font-size: @size-3;
+	}
+}
+
+.main{
+	display:flex;
+	flex:1;
+}
+
+.charts{
+	display:flex;
+	flex:1;
+	background: @lightgrey;
+	flex-wrap:wrap;
+}
+
+.side-left{
+	flex: 0 0;
+}
+
+
+
+.footer{
+	background: lime;
+}
+
+.side-left{
+	background: @pgxyz-pink;
+	color: white;
+	flex-direction: column;
+
+	.checklist > label{
+		display:block;
+		max-width: ~"calc(90% - 1.25em)";	white-space: nowrap;
+	  overflow: hidden;
+	  text-overflow: ellipsis;
+	}
+
+	// custom select box
+
+	.chosen-container{
+		// for some reason 93px keeps being put in
+		width: 100% !important;
+
+	}
+
+	.chosen-single{
+		height: 3rem;
+		line-height: 3rem;
+	}
+
+	.chosen-single, .chosen-results{
+		color: @darkgrey;
+		// width: 100%;
+		font-size: @size-1;
+		font-weight: 700;
+	}
+
+}
+
+#imps-chart{
+	height: 20rem;
+}
+
+#viewability-chart{
+	height: 20rem;
 }
