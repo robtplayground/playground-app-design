@@ -6,11 +6,9 @@ html{
 	height: 100%;
 }
 
-@gridColor: rgba(255, 0,0,0.1);
+@columnColor: rgba(255, 0,0,0.1);
 
 @baseWidth: 100vw;
-
-@content-width: ~"calc(" @baseWidth ~"- 1rem)";
 
 @numColumns:12;
 
@@ -39,7 +37,7 @@ body {
 		width: @baseWidth;
 		height: 100%;
 		background-image:
-		repeating-linear-gradient(to right, @gridColor 0px, @gridColor ~"calc(" @baseWidth ~"/" @numColumns ~"- 1rem)", transparent ~"calc(" @baseWidth ~"/" @numColumns ~"- 1rem)", transparent ~"calc(" @baseWidth ~"/" @numColumns ~")");
+		repeating-linear-gradient(to right, @columnColor 0px, @columnColor ~"calc(" @baseWidth ~"/" @numColumns ~"- 1rem)", transparent ~"calc(" @baseWidth ~"/" @numColumns ~"- 1rem)", transparent ~"calc(" @baseWidth ~"/" @numColumns ~")");
 		background-position: left 0.5rem top;
 		z-index:-1;
 	}
@@ -161,7 +159,7 @@ h1, h2, h3, h4, p{
 // Grid
 // -----------------
 
-.container{
+.grid{
 	width: @baseWidth;
 	margin: 0 auto;
 	display:flex;
@@ -169,32 +167,32 @@ h1, h2, h3, h4, p{
 	justify-content: space-between;
 }
 
-.cell{
+.grid-cell{
 	position:relative;
 	width: auto;
 	height: 100%;
 	margin: 0 0.5rem;
 	border: 1px solid red;
 	flex: 1;
-	height: 60px;
+	height: 7rem;
 	display:flex;
 	align-items: center;
-	justify-content: center;
 }
 
 section{
 	margin-top: 1rem;
 }
 
-.baseColumnWidths(@i: 1) when (@i <= (@numColumns)) {
-  .baseCol@{i} {
+.baseGridWidths(@i: 1) when (@i <= (@numColumns)) {
+  .grid-cell.grid@{i} {
     width: ~"calc(("@baseWidth~" * "@i/@numColumns~") - 1rem)";
 		flex:none;
   }
-  .baseColumnWidths(@i + 1);
+	// .grid-cell.wrapper
+  .baseGridWidths(@i + 1);
 }
 
-.baseColumnWidths();
+.baseGridWidths();
 
 .row{
 	width:100%;
@@ -202,11 +200,23 @@ section{
 	margin-top: 1rem;
 }
 
-.row.wrapper{
-	background:yellow;
+.grid-cell.wrapper{
+	// Not exactly what I wanted, but the simplest solution. Cannot make a grid-cell.wrapper 'inherit' and manipulate .grid-cell's original width to 'extend' it by 0.5rem
+	margin: 0;
+	display:flex;
+	&:before{
+		content: '';
+		position: absolute;
+		width: ~"calc(100% + 0.5rem)";
+		height: 100%;
+		top:0;
+		left:0;
+		z-index: -1;
+		background: yellow;
+	}
 }
 
-.cell.callout-left:before{
+.grid-cell.callout-left:before{
 	content: '';
 	position:absolute;
 	width: 100vw;
@@ -215,4 +225,11 @@ section{
 	top:0;
 	background: lime;
 	z-index: -1;
+}
+
+section.red-bg{
+	background: red;
+	.grid-cell{
+		border-color: lime;
+	}
 }
