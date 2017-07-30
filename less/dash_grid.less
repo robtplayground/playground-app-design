@@ -1,0 +1,119 @@
+//
+// Typography
+// -----------------
+
+html{
+	height: 100%;
+}
+
+@columnColor: rgba(255, 0,0,0.1);
+
+@baseWidth: 100vw;
+
+@numColumns:12;
+
+
+body {
+	padding-top:0.1px; // collapsing margins fix
+	color: @black;
+	height: 100%;
+	position:relative;
+	background-image:	linear-gradient(to bottom, #000 0%, #000 5%, transparent 5%, transparent 100%);
+	// background-image:none;
+	background-size: 1rem 1rem;
+	background-repeat: repeat;
+	background-position: left top;
+	&:before{
+		content: '';
+		display:block;
+		// display:none;
+		position: absolute;
+		top:0;
+		left: 0;
+		right:0;
+		margin: 0 auto;
+		width: @baseWidth;
+		height: 100%;
+		background-image:
+		repeating-linear-gradient(to right, @columnColor 0px, @columnColor ~"calc(" @baseWidth ~"/" @numColumns ~"- 1rem)", transparent ~"calc(" @baseWidth ~"/" @numColumns ~"- 1rem)", transparent ~"calc(" @baseWidth ~"/" @numColumns ~")");
+		background-position: left 0.5rem top;
+		z-index:-1;
+	}
+}
+
+// set rems
+
+html{
+	font-size: 18px;
+}
+
+.media-small-device({
+	html{
+		font-size: 14px;
+	}
+});
+
+.media-phone-portrait({
+	html{
+		font-size: ~"calc(0.5em + 4vw)";
+	}
+});
+
+.grid{
+	width: @baseWidth;
+	margin: 0 auto;
+	display:flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+}
+
+.grid-cell{
+	position:relative;
+	width: auto;
+	height: 100%;
+	margin: 0 0.5rem;
+	border: 1px solid red;
+	flex: 1;
+	height: 7rem;
+	display:flex;
+	align-items: center;
+	&.no-gutter{
+		margin:0;
+	}
+}
+
+section{
+	margin-top: 1rem;
+}
+
+.baseGridWidths(@i: 1) when (@i <= (@numColumns)) {
+  .grid-cell.grid@{i} {
+    width: ~"calc(("@baseWidth~" * "@i/@numColumns~") - 1rem)";
+		flex:none;
+		&.no-gutter{
+			width: ~"calc("@baseWidth~" * "@i/@numColumns~")";
+			margin:0;
+		}
+  }
+	// .grid-cell.wrapper
+  .baseGridWidths(@i + 1);
+}
+
+.baseGridWidths();
+
+.row{
+	width:100%;
+	display:flex;
+	margin-top: 1rem;
+}
+
+.grid-cell.callout-left:before{
+	content: '';
+	position:absolute;
+	width: 100vw;
+	height: 100%;
+	right:0;
+	top:0;
+	background: lime;
+	z-index: -1;
+}
