@@ -5,8 +5,6 @@ var data = require('./content/content.json');
 // var moment = require('moment');
 var dataGenerator = require('./js/dataGenerator.js');
 
-console.log(dataGenerator.chartData.SS1Pre);
-
 app.set('port', (process.env.PORT || 5000));
 
 app.use(express.static(__dirname));
@@ -18,6 +16,10 @@ app.set('view engine', 'ejs');
 
 app.get('/', function(request, response) {
   response.render('../views/index.html.ejs');
+});
+
+app.get('/login', function(request, response) {
+  response.render('../views/login.html.ejs');
 });
 
 app.get('/graphs', function(request, response) {
