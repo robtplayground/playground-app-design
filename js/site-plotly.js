@@ -30,11 +30,12 @@ var Chart = {
 console.log(chartData);
 
 Object.keys(chartData).forEach(function(key, index){
-  if(key === 'campaign'){
+  if(key === 'campaign' | key === 'iab' | key === 'superSkin' ){
     return;
   }else{
     var placement = chartData[key];
-    Chart.execImpsAgg.data[index - 1] = {
+    // -3 so as not to put in the 3 useless indexes
+    Chart.execImpsAgg.data[index - 3] = {
       name: placement.name,
       x: chartData.campaign.dateList,
       y: placement.data.execImpsAgg,
@@ -44,25 +45,45 @@ Object.keys(chartData).forEach(function(key, index){
   }
 });
 
+console.log(Chart);
+
 Plotly.newPlot('imps-chart', Chart.execImpsAgg.data, Chart.execImpsAgg.layout, {displayModeBar: false});
 
 var viewTarget = 'viewability-chart';
 
 var ss2_viewb_Avg = average(chartData.SS2Pre.data.viewability, chartData.SS2Pre.dates);
 
-var data = [{
-  values: [ss2_viewb_Avg, 100 - ss2_viewb_Avg],
-  labels: ['Viewability', 'remainder'],
-  hoverinfo: 'label+percent+name',
-  sort: false,
-  hole: .8,
-  type: 'pie'
-}];
+var data = [
+  {
+    values: [ss2_viewb_Avg, 100 - ss2_viewb_Avg],
+    labels: ['Viewability', 'remainder'],
+    hoverinfo: 'label+percent+name',
+    sort: false,
+    showlegend: false,
+    direction: 'clockwise',
+    hole: .8,
+    type: 'pie',
+  },
+  {
+    values: [chartData.iab.benchmarks.viewability, 1, 100 - (chartData.iab.benchmarks.viewability + 1)],
+    labels: ['', 'IAB Benchmark', ''],
+    showlegend: false,
+    text: ['', (chartData.iab.benchmarks.viewability + '%'), ''],
+    hoverinfo: 'none',
+    textinfo: 'label+text',
+    textposition: ['none','outside', 'none'],
+    marker:{colors: ['rgba(255,0,0,0)', 'rgb(0,0, 255, 1)', 'rgba(0,255,0,0)']},
+    sort: false,
+    direction: 'clockwise',
+    hole: .2,
+    pull: .1,
+    type: 'pie'
+  },
+];
 
 var viewLayout = {
   // title: 'Viewability: ' + SS2Pre.name,
   autosize: true,
-  showlegend: false,
   annotations: [{
     font: {
       size: 20
