@@ -35,7 +35,7 @@ function listDates(dates){
 	for(var i=0; i < duration(dates); i++){
 		var thisStart = dates.start;
 		// console.log(thisStart);
-		var value = moment(thisStart).add(i, 'days').format('D/M/Y');
+		var value = moment(thisStart).add(i, 'days').format('YYYY-MM-DD');
 		// console.log(value);
 		datesArray.push(value);
 	}

@@ -21,8 +21,8 @@ function generateCampaign(name, dates) {
 }
 
 var campaign = generateCampaign('campaign', {
-	start: new Date(2017, 4, 1),
-	end: new Date(2017, 6, 32)
+	start: new Date(2017, 6, 1),
+	end: new Date(2017, 8, 31)
 });
 
 var currentDate = new Date(2017, 5, 28);
@@ -334,8 +334,8 @@ var SS1Pre = createPlacement({
 	name: '146560594_Airwave_GoPro_Target_MalesMetro18-44_PreLaunch',
 	bookedImps: 500000,
 	dates: {
-		start: new Date(2017, 4, 1),
-		end: new Date(2017, 5, 16)
+		start: new Date(2017, 6, 1),
+		end: new Date(2017, 7, 16)
 	},
 	errors: {
 		reqImps:{
@@ -365,8 +365,8 @@ var SS2Pre = createPlacement({
 	name: '146560595_Airwave_GoPro_Target_FemalesMetro18-44_PreLaunch',
 	bookedImps: 500000,
 	dates: {
-		start: new Date(2017, 4, 1),
-		end: new Date(2017, 5, 16)
+		start: new Date(2017, 6, 1),
+		end: new Date(2017, 7, 16)
 	},
 	errors: {
 		// execImps:{
@@ -396,8 +396,8 @@ var HT1Pre = createPlacement({
 	name: '146560596_Airwave_GoPro_Target_MalesMetro18-44_Pre',
 	bookedImps: 500000,
 	dates: {
-		start: new Date(2017, 4, 1),
-		end: new Date(2017, 5, 16)
+		start: new Date(2017, 6, 1),
+		end: new Date(2017, 7, 16)
 	},
 	errors: {
 		// viewImps:{
@@ -425,8 +425,8 @@ var HT2Pre = createPlacement({
 	name: '146560597_Airwave_GoPro_Target_FemalesMetro18-44_Pre',
 	bookedImps: 500000,
 	dates: {
-		start: new Date(2017, 4, 1),
-		end: new Date(2017, 5, 16)
+		start: new Date(2017, 6, 1),
+		end: new Date(2017, 7, 16)
 	},
 	errors: {
 		// viewImps:{
@@ -456,8 +456,8 @@ var SS1Post = createPlacement({
 	name: '146560598_Airwave_GoPro_Target_MalesMetro18-44_PreLaunch',
 	bookedImps: 500000,
 	dates: {
-		start: new Date(2017, 5, 17),
-		end: new Date(2017, 6, 32)
+		start: new Date(2017, 7, 17),
+		end: new Date(2017, 8, 31)
 	},
 	errors: {
 		// reqImps:{
@@ -487,8 +487,8 @@ var SS2Post = createPlacement({
 	name: '146560599_Airwave_GoPro_Target_FemalesMetro18-44_PreLaunch',
 	bookedImps: 500000,
 	dates: {
-		start: new Date(2017, 5, 17),
-		end: new Date(2017, 6, 32)
+		start: new Date(2017, 7, 17),
+		end: new Date(2017, 8, 31)
 	},
 	errors: {
 		// execImps:{
@@ -518,8 +518,8 @@ var HT1Post = createPlacement({
 	name: '146560600_Airwave_GoPro_Target_MalesMetro18-44_Pre',
 	bookedImps: 500000,
 	dates: {
-		start: new Date(2017, 5, 17),
-		end: new Date(2017, 6, 32)
+		start: new Date(2017, 7, 17),
+		end: new Date(2017, 8, 31)
 	},
 	errors: {
 		// viewImps:{
@@ -547,8 +547,8 @@ var HT2Post = createPlacement({
 	name: '146560601_Airwave_GoPro_Target_FemalesMetro18-44_Pre',
 	bookedImps: 500000,
 	dates: {
-		start: new Date(2017, 5, 17),
-		end: new Date(2017, 6, 32)
+		start: new Date(2017, 7, 17),
+		end: new Date(2017, 8, 31)
 	},
 	errors: {
 		// viewImps:{
