@@ -1187,16 +1187,16 @@ body {
   font-size: 1.2rem;
   font-weight: 700;
 }
-#imps-chart {
+#chart--execImpsAgg {
   height: 20rem;
 }
-#imps-chart text {
+#chart--execImpsAgg text {
   font-family: Roboto, Helvetica, Arial, sans-serif !important;
 }
-#imps-chart .xaxislayer-above .xtick text {
+#chart--execImpsAgg .xaxislayer-above .xtick text {
   font-size: 8.5px !important;
   letter-spacing: 0.05em;
 }
-#viewability-chart {
+#chart--vAv {
   height: 20rem;
 }

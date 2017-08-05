@@ -16,25 +16,36 @@ function average(array, dates) {
 }
 
 var Chart = {
-  execImpsAgg: {
-    data: [],
-    layout: {
-      xaxis: {
-        type: 'date',
-        title: 'Date'
-      },
-      yaxis: {
-        title: 'Impressions'
-      },
-      title: 'Campaign Imps'
-    }
-  },
-  viewability: {
-    data: [],
-    layout: {}
-  }
+  execImpsAgg:{},
+  vAv: {},
+  ativ:{},
+  impsPercent:{},
+  er: {},
+  erAv: {},
+  passiveC: {},
+  engagedC: {},
+  ctr: {},
+  ctd: {},
+  passiveHeat: {},
+  engagedHeat: {}
 };
 
+function sizeChart(chart){
+  var parentWidth = $('#' + chart.target).width();
+  var parentHeight = $('#' + chart.target).height();
+
+  console.log(chart.target, parentWidth, parentHeight);
+
+  chart.layout.width = parentWidth;
+  chart.layout.height = parentHeight;
+
+  Plotly.relayout(chart.target, chart.layout);
+}
+
+// ** EXECUTED IMPS  ** //
+
+Chart.execImpsAgg.target = "chart--execImpsAgg";
+Chart.execImpsAgg.data = [];
 
 Object.keys(chartData).forEach(function(key, index) {
   if (key === 'campaign' | key === 'iab' | key === 'superSkin') {
@@ -43,7 +54,7 @@ Object.keys(chartData).forEach(function(key, index) {
     var placement = chartData[key];
     // -3 so as not to put in the 3 useless indexes
     Chart.execImpsAgg.data[index - 3] = {
-      name: placement.name,
+      name: placement.name.trunc(10),
       x: chartData.campaign.dateList,
       y: placement.data.execImpsAgg,
       type: 'scatter',
@@ -52,25 +63,35 @@ Object.keys(chartData).forEach(function(key, index) {
   }
 });
 
-// console.log(Chart.execImpsAgg.data[1].x);
+Chart.execImpsAgg.layout = {
+  xaxis: {
+    type: 'date',
+    title: 'Date'
+  },
+  yaxis: {
+    title: 'Impressions'
+  },
+  title: 'Campaign Imps'
+};
 
-Plotly.newPlot('imps-chart', Chart.execImpsAgg.data, Chart.execImpsAgg.layout, {
+Plotly.newPlot(Chart.execImpsAgg.target, Chart.execImpsAgg.data, Chart.execImpsAgg.layout, {
   displayModeBar: false
 });
 
 // relayout to only show 1 July - 4 July
 
-Plotly.relayout('imps-chart', 'xaxis.range', [new Date(2017, 6, 1).getTime(), new Date(2017, 6, 4).getTime()]);
+Plotly.relayout(Chart.execImpsAgg.target, 'xaxis.range', [new Date(2017, 6, 1).getTime(), new Date(2017, 6, 4).getTime()]);
 
 // relayout to only show from start of campaign to today!
 
-Plotly.relayout('imps-chart', 'xaxis.range', [new Date(2017, 6, 1).getTime(), new Date().getTime()]);
+Plotly.relayout(Chart.execImpsAgg.target, 'xaxis.range', [new Date(2017, 6, 1).getTime(), new Date().getTime()]);
 
-var viewTarget = 'viewability-chart';
+// ** VIEWABILITY AVERAGE CHART
 
 var ss2_viewb_Avg = average(chartData.SS2Pre.data.viewability, chartData.SS2Pre.dates);
 
-var data = [{
+Chart.vAv.target = 'chart--vAv';
+Chart.vAv.data = [{
     values: [ss2_viewb_Avg, 100 - ss2_viewb_Avg],
     labels: ['Viewability', 'remainder'],
     hoverinfo: 'label+percent+name',
@@ -99,7 +120,7 @@ var data = [{
   },
 ];
 
-var viewLayout = {
+Chart.vAv.layout = {
   // title: 'Viewability: ' + SS2Pre.name,
   autosize: true,
   annotations: [{
@@ -111,8 +132,6 @@ var viewLayout = {
     x: .8,
     y: .8
   }],
-  width: $('#' + viewTarget).width(),
-  height: $('#' + viewTarget).height(),
   margin: {
     l: 0,
     r: 0,
@@ -124,14 +143,16 @@ var viewLayout = {
   plot_bgcolor: 'grey'
 };
 
-console.log(viewLayout.width);
-
-Plotly.newPlot(viewTarget, data, viewLayout, {
+Plotly.newPlot(Chart.vAv.target, Chart.vAv.data, Chart.vAv.layout, {
   displayModeBar: false
 });
+
+// Set size for charts
+sizeChart(Chart.execImpsAgg);
+sizeChart(Chart.vAv);
+
+
 $(window).on('resize', function() {
-  viewLayout.width = $('#' + viewTarget).width();
-  viewLayout.height = $('#' + viewTarget).height();
-  console.log('viewLayout', viewLayout.width, viewLayout.height);
-  Plotly.relayout(viewTarget, viewLayout);
+  sizeChart(Chart.execImpsAgg);
+  sizeChart(Chart.vAv);
 });

@@ -52,3 +52,9 @@ if(typeof module != 'undefined'){
 
 	};
 }
+
+// add string truncator to String prototype. Note - not exported for use in backend, didn't figure that out
+
+String.prototype.trunc = String.prototype.trunc || function(n){
+    return (this.length > n) ? this.substr(0, n-1) + '…' : this;
+};
