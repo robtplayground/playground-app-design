@@ -55,17 +55,24 @@
         <select class="data-filter__group-select chosen-select">
           <option value="Delivery">Campaign</option>
           <option value="Audience" selected>Placement</option>
+          <option value="Audience">Date Range</option>
           <option value="Category">Format</option>
           <option value="Format">Features</option>
         </select>
 
         <div class="data-filter__placement-select">
 
-          <input type="radio" id="check-SS1" name="placement-select" checked/>
+          <input type="checkbox" id="check-SS1" name="placement-select" checked/>
           <label for="check-SS1"><span></span><%= chartData.SS1Pre.name %></label>
 
-          <input type="radio" id="check-SS2" name="placement-select"/>
+          <input type="checkbox" id="check-SS2" name="placement-select" checked/>
           <label for="check-SS2"><span></span><%= chartData.SS2Pre.name %></label>
+
+          <input type="checkbox" id="check-SS2" name="placement-select"/>
+          <label for="check-SS2"><span></span><%= chartData.SS1Post.name %></label>
+
+          <input type="checkbox" id="check-SS2" name="placement-select"/>
+          <label for="check-SS2"><span></span><%= chartData.SS2Post.name %></label>
 
         </div>
 
@@ -97,8 +104,28 @@
     </div>
 
     <div class="charts grid-cell grid10 no-gutter">
-      <div id="chart--execImpsAgg" class="grid-cell grid12"></div>
-      <div id="chart--vAv" class="grid-cell grid6"></div>
+
+      <div class="grid-cell grid12">
+
+        <h2>Campaign Delivery: All Sites</h2>
+
+        <div class="chart-wrapper">
+
+          <select class="chart-wrapper__select chosen-select" name="" id="">
+            <option value="Cumulative">Cumulative</option>
+            <option value="Individual">Individual</option>
+          </select>
+
+        <div id="chart--execImpsAgg"></div>
+
+        </div>
+
+      </div>
+
+      <div id="chart--vAv" class="grid-cell grid6">
+
+      </div>
+
     </div>
 
     <div class="footer grid-cell grid12 no-gutter">

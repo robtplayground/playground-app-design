@@ -378,10 +378,10 @@ var SS2Pre = createPlacement({
 		end: new Date(2017, 7, 16)
 	},
 	errors: {
-		// execImps:{
-		// 	start: new Date(2017, 4, 10),
-		// 	end: new Date(2017, 4, 30)
-		// }
+		execImps:{
+			start: new Date(2017, 6, 1),
+			end: new Date(2017, 6, 30)
+		}
 	},
 	creative: {
     format: 'super-skin',
@@ -401,7 +401,7 @@ var SS2Pre = createPlacement({
 
 // SIDE-PUSH, males, pre-launch
 
-var HT1Pre = createPlacement({
+var SP1Pre = createPlacement({
 	name: '146560596_Airwave_GoPro_Target_MalesMetro18-44_Pre',
 	bookedImps: 500000,
 	dates: {
@@ -430,7 +430,7 @@ var HT1Pre = createPlacement({
   }
 });
 
-var HT2Pre = createPlacement({
+var SP2Pre = createPlacement({
 	name: '146560597_Airwave_GoPro_Target_FemalesMetro18-44_Pre',
 	bookedImps: 500000,
 	dates: {
@@ -523,7 +523,7 @@ var SS2Post = createPlacement({
 
 // SIDE-PUSH, males, pre-launch
 
-var HT1Post = createPlacement({
+var SP1Post = createPlacement({
 	name: '146560600_Airwave_GoPro_Target_MalesMetro18-44_Pre',
 	bookedImps: 500000,
 	dates: {
@@ -552,7 +552,7 @@ var HT1Post = createPlacement({
   }
 });
 
-var HT2Post = createPlacement({
+var SP2Post = createPlacement({
 	name: '146560601_Airwave_GoPro_Target_FemalesMetro18-44_Pre',
 	bookedImps: 500000,
 	dates: {
@@ -590,11 +590,11 @@ module.exports = {
 		campaign: campaign,
 	  SS1Pre: SS1Pre,
 	  SS2Pre: SS2Pre,
-	  HT1Pre: HT1Pre,
-	  HT2Pre: HT2Pre,
+	  SP1Pre: SP1Pre,
+	  SP2Pre: SP2Pre,
 	  SS1Post: SS1Post,
 	  SS2Post: SS2Post,
-	  HT1Post: HT1Post,
-	  HT2Post: HT2Post
+	  SP1Post: SP1Post,
+	  SP2Post: SP2Post
 	}
 };

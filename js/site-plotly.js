@@ -49,21 +49,49 @@ function sizeChart(chart){
 Chart.execImpsAgg.target = "chart--execImpsAgg";
 Chart.execImpsAgg.data = [];
 
-Object.keys(chartData).forEach(function(key, index) {
-  if (key === 'campaign' | key === 'iab' | key === 'superSkin') {
-    return;
-  } else {
-    var placement = chartData[key];
-    // -3 so as not to put in the 3 useless indexes
-    Chart.execImpsAgg.data[index - 3] = {
-      name: placement.name.trunc(10),
-      x: chartData.campaign.dateList,
-      y: placement.data.execImpsAgg,
-      type: 'scatter',
-      fill: 'tozeroy'
-    }
+// all placements
+
+// Object.keys(chartData).forEach(function(key, index) {
+//   if (key === 'campaign' | key === 'iab' | key === 'superSkin') {
+//     return;
+//   } else {
+//     var placement = chartData[key];
+//     // -3 so as not to put in the 3 useless indexes
+//     Chart.execImpsAgg.data[index - 3] = {
+//       name: placement.name.trunc(10),
+//       x: chartData.campaign.dateList,
+//       y: placement.data.execImpsAgg,
+//       type: 'scatter',
+//       fill: 'tozeroy'
+//     }
+//   }
+// });
+
+Chart.execImpsAgg.data[0] = {
+  name: chartData.SS1Pre.name.trunc(10),
+  x: chartData.campaign.dateList,
+  y: chartData.SS1Pre.data.execImpsAgg,
+  type: 'scatter',
+  fill: 'tozeroy',
+  mode: 'line',
+  line: {
+    color: 'rgb(55, 128, 191)',
+    width: 0
   }
-});
+};
+
+Chart.execImpsAgg.data[1] = {
+  name: chartData.SS2Pre.name.trunc(10),
+  x: chartData.campaign.dateList,
+  y: chartData.SS2Pre.data.execImpsAgg,
+  type: 'scatter',
+  fill: 'tozeroy',
+  mode: 'line',
+  line: {
+    color: 'rgb(255, 0, 191)',
+    width: 0
+  }
+};
 
 Chart.execImpsAgg.layout = {
   showlegend: false,
@@ -74,7 +102,7 @@ Chart.execImpsAgg.layout = {
   yaxis: {
     title: 'Impressions'
   },
-  title: 'Campaign Imps'
+  // title: 'Campaign Imps'
 };
 
 Plotly.newPlot(Chart.execImpsAgg.target, Chart.execImpsAgg.data, Chart.execImpsAgg.layout, {
@@ -83,7 +111,7 @@ Plotly.newPlot(Chart.execImpsAgg.target, Chart.execImpsAgg.data, Chart.execImpsA
 
 // relayout to only show 1 July - 4 July
 
-Plotly.relayout(Chart.execImpsAgg.target, 'xaxis.range', [new Date(2017, 6, 1).getTime(), new Date(2017, 6, 4).getTime()]);
+// Plotly.relayout(Chart.execImpsAgg.target, 'xaxis.range', [new Date(2017, 6, 1).getTime(), new Date(2017, 6, 4).getTime()]);
 
 // relayout to only show from start of campaign to today!
 

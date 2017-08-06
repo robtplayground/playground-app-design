@@ -153,7 +153,27 @@ body{
 		background: mix(@palePink, @palegrey, 20%);
 	}
 
+}
 
+.chart-wrapper{
+	// custom select box
+
+	.chosen-container{
+		// for some reason 93px keeps being put in
+		width: auto !important;
+		margin-bottom: 0.5rem;
+
+	}
+
+	.chosen-single{
+		height: 2rem;
+		line-height: 2rem;
+	}
+
+	.chosen-single, .chosen-results{
+		color: @darkgrey;
+		font-size: @size-small;
+	}
 }
 
 #chart--execImpsAgg{
