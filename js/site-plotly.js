@@ -17,6 +17,7 @@ function average(array, dates) {
 
 var Chart = {
   cProg: {},
+  siteTree: {},
   execImpsAgg:{},
   vAv: {},
   ativ:{},
@@ -256,6 +257,12 @@ Chart.cProg.layout = {
 Plotly.newPlot(Chart.cProg.target, Chart.cProg.data, Chart.cProg.layout, {
   displayModeBar: false
 });
+
+
+// TREEMAP
+
+// too hard, faking it with greensock...
+
 
 // Set size for charts
 sizeChart(Chart.execImpsAgg);

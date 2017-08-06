@@ -5,7 +5,7 @@ body{
 }
 
 .main-header{
-	height: 10rem;
+	height: 9rem;
 	background: black;
 }
 
@@ -21,34 +21,28 @@ body{
 	flex-wrap:wrap;
 }
 
-.side-left{
-	flex: 0 0;
-}
-
-
-
 .footer{
 	height: 10rem;
 	background: lime;
 }
 
-.side-left{
+.data-filter{
 	background: @pgxyz-pink;
 	color: white;
 	flex-direction: column;
+	flex: 0 0;
 
-	.checklist > label{
-		display:block;
-		max-width: ~"calc(90% - 1.25em)";	white-space: nowrap;
-	  overflow: hidden;
-	  text-overflow: ellipsis;
+	h2{
+		text-transform: uppercase;
+		font-size: @size-1;
+		font-weight: 700;
 	}
-
 	// custom select box
 
 	.chosen-container{
 		// for some reason 93px keeps being put in
 		width: 100% !important;
+		margin-bottom: 1rem;
 
 	}
 
@@ -63,7 +57,14 @@ body{
 		font-size: @size-1;
 		font-weight: 700;
 	}
-	
+
+}
+
+.data-filter__placement-select > label{
+	display:block;
+	max-width: ~"calc(90% - 1.25em)";	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 .campaign-details{
@@ -71,6 +72,7 @@ body{
 	color: white;
 	display:flex;
 	flex-wrap: wrap;
+	padding: 1rem 0 2rem;
 	.grid-cell{
 		width: ~"calc(50% - 1rem)";
 		flex: none;
@@ -91,6 +93,67 @@ body{
 .campaign-edit{
 	display:flex;
 	flex-direction: column;
+}
+
+@palePink: lighten(@pgxyz-pink, 10%);
+
+.data-filter__treemap{
+	height: 20rem;
+	font-size: @size-xsmall;
+	font-weight: 700;
+	display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+	> div{
+		display:flex;
+		border: 1px solid @pgxyz-pink;
+		align-items: center;
+		justify-content: center;
+		width: 33%;
+		text-align: center;
+	}
+	.dm{
+		height: 9rem;
+		background: mix(@palePink, @palegrey, 100%);
+	}
+	.smh{
+		height: 9rem;
+		background: mix(@palePink, @palegrey, 100%);
+	}
+	.elle{
+		height: 7rem;
+		background: mix(@palePink, @palegrey, 90%);
+	}
+	.roar{
+		height: 6rem;
+		background: mix(@palePink, @palegrey, 80%);
+	}
+	.bm{
+		height: 5rem;
+		background: mix(@palePink, @palegrey, 70%);
+	}
+	.giz{
+		height: 5rem;
+		background: mix(@palePink, @palegrey, 60%);
+	}
+	.junk{
+		height: 5rem;
+		background: mix(@palePink, @palegrey, 50%);
+	}
+	.cnet{
+		height: 3rem;
+		background: mix(@palePink, @palegrey, 40%);
+	}
+	.huff{
+		height: 3rem;
+		background: mix(@palePink, @palegrey, 30%);
+	}
+	.mix{
+		height: 2rem;
+		background: mix(@palePink, @palegrey, 20%);
+	}
+
+
 }
 
 #chart--execImpsAgg{
