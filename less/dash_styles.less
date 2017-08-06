@@ -37,26 +37,6 @@ body{
 		font-size: @size-1;
 		font-weight: 700;
 	}
-	// custom select box
-
-	.chosen-container{
-		// for some reason 93px keeps being put in
-		width: 100% !important;
-		margin-bottom: 1rem;
-
-	}
-
-	.chosen-single{
-		height: 3rem;
-		line-height: 3rem;
-	}
-
-	.chosen-single, .chosen-results{
-		color: @darkgrey;
-		// width: 100%;
-		font-size: @size-1;
-		font-weight: 700;
-	}
 
 }
 
@@ -155,25 +135,10 @@ body{
 
 }
 
-.chart-wrapper{
-	// custom select box
-
-	.chosen-container{
-		// for some reason 93px keeps being put in
-		width: auto !important;
-		margin-bottom: 0.5rem;
-
-	}
-
-	.chosen-single{
-		height: 2rem;
-		line-height: 2rem;
-	}
-
-	.chosen-single, .chosen-results{
-		color: @darkgrey;
-		font-size: @size-small;
-	}
+.select2 svg, .select2-results svg{
+	display: inline-block;
+	height: 1em;
+	width: 1em;
 }
 
 #chart--execImpsAgg{

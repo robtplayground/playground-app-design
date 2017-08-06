@@ -1,15 +1,19 @@
-function formatState (option) {
-  console.log('formatState', option);
-  if (!option.id) { return option.text; }
+function format (option) {
+  if (!option.id) {
+    return option.text;
+  }
   if(option.id === 'Cumulative'){
-    var $option = $('<span><svg viewBox="0 0 300 300" preserveAspectRatio="xMinYMid meet"><use x="0" y="0" href="#comments-old" /></svg> ' + option.text + '</span>');
+    var $option = $('<span><svg viewBox="0 0 300 300" preserveAspectRatio="xMinYMid meet"><use x="0" y="0" href="#chart-area" /></svg> ' + option.text + '</span>');
     return $option;
-  }else{
-    return $('<span>' + option.id + '</span>');
+  }
+  if(option.id === 'Individual'){
+    var $option = $('<span><svg viewBox="0 0 300 300" preserveAspectRatio="xMinYMid meet"><use x="0" y="0" href="#chart-bar" /></svg> ' + option.text + '</span>');
+    return $option;
   }
 
 };
 
 $('select').select2({
-  templateResult: formatState
+  templateResult: format,
+  templateSelection: format
 });

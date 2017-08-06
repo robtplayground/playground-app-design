@@ -1379,20 +1379,6 @@ body {
   font-size: 1.2rem;
   font-weight: 700;
 }
-.data-filter .chosen-container {
-  width: 100% !important;
-  margin-bottom: 1rem;
-}
-.data-filter .chosen-single {
-  height: 3rem;
-  line-height: 3rem;
-}
-.data-filter .chosen-single,
-.data-filter .chosen-results {
-  color: #333333;
-  font-size: 1.2rem;
-  font-weight: 700;
-}
 .data-filter__placement-select > label {
   display: block;
   max-width: calc(90% - 1.25em);
@@ -1482,18 +1468,11 @@ body {
   height: 2rem;
   background: #f8d7e2;
 }
-.chart-wrapper .chosen-container {
-  width: auto !important;
-  margin-bottom: 0.5rem;
-}
-.chart-wrapper .chosen-single {
-  height: 2rem;
-  line-height: 2rem;
-}
-.chart-wrapper .chosen-single,
-.chart-wrapper .chosen-results {
-  color: #333333;
-  font-size: 0.833rem;
+.select2 svg,
+.select2-results svg {
+  display: inline-block;
+  height: 1em;
+  width: 1em;
 }
 #chart--execImpsAgg {
   height: 20rem;
