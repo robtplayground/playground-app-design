@@ -49,7 +49,7 @@ var iab = {
 
 var superSkin = {
   benchmarks: {
-    viewability: 91,
+    viewability: 63,
     er: 0.92,
     ativ: 9.2
   }

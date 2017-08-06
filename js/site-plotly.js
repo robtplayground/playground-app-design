@@ -96,6 +96,10 @@ var ss2_viewb_Avg = average(chartData.SS2Pre.data.viewability, chartData.SS2Pre.
 Chart.vAv.target = 'chart--vAv';
 Chart.vAv.data = [{
     values: [ss2_viewb_Avg, 100 - ss2_viewb_Avg],
+    // domain: {
+    //   x: [0, 1],
+    //   y: [0, 0.8]
+    // },
     labels: ['Viewability', 'remainder'],
     hoverinfo: 'label+percent+name',
     sort: false,
@@ -106,7 +110,11 @@ Chart.vAv.data = [{
   },
   {
     values: [chartData.iab.benchmarks.viewability, 1, 100 - (chartData.iab.benchmarks.viewability + 1)],
-    labels: ['', 'IAB Benchmark', ''],
+    // domain: {
+    //   x: [0, 1],
+    //   y: [0, 0.8]
+    // },
+    labels: ['', 'IAB', ''],
     showlegend: false,
     text: ['', (chartData.iab.benchmarks.viewability + '%'), ''],
     hoverinfo: 'none',
@@ -118,29 +126,61 @@ Chart.vAv.data = [{
     sort: false,
     direction: 'clockwise',
     hole: .2,
-    pull: .1,
+    pull: .5,
+    type: 'pie'
+  },
+  {
+    values: [chartData.superSkin.benchmarks.viewability, 1, 100 - (chartData.superSkin.benchmarks.viewability + 1)],
+    // domain: {
+    //   x: [0, 1],
+    //   y: [0, 0.8]
+    // },
+    labels: ['', 'Super Skin', ''],
+    showlegend: false,
+    text: ['', (chartData.superSkin.benchmarks.viewability + '%'), ''],
+    hoverinfo: 'none',
+    textinfo: 'label+text',
+    textposition: ['none', 'outside', 'none'],
+    marker: {
+      colors: ['rgba(255,0,0,0)', 'rgb(0,255, 255, 1)', 'rgba(0,255,0,0)']
+    },
+    sort: false,
+    direction: 'clockwise',
+    hole: .2,
+    pull: .5,
     type: 'pie'
   },
 ];
 
 Chart.vAv.layout = {
-  // title: 'Viewability: ' + SS2Pre.name,
+  title: 'Viewability',
   autosize: true,
-  annotations: [{
-    font: {
-      size: 20
+  annotations: [
+    {
+      font: {
+        size: 40
+      },
+      showarrow: false,
+      text: Math.round(ss2_viewb_Avg),
+      x: 0.5,
+      y: 0.5
     },
-    showarrow: false,
-    text: 'GHG',
-    x: .8,
-    y: .8
-  }],
+    {
+      font: {
+        size: 15
+      },
+      showarrow: false,
+      text: '%',
+      x: 0.58,
+      y: 0.53
+    }
+  ],
   margin: {
-    l: 0,
-    r: 0,
-    b: 0,
-    t: 0,
-    pad: 200
+    l: 30,
+    r: 30,
+    b: 30,
+    t: 30,
+    pad: 0
   },
   paper_bgcolor: 'white',
   plot_bgcolor: 'grey'
@@ -190,7 +230,6 @@ console.log('chart date', moment(chartData.campaign.dates.start).format('ddd D M
 console.log(rem);
 
 Chart.cProg.layout = {
-  // title: 'Viewability: ' + SS2Pre.name,
   autosize: false,
   annotations: [{
     font:{
