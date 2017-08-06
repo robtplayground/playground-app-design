@@ -4,7 +4,45 @@
     var chartData = <%- v_chartData %>;
   </script>
 
-  <header class="main-header"></header>
+  <header class="main-header grid">
+    <div class="campaign-details grid-cell grid7">
+      <div class="campaign-details__brand grid-cell">
+        <h5>Brand</h5>
+        <p><%= chartData.campaign.brand %></p>
+      </div>
+      <div class="campaign-details__name grid-cell">
+        <h5>Name</h5>
+        <p><%= chartData.campaign.name %></p>
+      </div>
+      <div class="campaign-details__objective grid-cell">
+        <h5>Objective</h5>
+        <p><%= chartData.campaign.objective %></p>
+      </div>
+      <div class="campaign-details__vertical grid-cell">
+        <h5>Vertical</h5>
+        <p><%= chartData.campaign.vertical %></p>
+      </div>
+    </div>
+
+    <div id="chart--cProg" class="campaign-progress grid-cell grid4">
+        <!-- Plotly graph -->
+    </div>
+    <div class="campaign-edit grid-cell grid1">
+      <button class="icon-only">
+        <svg viewBox="0 0 300 300" preserveAspectRatio="xMinYMid meet">
+          <use x="0" y="0" href="#menu" />
+        </svg>
+        <span>Menu</span>
+
+      </button>
+      <button class="icon-only">
+        <svg viewBox="0 0 300 300" preserveAspectRatio="xMinYMid meet">
+          <use x="0" y="0" href="#comments-old" />
+        </svg>
+        <span>Comments</span>
+      </button>
+    </div>
+  </header>
 
   <div class="main grid">
 

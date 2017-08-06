@@ -7,11 +7,6 @@ body{
 .main-header{
 	height: 10rem;
 	background: black;
-	&:before{
-		content: 'Header here';
-		color: white;
-		font-size: @size-3;
-	}
 }
 
 .main{
@@ -68,7 +63,34 @@ body{
 		font-size: @size-1;
 		font-weight: 700;
 	}
+	
+}
 
+.campaign-details{
+	position:relative;
+	color: white;
+	display:flex;
+	flex-wrap: wrap;
+	.grid-cell{
+		width: ~"calc(50% - 1rem)";
+		flex: none;
+	}
+	h5{
+		color: white;
+		text-transform: capitalize;
+		font-size: @size-xsmall;
+		margin:0.5rem 0rem;
+	}
+	p{
+		font-size: @size-1;
+		font-weight: 500;
+		margin: 0.5rem 0;
+	}
+}
+
+.campaign-edit{
+	display:flex;
+	flex-direction: column;
 }
 
 #chart--execImpsAgg{

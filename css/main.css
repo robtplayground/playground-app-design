@@ -1100,7 +1100,18 @@ button {
   border: 0;
   background: white;
   padding: 0.3em 1em;
-  border-radius: 20%;
+  border-radius: 5em;
+}
+button.icon-only {
+  background: transparent;
+}
+button.icon-only span {
+  display: none;
+}
+button.icon-only svg {
+  width: 2rem;
+  height: 2rem;
+  fill: white;
 }
 .app__svg-icons {
   display: none;
@@ -1139,11 +1150,6 @@ body {
 .main-header {
   height: 10rem;
   background: black;
-}
-.main-header:before {
-  content: 'Header here';
-  color: white;
-  font-size: 1.728rem;
 }
 .main {
   display: flex;
@@ -1186,6 +1192,31 @@ body {
   color: #333333;
   font-size: 1.2rem;
   font-weight: 700;
+}
+.campaign-details {
+  position: relative;
+  color: white;
+  display: flex;
+  flex-wrap: wrap;
+}
+.campaign-details .grid-cell {
+  width: calc(50% - 1rem);
+  flex: none;
+}
+.campaign-details h5 {
+  color: white;
+  text-transform: capitalize;
+  font-size: 0.694rem;
+  margin: 0.5rem 0rem;
+}
+.campaign-details p {
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin: 0.5rem 0;
+}
+.campaign-edit {
+  display: flex;
+  flex-direction: column;
 }
 #chart--execImpsAgg {
   height: 20rem;

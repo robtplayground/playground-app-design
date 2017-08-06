@@ -6,23 +6,32 @@ var helpers = require( path.resolve( __dirname, "helpers.js" ) );
 
 // graphing will happen from 27 June 2017
 
-function generateCampaign(name, dates) {
-	var dateList = helpers.listDates(dates);
-	var dur = helpers.duration(dates);
+function generateCampaign(options) {
+	var dateList = helpers.listDates(options.dates);
+	var dur = helpers.duration(options.dates);
 	return {
-		name: name,
+		name: options.name,
+		brand: options.brand,
+		objective: options.objective,
+		vertical: options.vertical,
 		dates: {
-			start: dates.start,
-			end: dates.end
+			start: options.dates.start,
+			end: options.dates.end
 		},
 		dateList: dateList,
 		duration: dur
 	}
 }
 
-var campaign = generateCampaign('campaign', {
-	start: new Date(2017, 6, 1),
-	end: new Date(2017, 8, 31)
+var campaign = generateCampaign({
+	name:'Hero5 Mark II Launch',
+	brand: "GoPro",
+	vertical: "Technology",
+	objective: "Awareness",
+	dates: {
+		start: new Date(2017, 6, 1),
+		end: new Date(2017, 8, 31)
+	}
 });
 
 var currentDate = new Date(2017, 5, 28);

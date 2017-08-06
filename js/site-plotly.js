@@ -16,6 +16,7 @@ function average(array, dates) {
 }
 
 var Chart = {
+  cProg: {},
   execImpsAgg:{},
   vAv: {},
   ativ:{},
@@ -64,6 +65,7 @@ Object.keys(chartData).forEach(function(key, index) {
 });
 
 Chart.execImpsAgg.layout = {
+  showlegend: false,
   xaxis: {
     type: 'date',
     title: 'Date'
@@ -147,12 +149,122 @@ Plotly.newPlot(Chart.vAv.target, Chart.vAv.data, Chart.vAv.layout, {
   displayModeBar: false
 });
 
+
+// ** CAMPAIGN PROGRESS
+
+var currentDur = moment(new Date()).diff(moment(chartData.campaign.dates.start), 'days');
+var campDur = chartData.campaign.duration;
+var cProgPercent = currentDur / campDur;
+
+Chart.cProg.target = 'chart--cProg';
+Chart.cProg.data = [
+  {
+    values: [90, 270],
+    showlegend: false,
+    hoverinfo: 'none',
+    marker: {
+      colors: ['rgba(255,0,0,0)', '#ababab']
+    },
+    sort: true,
+    rotation: 225,
+    hole: .9,
+    type: 'pie'
+  },
+  {
+    values: [90, (270 * cProgPercent)],
+    showlegend: false,
+    hoverinfo: 'none',
+    marker: {
+      colors: ['rgba(255,0,0,0)', 'rgb(0,255, 1)']
+    },
+    sort: true,
+    rotation: 225,
+    hole: .9,
+    type: 'pie'
+  },
+];
+
+console.log('chart date', moment(chartData.campaign.dates.start).format('ddd D MMM'));
+
+console.log(rem);
+
+Chart.cProg.layout = {
+  // title: 'Viewability: ' + SS2Pre.name,
+  autosize: false,
+  annotations: [{
+    font:{
+      color: 'white',
+      size: 0.9*rem,
+      weight: 700
+    },
+    // xref: 'paper',
+    // yref: 'paper',
+    x: 0.45,
+    xanchor: 'right',
+    y: -0.05,
+    yanchor: 'bottom',
+    text: moment(chartData.campaign.dates.start).format('ddd D MMMM'),
+    showarrow: false
+  }, {
+    font:{
+      color: 'white',
+      size: 0.9*rem,
+      weight: 700
+    },
+    // xref: 'paper',
+    // yref: 'paper',
+    x: 0.55,
+    xanchor: 'left',
+    y: -0.05,
+    yanchor: 'bottom',
+    text: moment(chartData.campaign.dates.end).format('ddd D MMMM'),
+    showarrow: false
+  },
+  {
+    font: {
+      size: 13,
+      color: 'white'
+    },
+    showarrow: false,
+      text: 'DAYS LEFT',
+    x: .5,
+    y: .42,
+    yanchor: 'top'
+  },
+  {
+    font: {
+      size: 36,
+      color: 'white'
+    },
+    showarrow: false,
+    text: (campDur - currentDur),
+    x: .5,
+    y: .35,
+    yanchor: 'bottom'
+  }],
+  margin: {
+    l: 0,
+    r: 0,
+    b: 20,
+    t: 10,
+    pad: 200
+  },
+  paper_bgcolor: 'transparent',
+  plot_bgcolor: 'transparent'
+};
+
+Plotly.newPlot(Chart.cProg.target, Chart.cProg.data, Chart.cProg.layout, {
+  displayModeBar: false
+});
+
 // Set size for charts
 sizeChart(Chart.execImpsAgg);
+sizeChart(Chart.cProg);
 sizeChart(Chart.vAv);
 
 
 $(window).on('resize', function() {
   sizeChart(Chart.execImpsAgg);
+  sizeChart(Chart.cProg);
   sizeChart(Chart.vAv);
 });

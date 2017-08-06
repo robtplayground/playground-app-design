@@ -3,6 +3,10 @@ if(typeof require != "undefined"){
 	var moment = require('moment');
 }
 
+// not sure how to get this dynamically for JS
+
+var rem = 16;
+
 var randMinMax = Math.randMinMax = function(min, max, round) {
 	var val = min + (Math.random() * (max - min));
 	if( round ) val = Math.round( val );
