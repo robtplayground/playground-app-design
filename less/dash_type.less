@@ -101,6 +101,31 @@ h1, h2, h3, h4, p{
 	margin:0.5rem 0;
 }
 
+a{
+	display: inline-block;
+	width: auto;
+	text-decoration: none;
+	color: @pgxyz-pink;
+	height: 1.75em;
+	border-bottom: 1px dotted @pgxyz-pink;
+}
+
+// LABEL / INPUTS
+
+.labelled-input{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin: 1rem 0;
+	[type="text"],
+	[type="email"],
+	[type="password"]{
+		width: 70%;
+		height: 2rem;
+	}
+}
+
+
 // CHECKBOXES
 
 /* Base for label styling */
@@ -111,7 +136,7 @@ h1, h2, h3, h4, p{
 }
 [type="checkbox"]:not(:checked) + label,
 [type="checkbox"]:checked + label {
-	display:inline-block;
+	display:block;
   position: relative;
   padding-left: 1.95em;
 	height: 1.5rem;
@@ -231,11 +256,10 @@ label:hover:before {
 
 
 button{
-	box-sizing: content-box;
-	border:0;
-	background:white;
-	padding: 0.3em 1em;
+	border: 0;
 	border-radius: 5em;
+	height: 2em;
+	width: 7em;
 }
 
 button.icon-only{

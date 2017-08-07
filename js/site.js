@@ -13,7 +13,12 @@ function format (option) {
 
 };
 
-$('select').select2({
+$('.chart-wrapper select').select2({
   templateResult: format,
-  templateSelection: format
+  templateSelection: format,
+  minimumResultsForSearch: Infinity
+});
+
+$('.data-filter select').select2({
+  minimumResultsForSearch: Infinity
 });

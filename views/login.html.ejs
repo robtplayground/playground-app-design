@@ -1,18 +1,32 @@
 <% include partials/header.html.ejs %>
 
-  <header class="main-header"></header>
-
   <div class="main grid">
 
-    <div class="side-left grid-cell grid2 no-gutter">
 
+    <form class="login__box">
+
+      <h1>Login</h1>
+
+      <div class="labelled-input">
+        <label for="email">Email address</label>
+        <input name="email" type="email">
+      </div>
+
+    <div class="labelled-input">
+      <label for="password">Password</label>
+      <input name="password" type="password">
     </div>
 
-    <div class="charts grid-cell grid10 no-gutter">
+    <a href="#">Forgotten your password?</a>
 
-    </div>
+    <button type="submit" value="Login">Login</button>
+
+
+
+    </form>
 
   </div>
+
 
   <div class="footer grid-cell grid12 no-gutter">
       Footer
