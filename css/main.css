@@ -1371,26 +1371,61 @@ button.icon-only svg {
   display: flex;
   align-items: center;
 }
+.app__body {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+}
+.app__footer {
+  background: #333333;
+  padding: 2rem 0 1rem 0;
+}
+.app__footer .grid-cell {
+  display: flex;
+  flex-direction: column;
+}
+.app__footer a {
+  border: 0;
+  color: #ffffff;
+}
+.app__footer h2 {
+  text-transform: uppercase;
+  font-size: 1.2rem;
+  color: #ffffff;
+  margin: 0 0 .5rem 0;
+}
+.app__footer__logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.app__footer__logo svg {
+  fill: white;
+  height: 5rem;
+  width: 5rem;
+  margin-right: 2rem;
+}
+.app__footer__menu a {
+  font-size: 1rem;
+  font-weight: 700;
+  height: 1.5rem;
+  margin-bottom: 0.4rem;
+}
+.app__footer__contact svg {
+  display: inline-block;
+  fill: white;
+  width: 2rem;
+  height: 2rem;
+}
 body {
   display: flex;
   min-height: 100vh;
   flex-direction: column;
 }
-.main-header {
+.campaign__header {
   height: 9rem;
   background: black;
-}
-.main {
-  display: flex;
-  flex: 1;
-}
-.footer {
-  height: 10rem;
-  background: lime;
-}
-.main {
-  align-items: center;
-  justify-content: center;
 }
 .login__box {
   width: 40vw;
