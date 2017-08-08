@@ -180,3 +180,103 @@ body{
 		// transform:translateY(150%);
 	}
 }
+
+.campaigns{
+	align-self: flex-start;
+	display:flex;
+	justify-content: center;
+	flex-wrap: wrap;
+	width: 100%;
+}
+
+.campaigns__table{
+	position: relative;
+	width: 95%;
+	margin: 1rem;
+	table{
+		background: @palegrey;
+		border: 1px solid @midgrey;
+		width: 100%;
+		font-size: @size-0;
+	}
+	tr{
+		height: 5rem;
+	}
+	th{
+		// text-align: left;
+	}
+	td{
+		text-align: center;
+	}
+	// .progress{
+	// 	position: absolute;
+	// 	flex: none;
+	// 	width: 100%;
+	// 	height: 0.3rem;
+	// 	bottom:0;
+	// 	left:0;
+	// 	background: @midgrey;
+	// }
+	// .progress-bar{
+	// 	background: @pgxyz-pink;
+	// 	height: 100%;
+	// }
+}
+
+.col__thumb{
+	width: 5rem;
+	img{
+		width:5rem;
+	}
+}
+
+// .col__brand{
+// 	width: 10em;
+// }
+
+.col__expand{
+	width: 5rem;
+	svg{
+		height: 30%;
+	}
+}
+.col__name{
+	font-size: @size-1;
+	// font-weight: 700;
+}
+.col__objective{
+	width: 12em;
+	color: @midgrey;
+	svg{
+		fill: @midgrey;
+		width: 1em;
+	}
+}
+.col__vertical{
+	width: 12em;
+	color: @midgrey;
+	svg{
+		fill: @midgrey;
+		width: 1em;
+	}
+}
+.col__dates{
+	position: relative;
+	width: 16em;
+}
+.col__progress{
+	width: 7rem;
+	text-align:left;
+}
+.col__actions{
+	width:4rem;
+	svg{
+		width: 70%
+	}
+}
+
+.col__progress .chart-container{
+	width: 5rem;
+	height: 3rem;
+	margin: 0.2rem 0 0 0.2rem;
+}

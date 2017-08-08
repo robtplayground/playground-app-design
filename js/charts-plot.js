@@ -253,10 +253,6 @@ Chart.cProg.data = [
   },
 ];
 
-console.log('chart date', moment(chartData.campaign.dates.start).format('ddd D MMM'));
-
-console.log(rem);
-
 Chart.cProg.layout = {
   autosize: false,
   annotations: [{

@@ -1,0 +1,96 @@
+<% include partials/header.html.ejs %>
+
+  <script>
+    $(document).ready( function(){
+      var campaignStart = moment(chartData.campaign.dates.start).format('ddd D MMMM');
+      var campaignEnd = moment(chartData.campaign.dates.end).format('ddd D MMMM');
+      // var cProg = moment(new Date()).diff(moment(chartData.campaign.dates.start), 'days');
+      // cProg = cProg / chartData.campaign.duration * 100;
+      $('.startDate').text(campaignStart);
+      $('.endDate').text(campaignEnd);
+      // $('.progress-bar').css('width', cProg + '%');
+
+
+    });
+  </script>
+
+  <div class="app__body">
+
+    <div class="campaigns">
+      <!-- <h1>Campaigns</h1> -->
+
+      <div class="campaigns__table">
+        <!-- <table class="campaigns__table__header">
+          <thead>
+            <tr>
+            <th class="col__progress">Progress</th>
+              <th class="col__thumb">Thumb</th>
+              <th class="col__name">Name</th>
+              <th class="col__dates">dates</th>
+              <th class="col__objective">Objective</th>
+              <th class="col__vertical">Vertical</th>
+              <th class="col__actions">Actions</th>
+            </tr>
+          </thead>
+        </table> -->
+
+        <!-- Campaign Rows -->
+
+        <table class="campaigns__table__body">
+          <tbody>
+            <tr>
+              <td class="col__expand">
+                <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
+                  <use x="0" y="0" href="#expand-plus" />
+                </svg>
+              </td>
+              <td class="col__progress">
+                <div class="chart-container" id="chart--SS1Prog"></div>
+              </td>
+              <td class="col__thumb">
+                <img src="/images/logo-gopro.png" alt="">
+              </td>
+              <td class="col__name">
+                Hero 5 Mark II Release
+              </td>
+              <td class="col__dates">
+                <span class="startDate"></span> - <span class="endDate"></span>
+                <!-- <div class="progress"><div class="progress-bar"></div></div> -->
+              </td>
+              <!-- <td class="col__brand">
+                Go Pro
+              </td> -->
+              <td class="col__objective">
+                <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
+                  <use x="0" y="0" href="#target" />
+                </svg>
+                Awareness
+              </td>
+              <td class="col__vertical">
+                <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
+                  <use x="0" y="0" href="#tag" />
+                </svg>
+                Technology
+              </td>
+              <td class="col__actions">
+                <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
+                  <use x="0" y="0" href="#menu" />
+                </svg>
+              </td>
+
+            </tr>
+          </tbody>
+        </table>
+
+
+
+      </div>
+    </div>
+
+  </div>
+
+  <script src="/js/site.js"></script>
+  <script src="/js/campaigns-plot.js"></script>
+
+
+  <% include partials/footer.html.ejs %>

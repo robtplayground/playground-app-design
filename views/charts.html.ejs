@@ -1,9 +1,5 @@
 <% include partials/header.html.ejs %>
 
-  <script>
-    var chartData = <%- v_chartData %>;
-  </script>
-
   <header class="campaign__header grid">
     <div class="campaign-details grid-cell grid7">
       <div class="campaign-details__brand grid-cell">
@@ -112,8 +108,8 @@
         <div class="chart-wrapper">
 
           <select class="chart-wrapper__select chosen-select" name="" id="">
-            <option value="Cumulative"><i>Yaaa!</i>Cumulative</option>
-            <option value="Individual"><i>Weee!</i>Individual</option>
+            <option value="Cumulative">Cumulative</option>
+            <option value="Individual">Individual</option>
           </select>
 
         <div id="chart--execImpsAgg"></div>
@@ -126,15 +122,15 @@
 
       </div>
 
+
     </div>
 
-    <div class="footer grid-cell grid12 no-gutter">
-        Footer
-    </div>
 
   </div>
 
 
+  <script src="/js/site.js"></script>
+  <script src="/js/charts-plot.js"></script>
 
 
 

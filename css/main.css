@@ -903,7 +903,6 @@ html {
 body {
   padding-top: 0.1px;
   color: #222222;
-  height: 100%;
   position: relative;
 }
 body:after {
@@ -1573,4 +1572,78 @@ body {
 }
 #chart--vAv {
   height: 20rem;
+}
+.campaigns {
+  align-self: flex-start;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+}
+.campaigns__table {
+  position: relative;
+  width: 95%;
+  margin: 1rem;
+}
+.campaigns__table table {
+  background: #fafafa;
+  border: 1px solid #cccccc;
+  width: 100%;
+  font-size: 1rem;
+}
+.campaigns__table tr {
+  height: 5rem;
+}
+.campaigns__table td {
+  text-align: center;
+}
+.col__thumb {
+  width: 5rem;
+}
+.col__thumb img {
+  width: 5rem;
+}
+.col__expand {
+  width: 5rem;
+}
+.col__expand svg {
+  height: 30%;
+}
+.col__name {
+  font-size: 1.2rem;
+}
+.col__objective {
+  width: 12em;
+  color: #cccccc;
+}
+.col__objective svg {
+  fill: #cccccc;
+  width: 1em;
+}
+.col__vertical {
+  width: 12em;
+  color: #cccccc;
+}
+.col__vertical svg {
+  fill: #cccccc;
+  width: 1em;
+}
+.col__dates {
+  position: relative;
+  width: 16em;
+}
+.col__progress {
+  width: 7rem;
+  text-align: left;
+}
+.col__actions {
+  width: 4rem;
+}
+.col__actions svg {
+  width: 70%;
+}
+.col__progress .chart-container {
+  width: 5rem;
+  height: 3rem;
+  margin: 0.2rem 0 0 0.2rem;
 }

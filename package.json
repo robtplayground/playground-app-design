@@ -10,7 +10,7 @@
     "watch:css": "onchange \"scss/*.scss\" -- npm run css",
     "css": "node bin/scss.js",
     "server": "node server.js",
-    "watch:sync": "browser-sync start --port \"4000\" --ui-port \"4001\"  --proxy \"127.0.0.1:5000\"  --files \"css/*.css, views/**/*.html.ejs, js/*.js, images/**/*.jpg\" --startPath \"/login\""
+    "watch:sync": "browser-sync start --port \"4000\" --ui-port \"4001\"  --proxy \"127.0.0.1:5000\"  --files \"css/*.css, views/**/*.html.ejs, js/*.js, images/**/*.jpg\" --startPath \"/campaigns\""
   },
   "repository": {
     "type": "git",

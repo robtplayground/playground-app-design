@@ -22,15 +22,18 @@ app.get('/login', function(request, response) {
   response.render('../views/login.html.ejs');
 });
 
-app.get('/graphs', function(request, response) {
-  response.render('../views/graphs.html.ejs', {
+app.get('/charts', function(request, response) {
+  response.render('../views/charts.html.ejs', {
     chartData: dataGenerator.chartData,
     v_chartData: JSON.stringify(dataGenerator.chartData)
   });
 });
 
-app.get('/ui', function(request, response) {
-  response.render('../views/ui.html.ejs');
+app.get('/campaigns', function(request, response) {
+  response.render('../views/campaigns.html.ejs', {
+    chartData: dataGenerator.chartData,
+    v_chartData: JSON.stringify(dataGenerator.chartData)
+  });
 });
 
 app.listen(app.get('port'), function() {
