@@ -60,11 +60,11 @@ Chart.SS1Prog.data = [
     hoverinfo: 'none',
     textposition: ['none', 'none'],
     marker: {
-      colors: ['rgba(255,0,0,0)', '#666']
+      colors: ['rgba(255,0,0,0)', '#0078d8']
     },
     sort: true,
     rotation: 225,
-    hole: .8,
+    hole: .83,
     type: 'pie'
   },
 ];

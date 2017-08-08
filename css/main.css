@@ -1320,7 +1320,14 @@ button {
   border: 0;
   border-radius: 5em;
   height: 2em;
-  width: 7em;
+  width: auto;
+  display: flex;
+  align-items: center;
+  padding: 0 1em;
+}
+button svg {
+  width: 1.5em;
+  height: 1.5em;
 }
 button.icon-only {
   background: transparent;
@@ -1603,6 +1610,13 @@ body {
 .col__thumb img {
   width: 5rem;
 }
+.col__brand {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #0078d8;
+  width: 7em;
+  text-align: left;
+}
 .col__expand {
   width: 5rem;
 }
@@ -1614,18 +1628,18 @@ body {
 }
 .col__objective {
   width: 12em;
-  color: #cccccc;
+  color: #999999;
 }
 .col__objective svg {
-  fill: #cccccc;
+  fill: #999999;
   width: 1em;
 }
 .col__vertical {
   width: 12em;
-  color: #cccccc;
+  color: #999999;
 }
 .col__vertical svg {
-  fill: #cccccc;
+  fill: #999999;
   width: 1em;
 }
 .col__dates {
@@ -1633,17 +1647,74 @@ body {
   width: 16em;
 }
 .col__progress {
-  width: 7rem;
+  width: 4rem;
   text-align: left;
 }
 .col__actions {
   width: 4rem;
 }
 .col__actions svg {
-  width: 70%;
+  width: 50%;
 }
 .col__progress .chart-container {
   width: 5rem;
-  height: 3rem;
+  height: 4rem;
   margin: 0.2rem 0 0 0.2rem;
+}
+.creatives__wrapper {
+  background: #cccccc;
+  padding: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+.creatives__wrapper button {
+  background: #ffffff;
+}
+.creative {
+  width: 100%;
+}
+.creative__title {
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+  background: #0078d8;
+}
+.creative__title__format {
+  fill: white;
+  width: 10rem;
+}
+.creative__title__thumb img {
+  width: 5rem;
+}
+.creative__title__status {
+  display: flex;
+  align-items: center;
+}
+.creative__title__status svg {
+  width: 1.5em;
+  height: 1.5em;
+  margin-right: 0.3em;
+  fill: white;
+}
+.creative__title__actions {
+  width: 4rem;
+}
+.creative__title__actions svg {
+  fill: white;
+  width: 50%;
+}
+.placements__wrapper {
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+  background: #72c0ff;
+}
+.placements__wrapper button {
+  color: #333333;
 }
