@@ -16,6 +16,7 @@ function average(array, dates) {
 }
 
 var Chart = {
+  campaignProg: {},
   SS1Prog: {}
 };
 
@@ -55,15 +56,16 @@ Chart.SS1Prog.data = [
     type: 'pie'
   },
   {
-    values: [90, (270 * SS1ProgPercent)],
+    values: [90, (270 * SS1ProgPercent), (270 - (270 * SS1ProgPercent))],
     showlegend: false,
     hoverinfo: 'none',
-    textposition: ['none', 'none'],
+    textposition: ['none', 'none', 'none'],
     marker: {
-      colors: ['rgba(255,0,0,0)', '#0078d8']
+      colors: ['rgba(255,0,0,0)', '#0078d8', 'rgba(255,0,0,0)']
     },
-    sort: true,
-    rotation: 225,
+    sort: false,
+    direction: 'clockwise',
+    rotation: 135,
     hole: .83,
     type: 'pie'
   },
@@ -113,10 +115,95 @@ Plotly.newPlot(Chart.SS1Prog.target, Chart.SS1Prog.data, Chart.SS1Prog.layout, {
   displayModeBar: false
 });
 
+// ** CAMPAIGN PROGRESS
+
+var currentDur = moment(new Date()).diff(moment(chartData.campaign.dates.start), 'days');
+var campDur = chartData.campaign.duration;
+var campaignProgPercent = currentDur / campDur;
+
+console.log('campaignProgPercent', campaignProgPercent);
+
+Chart.campaignProg.target = 'chart--campaignProg';
+Chart.campaignProg.data = [
+  {
+    values: [90, 270],
+    showlegend: false,
+    hoverinfo: 'none',
+    textpostion: ['none', 'none'],
+    marker: {
+      colors: ['rgba(255,0,0,0)', '#dadada']
+    },
+    sort: true,
+    rotation: 225,
+    hole: .8,
+    type: 'pie'
+  },
+  {
+    values: [90, (270 * campaignProgPercent), (270 - (270 * campaignProgPercent))],
+    showlegend: false,
+    hoverinfo: 'none',
+    textposition: ['none', 'none', 'none'],
+    marker: {
+      colors: ['rgba(255,0,0,0)', '#0078d8', 'rgba(255,0,0,0)']
+    },
+    sort: false,
+    direction: 'clockwise',
+    rotation: 135,
+    hole: .83,
+    type: 'pie'
+  },
+];
+
+// console.log('chart date', moment(chartData.campaign.dates.start).format('ddd D MMM'));
+
+// console.log(rem);
+
+Chart.campaignProg.layout = {
+  autosize: false,
+  margin: {
+    l: 0,
+    r: 0,
+    b: 0,
+    t: 0,
+    pad: 10
+  },
+  annotations: [{
+    font: {
+      size: 12,
+      color: 'grey'
+    },
+    showarrow: false,
+      text: '%',
+    x: .64,
+    y: .6,
+    yanchor: 'left'
+  },
+  {
+    font: {
+      size: 18,
+      color: 'grey'
+    },
+    showarrow: false,
+    text: Math.round(campaignProgPercent * 100),
+    x: .62,
+    xanchor: 'right',
+    y: .52,
+    yanchor: 'center'
+  }],
+  paper_bgcolor: 'transparent',
+  plot_bgcolor: 'transparent'
+};
+
+Plotly.newPlot(Chart.campaignProg.target, Chart.campaignProg.data, Chart.campaignProg.layout, {
+  displayModeBar: false
+});
+
 
 sizeChart(Chart.SS1Prog);
+sizeChart(Chart.campaignProg);
 
 
 $(window).on('resize', function() {
   sizeChart(Chart.SS1Prog);
+  sizeChart(Chart.campaignProg);
 });

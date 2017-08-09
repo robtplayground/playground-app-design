@@ -46,13 +46,20 @@ function listDates(dates){
 	return datesArray;
 }
 
+function breakText(string){
+	if(string.indexOf('_') > 0){
+		return string.replace(/_/g, '<wbr>_');
+	}
+}
+
 if(typeof module != 'undefined'){
 	module.exports = {
 		randMinMax: randMinMax,
 		duration: duration,
 		arrayRange: arrayRange,
 		makeZeros: makeZeros,
-		listDates: listDates
+		listDates: listDates,
+		breakText: breakText
 
 	};
 }

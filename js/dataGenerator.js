@@ -10,7 +10,7 @@ function generateCampaign(options) {
 	var dateList = helpers.listDates(options.dates);
 	var dur = helpers.duration(options.dates);
 	return {
-		name: options.name,
+		name: helpers.breakText(options.name),
 		brand: options.brand,
 		objective: options.objective,
 		vertical: options.vertical,
@@ -306,9 +306,10 @@ function createPlacement(options){
 	var ativ = ATIV(executedImps, superSkin.benchmarks.ativ);
 	var videoViewableImps = VIDEO_VIEWABLE_IMPS(engagements);
 	var video = VIDEO_METRICS(engagements);
+	var name = helpers.breakText(options.name);
 
   return {
-    name: options.name,
+    name: name,
     dates: options.dates,
 		bookedImps: options.bookedImps,
     data: {

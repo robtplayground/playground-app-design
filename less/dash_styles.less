@@ -189,16 +189,14 @@ body{
 	width: 100%;
 }
 
-.campaigns__table{
+.campaign__table__body{
 	position: relative;
 	width: 95%;
 	margin: 1rem;
-	table{
-		background: @palegrey;
-		border: 1px solid @midgrey;
-		width: 100%;
-		font-size: @size-0;
-	}
+	background: @palegrey;
+	border: 1px solid @midgrey;
+	width: 100%;
+	font-size: @size-0;
 	tr{
 		height: 5rem;
 	}
@@ -208,82 +206,69 @@ body{
 	td{
 		text-align: center;
 	}
-	// .progress{
-	// 	position: absolute;
-	// 	flex: none;
-	// 	width: 100%;
-	// 	height: 0.3rem;
-	// 	bottom:0;
-	// 	left:0;
-	// 	background: @midgrey;
-	// }
-	// .progress-bar{
-	// 	background: @pgxyz-pink;
-	// 	height: 100%;
-	// }
-}
+	.col__thumb{
+		width: 5rem;
+		img{
+			width:5rem;
+		}
+	}
 
-.col__thumb{
-	width: 5rem;
-	img{
-		width:5rem;
+	.col__brand{
+		font-size: @size-1;
+		font-weight: 700;
+		color: @ss-blue;
+		width:7em;
+		text-align: left;
 	}
-}
 
-.col__brand{
-	font-size: @size-1;
-	font-weight: 700;
-	color: @ss-blue;
-	width:7em;
-	text-align: left;
-}
-
-.col__expand{
-	width: 5rem;
-	svg{
-		height: 30%;
+	.col__expand{
+		width: 5rem;
+		svg{
+			height: 30%;
+		}
 	}
-}
-.col__name{
-	font-size: @size-1;
-	// font-weight: 700;
-}
-.col__objective{
-	width: 12em;
-	color: lighten(@darkgrey, 40%);
-	svg{
-		fill: lighten(@darkgrey, 40%);
-		width: 1em;
+	.col__name{
+		font-size: @size-1;
+		// font-weight: 700;
 	}
-}
-.col__vertical{
-	width: 12em;
-	color: lighten(@darkgrey, 40%);
-	svg{
-		fill: lighten(@darkgrey, 40%);
-		width: 1em;
+	.col__objective{
+		width: 12em;
+		color: lighten(@darkgrey, 40%);
+		svg{
+			fill: lighten(@darkgrey, 40%);
+			width: 1em;
+		}
 	}
-}
-.col__dates{
-	position: relative;
-	width: 16em;
-}
-.col__progress{
-	width: 4rem;
-	text-align:left;
-}
-.col__actions{
-	width:4rem;
-	svg{
-		width: 50%
+	.col__vertical{
+		width: 12em;
+		color: lighten(@darkgrey, 40%);
+		svg{
+			fill: lighten(@darkgrey, 40%);
+			width: 1em;
+		}
+	}
+	.col__dates{
+		position: relative;
+		width: 16em;
+	}
+	.col__progress{
+		width: 4rem;
+		text-align:left;
+	}
+	.col__actions{
+		width:4rem;
+		svg{
+			width: 50%
+		}
+	}
+	.col__progress .chart-container{
+		width: 5rem;
+		height: 4rem;
+		margin: 0.2rem 0 0 0.2rem;
 	}
 }
 
-.col__progress .chart-container{
-	width: 5rem;
-	height: 4rem;
-	margin: 0.2rem 0 0 0.2rem;
-}
+
 
 .creatives__wrapper{
 	background: @midgrey;
@@ -318,7 +303,7 @@ body{
 
 .creative__title__thumb{
 	img{
-		width: 5rem;
+		width: 3rem;
 	}
 }
 
@@ -346,9 +331,34 @@ body{
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+	flex-wrap: wrap;
 	color: white;
 	background: lighten(@ss-blue, 30%);
 	button{
 		color: @darkgrey;
+	}
+}
+
+.campaign__table__body .placements__table{
+	width: 100%;
+	background: rgba(255,255,255, 0.7);
+	color: @black;
+	[class*="col__"]{
+		width: 5rem;
+		height: 4rem;
+	}
+	.col__status{
+		svg{
+			width: 2rem;
+		}
+	}
+	.col__name{
+		font-size: @size-0;
+		width: 12em;
+		padding: 0 1em;
+	}
+	td.col__name{
+		text-align: left;
+
 	}
 }

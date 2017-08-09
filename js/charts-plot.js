@@ -75,7 +75,7 @@ Chart.execImpsAgg.data[0] = {
   fill: 'tozeroy',
   mode: 'line',
   line: {
-    color: 'rgb(55, 128, 191)',
+    color: 'rgb(255)',
     width: 0
   }
 };
@@ -149,7 +149,7 @@ Chart.vAv.data = [{
     textinfo: 'label+text',
     textposition: ['none', 'outside', 'none'],
     marker: {
-      colors: ['rgba(255,0,0,0)', 'rgb(0,0, 255, 1)', 'rgba(0,255,0,0)']
+      colors: ['rgba(255,0,0,0)', 'rgba(255,255,255, 0.5)', 'rgba(0,255,0,0)']
     },
     sort: false,
     direction: 'clockwise',
@@ -170,7 +170,7 @@ Chart.vAv.data = [{
     textinfo: 'label+text',
     textposition: ['none', 'outside', 'none'],
     marker: {
-      colors: ['rgba(255,0,0,0)', 'rgb(0,255, 255, 1)', 'rgba(0,255,0,0)']
+      colors: ['rgba(255,0,0,0)', 'rgba(255,255,255, 0.5)', 'rgba(0,255,0,0)']
     },
     sort: false,
     direction: 'clockwise',
@@ -240,14 +240,15 @@ Chart.cProg.data = [
     type: 'pie'
   },
   {
-    values: [90, (270 * cProgPercent)],
+    values: [90, (270 * cProgPercent), (270 - (270 * cProgPercent))],
     showlegend: false,
     hoverinfo: 'none',
     marker: {
-      colors: ['rgba(255,0,0,0)', 'rgb(0,255, 1)']
+      colors: ['rgba(255,0,0,0)', 'rgb(0,255, 1)', 'rgba(255,0,0,0)']
     },
-    sort: true,
-    rotation: 225,
+    sort: false,
+    direction: 'clockwise',
+    rotation: 135,
     hole: .9,
     type: 'pie'
   },

@@ -19,7 +19,7 @@
     <div class="campaigns">
       <!-- <h1>Campaigns</h1> -->
 
-      <div class="campaigns__table">
+      <div class="campaign__table">
         <!-- <table class="campaigns__table__header">
           <thead>
             <tr>
@@ -36,7 +36,7 @@
 
         <!-- Campaign Rows -->
 
-        <table class="campaigns__table__body">
+        <table class="campaign__table__body">
           <tbody>
             <tr>
               <td class="col__expand">
@@ -45,7 +45,7 @@
                 </svg>
               </td>
               <td class="col__progress">
-                <div class="chart-container" id="chart--SS1Prog"></div>
+                <div class="chart-container" id="chart--campaignProg"></div>
               </td>
               <!-- <td class="col__thumb">
                 <img src="/images/logo-gopro.png" alt="">
@@ -101,7 +101,11 @@
                         <svg viewBox="0 0 980 300" preserveAspectRatio="xMidYMid meet">
                           <use x="0" y="0" href="#super-skin" />
                         </svg>
-                        <span>Expanding | Video</span></div>
+
+                      </div>
+                      <div class="creative__title__template">
+                        Expanding | Video
+                      </div>
                       <div class="creative__title__name"></div>
                       <div class="creative__title__status">
                         <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
@@ -123,6 +127,52 @@
                         </svg>
                         <span>Add Placement</span>
                       </button>
+                      <table class="placements__table">
+                        <thead>
+                          <tr>
+                            <th class="col__status">
+                              Status
+                            </th>
+                            <th class="col__name">Name</th>
+                            <th class="col__progress">
+                              Progress
+                            </th>
+                            <th class="col__imps">Impressions</th>
+                            <th class="col__viewability">Viewability</th>
+                            <th class="col__ctr">Clickthrough Rate</th>
+                            <th class="col__er">Engagement Rate</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                        <tr class="placement">
+                          <td class="col__status">
+                            <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
+                              <use x="0" y="0" href="#play" />
+                            </svg></td>
+                          <td class="col__name">
+                            <%- chartData.SS1Pre.name %>
+                          </td>
+                          <td class="col__progress">
+                            <div class="chart-container" id="chart--SS1Prog"></div>
+                          </td>
+                          <td class="col__imps">
+                            <div class="chart-container" id="chart--SS1Imps"></div>
+                          </td>
+                          <td class="col__viewability">
+                            <div class="chart-container" id="chart--SS1View"></div>
+                          </td>
+                          <td class="col__ctr">
+                            <div class="chart-container" id="chart--SS1CTR"></div>
+                          </td>
+                          <td class="col__er">
+                            <div class="chart-container" id="chart--SS1ER"></div>
+                          </td>
+                        </tr>
+
+                      </tbody>
+
+                        </thead>
+                      </table>
                     </div>
                   </div>
                 </div>
