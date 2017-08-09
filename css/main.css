@@ -894,6 +894,11 @@ th {
 *:after {
   box-sizing: border-box;
 }
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 /*  COLORS */
 /*   MEDIA QUERIES */
 html {
@@ -1567,6 +1572,22 @@ body {
   height: 1em;
   width: 1em;
 }
+.chart:before {
+  content: '?';
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  width: 1.3em;
+  height: 1.3em;
+  font-size: 0.833rem;
+  border: 1px solid #222222;
+  border-radius: 100%;
+  top: 0;
+  right: 0;
+  z-index: 10;
+  margin: 0.6em;
+}
 #chart--execImpsAgg {
   height: 20rem;
 }
@@ -1579,6 +1600,61 @@ body {
 }
 #chart--vAv {
   height: 20rem;
+}
+.chart-single {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.chart-single h3 {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  text-align: center;
+  font-weight: 400;
+  font-size: 1.2rem;
+  margin-top: 1.5rem;
+  text-transform: uppercase;
+}
+.chart-single__circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 10rem;
+  height: 10rem;
+  background: #0078d8;
+  color: white;
+  font-size: 2.074rem;
+  border-radius: 100%;
+}
+.chart-single__bm {
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  font-weight: 400;
+  font-size: 1rem;
+  margin-top: 1.5rem;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+.bm__iab {
+  color: lime;
+}
+.bm__iab:before {
+  content: 'IAB: ';
+  color: #222222;
+}
+.bm__pgxyz {
+  color: red;
+}
+.bm__pgxyz:before {
+  content: 'PGXYZ: ';
+  color: #222222;
 }
 .campaigns {
   align-self: flex-start;

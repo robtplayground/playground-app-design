@@ -49,6 +49,8 @@ function listDates(dates){
 function breakText(string){
 	if(string.indexOf('_') > 0){
 		return string.replace(/_/g, '<wbr>_');
+	}else{
+		return string;
 	}
 }
 

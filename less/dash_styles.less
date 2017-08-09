@@ -160,6 +160,23 @@ body{
 	width: 1em;
 }
 
+.chart{
+	&:before{
+		content: '?';
+		.flex-center;
+		position:absolute;
+		width: 1.3em;
+		height: 1.3em;
+		font-size: @size-small;
+		border: 1px solid @black;
+		border-radius: 100%;
+		top: 0;
+		right: 0;
+		z-index: 10;
+		margin: 0.6em;
+	}
+}
+
 #chart--execImpsAgg{
 	height: 20rem;
 	text{
@@ -178,6 +195,66 @@ body{
 	// hack to fix plotly
 	.g-gtitle{
 		// transform:translateY(150%);
+	}
+}
+
+.chart-single{
+	.flex-center;
+	flex-direction: column;
+}
+
+.chart-single h3{
+	// no justify-self at the moment
+	position: absolute;
+	top:0;
+	width: 100%;
+	text-align: center;
+	font-weight: 400;
+	font-size: @size-1;
+	margin-top: 1.5rem;
+	text-transform: uppercase;
+}
+
+.chart-single__circle{
+	.flex-center;
+	flex-direction: column;
+	width: 10rem;
+	height: 10rem;
+	background: @ss-blue;
+	color:white;
+	font-size: @size-4;
+	border-radius: 100%;
+}
+
+.chart-single__value{
+}
+
+.chart-single__bm{
+	display:flex;
+	justify-content: space-between;
+	position: absolute;
+	bottom:0;
+	width: 100%;
+	text-align: center;
+	font-weight: 400;
+	font-size: @size-0;
+	margin-top: 1.5rem;
+	text-transform: uppercase;
+	margin-bottom: 0.5rem;
+}
+
+.bm__iab{
+	color: lime;
+	&:before{
+		content: 'IAB: ';
+		color: @black;
+	}
+}
+.bm__pgxyz{
+	color: red;
+	&:before{
+		content: 'PGXYZ: ';
+		color: @black;
 	}
 }
 

@@ -219,6 +219,8 @@ Plotly.newPlot(Chart.vAv.target, Chart.vAv.data, Chart.vAv.layout, {
 });
 
 
+
+
 // ** CAMPAIGN PROGRESS
 
 var currentDur = moment(new Date()).diff(moment(chartData.campaign.dates.start), 'days');
@@ -323,9 +325,11 @@ Plotly.newPlot(Chart.cProg.target, Chart.cProg.data, Chart.cProg.layout, {
 });
 
 
-// TREEMAP
+// ATIV
 
-// too hard, faking it with greensock...
+var ativAv = average(chartData.SS1Pre.data.ativ, chartData.SS1Pre.dates).toFixed(1);
+
+$('#chart--ativAv .chart-single__value').text(ativAv);
 
 
 // Set size for charts
