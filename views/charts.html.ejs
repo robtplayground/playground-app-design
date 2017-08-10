@@ -4,24 +4,32 @@
     <div class="campaign-details grid-cell grid7">
       <div class="campaign-details__brand grid-cell">
         <h5>Brand</h5>
-        <p><%= chartData.campaign.brand %></p>
+        <p>
+          <%= chartData.campaign.brand %>
+        </p>
       </div>
       <div class="campaign-details__name grid-cell">
         <h5>Name</h5>
-        <p><%= chartData.campaign.name %></p>
+        <p>
+          <%= chartData.campaign.name %>
+        </p>
       </div>
       <div class="campaign-details__objective grid-cell">
         <h5>Objective</h5>
-        <p><%= chartData.campaign.objective %></p>
+        <p>
+          <%= chartData.campaign.objective %>
+        </p>
       </div>
       <div class="campaign-details__vertical grid-cell">
         <h5>Vertical</h5>
-        <p><%= chartData.campaign.vertical %></p>
+        <p>
+          <%= chartData.campaign.vertical %>
+        </p>
       </div>
     </div>
 
     <div id="chart--cProg" class="chart campaign-progress grid-cell grid4">
-        <!-- Plotly graph -->
+      <!-- Plotly graph -->
     </div>
     <div class="campaign-edit grid-cell grid1">
       <button class="icon-only">
@@ -64,10 +72,10 @@
           <input type="checkbox" id="check-SS2" name="placement-select" checked/>
           <label for="check-SS2"><span></span><%= chartData.SS2Pre.name %></label>
 
-          <input type="checkbox" id="check-SS2" name="placement-select"/>
+          <input type="checkbox" id="check-SS2" name="placement-select" />
           <label for="check-SS2"><span></span><%= chartData.SS1Post.name %></label>
 
-          <input type="checkbox" id="check-SS2" name="placement-select"/>
+          <input type="checkbox" id="check-SS2" name="placement-select" />
           <label for="check-SS2"><span></span><%= chartData.SS2Post.name %></label>
 
         </div>
@@ -112,15 +120,14 @@
             <option value="Individual">Individual</option>
           </select>
 
-        <div id="chart--execImpsAgg" class="chart"></div>
+          <div id="chart--execImpsAgg" class="chart"></div>
 
         </div>
 
       </div>
 
-      <div id="chart--vAv" class="chart grid-cell grid4">
+      <div id="chart--impsDelivered" class="chart grid-cell grid4"></div>
 
-      </div>
 
       <div id="chart--ativAv" class="chart chart-single grid-cell grid4">
         <h3>Time in View</h3>
@@ -129,13 +136,83 @@
         </div>
         <div class="chart-single__bm">
           <div class="bm__iab">
-              +3.2
+            +3.2
           </div>
           <div class="bm__pgxyz">
-              -0.3
+            -0.3
           </div>
         </div>
+      </div>
 
+      <div id="chart--vAv" class="chart grid-cell grid4"></div>
+
+      <div id="chart--erAv" class="chart chart-single grid-cell grid4">
+        <h3>Engagement Rate</h3>
+        <div class="chart-single__circle">
+          <div class="chart-single__value"></div>
+        </div>
+        <div class="chart-single__bm">
+          <div class="bm__iab">
+            +3.2
+          </div>
+          <div class="bm__pgxyz">
+            -0.3
+          </div>
+        </div>
+      </div>
+
+      <div id="chart--passiveC" class="chart chart-single grid-cell grid4">
+        <h3>Passive Completion Rate</h3>
+        <div class="chart-single__circle">
+          <div class="chart-single__value"></div>
+        </div>
+        <div class="chart-single__bm">
+          <div class="bm__iab">
+            +3.2
+          </div>
+          <div class="bm__pgxyz">
+            -0.3
+          </div>
+        </div>
+      </div>
+
+      <div id="chart--engagedC" class="chart chart-single grid-cell grid4">
+        <h3>Engaged Completion Rate</h3>
+        <div class="chart-single__circle">
+          <div class="chart-single__value"></div>
+        </div>
+        <div class="chart-single__bm">
+          <div class="bm__iab">
+            +3.2
+          </div>
+          <div class="bm__pgxyz">
+            -0.3
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-cell grid12">
+        <div class="chart-wrapper">
+          <div id="chart--erTime" class="chart"></div>
+        </div>
+      </div>
+
+      <div class="grid-cell grid12">
+        <div class="chart-wrapper">
+          <div id="chart--ctrTime" class="chart"></div>
+        </div>
+      </div>
+
+      <div class="grid-cell grid12">
+        <div class="chart-wrapper">
+          <div id="chart--completionsTime" class="chart"></div>
+        </div>
+      </div>
+
+      <div class="grid-cell grid12">
+        <div class="chart-wrapper">
+          <div id="chart--ecHeat" class="chart"></div>
+        </div>
       </div>
 
 

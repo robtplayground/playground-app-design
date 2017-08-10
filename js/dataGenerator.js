@@ -189,6 +189,28 @@ function ENGAGEMENTS(array){
   return values;
 }
 
+function PASSIVE_COMPLETIONS(array){
+	var values = array.slice();
+	values.forEach(function(value, i){
+		if(value != 0){
+			var newValue = value/3;
+	    values.splice(i, 1, newValue);
+		}
+  });
+  return values;
+}
+
+function ENGAGED_COMPLETIONS(array){
+	var values = array.slice();
+	values.forEach(function(value, i){
+		if(value != 0){
+			var newValue = value/5;
+	    values.splice(i, 1, newValue);
+		}
+  });
+  return values;
+}
+
 function CLICKENG(clicksArray, engagementsArray){
 	// create zeros
 	var values = clicksArray.slice();
@@ -301,8 +323,12 @@ function createPlacement(options){
 	var clicks = CLICKS(viewableImps);
 	var clickRate = PERCENT(clicks, executedImps);
 	var engagements = ENGAGEMENTS(viewableImps);
+	var passiveCompletions = PASSIVE_COMPLETIONS(engagements);
+	var engagedCompletions = ENGAGED_COMPLETIONS(engagements);
 	var clickEng = CLICKENG(clicks, engagements);
 	var engagementRate = PERCENT(clickEng, executedImps);
+	var passiveCompletionRate = PERCENT(passiveCompletions, executedImps);
+	var engagedCompletionRate = PERCENT(engagedCompletions, executedImps);
 	var ativ = ATIV(executedImps, superSkin.benchmarks.ativ);
 	var videoViewableImps = VIDEO_VIEWABLE_IMPS(engagements);
 	var video = VIDEO_METRICS(engagements);
@@ -324,6 +350,10 @@ function createPlacement(options){
 			clicks: clicks,
 			clickRate: clickRate,
 			engagements: engagements,
+			passiveCompletions: passiveCompletions,
+			engagedCompletions: engagedCompletions,
+			passiveCompletionRate: passiveCompletionRate,
+			engagedCompletionRate: engagedCompletionRate,
 			clickEng: clickEng,
 			engagementRate: engagementRate,
 			ativ: ativ,

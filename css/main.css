@@ -1588,18 +1588,11 @@ body {
   z-index: 10;
   margin: 0.6em;
 }
-#chart--execImpsAgg {
+.chart {
   height: 20rem;
 }
-#chart--execImpsAgg text {
-  font-family: Roboto, Helvetica, Arial, sans-serif !important;
-}
-#chart--execImpsAgg .xaxislayer-above .xtick text {
-  font-size: 8.5px !important;
-  letter-spacing: 0.05em;
-}
-#chart--vAv {
-  height: 20rem;
+.chart#chart--cProg {
+  height: 100%;
 }
 .chart-single {
   display: flex;

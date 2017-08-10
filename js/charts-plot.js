@@ -11,40 +11,22 @@ function total(array, dates) {
 function average(array, dates) {
   // only add totals of array within this Range
   var rangeTotal = total(array, dates);
-  console.log(rangeTotal);
   return rangeTotal / duration(dates);
 }
 
-var Chart = {
-  cProg: {},
-  siteTree: {},
-  execImpsAgg:{},
-  vAv: {},
-  ativ:{},
-  impsPercent:{},
-  er: {},
-  erAv: {},
-  passiveC: {},
-  engagedC: {},
-  ctr: {},
-  ctd: {},
-  passiveHeat: {},
-  engagedHeat: {}
-};
+var Chart = {};
 
 function sizeChart(chart){
   var parentWidth = $('#' + chart.target).width();
   var parentHeight = $('#' + chart.target).height();
-
-  console.log(chart.target, parentWidth, parentHeight);
-
   chart.layout.width = parentWidth;
   chart.layout.height = parentHeight;
-
   Plotly.relayout(chart.target, chart.layout);
 }
 
 // ** EXECUTED IMPS  ** //
+
+Chart.execImpsAgg = {};
 
 Chart.execImpsAgg.target = "chart--execImpsAgg";
 Chart.execImpsAgg.data = [];
@@ -81,9 +63,9 @@ Chart.execImpsAgg.data[0] = {
 };
 
 Chart.execImpsAgg.data[1] = {
-  name: chartData.SS2Pre.name.trunc(10),
+  name: chartData.SS1Pre.name.trunc(10),
   x: chartData.campaign.dateList,
-  y: chartData.SS2Pre.data.execImpsAgg,
+  y: chartData.SS1Pre.data.execImpsAgg,
   type: 'scatter',
   fill: 'tozeroy',
   mode: 'line',
@@ -115,11 +97,13 @@ Plotly.newPlot(Chart.execImpsAgg.target, Chart.execImpsAgg.data, Chart.execImpsA
 
 // relayout to only show from start of campaign to today!
 
-Plotly.relayout(Chart.execImpsAgg.target, 'xaxis.range', [new Date(2017, 6, 1).getTime(), new Date().getTime()]);
+// Plotly.relayout(Chart.execImpsAgg.target, 'xaxis.range', [new Date(2017, 6, 1).getTime(), new Date().getTime()]);
 
 // ** VIEWABILITY AVERAGE CHART
 
-var ss2_viewb_Avg = average(chartData.SS2Pre.data.viewability, chartData.SS2Pre.dates);
+Chart.vAv = {};
+
+var ss2_viewb_Avg = average(chartData.SS1Pre.data.viewability, chartData.SS1Pre.dates);
 
 Chart.vAv.target = 'chart--vAv';
 Chart.vAv.data = [{
@@ -218,10 +202,93 @@ Plotly.newPlot(Chart.vAv.target, Chart.vAv.data, Chart.vAv.layout, {
   displayModeBar: false
 });
 
+// IMPS DELIVERED
 
+Chart.impsDel = {};
+
+var thisPCurDur = moment(new Date()).diff(moment(chartData.SS1Pre.dates.start), 'days');
+var thisImpsDel = chartData.SS1Pre.data.execImpsAgg[thisPCurDur - 1];
+// console.log('thisImpsDel', thisImpsDel);
+var thisImpsBooked = chartData.SS1Pre.bookedImps;
+var thisImpsBookedDaily = thisImpsBooked / duration(chartData.SS1Pre.dates);
+var thisImpsPercDel = thisImpsDel / thisImpsBooked * 100;
+// console.log('thisImpsPercDel',thisImpsPercDel);
+console.log('pCurDur', thisPCurDur);
+var thisImpsBench = Math.round(((thisImpsBookedDaily * thisPCurDur) / thisImpsBooked) * 100);
+
+
+Chart.impsDel.target = 'chart--impsDelivered';
+Chart.impsDel.data = [{
+    values: [thisImpsPercDel, 100 - thisImpsPercDel],
+    labels: ['Amount Delivered', 'remainder'],
+    hoverinfo: 'label+percent+name',
+    sort: false,
+    showlegend: false,
+    direction: 'clockwise',
+    hole: .8,
+    type: 'pie',
+  },
+  {
+    values: [thisImpsBench, 1, 100 - (thisImpsBench + 1)],
+    labels: ['', 'Expected', ''],
+    showlegend: false,
+    text: ['', (thisImpsBench + '%'), ''],
+    hoverinfo: 'none',
+    textinfo: 'label+text',
+    textposition: ['none', 'outside', 'none'],
+    marker: {
+      colors: ['rgba(255,0,0,0)', 'rgba(255,255,255, 0.5)', 'rgba(0,255,0,0)']
+    },
+    sort: false,
+    direction: 'clockwise',
+    hole: .2,
+    pull: .5,
+    type: 'pie'
+  },
+];
+
+Chart.impsDel.layout = {
+  title: 'Impressions Delivered (Executed)',
+  autosize: true,
+  annotations: [
+    {
+      font: {
+        size: 40
+      },
+      showarrow: false,
+      text: Math.round(thisImpsPercDel),
+      x: 0.5,
+      y: 0.5
+    },
+    {
+      font: {
+        size: 15
+      },
+      showarrow: false,
+      text: '%',
+      x: 0.58,
+      y: 0.53
+    }
+  ],
+  margin: {
+    l: 30,
+    r: 30,
+    b: 30,
+    t: 30,
+    pad: 0
+  },
+  paper_bgcolor: 'white',
+  plot_bgcolor: 'grey'
+};
+
+Plotly.newPlot(Chart.impsDel.target, Chart.impsDel.data, Chart.impsDel.layout, {
+  displayModeBar: false
+});
 
 
 // ** CAMPAIGN PROGRESS
+
+Chart.cProg = {};
 
 var currentDur = moment(new Date()).diff(moment(chartData.campaign.dates.start), 'days');
 var campDur = chartData.campaign.duration;
@@ -331,15 +398,188 @@ var ativAv = average(chartData.SS1Pre.data.ativ, chartData.SS1Pre.dates).toFixed
 
 $('#chart--ativAv .chart-single__value').text(ativAv);
 
+// PASSIVE COMPLETION RATE
 
-// Set size for charts
-sizeChart(Chart.execImpsAgg);
-sizeChart(Chart.cProg);
-sizeChart(Chart.vAv);
+var thisPassiveC = (average(chartData.SS1Pre.data.passiveCompletionRate, chartData.SS1Pre.dates) * 100).toFixed(2) ;
+$('#chart--passiveC .chart-single__value').text(thisPassiveC);
+
+// ENGAGED COMPLETION RATE
+
+var thisEngagedC = (average(chartData.SS1Pre.data.engagedCompletionRate, chartData.SS1Pre.dates) * 100).toFixed(2) ;
+$('#chart--engagedC .chart-single__value').text(thisEngagedC);
+
+// ENGAGEMENT RATE
+
+var thisErAv = (average(chartData.SS1Pre.data.engagementRate, chartData.SS1Pre.dates) * 100).toFixed(2) ;
+$('#chart--erAv .chart-single__value').text(thisErAv);
+
+
+
+// ** ENGAGEMENT RATE OVER TIME  ** //
+
+Chart.er = {};
+Chart.er.target = "chart--erTime";
+Chart.er.data = [];
+
+Chart.er.data[0] = {
+  name: chartData.SS1Pre.name.trunc(10),
+  x: chartData.campaign.dateList,
+  y: chartData.SS1Pre.data.engagementRate,
+  type: 'scatter',
+  fill: 'tozeroy',
+  mode: 'line',
+  line: {
+    color: 'rgb(255, 0, 0, 0.5)',
+    width: 0
+  }
+};
+
+Chart.er.layout = {
+  showlegend: false,
+  xaxis: {
+    type: 'date',
+    title: 'Date'
+  },
+  yaxis: {
+    title: 'Engagement Rate'
+  },
+  // title: 'Engagement Rate'
+};
+
+Plotly.newPlot(Chart.er.target, Chart.er.data, Chart.er.layout, {
+  displayModeBar: false
+});
+
+// ** CTR OVER TIME ** //
+
+Chart.ctrTime = {};
+Chart.ctrTime.target = "chart--ctrTime";
+Chart.ctrTime.data = [];
+
+Chart.ctrTime.data[0] = {
+  name: chartData.SS1Pre.name.trunc(10),
+  x: chartData.campaign.dateList,
+  y: chartData.SS1Pre.data.clickRate,
+  type: 'scatter',
+  fill: 'tozeroy',
+  mode: 'line',
+  line: {
+    color: 'rgb(255, 0, 0, 0.5)',
+    width: 0
+  }
+};
+
+Chart.ctrTime.layout = {
+  showlegend: false,
+  xaxis: {
+    type: 'date',
+    title: 'Date'
+  },
+  yaxis: {
+    title: 'Clickthrough Rate'
+  },
+  // title: 'CTR'
+};
+
+Plotly.newPlot(Chart.ctrTime.target, Chart.ctrTime.data, Chart.ctrTime.layout, {
+  displayModeBar: false
+});
+
+// ** COMPLETIONS OVER TIME  ** //
+
+Chart.completionsTime = {};
+Chart.completionsTime.target = "chart--completionsTime";
+Chart.completionsTime.data = [];
+
+Chart.completionsTime.data[0] = {
+  name: chartData.SS1Pre.name.trunc(10),
+  x: chartData.campaign.dateList,
+  y: chartData.SS1Pre.data.engagedCompletionRate,
+  type: 'scatter',
+  fill: 'tozeroy',
+  mode: 'line',
+  line: {
+    color: 'rgb(255, 0, 0, 0.5)',
+    width: 0
+  }
+};
+
+Chart.completionsTime.data[1] = {
+  name: chartData.SS1Pre.name.trunc(10),
+  x: chartData.campaign.dateList,
+  y: chartData.SS1Pre.data.passiveCompletionRate,
+  type: 'scatter',
+  fill: 'tozeroy',
+  mode: 'line',
+  line: {
+    // color: 'rgb(255, 0, 0, 0.5)',
+    width: 0
+  }
+};
+
+Chart.completionsTime.layout = {
+  showlegend: false,
+  xaxis: {
+    type: 'date',
+    title: 'Date'
+  },
+  yaxis: {
+    title: 'Clickthrough Rate'
+  },
+  // title: 'CTR'
+};
+
+Plotly.newPlot(Chart.completionsTime.target, Chart.completionsTime.data, Chart.completionsTime.layout, {
+  displayModeBar: false
+});
+
+
+// COMPLETION HEAT
+
+Chart.ecHeat = {};
+Chart.ecHeat.target = "chart--ecHeat";
+Chart.ecHeat.data = [];
+
+
+
+var avVid0 = average(chartData.SS1Pre.data.video.vid0, chartData.SS1Pre.dates);
+var avVid25 = average(chartData.SS1Pre.data.video.vid25, chartData.SS1Pre.dates);
+var avVid50 = average(chartData.SS1Pre.data.video.vid50, chartData.SS1Pre.dates);
+var avVid75 = average(chartData.SS1Pre.data.video.vid75, chartData.SS1Pre.dates);
+var avVid100 = average(chartData.SS1Pre.data.video.vid100, chartData.SS1Pre.dates);
+
+console.log(avVid0, avVid25, avVid50, avVid75, avVid100);
+
+var colorscaleValue = [
+  [0, 'grey'],
+  [1, 'red']
+];
+
+Chart.ecHeat.data = [
+  {
+    z: [[avVid0, avVid25, avVid50, avVid75, avVid100]],
+    x: ['0%', '25%', '50%', '75%', '100%'],
+    y: ['Video Completions'],
+    type: 'heatmap',
+    colorscale: colorscaleValue
+  }
+];
+
+Plotly.newPlot(Chart.ecHeat.target, Chart.ecHeat.data);
+
+// resize charts
+
+Object.keys(Chart).forEach(function(chart, index) {
+  if(typeof Chart[chart].target != 'undefined'){
+    sizeChart(Chart[chart]);
+  }
+});
 
 
 $(window).on('resize', function() {
-  sizeChart(Chart.execImpsAgg);
-  sizeChart(Chart.cProg);
-  sizeChart(Chart.vAv);
+  Object.keys(Chart).forEach(function(chart, index) {
+    if(typeof Chart[chart].target != 'undefined'){
+      sizeChart(Chart[chart]);
+    }
+  });
 });
