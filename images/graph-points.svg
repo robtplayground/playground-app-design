@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 21.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="graph-points" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
+	 y="0px" viewBox="0 0 1460 944" style="enable-background:new 0 0 1460 944;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:none;stroke:#31BF00;stroke-width:291;stroke-miterlimit:10;}
+	.st1{fill:none;stroke:#E93700;stroke-width:291;stroke-miterlimit:10;}
+	.st2{fill:none;stroke:#7D007F;stroke-width:291;stroke-miterlimit:10;}
+	.st3{fill:none;stroke:#FEFF15;stroke-width:291;stroke-miterlimit:10;}
+	.st4{fill:none;stroke:#553FFF;stroke-width:291;stroke-miterlimit:10;}
+	.st5{display:none;}
+	.st6{display:inline;fill:none;stroke:#31BF00;stroke-width:291;stroke-miterlimit:10;}
+	.st7{display:inline;fill:none;stroke:#E93700;stroke-width:291;stroke-miterlimit:10;}
+	.st8{display:inline;fill:none;stroke:#7D007F;stroke-width:291;stroke-miterlimit:10;}
+	.st9{display:inline;fill:none;stroke:#FEFF15;stroke-width:291;stroke-miterlimit:10;}
+	.st10{display:inline;fill:none;stroke:#553FFF;stroke-width:291;stroke-miterlimit:10;}
+	.st11{fill:none;stroke:#231F20;stroke-miterlimit:10;}
+	.st12{fill:none;}
+	.st13{display:none;fill:#F21454;}
+	.st14{fill:#F21454;}
+</style>
+<g id="piegroup1">
+	<path id="piestart5" class="st0" d="M352.8,88.7c-26.1-38.2-70-63.4-119.8-63.4c-33.6,0-64.5,11.4-89,30.5"/>
+	<path id="piestart4" class="st1" d="M144,55.9c-30.3,23.6-51,59-55.2,99.3"/>
+	<path id="piestart3" class="st2" d="M194.3,310.1c12.3,3.4,25.3,5.2,38.7,5.2c43.4,0,82.4-19.1,109-49.4"/>
+	<path id="piestart2" class="st3" d="M88.8,155.2c-0.5,5-0.8,10-0.8,15.1c0,66.7,45,122.8,106.3,139.8"/>
+	<path id="piestart1" class="st4" d="M342,266c22.4-25.5,36-59,36-95.6c0-30.3-9.3-58.4-25.2-81.6"/>
+</g>
+<g id="piegroup2" class="st5">
+	<path id="pieend5" class="st6" d="M334.6,66.9c-26.2-25.7-62-41.6-101.6-41.6c-49.9,0-93.8,25.2-119.9,63.5"/>
+	<path id="pieend4" class="st7" d="M113.1,88.8C97.2,112.1,88,140.1,88,170.3c0,16.9,2.9,33.1,8.2,48.2"/>
+	<path id="pieend3" class="st8" d="M262.8,312.3c53.3-11.1,95.9-51.6,110.1-103.7"/>
+	<path id="pieend2" class="st9" d="M96.2,218.5c19.9,56.4,73.6,96.8,136.8,96.8c10.2,0,20.2-1.1,29.8-3.1"/>
+	<path id="pieend1" class="st10" d="M372.9,208.5c3.3-12.2,5.1-25,5.1-38.2c0-40.5-16.6-77.1-43.4-103.4"/>
+</g>
+<polyline id="line2" class="st11" points="554.6,353.5 652.4,291.4 683.1,322.4 698.7,291.4 762.9,236.1 796,291.4 860.3,291.4
+	875.9,301.6 924.5,294.8 982.4,301.6 1039.4,324.7 1102.4,324.7 1140.5,301.6 "/>
+<polyline id="line1" class="st11" points="554.6,82.3 652.4,141 683.1,111.6 698.7,141 762.9,193.1 796,141 860.3,141 875.9,131.3
+	924.5,137.7 982.4,193.1 1039.4,109.5 1102.4,236.1 1140.5,131.3 "/>
+<rect class="st12" width="1460" height="944"/>
+<path id="bar2" class="st13" d="M106.5,883.5H75.4V575.3h31.2V883.5z M170.8,633.2h-31.2v250.3h31.2V633.2z M235.1,406.5h-31.2v477
+	h31.2V406.5z M363.6,536h-31.2v347.5h31.2V536z M492.1,406.5h-31.2v477h31.2V406.5z M556.3,564.3h-31.2v319.3h31.2V564.3z
+	 M620.6,628h-31.2v255.5h31.2V628z M427.8,507h-31.2v376.5h31.2V507z M299.3,575.3h-31.2v308.2h31.2V575.3z"/>
+<path id="bar1" class="st14" d="M106.5,883.5H75.4V775.9h31.2V883.5z M170.8,633.2h-31.2v250.3h31.2V633.2z M235.1,645h-31.2v238.5
+	h31.2V645z M363.6,536h-31.2v347.5h31.2V536z M492.1,593.6h-31.2v289.9h31.2V593.6z M556.3,461.6h-31.2v421.9h31.2V461.6z
+	 M620.6,508.1h-31.2v375.4h31.2V508.1z M427.8,742.1h-31.2v141.5h31.2V742.1z M299.3,672.6h-31.2v211h31.2V672.6z"/>
+</svg>

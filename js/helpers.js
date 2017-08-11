@@ -3,6 +3,23 @@ if(typeof require != "undefined"){
 	var moment = require('moment');
 }
 
+
+function setErrors(pathArray, targetArray){
+	console.log('pathArray', pathArray, 'targetArray', targetArray);
+	var values = targetArray.slice();
+	// console.log(targetArray)
+;	var path = pathArray.slice();
+	for(i = 0; i < path.length; i++){
+		// make path value into percentage value
+		var originalValue = values[i];
+		var percent = (path[i] - 100)/100 * -1;
+		var difference = values[i] * percent;
+		values[i] = Math.round(values[i] + difference);
+	}
+
+	return values;
+}
+
 // not sure how to get this dynamically for JS
 
 var rem = 16;
@@ -54,14 +71,17 @@ function breakText(string){
 	}
 }
 
+
+
 if(typeof module != 'undefined'){
 	module.exports = {
+		setErrors: setErrors,
 		randMinMax: randMinMax,
 		duration: duration,
 		arrayRange: arrayRange,
 		makeZeros: makeZeros,
 		listDates: listDates,
-		breakText: breakText
+		breakText: breakText,
 
 	};
 }

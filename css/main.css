@@ -1806,3 +1806,6 @@ body {
 .campaign__table__body .placements__table td.col__name {
   text-align: left;
 }
+.st0 {
+  display: block !important;
+}

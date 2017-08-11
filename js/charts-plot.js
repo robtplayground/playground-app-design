@@ -207,8 +207,9 @@ Plotly.newPlot(Chart.vAv.target, Chart.vAv.data, Chart.vAv.layout, {
 Chart.impsDel = {};
 
 var thisPCurDur = moment(new Date()).diff(moment(chartData.SS1Pre.dates.start), 'days');
+console.log(chartData.SS1Pre.dates.start, 'campapign', chartData.campaign.dates.start);
 var thisImpsDel = chartData.SS1Pre.data.execImpsAgg[thisPCurDur - 1];
-// console.log('thisImpsDel', thisImpsDel);
+console.log('thisImpsDel', thisImpsDel);
 var thisImpsBooked = chartData.SS1Pre.bookedImps;
 var thisImpsBookedDaily = thisImpsBooked / duration(chartData.SS1Pre.dates);
 var thisImpsPercDel = thisImpsDel / thisImpsBooked * 100;
