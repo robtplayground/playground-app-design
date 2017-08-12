@@ -456,17 +456,20 @@ a[href="http://www.amcharts.com/javascript-charts/"]{
 	}
 }
 
-#chart--vAvData, #chart--vAvBenchmarks{
+#chart--vAvData,
+#chart--vAvBenchmarks,
+#chart--impsDelData,
+#chart--impsDelBench{
 	position: absolute;
 	width: 100%;
 	height: 100%;
 
-	.amcharts-pie-label tspan{
-		font-weight: bold;
-		font-size: 1.5em;
-		fill: white;
-		text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
-	}
+	// .amcharts-pie-label tspan{
+	// 	font-weight: bold;
+	// 	font-size: 1.5em;
+	// 	fill: white;
+	// 	text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
+	// }
 }
 
 .chart__legend{
@@ -486,7 +489,7 @@ a[href="http://www.amcharts.com/javascript-charts/"]{
 		background: lighten(@pgxyz-pink, 10%);
 	}
 }
-.legend__format, .legend__iab{
+.legend__format, .legend__iab, .legend__impsDel{
 	// box-sizing: content-box;
 	position: absolute;
 	bottom:0;
@@ -497,6 +500,12 @@ a[href="http://www.amcharts.com/javascript-charts/"]{
 }
 .legend__iab{
 	text-align: right;
+	span:before{
+		background: red;
+	}
+}
+
+.legend__impsDel{
 	span:before{
 		background: red;
 	}

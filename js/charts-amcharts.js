@@ -199,90 +199,78 @@ function labelFunction(info) {
   }
 }
 
-
-
-}); // end AmCharts.ready
-
 // IMPS DELIVERED
 
-Chart.impsDel = {};
-
 var thisPCurDur = moment(new Date()).diff(moment(chartData.TTM_same.dates.start), 'days');
-console.log(chartData.TTM_same.dates.start, 'campapign', chartData.campaign.dates.start);
+
 var thisImpsDel = chartData.TTM_same.data.execImpsAgg[thisPCurDur - 1];
-console.log('thisImpsDel', thisImpsDel);
+
 var thisImpsBooked = chartData.TTM_same.bookedImps;
 var thisImpsBookedDaily = thisImpsBooked / duration(chartData.TTM_same.dates);
 var thisImpsPercDel = thisImpsDel / thisImpsBooked * 100;
-// console.log('thisImpsPercDel',thisImpsPercDel);
-console.log('pCurDur', thisPCurDur);
-console.log('bookedImpsDaily', thisImpsBookedDaily * thisPCurDur);
+
 // execImps bench is 10% below reqImps bench
-var thisImpsBench = Math.round(((thisImpsBookedDaily * 0.9 * thisPCurDur) / thisImpsBooked) * 100);
+var thisImpsBench = Math.round(((thisImpsBookedDaily * 0.9 * thisPCurDur) / thisImpsBooked)  * 100);
 
 
-Chart.impsDel.target = 'chart--impsDelivered';
-Chart.impsDel.data = [{
-    values: [thisImpsPercDel, 100 - thisImpsPercDel],
-    labels: ['Amount Delivered', 'remainder'],
-    hoverinfo: 'label+percent+name',
-    sort: false,
-    showlegend: false,
-    direction: 'clockwise',
-    hole: .8,
-    type: 'pie',
-  },
-  {
-    values: [thisImpsBench, 1, 100 - (thisImpsBench + 1)],
-    labels: ['', 'Expected', ''],
-    showlegend: false,
-    text: ['', (thisImpsBench + '%'), ''],
-    hoverinfo: 'none',
-    textinfo: 'label+text',
-    textposition: ['none', 'outside', 'none'],
-    marker: {
-      colors: ['rgba(255,0,0,0)', 'rgba(255,255,255, 0.5)', 'rgba(0,255,0,0)']
-    },
-    sort: false,
-    direction: 'clockwise',
-    hole: .2,
-    pull: .5,
-    type: 'pie'
-  },
+var impsDelData = [{progress: thisImpsPercDel, label: "Executed Impressions", color:"#5d3289"}, {progress: 100 - thisImpsPercDel, label: "", color: "lightgrey"}];
+
+var impsDelBench = [
+  {segment: thisImpsBench, color: "transparent"},
+  {segment: 1, label: "Expected: " + thisImpsBench + "%", color: "red"},
+  {segment: 100 - (thisImpsBench + 1), color: "transparent"}
 ];
 
-Chart.impsDel.layout = {
-  title: 'Impressions Delivered (Executed)',
-  autosize: true,
-  annotations: [{
-      font: {
-        size: 40
-      },
-      showarrow: false,
-      text: Math.round(thisImpsPercDel),
-      x: 0.5,
-      y: 0.5
-    },
-    {
-      font: {
-        size: 15
-      },
-      showarrow: false,
-      text: '%',
-      x: 0.58,
-      y: 0.53
-    }
-  ],
-  margin: {
-    l: 30,
-    r: 30,
-    b: 30,
-    t: 30,
-    pad: 0
-  },
-  paper_bgcolor: 'white',
-  plot_bgcolor: 'grey'
-};
+var chart4 = Chart.impsDelData = AmCharts.makeChart('chart--impsDelData', {
+  type: "pie",
+  theme: "light",
+  dataProvider: impsDelData,
+  valueField: "progress",
+  titleField: "label",
+  colorField: "color",
+  // labelFunction: labelFunction,
+  labelsEnabled: false,
+  // labelRadius: "-50%",
+  alphaField: "alpha",
+  innerRadius: "70%",
+  startDuration: 0,
+  allLabels: [{
+    text: Math.round(thisImpsPercDel),
+    align: "right",
+    size: 45,
+    // bold: true,
+    x: '55%',
+    y: '42%'
+  }, {
+    text: "%",
+    align: "left",
+    size: 15,
+    bold: false,
+    x: '55%',
+    y: '45%'
+  }],
+});
+
+var chart5 = Chart.impsDelBenchmarks = AmCharts.makeChart('chart--impsDelBench', {
+  type: "pie",
+  theme: "light",
+  dataProvider: impsDelBench,
+  valueField: "segment",
+  titleField: "label",
+  labelsEnabled: false,
+  // labelFunction: labelFunction,
+  // labelRadius: "-5%",
+  colorField: "color",
+  alphaField: "alpha",
+  innerRadius: "70%",
+  startDuration: 0,
+  addClassNames: true
+});
+
+$('.chart__legend.impsDel span').text('Expected: ' + thisImpsBench + '%');
+
+}); // end AmCharts.ready
+
 
 
 

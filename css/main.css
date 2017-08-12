@@ -1828,17 +1828,12 @@ a[href="http://www.amcharts.com/javascript-charts/"] {
   opacity: 1;
 }
 #chart--vAvData,
-#chart--vAvBenchmarks {
+#chart--vAvBenchmarks,
+#chart--impsDelData,
+#chart--impsDelBench {
   position: absolute;
   width: 100%;
   height: 100%;
-}
-#chart--vAvData .amcharts-pie-label tspan,
-#chart--vAvBenchmarks .amcharts-pie-label tspan {
-  font-weight: bold;
-  font-size: 1.5em;
-  fill: white;
-  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
 }
 .chart__legend {
   position: absolute;
@@ -1858,7 +1853,8 @@ a[href="http://www.amcharts.com/javascript-charts/"] {
   background: #ee4c83;
 }
 .legend__format,
-.legend__iab {
+.legend__iab,
+.legend__impsDel {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -1870,5 +1866,8 @@ a[href="http://www.amcharts.com/javascript-charts/"] {
   text-align: right;
 }
 .legend__iab span:before {
+  background: red;
+}
+.legend__impsDel span:before {
   background: red;
 }
