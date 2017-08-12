@@ -431,6 +431,10 @@ body{
 	display:block !important;
 }
 
+a[href="http://www.amcharts.com/javascript-charts/"]{
+	display:none !important;
+}
+
 #chart--execImpsAgg {
 	.amcharts-graph-stroke{
 		opacity:0;
@@ -449,5 +453,51 @@ body{
 	.amcharts-graph-stroke{
 		transition: opacity 1s linear 1s;
 		opacity: 1;
+	}
+}
+
+#chart--vAvData, #chart--vAvBenchmarks{
+	position: absolute;
+	width: 100%;
+	height: 100%;
+
+	.amcharts-pie-label tspan{
+		font-weight: bold;
+		font-size: 1.5em;
+		fill: white;
+		text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
+	}
+}
+
+.chart__legend{
+	position: absolute;
+	bottom: 0;
+	left:0;
+	width:100%;
+	font-size: @size-small;
+	span:before{
+		position: relative;
+		content:'';
+		width: 1.5em;
+		height: 1.5em;
+		display:inline-block;
+		margin-right: 1em;
+		top: 0.3em;
+		background: lighten(@pgxyz-pink, 10%);
+	}
+}
+.legend__format, .legend__iab{
+	// box-sizing: content-box;
+	position: absolute;
+	bottom:0;
+	left:0;
+	width: 100%;
+	text-align: left;
+	padding: 2em;
+}
+.legend__iab{
+	text-align: right;
+	span:before{
+		background: red;
 	}
 }

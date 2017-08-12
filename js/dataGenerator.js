@@ -56,6 +56,14 @@ var superSkin = {
   }
 };
 
+var topAndTail = {
+  benchmarks: {
+    viewability: 82,
+    er: 0.55,
+    ativ: 14
+  }
+};
+
 /***** METRICS  *****/
 
 function REQUESTED_IMPS(bookedImps, placementDates, errors){
@@ -642,6 +650,7 @@ var TTF_opp = createPlacement({
 module.exports = {
 	chartData: {
 		superSkin: superSkin,
+		topAndTail: topAndTail,
 		iab: iab,
 		campaign: campaign,
 	  SSM_same: SSM_same,

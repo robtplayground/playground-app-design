@@ -62,7 +62,7 @@ AmCharts.ready(function() {
     // data updated event will be fired when chart is first displayed,
     // also when data will be updated. We'll use it to set some
     // initial zoom
-    chart1.addListener("dataUpdated", zoomChart);
+    // chart1.addListener("dataUpdated", zoomChart);
     chart1.addListener("rendered", animChart);
 
     // AXES
@@ -126,140 +126,82 @@ AmCharts.ready(function() {
   // WRITE
   chart1.write("chart--execImpsAgg");
 
-}); // end AmCharts.ready
-
-function generateChartData() {
-    var chartData = [];
-    var firstDate = new Date();
-    firstDate.setDate(firstDate.getDate() - 100);
-
-        var visits = 1600;
-        var hits = 2900;
-        var views = 8700;
 
 
-    for (var i = 0; i < 100; i++) {
-        // we create date objects here. In your data, you can have date strings
-        // and then set format of your dates using chart.dataDateFormat property,
-        // however when possible, use date objects, as this will speed up chart rendering.
-        var newDate = new Date(firstDate);
-        newDate.setDate(newDate.getDate() + i);
-
-        visits += Math.round((Math.random()<0.5?1:-1)*Math.random()*10);
-        hits += Math.round((Math.random()<0.5?1:-1)*Math.random()*10);
-        views += Math.round((Math.random()<0.5?1:-1)*Math.random()*10);
-
-        chartData.push({
-            date: newDate,
-            visits: visits,
-            hits: hits,
-            views: views
-        });
-    }
-    return chartData;
-}
-
-console.log('chartDataAm', generateChartData());
 
 // ** VIEWABILITY AVERAGE CHART
+var viewb_Avg = Math.round(average(chartData.TTM_same.data.viewability, chartData.TTM_same.dates));
 
-Chart.vAv = {};
+console.log(viewb_Avg);
 
-var ss2_viewb_Avg = average(chartData.TTM_same.data.viewability, chartData.TTM_same.dates);
+var vAvData = [{viewability: viewb_Avg, label: "TT Viewability", color:"#5d3289"}, {viewability: 100 - viewb_Avg, label: "", color: "lightgrey"}];
 
-Chart.vAv.target = 'chart--vAv';
-Chart.vAv.data = [{
-    values: [ss2_viewb_Avg, 100 - ss2_viewb_Avg],
-    // domain: {
-    //   x: [0, 1],
-    //   y: [0, 0.8]
-    // },
-    labels: ['Viewability', 'remainder'],
-    hoverinfo: 'label+percent+name',
-    sort: false,
-    showlegend: false,
-    direction: 'clockwise',
-    hole: .8,
-    type: 'pie',
-  },
-  {
-    values: [chartData.iab.benchmarks.viewability, 1, 100 - (chartData.iab.benchmarks.viewability + 1)],
-    // domain: {
-    //   x: [0, 1],
-    //   y: [0, 0.8]
-    // },
-    labels: ['', 'IAB', ''],
-    showlegend: false,
-    text: ['', (chartData.iab.benchmarks.viewability + '%'), ''],
-    hoverinfo: 'none',
-    textinfo: 'label+text',
-    textposition: ['none', 'outside', 'none'],
-    marker: {
-      colors: ['rgba(255,0,0,0)', 'rgba(255,255,255, 0.5)', 'rgba(0,255,0,0)']
-    },
-    sort: false,
-    direction: 'clockwise',
-    hole: .2,
-    pull: .5,
-    type: 'pie'
-  },
-  {
-    values: [chartData.superSkin.benchmarks.viewability, 1, 100 - (chartData.superSkin.benchmarks.viewability + 1)],
-    // domain: {
-    //   x: [0, 1],
-    //   y: [0, 0.8]
-    // },
-    labels: ['', 'Super Skin', ''],
-    showlegend: false,
-    text: ['', (chartData.superSkin.benchmarks.viewability + '%'), ''],
-    hoverinfo: 'none',
-    textinfo: 'label+text',
-    textposition: ['none', 'outside', 'none'],
-    marker: {
-      colors: ['rgba(255,0,0,0)', 'rgba(255,255,255, 0.5)', 'rgba(0,255,0,0)']
-    },
-    sort: false,
-    direction: 'clockwise',
-    hole: .2,
-    pull: .5,
-    type: 'pie'
-  },
+var vAvBenchData = [
+  {segment: chartData.iab.benchmarks.viewability, color: "transparent"},
+  {segment: 1, label: "IAB: " + chartData.iab.benchmarks.viewability + "%", color: "red"},
+  {segment: chartData.topAndTail.benchmarks.viewability - chartData.iab.benchmarks.viewability - 1, color: "transparent"},
+  {segment: 1, label: "TT: " + chartData.topAndTail.benchmarks.viewability + '%', color: "#e91e63"},
+  {segment: 100 - 1 - chartData.topAndTail.benchmarks.viewability, color: "transparent"}
 ];
 
-Chart.vAv.layout = {
-  title: 'Viewability',
-  autosize: true,
-  annotations: [{
-      font: {
-        size: 40
-      },
-      showarrow: false,
-      text: Math.round(ss2_viewb_Avg),
-      x: 0.5,
-      y: 0.5
-    },
-    {
-      font: {
-        size: 15
-      },
-      showarrow: false,
-      text: '%',
-      x: 0.58,
-      y: 0.53
-    }
-  ],
-  margin: {
-    l: 30,
-    r: 30,
-    b: 30,
-    t: 30,
-    pad: 0
-  },
-  paper_bgcolor: 'white',
-  plot_bgcolor: 'grey'
-};
+var chart2 = Chart.vAvData = AmCharts.makeChart('chart--vAvData', {
+  type: "pie",
+  theme: "light",
+  dataProvider: vAvData,
+  valueField: "viewability",
+  titleField: "label",
+  colorField: "color",
+  // labelFunction: labelFunction,
+  labelsEnabled: false,
+  // labelRadius: "-50%",
+  alphaField: "alpha",
+  innerRadius: "70%",
+  startDuration: 0,
+  allLabels: [{
+    text: viewb_Avg,
+    align: "right",
+    size: 45,
+    // bold: true,
+    x: '55%',
+    y: '42%'
+  }, {
+    text: "%",
+    align: "left",
+    size: 15,
+    bold: false,
+    x: '55%',
+    y: '45%'
+  }],
+});
+
+var chart3 = Chart.vAvBenchmarks = AmCharts.makeChart('chart--vAvBenchmarks', {
+  type: "pie",
+  theme: "light",
+  dataProvider: vAvBenchData,
+  valueField: "segment",
+  titleField: "label",
+  labelsEnabled: false,
+  // labelFunction: labelFunction,
+  // labelRadius: "-5%",
+  colorField: "color",
+  alphaField: "alpha",
+  innerRadius: "70%",
+  startDuration: 0,
+  addClassNames: true
+});
+
+function labelFunction(info) {
+  var data = info.dataContext;
+  if (info.index != null && data.label) {
+    return data.label;
+  } else {
+    return "";
+  }
+}
 
 
+
+}); // end AmCharts.ready
 
 // IMPS DELIVERED
 

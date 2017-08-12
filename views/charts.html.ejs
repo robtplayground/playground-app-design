@@ -147,7 +147,14 @@
         </div>
       </div>
 
-      <div id="chart--vAv" class="chart grid-cell grid4"></div>
+      <div class="chart vAv grid-cell grid4">
+        <div id="chart--vAvData"></div>
+        <div id="chart--vAvBenchmarks"></div>
+        <div class="chart__legend">
+          <div class="legend__format"><span>TT: <%= chartData.topAndTail.benchmarks.viewability %>%</span></div>
+          <div class="legend__iab"><span>IAB: <%= chartData.iab.benchmarks.viewability %>%</span></div>
+        </div>
+      </div>
 
       <div id="chart--erAv" class="chart chart-single grid-cell grid4">
         <h3>Engagement Rate</h3>
