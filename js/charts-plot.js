@@ -50,9 +50,9 @@ Chart.execImpsAgg.data = [];
 // });
 
 Chart.execImpsAgg.data[0] = {
-  name: chartData.SS1Pre.name.trunc(10),
+  name: chartData.SSM_same.name.trunc(10),
   x: chartData.campaign.dateList,
-  y: chartData.SS1Pre.data.execImpsAgg,
+  y: chartData.SSM_same.data.execImpsAgg,
   type: 'scatter',
   fill: 'tozeroy',
   mode: 'line',
@@ -63,9 +63,9 @@ Chart.execImpsAgg.data[0] = {
 };
 
 Chart.execImpsAgg.data[1] = {
-  name: chartData.SS1Pre.name.trunc(10),
+  name: chartData.SSM_same.name.trunc(10),
   x: chartData.campaign.dateList,
-  y: chartData.SS1Pre.data.execImpsAgg,
+  y: chartData.SSM_same.data.execImpsAgg,
   type: 'scatter',
   fill: 'tozeroy',
   mode: 'line',
@@ -103,7 +103,7 @@ Plotly.newPlot(Chart.execImpsAgg.target, Chart.execImpsAgg.data, Chart.execImpsA
 
 Chart.vAv = {};
 
-var ss2_viewb_Avg = average(chartData.SS1Pre.data.viewability, chartData.SS1Pre.dates);
+var ss2_viewb_Avg = average(chartData.SSM_same.data.viewability, chartData.SSM_same.dates);
 
 Chart.vAv.target = 'chart--vAv';
 Chart.vAv.data = [{
@@ -206,12 +206,12 @@ Plotly.newPlot(Chart.vAv.target, Chart.vAv.data, Chart.vAv.layout, {
 
 Chart.impsDel = {};
 
-var thisPCurDur = moment(new Date()).diff(moment(chartData.SS1Pre.dates.start), 'days');
-console.log(chartData.SS1Pre.dates.start, 'campapign', chartData.campaign.dates.start);
-var thisImpsDel = chartData.SS1Pre.data.execImpsAgg[thisPCurDur - 1];
+var thisPCurDur = moment(new Date()).diff(moment(chartData.SSM_same.dates.start), 'days');
+console.log(chartData.SSM_same.dates.start, 'campapign', chartData.campaign.dates.start);
+var thisImpsDel = chartData.SSM_same.data.execImpsAgg[thisPCurDur - 1];
 console.log('thisImpsDel', thisImpsDel);
-var thisImpsBooked = chartData.SS1Pre.bookedImps;
-var thisImpsBookedDaily = thisImpsBooked / duration(chartData.SS1Pre.dates);
+var thisImpsBooked = chartData.SSM_same.bookedImps;
+var thisImpsBookedDaily = thisImpsBooked / duration(chartData.SSM_same.dates);
 var thisImpsPercDel = thisImpsDel / thisImpsBooked * 100;
 // console.log('thisImpsPercDel',thisImpsPercDel);
 console.log('pCurDur', thisPCurDur);
@@ -395,23 +395,23 @@ Plotly.newPlot(Chart.cProg.target, Chart.cProg.data, Chart.cProg.layout, {
 
 // ATIV
 
-var ativAv = average(chartData.SS1Pre.data.ativ, chartData.SS1Pre.dates).toFixed(1);
+var ativAv = average(chartData.SSM_same.data.ativ, chartData.SSM_same.dates).toFixed(1);
 
 $('#chart--ativAv .chart-single__value').text(ativAv);
 
 // PASSIVE COMPLETION RATE
 
-var thisPassiveC = (average(chartData.SS1Pre.data.passiveCompletionRate, chartData.SS1Pre.dates) * 100).toFixed(2) ;
+var thisPassiveC = (average(chartData.SSM_same.data.passiveCompletionRate, chartData.SSM_same.dates) * 100).toFixed(2) ;
 $('#chart--passiveC .chart-single__value').text(thisPassiveC);
 
 // ENGAGED COMPLETION RATE
 
-var thisEngagedC = (average(chartData.SS1Pre.data.engagedCompletionRate, chartData.SS1Pre.dates) * 100).toFixed(2) ;
+var thisEngagedC = (average(chartData.SSM_same.data.engagedCompletionRate, chartData.SSM_same.dates) * 100).toFixed(2) ;
 $('#chart--engagedC .chart-single__value').text(thisEngagedC);
 
 // ENGAGEMENT RATE
 
-var thisErAv = (average(chartData.SS1Pre.data.engagementRate, chartData.SS1Pre.dates) * 100).toFixed(2) ;
+var thisErAv = (average(chartData.SSM_same.data.engagementRate, chartData.SSM_same.dates) * 100).toFixed(2) ;
 $('#chart--erAv .chart-single__value').text(thisErAv);
 
 
@@ -423,9 +423,9 @@ Chart.er.target = "chart--erTime";
 Chart.er.data = [];
 
 Chart.er.data[0] = {
-  name: chartData.SS1Pre.name.trunc(10),
+  name: chartData.SSM_same.name.trunc(10),
   x: chartData.campaign.dateList,
-  y: chartData.SS1Pre.data.engagementRate,
+  y: chartData.SSM_same.data.engagementRate,
   type: 'scatter',
   fill: 'tozeroy',
   mode: 'line',
@@ -458,9 +458,9 @@ Chart.ctrTime.target = "chart--ctrTime";
 Chart.ctrTime.data = [];
 
 Chart.ctrTime.data[0] = {
-  name: chartData.SS1Pre.name.trunc(10),
+  name: chartData.SSM_same.name.trunc(10),
   x: chartData.campaign.dateList,
-  y: chartData.SS1Pre.data.clickRate,
+  y: chartData.SSM_same.data.clickRate,
   type: 'scatter',
   fill: 'tozeroy',
   mode: 'line',
@@ -493,9 +493,9 @@ Chart.completionsTime.target = "chart--completionsTime";
 Chart.completionsTime.data = [];
 
 Chart.completionsTime.data[0] = {
-  name: chartData.SS1Pre.name.trunc(10),
+  name: chartData.SSM_same.name.trunc(10),
   x: chartData.campaign.dateList,
-  y: chartData.SS1Pre.data.engagedCompletionRate,
+  y: chartData.SSM_same.data.engagedCompletionRate,
   type: 'scatter',
   fill: 'tozeroy',
   mode: 'line',
@@ -506,9 +506,9 @@ Chart.completionsTime.data[0] = {
 };
 
 Chart.completionsTime.data[1] = {
-  name: chartData.SS1Pre.name.trunc(10),
+  name: chartData.SSM_same.name.trunc(10),
   x: chartData.campaign.dateList,
-  y: chartData.SS1Pre.data.passiveCompletionRate,
+  y: chartData.SSM_same.data.passiveCompletionRate,
   type: 'scatter',
   fill: 'tozeroy',
   mode: 'line',
@@ -543,11 +543,11 @@ Chart.ecHeat.data = [];
 
 
 
-var avVid0 = average(chartData.SS1Pre.data.video.vid0, chartData.SS1Pre.dates);
-var avVid25 = average(chartData.SS1Pre.data.video.vid25, chartData.SS1Pre.dates);
-var avVid50 = average(chartData.SS1Pre.data.video.vid50, chartData.SS1Pre.dates);
-var avVid75 = average(chartData.SS1Pre.data.video.vid75, chartData.SS1Pre.dates);
-var avVid100 = average(chartData.SS1Pre.data.video.vid100, chartData.SS1Pre.dates);
+var avVid0 = average(chartData.SSM_same.data.video.vid0, chartData.SSM_same.dates);
+var avVid25 = average(chartData.SSM_same.data.video.vid25, chartData.SSM_same.dates);
+var avVid50 = average(chartData.SSM_same.data.video.vid50, chartData.SSM_same.dates);
+var avVid75 = average(chartData.SSM_same.data.video.vid75, chartData.SSM_same.dates);
+var avVid100 = average(chartData.SSM_same.data.video.vid100, chartData.SSM_same.dates);
 
 console.log(avVid0, avVid25, avVid50, avVid75, avVid100);
 

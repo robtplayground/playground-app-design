@@ -2,6 +2,7 @@ var moment = require('moment');
 var path = require('path');
 var helpers = require( path.resolve( __dirname, "helpers.js" ) );
 
+
 /***** CAMPAIGN  *****/
 
 // graphing will happen from 27 June 2017
@@ -24,13 +25,13 @@ function generateCampaign(options) {
 }
 
 var campaign = generateCampaign({
-	name:'Hero5 Mark II Launch',
+	name:'Hero5 Mark II ',
 	brand: "GoPro",
 	vertical: "Technology",
 	objective: "Awareness",
 	dates: {
 		start: new Date(2017, 6, 1),
-		end: new Date(2017, 8, 31)
+		end: new Date(2017, 7, 31)
 	}
 });
 
@@ -83,12 +84,9 @@ function REQUESTED_IMPS(bookedImps, placementDates, errors){
   }
 
 	// there are errors for this metric...
+
 	if(errors.reqImps){
-		var eRange = helpers.arrayRange(errors.reqImps, campaign);
-		// overwrite impressions with errors
-		for(var i = eRange.startPos; i < eRange.endPos; i++){
-			values.splice(i, 1, setError());
-	  }
+		values = helpers.setErrors(errors.reqImps.differences, values);
 	}
   return values;
 }
@@ -103,20 +101,11 @@ function EXECUTED_IMPS(reqImpsArray, errors){
 		}
   });
 
-	function setError(value){
-		// only 1/4 imps are executing
-		return Math.round(value / 4);
-	}
-
 	// there are errors for this metric...
-	if(errors.execImps){
-		var eRange = helpers.arrayRange(errors.execImps, campaign);
-		// overwrite impressions with errors
-		for(var i = eRange.startPos; i < eRange.endPos; i++){
-			values.splice(i, 1, setError(values[i]));
-	  }
-	}
 
+	if(errors.execImps){
+		values = helpers.setErrors(errors.execImps.differences, values);
+	}
   return values;
 }
 
@@ -130,19 +119,10 @@ function VIEWABLE_IMPS(execImpsArray, errors){
 		}
   });
 
-	function setError(){
-		// ad not viewable - not rendering - creative error?
-		return helpers.randMinMax(100, 60, true);
-	}
-
 	// there are errors for this metric...
-	if(errors.viewImps){
 
-		var eRange = helpers.arrayRange(errors.viewImps, campaign);
-		// overwrite impressions with errors
-		for(var i = eRange.startPos; i < eRange.endPos; i++){
-			values.splice(i, 1, setError());
-	  }
+	if(errors.viewImps){
+		values = helpers.setErrors(errors.viewImps.differences, values);
 	}
 
   return values;
@@ -175,7 +155,7 @@ function CLICKS(array){
   return values;
 }
 
-function ENGAGEMENTS(array){
+function ENGAGEMENTS(array, errors){
 	// create zeros
 	var values = array.slice();
 	values.forEach(function(value, i){
@@ -186,6 +166,13 @@ function ENGAGEMENTS(array){
 	    values.splice(i, 1, newValue);
 		}
   });
+
+	// there are errors for this metric...
+
+	if(errors.engagements){
+		values = helpers.setErrors(errors.engagements.differences, values);
+	}
+
   return values;
 }
 
@@ -322,7 +309,7 @@ function createPlacement(options){
 	// console.log(requestedImps);
 	var clicks = CLICKS(viewableImps);
 	var clickRate = PERCENT(clicks, executedImps);
-	var engagements = ENGAGEMENTS(viewableImps);
+	var engagements = ENGAGEMENTS(viewableImps, options.errors);
 	var passiveCompletions = PASSIVE_COMPLETIONS(engagements);
 	var engagedCompletions = ENGAGED_COMPLETIONS(engagements);
 	var clickEng = CLICKENG(clicks, engagements);
@@ -365,22 +352,40 @@ function createPlacement(options){
 	}
 }
 
+/***** ERRORS  *****/
+
+var errorPath_execImps1_8Aug = [200, 200, 200, 200, 200, 200, 200, 200, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100];
+
+var errorPath_viewb26_30July = [100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 139, 139, 143, 138, 137, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100];
+
+var errorPath_reqImps1Jul_30Aug = [100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 49, 47, 35, 42, 44, 53, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 97, 92, 88, 84, 78, 64, 34, 34, 30, 30, 30, 29];
+
+var errorPath_eng1Jul_30Aug = [133, 129, 127, 141, 125, 133, 143, 147, 130, 128, 123, 117, 123, 119, 118, 119, 119, 119, 119, 119, 119, 109, 109, 109, 109, 109, 109, 109, 109, 90, 90, 90, 90, 82, 82, 82, 82, 82, 82, 82, 68, 68, 68, 68, 68, 68, 68, 68, 68, 68, 68, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60];
+
 
 /***** GENERATE  *****/
 
 // SUPER SKIN, male, pre-launch,
 
-var SS1Pre = createPlacement({
-	name: '146560594_Airwave_GoPro_Target_MalesMetro18-44_PreLaunch',
-	bookedImps: 500000,
+var SSM_same = createPlacement({
+	name: '146560594_Airwave_GoPro_Target_MalesMetro18-44',
+	bookedImps: 200000,
 	dates: {
 		start: new Date(2017, 6, 1),
-		end: new Date(2017, 7, 16)
+		end: new Date(2017, 7, 31)
 	},
 	errors: {
-		reqImps:{
-			start: new Date(2017, 4, 30),
-			end: new Date(2017, 5, 5)
+		reqImps: {
+			differences: errorPath_reqImps1Jul_30Aug
+		},
+		viewImps: {
+			differences: errorPath_viewb26_30July
+		},
+		engagements: {
+			differences: errorPath_eng1Jul_30Aug
+		},
+		execImps: {
+			differences: errorPath_execImps1_8Aug
 		}
 	},
 	creative: {
@@ -395,23 +400,31 @@ var SS1Pre = createPlacement({
       to: 44
     },
     interests: ['Entertainment', 'Tech', 'Lifestyle', 'News' ],
-    locations: ['AU Metro', 'AU Regional']
+    locations: ['AU Metro']
   }
 });
 
 // SUPER SKIN, females, pre-launch
 
-var SS2Pre = createPlacement({
-	name: '146560595_Airwave_GoPro_Target_FemalesMetro18-44_PreLaunch',
-	bookedImps: 500000,
+var SSM_opp = createPlacement({
+	name: '146560595_Airwave_GoPro_Target_MalesMetro18-44',
+	bookedImps: 50000,
 	dates: {
 		start: new Date(2017, 6, 1),
-		end: new Date(2017, 7, 16)
+		end: new Date(2017, 7, 31)
 	},
 	errors: {
-		execImps:{
-			start: new Date(2017, 6, 1),
-			end: new Date(2017, 6, 30)
+		reqImps: {
+			differences: errorPath_reqImps1Jul_30Aug
+		},
+		viewImps: {
+			differences: errorPath_viewb26_30July
+		},
+		engagements: {
+			differences: errorPath_eng1Jul_30Aug
+		},
+		execImps: {
+			differences: errorPath_execImps1_8Aug
 		}
 	},
 	creative: {
@@ -426,24 +439,32 @@ var SS2Pre = createPlacement({
       to: 44
     },
     interests: ['Entertainment', 'Tech', 'Lifestyle', 'News' ],
-    locations: ['AU Metro', 'AU Regional']
+    locations: ['AU Metro']
   }
 });
 
 // SIDE-PUSH, males, pre-launch
 
-var SP1Pre = createPlacement({
-	name: '146560596_Airwave_GoPro_Target_MalesMetro18-44_Pre',
-	bookedImps: 500000,
+var SSF_same = createPlacement({
+	name: '146560596_Airwave_GoPro_Target_FemalesMetro18-44',
+	bookedImps: 200000,
 	dates: {
 		start: new Date(2017, 6, 1),
-		end: new Date(2017, 7, 16)
+		end: new Date(2017, 7, 31)
 	},
 	errors: {
-		// viewImps:{
-		// 	start: new Date(2017, 4, 3),
-		// 	end: new Date(2017, 4, 16)
-		// }
+		reqImps: {
+			differences: errorPath_reqImps1Jul_30Aug
+		},
+		viewImps: {
+			differences: errorPath_viewb26_30July
+		},
+		engagements: {
+			differences: errorPath_eng1Jul_30Aug
+		},
+		execImps: {
+			differences: errorPath_execImps1_8Aug
+		}
 	},
 	creative: {
     format: 'side-push',
@@ -457,22 +478,30 @@ var SP1Pre = createPlacement({
       to: 44
     },
     interests: ['Entertainment', 'Tech', 'Lifestyle', 'News' ],
-    locations: ['AU Metro', 'AU Regional']
+    locations: ['AU Metro']
   }
 });
 
-var SP2Pre = createPlacement({
-	name: '146560597_Airwave_GoPro_Target_FemalesMetro18-44_Pre',
-	bookedImps: 500000,
+var SSF_opp = createPlacement({
+	name: '146560597_Airwave_GoPro_Target_FemalesMetro18-44',
+	bookedImps: 50000,
 	dates: {
 		start: new Date(2017, 6, 1),
-		end: new Date(2017, 7, 16)
+		end: new Date(2017, 7, 31)
 	},
 	errors: {
-		// viewImps:{
-		// 	start: new Date(2017, 4, 3),
-		// 	end: new Date(2017, 4, 16)
-		// }
+		reqImps: {
+			differences: errorPath_reqImps1Jul_30Aug
+		},
+		viewImps: {
+			differences: errorPath_viewb26_30July
+		},
+		engagements: {
+			differences: errorPath_eng1Jul_30Aug
+		},
+		execImps: {
+			differences: errorPath_execImps1_8Aug
+		}
 	},
 	creative: {
     format: 'side-push',
@@ -486,24 +515,23 @@ var SP2Pre = createPlacement({
       to: 44
     },
     interests: ['Entertainment', 'Tech', 'Lifestyle', 'News' ],
-    locations: ['AU Metro', 'AU Regional']
+    locations: ['AU Metro']
   }
 });
 
 // SUPER SKIN, males, post-launch
 
-var SS1Post = createPlacement({
-	name: '146560598_Airwave_GoPro_Target_MalesMetro18-44_PreLaunch',
-	bookedImps: 500000,
+var TTM_same = createPlacement({
+	name: '146560598_Airwave_GoPro_Target_MalesMetro18-44',
+	bookedImps: 200000,
 	dates: {
-		start: new Date(2017, 7, 17),
-		end: new Date(2017, 8, 31)
+		start: new Date(2017, 6, 1),
+		end: new Date(2017, 7, 31)
 	},
 	errors: {
-		// reqImps:{
-		// 	start: new Date(2017, 4, 30),
-		// 	end: new Date(2017, 5, 5)
-		// }
+		reqImps: {
+			differences: errorPath_reqImps1Jul_30Aug
+		}
 	},
 	creative: {
     format: 'super-skin',
@@ -517,24 +545,23 @@ var SS1Post = createPlacement({
       to: 44
     },
     interests: ['Entertainment', 'Tech', 'Lifestyle', 'News' ],
-    locations: ['AU Metro', 'AU Regional']
+    locations: ['AU Metro']
   }
 });
 
 // SUPER SKIN, females, post-launch
 
-var SS2Post = createPlacement({
-	name: '146560599_Airwave_GoPro_Target_FemalesMetro18-44_PreLaunch',
-	bookedImps: 500000,
+var TTM_opp = createPlacement({
+	name: '146560599_Airwave_GoPro_Target_MalesMetro18-44',
+	bookedImps: 50000,
 	dates: {
-		start: new Date(2017, 7, 17),
-		end: new Date(2017, 8, 31)
+		start: new Date(2017, 6, 1),
+		end: new Date(2017, 7, 31)
 	},
 	errors: {
-		// execImps:{
-		// 	start: new Date(2017, 4, 10),
-		// 	end: new Date(2017, 4, 30)
-		// }
+		reqImps: {
+			differences: errorPath_reqImps1Jul_30Aug
+		}
 	},
 	creative: {
     format: 'super-skin',
@@ -548,24 +575,23 @@ var SS2Post = createPlacement({
       to: 44
     },
     interests: ['Entertainment', 'Tech', 'Lifestyle', 'News' ],
-    locations: ['AU Metro', 'AU Regional']
+    locations: ['AU Metro']
   }
 });
 
 // SIDE-PUSH, males, pre-launch
 
-var SP1Post = createPlacement({
-	name: '146560600_Airwave_GoPro_Target_MalesMetro18-44_Pre',
-	bookedImps: 500000,
+var TTF_same = createPlacement({
+	name: '146560600_Airwave_GoPro_Target_FemalesMetro18-44',
+	bookedImps: 200000,
 	dates: {
-		start: new Date(2017, 7, 17),
-		end: new Date(2017, 8, 31)
+		start: new Date(2017, 6, 1),
+		end: new Date(2017, 7, 31)
 	},
 	errors: {
-		// viewImps:{
-		// 	start: new Date(2017, 4, 3),
-		// 	end: new Date(2017, 4, 16)
-		// }
+		reqImps: {
+			differences: errorPath_reqImps1Jul_30Aug
+		}
 	},
 	creative: {
     format: 'side-push',
@@ -579,22 +605,21 @@ var SP1Post = createPlacement({
       to: 44
     },
     interests: ['Entertainment', 'Tech', 'Lifestyle', 'News' ],
-    locations: ['AU Metro', 'AU Regional']
+    locations: ['AU Metro']
   }
 });
 
-var SP2Post = createPlacement({
-	name: '146560601_Airwave_GoPro_Target_FemalesMetro18-44_Pre',
-	bookedImps: 500000,
+var TTF_opp = createPlacement({
+	name: '146560601_Airwave_GoPro_Target_FemalesMetro18-44',
+	bookedImps: 50000,
 	dates: {
-		start: new Date(2017, 7, 17),
-		end: new Date(2017, 8, 31)
+		start: new Date(2017, 6, 1),
+		end: new Date(2017, 7, 31)
 	},
 	errors: {
-		// viewImps:{
-		// 	start: new Date(2017, 4, 3),
-		// 	end: new Date(2017, 4, 16)
-		// }
+		reqImps: {
+			differences: errorPath_reqImps1Jul_30Aug
+		}
 	},
 	creative: {
     format: 'side-push',
@@ -608,7 +633,7 @@ var SP2Post = createPlacement({
       to: 44
     },
     interests: ['Entertainment', 'Tech', 'Lifestyle', 'News' ],
-    locations: ['AU Metro', 'AU Regional']
+    locations: ['AU Metro']
   }
 });
 
@@ -619,13 +644,13 @@ module.exports = {
 		superSkin: superSkin,
 		iab: iab,
 		campaign: campaign,
-	  SS1Pre: SS1Pre,
-	  SS2Pre: SS2Pre,
-	  SP1Pre: SP1Pre,
-	  SP2Pre: SP2Pre,
-	  SS1Post: SS1Post,
-	  SS2Post: SS2Post,
-	  SP1Post: SP1Post,
-	  SP2Post: SP2Post
+	  SSM_same: SSM_same,
+	  SSM_opp: SSM_opp,
+	  SSF_same: SSF_same,
+	  SSF_opp: SSF_opp,
+	  TTM_same: TTM_same,
+	  TTM_opp: TTM_opp,
+	  TTF_same: TTF_same,
+	  TTF_opp: TTF_opp
 	}
 };

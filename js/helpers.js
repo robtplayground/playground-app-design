@@ -5,7 +5,7 @@ if(typeof require != "undefined"){
 
 
 function setErrors(pathArray, targetArray){
-	console.log('pathArray', pathArray, 'targetArray', targetArray);
+	// console.log('pathArray', pathArray, 'targetArray', targetArray);
 	var values = targetArray.slice();
 	// console.log(targetArray)
 ;	var path = pathArray.slice();
