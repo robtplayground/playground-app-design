@@ -54,15 +54,16 @@ AmCharts.ready(function() {
       {name: 'viewImps',values: chartData.SSM_same.data.viewImpsAgg}
     ]);
     chart1.categoryField = "date";
-    chart1.startDuration = 1;
-    // chart1.sequencedAnimation = false;
+    chart1.startDuration = 0;
+    chart1.addClassNames = true;
 
     console.log('data', chart1.dataProvider);
 
     // data updated event will be fired when chart is first displayed,
     // also when data will be updated. We'll use it to set some
     // initial zoom
-    // chart1.addListener("dataUpdated", zoomChart);
+    chart1.addListener("dataUpdated", zoomChart);
+    chart1.addListener("rendered", animChart);
 
     // AXES
     // Category
@@ -79,7 +80,7 @@ AmCharts.ready(function() {
 
     // GRAPH 1
     var graph1 = new AmCharts.AmGraph();
-    graph1.type = "line"; // try to change it to "column"
+    graph1.type = "column"; // try to change it to "column"
     graph1.title = "red line";
     graph1.valueField = "execImps";
     graph1.lineAlpha = 1;
@@ -108,7 +109,13 @@ AmCharts.ready(function() {
     chart1.addChartScrollbar(chartScrollbar);
 
     // WRITE
-    chart1.write("chartdiv");
+    chart1.write("chart--execImpsAgg");
+
+    function animChart(){
+      setTimeout(function(){
+        $("#chart--execImpsAgg").addClass('animateChart');
+      }, 500);
+    }
 
   // this method is called when chart is first inited as we listen for "dataUpdated" event
   function zoomChart() {

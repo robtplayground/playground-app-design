@@ -1809,3 +1809,18 @@ body {
 .st0 {
   display: block !important;
 }
+#chart--execImpsAgg .amcharts-graph-stroke {
+  opacity: 0;
+}
+#chart--execImpsAgg .amcharts-graph-fill {
+  transform-origin: bottom center;
+  transform: scaleY(0);
+}
+#chart--execImpsAgg.animateChart .amcharts-graph-fill {
+  transition: transform 1s linear;
+  transform: scaleY(1);
+}
+#chart--execImpsAgg.animateChart .amcharts-graph-stroke {
+  transition: opacity 1s linear 1s;
+  opacity: 1;
+}
