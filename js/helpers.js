@@ -56,7 +56,8 @@ function listDates(dates){
 	for(var i=0; i < duration(dates); i++){
 		var thisStart = dates.start;
 		// console.log(thisStart);
-		var value = moment(thisStart).add(i, 'days').format('YYYY-MM-DD');
+		// var value = moment(thisStart).add(i, 'days').format('YYYY-MM-DD');
+		var value = moment(thisStart).add(i, 'days');
 		// console.log(value);
 		datesArray.push(value);
 	}
