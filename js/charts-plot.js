@@ -17,6 +17,7 @@ function average(array, dates) {
 var Chart = {};
 
 function sizeChart(chart){
+  console.log(chart.target);
   var parentWidth = $('#' + chart.target).width();
   var parentHeight = $('#' + chart.target).height();
   chart.layout.width = parentWidth;
@@ -90,14 +91,6 @@ Chart.execImpsAgg.layout = {
 Plotly.newPlot(Chart.execImpsAgg.target, Chart.execImpsAgg.data, Chart.execImpsAgg.layout, {
   displayModeBar: false
 });
-
-// relayout to only show 1 July - 4 July
-
-// Plotly.relayout(Chart.execImpsAgg.target, 'xaxis.range', [new Date(2017, 6, 1).getTime(), new Date(2017, 6, 4).getTime()]);
-
-// relayout to only show from start of campaign to today!
-
-// Plotly.relayout(Chart.execImpsAgg.target, 'xaxis.range', [new Date(2017, 6, 1).getTime(), new Date().getTime()]);
 
 // ** VIEWABILITY AVERAGE CHART
 
@@ -413,7 +406,7 @@ $('#chart--engagedC .chart-single__value').text(thisEngagedC);
 
 // ENGAGEMENT RATE
 
-var thisErAv = (average(chartData.TTM_same.data.engagementRate, chartData.TTM_same.dates) * 100).toFixed(2) ;
+var thisErAv = (average(chartData.TTM_same.data.engagementRate, chartData.TTM_same.dates)).toFixed(2) ;
 $('#chart--erAv .chart-single__value').text(thisErAv);
 
 
@@ -438,13 +431,14 @@ Chart.er.data[0] = {
 };
 
 Chart.er.layout = {
-  showlegend: false,
+  showlegend: true,
   xaxis: {
     type: 'date',
     title: 'Date'
   },
   yaxis: {
-    title: 'Engagement Rate'
+    range: [0, 2],
+    title: 'Engagement Rate (%)'
   },
   // title: 'Engagement Rate'
 };
@@ -479,7 +473,8 @@ Chart.ctrTime.layout = {
     title: 'Date'
   },
   yaxis: {
-    title: 'Clickthrough Rate'
+    range: [0, 1],
+    title: 'Clickthrough Rate (%)'
   },
   // title: 'CTR'
 };
@@ -495,7 +490,7 @@ Chart.completionsTime.target = "chart--completionsTime";
 Chart.completionsTime.data = [];
 
 Chart.completionsTime.data[0] = {
-  name: chartData.TTM_same.name.trunc(10),
+  name: 'Completion Rate (Engaged)',
   x: chartData.campaign.dateList,
   y: chartData.TTM_same.data.engagedCompletionRate,
   type: 'scatter',
@@ -508,7 +503,7 @@ Chart.completionsTime.data[0] = {
 };
 
 Chart.completionsTime.data[1] = {
-  name: chartData.TTM_same.name.trunc(10),
+  name: 'Completion Rate (Passive)',
   x: chartData.campaign.dateList,
   y: chartData.TTM_same.data.passiveCompletionRate,
   type: 'scatter',
@@ -521,13 +516,13 @@ Chart.completionsTime.data[1] = {
 };
 
 Chart.completionsTime.layout = {
-  showlegend: false,
+  showlegend: true,
   xaxis: {
     type: 'date',
     title: 'Date'
   },
   yaxis: {
-    title: 'Clickthrough Rate'
+    title: 'Completion Rate (%)'
   },
   // title: 'CTR'
 };
@@ -542,8 +537,6 @@ Plotly.newPlot(Chart.completionsTime.target, Chart.completionsTime.data, Chart.c
 Chart.ecHeat = {};
 Chart.ecHeat.target = "chart--ecHeat";
 Chart.ecHeat.data = [];
-
-
 
 var avVid0 = average(chartData.TTM_same.data.video.vid0, chartData.TTM_same.dates);
 var avVid25 = average(chartData.TTM_same.data.video.vid25, chartData.TTM_same.dates);
@@ -568,12 +561,15 @@ Chart.ecHeat.data = [
   }
 ];
 
+Chart.ecHeat.layout = {};
+
 Plotly.newPlot(Chart.ecHeat.target, Chart.ecHeat.data);
 
 // resize charts
 
 Object.keys(Chart).forEach(function(chart, index) {
   if(typeof Chart[chart].target != 'undefined'){
+    console.log(chart, Chart[chart]);
     sizeChart(Chart[chart]);
   }
 });
