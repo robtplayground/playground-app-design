@@ -279,7 +279,7 @@ $('.chart--impsDel .chart__legend__left span').text('Expected: ' + thisImpsBench
 
 
 
-}); // end AmCharts.ready
+
 
 // ** CAMPAIGN PROGRESS
 
@@ -350,102 +350,7 @@ var chart6 = Chart.cProg = AmCharts.makeChart('chart--cProg', {
   }
 } );
 
-
-
-Chart.cProg.target = 'chart--cProg';
-Chart.cProg.data = [{
-    values: [90, 270],
-    showlegend: false,
-    hoverinfo: 'none',
-    marker: {
-      colors: ['rgba(255,0,0,0)', '#ababab']
-    },
-    sort: true,
-    rotation: 225,
-    hole: .9,
-    type: 'pie'
-  },
-  {
-    values: [90, (270 * cProgPercent), (270 - (270 * cProgPercent))],
-    showlegend: false,
-    hoverinfo: 'none',
-    marker: {
-      colors: ['rgba(255,0,0,0)', 'rgb(0,255, 1)', 'rgba(255,0,0,0)']
-    },
-    sort: false,
-    direction: 'clockwise',
-    rotation: 135,
-    hole: .9,
-    type: 'pie'
-  },
-];
-
-Chart.cProg.layout = {
-  autosize: false,
-  annotations: [{
-      font: {
-        color: 'white',
-        size: 0.9 * rem,
-        weight: 700
-      },
-      // xref: 'paper',
-      // yref: 'paper',
-      x: 0.45,
-      xanchor: 'right',
-      y: -0.05,
-      yanchor: 'bottom',
-      text: moment(chartData.campaign.dates.start).format('ddd D MMMM'),
-      showarrow: false
-    }, {
-      font: {
-        color: 'white',
-        size: 0.9 * rem,
-        weight: 700
-      },
-      // xref: 'paper',
-      // yref: 'paper',
-      x: 0.55,
-      xanchor: 'left',
-      y: -0.05,
-      yanchor: 'bottom',
-      text: moment(chartData.campaign.dates.end).format('ddd D MMMM'),
-      showarrow: false
-    },
-    {
-      font: {
-        size: 13,
-        color: 'white'
-      },
-      showarrow: false,
-      text: 'DAYS LEFT',
-      x: .5,
-      y: .42,
-      yanchor: 'top'
-    },
-    {
-      font: {
-        size: 36,
-        color: 'white'
-      },
-      showarrow: false,
-      text: (campDur - currentDur),
-      x: .5,
-      y: .35,
-      yanchor: 'bottom'
-    }
-  ],
-  margin: {
-    l: 0,
-    r: 0,
-    b: 20,
-    t: 10,
-    pad: 200
-  },
-  paper_bgcolor: 'transparent',
-  plot_bgcolor: 'transparent'
-};
-
-
+}); // end AmCharts.ready
 
 
 // ATIV
