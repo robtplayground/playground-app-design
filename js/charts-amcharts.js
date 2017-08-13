@@ -47,19 +47,13 @@ Object.keys(pl).forEach(function(p){
     {name: 'viewImps',values: pl[p].data.viewImpsAgg}
   ]);
 });
-console.log(execImpsData);
 
+var dataIndex = 0;
 
 // SERIAL CHART
 var chart1 = Chart.execImpsAgg = AmCharts.makeChart("chart--execImpsAgg", {
   type: "serial",
-  dataProvider: prepData({
-    name: 'date',
-    values: cp.dateList
-  },[
-    {name: 'execImps',values: pl.SSM_same.data.execImpsAgg},
-    {name: 'viewImps',values: pl.SSM_same.data.viewImpsAgg}
-  ]),
+  dataProvider: [],
   categoryField: "date",
   startDuration: 0,
   addClassNames: true,
@@ -72,6 +66,8 @@ var chart1 = Chart.execImpsAgg = AmCharts.makeChart("chart--execImpsAgg", {
   valueAxes:[{
     gridAlpha: 0.07,
     title: "Executed Impressions",
+    minimum: 0,
+    maximum: 300000
   }],
   graphs: [{
     type: "line", // try to change it to "column"
@@ -94,9 +90,40 @@ var chart1 = Chart.execImpsAgg = AmCharts.makeChart("chart--execImpsAgg", {
   },
   chartScrollbar: {},
   listeners:[{
-    event: "rendered",
-    method: animChart
-  }]
+    event: "init",
+    method: function( e ) {
+      var chart = e.chart;
+      var keys = Object.keys(execImpsData);
+      var dataIndex = 0;
+
+      function getData() {
+        var data = execImpsData[keys[dataIndex]];
+        dataIndex++;
+        if (dataIndex > keys.length-1){
+          dataIndex = 0;
+        }
+        return data;
+      }
+
+      function loop() {
+        // chart.allLabels[0].text = currentYear;
+        var data = getData();
+        chart.animateData( data, {
+          duration: 1000,
+          complete: function() {
+            setTimeout( loop, 3000 );
+          }
+        } );
+      }
+
+      loop();
+    }
+  },
+  // {
+  //   event: "rendered",
+  //   method: animChart
+  // }
+]
 });
 
 // ** VIEWABILITY AVERAGE CHART
