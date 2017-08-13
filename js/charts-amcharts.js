@@ -16,14 +16,6 @@ function average(array, dates) {
 
 var Chart = {};
 
-function sizeChart(chart) {
-  console.log(chart.target);
-  var parentWidth = $('#' + chart.target).width();
-  var parentHeight = $('#' + chart.target).height();
-  chart.layout.width = parentWidth;
-  chart.layout.height = parentHeight;
-  // Plotly.relayout(chart.target, chart.layout);
-}
 
 function prepData(categoryObj, valuesArray) {
   var data = [];
@@ -426,40 +418,6 @@ var chart8 = Chart.erTime = AmCharts.makeChart("chart--erTime",{
 });
 
 
-// ** CTR OVER TIME ** //
-
-Chart.ctrTime = {};
-Chart.ctrTime.target = "chart--ctrTime";
-Chart.ctrTime.data = [];
-
-Chart.ctrTime.data[0] = {
-  name: chartData.TTM_same.name.trunc(10),
-  x: chartData.campaign.dateList,
-  y: chartData.TTM_same.data.clickRate,
-  type: 'scatter',
-  fill: 'tozeroy',
-  mode: 'line',
-  line: {
-    color: 'rgb(255, 0, 0, 0.5)',
-    width: 0
-  }
-};
-
-Chart.ctrTime.layout = {
-  showlegend: false,
-  xaxis: {
-    type: 'date',
-    title: 'Date'
-  },
-  yaxis: {
-    range: [0, 1],
-    title: 'Clickthrough Rate (%)'
-  },
-  // title: 'CTR'
-};
-
-
-
 // ** COMPLETIONS OVER TIME  ** //
 
 Chart.completionsTime = {};
@@ -506,12 +464,38 @@ Chart.completionsTime.layout = {
 
 
 
-
 // COMPLETION HEAT
 
-Chart.ecHeat = {};
-Chart.ecHeat.target = "chart--ecHeat";
-Chart.ecHeat.data = [];
+var ec_color1 = hexToRgb("#e91e63");
+var ec_color2 = hexToRgb("#666666");
+
+var pc_color1 = hexToRgb("#0078d8");
+var pc_color2 = hexToRgb("#666666");
+
+
+function hexToRgb(hex) {
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    var values = [];
+    if(result){
+      values.push(parseInt(result[1], 16));
+      values.push(parseInt(result[2], 16));
+      values.push(parseInt(result[3], 16));
+      return values;
+    }else{
+      return null;
+    }
+}
+
+function pickHex(color1, color2, weight) {
+    var p = weight;
+    var w = p * 2 - 1;
+    var w1 = (w/1+1) / 2;
+    var w2 = 1 - w1;
+    var rgb = [Math.round(color1[0] * w1 + color2[0] * w2),
+        Math.round(color1[1] * w1 + color2[1] * w2),
+        Math.round(color1[2] * w1 + color2[2] * w2)];
+    return rgb;
+}
 
 var avVid0 = average(chartData.TTM_same.data.video.vid0, chartData.TTM_same.dates);
 var avVid25 = average(chartData.TTM_same.data.video.vid25, chartData.TTM_same.dates);
@@ -519,21 +503,127 @@ var avVid50 = average(chartData.TTM_same.data.video.vid50, chartData.TTM_same.da
 var avVid75 = average(chartData.TTM_same.data.video.vid75, chartData.TTM_same.dates);
 var avVid100 = average(chartData.TTM_same.data.video.vid100, chartData.TTM_same.dates);
 
-console.log(avVid0, avVid25, avVid50, avVid75, avVid100);
+var ecRates = [{value: avVid25, label: "25% complete"}, {value: avVid50, label: "50% complete"}, {value: avVid75, label: "75% complete"}, {value: avVid100, label: "100% complete"}];
 
-var colorscaleValue = [
-  [0, 'grey'],
-  [1, 'red']
-];
+var pcRates = [{value: avVid25 + 10, label: "25% complete"}, {value: avVid50 + 15, label: "50% complete"}, {value: avVid75 + 5, label: "75% complete"}, {value: avVid100 + 12, label: "100% complete"}];
 
-Chart.ecHeat.data = [{
-  z: [
-    [avVid0, avVid25, avVid50, avVid75, avVid100]
-  ],
-  x: ['0%', '25%', '50%', '75%', '100%'],
-  y: ['Video Completions'],
-  type: 'heatmap',
-  colorscale: colorscaleValue
-}];
 
-Chart.ecHeat.layout = {};
+var ecHighVal = 0;
+var ecLowVal = 100;
+ecRates.forEach(function(obj){
+  if(obj.value > ecHighVal){
+    ecHighVal = obj.value;
+  }
+  if(obj.value < ecLowVal){
+    ecLowVal = obj.value;
+  }
+});
+ecRates.forEach(function(obj){
+  obj.color = [];
+  var colorPos = (obj.value - ecLowVal) / (ecHighVal - ecLowVal);
+  obj.color = 'rgb(' + pickHex(ec_color1, ec_color2, colorPos) + ')';
+  obj.stackHeight = 1;
+});
+
+var pcHighVal = 0;
+var pcLowVal = 100;
+pcRates.forEach(function(obj){
+  if(obj.value > pcHighVal){
+    pcHighVal = obj.value;
+  }
+  if(obj.value < pcLowVal){
+    pcLowVal = obj.value;
+  }
+});
+pcRates.forEach(function(obj){
+  obj.color = [];
+  var colorPos = (obj.value - pcLowVal) / (pcHighVal - pcLowVal);
+  obj.color = 'rgb(' + pickHex(pc_color1, pc_color2, colorPos) + ')';
+  obj.stackHeight = 1;
+});
+
+var chart9 = Chart.ecHeat = AmCharts.makeChart("chart--engagedCHeat",{
+  type: 'serial',
+  dataProvider: ecRates,
+  categoryField: "label",
+  startDuration: 0,
+  addClassNames: true,
+  categoryAxis: {
+    gridAlpha: 0,
+    axisAlpha: 0
+  },
+  valueAxes: [{
+    stackType: "regular",
+    title:" ",
+    gridAlpha:0,
+    axisAlpha:0,
+    minimum: 0,
+    maximum: 1,
+    labelsEnabled: false
+  }],
+  graphs: [{
+    columnWidth: 1,
+    type: "column", // try to change it to "column"
+    title: "Percent Completed",
+    valueField: "stackHeight",
+    colorField: "color",
+    fillAlphas: 0.9,
+    lineAlpha: 0,
+    // "labelOffset": -40,
+    "labelText": "Allo",
+    "labelPosition": "middle",
+    labelAnchor: "middle",
+    "color": "#fff",
+    labelFunction: function(item){
+      return Math.round(item.dataContext.value) + "%";
+    },
+    balloonText: ""
+  }]
+  // listeners: [{
+  //   event: "rendered",
+  //   method: animChart
+  // }]
+});
+
+var chart10 = Chart.pcHeat = AmCharts.makeChart("chart--passiveCHeat",{
+  type: 'serial',
+  dataProvider: pcRates,
+  categoryField: "label",
+  startDuration: 0,
+  addClassNames: true,
+  categoryAxis: {
+    gridAlpha: 0,
+    axisAlpha: 0
+  },
+  valueAxes: [{
+    stackType: "regular",
+    title:" ",
+    gridAlpha:0,
+    axisAlpha:0,
+    minimum: 0,
+    maximum: 1,
+    labelsEnabled: false
+  }],
+  graphs: [{
+    columnWidth: 1,
+    type: "column", // try to change it to "column"
+    title: "Percent Completed",
+    valueField: "stackHeight",
+    colorField: "color",
+    fillAlphas: 0.9,
+    lineAlpha: 0,
+    // "labelOffset": -40,
+    "labelText": "Allo",
+    "labelPosition": "middle",
+    labelAnchor: "middle",
+    "color": "#fff",
+    labelFunction: function(item){
+      return Math.round(item.dataContext.value) + "%";
+    },
+    balloonText: ""
+  }]
+  // listeners: [{
+  //   event: "rendered",
+  //   method: animChart
+  // }]
+});

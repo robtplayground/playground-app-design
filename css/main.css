@@ -1901,3 +1901,20 @@ a[href="http://www.amcharts.com/javascript-charts/"] {
 .chart--cProg .chart__render {
   background: transparent;
 }
+.chart--heat {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  height: 23rem;
+}
+.chart--heat h3 {
+  position: relative;
+}
+.chart--heat .chart__render {
+  position: relative;
+  height: 30%;
+  width: 100%;
+}
+.chart--heat .amcharts-graph-label {
+  font-size: 15px;
+}
