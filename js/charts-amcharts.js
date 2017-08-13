@@ -526,24 +526,3 @@ Chart.ecHeat.data = [{
 }];
 
 Chart.ecHeat.layout = {};
-
-
-
-
-// resize charts
-
-Object.keys(Chart).forEach(function(chart, index) {
-  if (typeof Chart[chart].target != 'undefined') {
-    console.log(chart, Chart[chart]);
-    sizeChart(Chart[chart]);
-  }
-});
-
-
-$(window).on('resize', function() {
-  Object.keys(Chart).forEach(function(chart, index) {
-    if (typeof Chart[chart].target != 'undefined') {
-      sizeChart(Chart[chart]);
-    }
-  });
-});
