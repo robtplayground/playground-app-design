@@ -32,7 +32,8 @@
       </div>
     </div>
 
-    <div id="chart--cProg" class="chart campaign-progress grid-cell grid4">
+    <div class="chart campaign-progress grid-cell grid4">
+      <div class="chart__render" id="chart--cProg"></div>
       <!-- Plotly graph -->
     </div>
     <div class="campaign-edit grid-cell grid1">
@@ -60,7 +61,7 @@
 
         <h2>Group by:</h2>
 
-        <select class="data-filter__group-select chosen-select">
+        <select class="data-filter__group-select">
           <option value="Delivery">Campaign</option>
           <option value="Audience" selected>Placement</option>
           <option value="Category">Format</option>
@@ -85,7 +86,7 @@
 
         <h2>Split by:</h2>
 
-        <select class="data-filter__split-select chosen-select">
+        <select class="data-filter__split-select">
           <option value="Delivery">Sites</option>
           <option value="Audience">Location</option>
           <option value="Category">Gender</option>
@@ -110,124 +111,164 @@
 
     </div>
 
-    <div class="charts grid-cell grid10 no-gutter">
+    <div class="content grid-cell grid10 no-gutter">
 
       <div class="grid-cell grid12">
 
-        <h2>Campaign Delivery: All Sites</h2>
+        <div class="chart chart--execImpsAgg">
 
-        <div class="chart-wrapper">
+          <h3>Campaign Delivery: All Sites</h3>
 
-          <select class="chart-wrapper__select chosen-select" name="" id="">
+          <div class="chart__controls">
+            <select class="chart__select">
             <option value="Cumulative">Cumulative</option>
             <option value="Individual">Individual</option>
           </select>
+          </div>
 
-          <div id="chart--execImpsAgg" class="chart"></div>
+          <div id="chart--execImpsAgg" class="chart__render"></div>
 
         </div>
 
       </div>
 
-      <div class="chart chart-impsDel grid-cell grid4">
-        <div id="chart--impsDelData"></div>
-        <div id="chart--impsDelBench"></div>
-        <div class="chart__legend impsDel">
-          <div class="legend__impsDel"><span></span></div>
-        </div>
-      </div>
-
-
-      <div id="chart--ativAv" class="chart chart-ativAv  chart-single grid-cell grid4">
-        <h3>Time in View</h3>
-        <div class="chart-single__circle">
-          <div class="chart-single__value"></div>
-        </div>
-        <div class="chart-single__bm">
-          <div class="bm__iab">
-            +3.2
-          </div>
-          <div class="bm__pgxyz">
-            -0.3
+      <div class="grid-cell grid4">
+        <div class="chart chart--impsDel">
+          <h3>Delivery</h3>
+          <div class="chart__render" id="chart--impsDelData"></div>
+          <div class="chart__render" id="chart--impsDelBench"></div>
+          <div class="chart__legend">
+            <div class="chart__legend__left"><span></span></div>
           </div>
         </div>
       </div>
 
-      <div class="chart chart-vAv grid-cell grid4">
-        <div id="chart--vAvData"></div>
-        <div id="chart--vAvBenchmarks"></div>
-        <div class="chart__legend">
-          <div class="legend__format"><span>TT: <%= chartData.topAndTail.benchmarks.viewability %>%</span></div>
-          <div class="legend__iab"><span>IAB: <%= chartData.iab.benchmarks.viewability %>%</span></div>
-        </div>
-      </div>
 
-      <div id="chart--erAv" class="chart chart-single grid-cell grid4">
-        <h3>Engagement Rate</h3>
-        <div class="chart-single__circle">
-          <div class="chart-single__value"></div>
-        </div>
-        <div class="chart-single__bm">
-          <div class="bm__iab">
-            +3.2
-          </div>
-          <div class="bm__pgxyz">
-            -0.3
-          </div>
-        </div>
-      </div>
+      <div class="grid-cell grid4">
+        <div id="chart--ativAv" class="chart chart--ativAv">
+          <h3>Time in View</h3>
+          <div class="chart__render">
+            <div class="chart__circle">
+              <div class="chart__circle__value"></div>
+            </div>
 
-      <div id="chart--passiveC" class="chart chart-single grid-cell grid4">
-        <h3>Passive Completion Rate</h3>
-        <div class="chart-single__circle">
-          <div class="chart-single__value"></div>
-        </div>
-        <div class="chart-single__bm">
-          <div class="bm__iab">
-            +3.2
           </div>
-          <div class="bm__pgxyz">
-            -0.3
+          <div class="chart__legend">
+            <div class="chart__legend__left">
+              <span class="legend__label">PGXYZ: </span>
+              <span class="legend__value">-1.2</span>
+            </div>
+            <div class="chart__legend__right">
+              <span class="legend__label">IAB: </span>
+              <span class="legend__value">+3.2</span>
+            </div>
           </div>
         </div>
       </div>
 
-      <div id="chart--engagedC" class="chart chart-single grid-cell grid4">
-        <h3>Engaged Completion Rate</h3>
-        <div class="chart-single__circle">
-          <div class="chart-single__value"></div>
-        </div>
-        <div class="chart-single__bm">
-          <div class="bm__iab">
-            +3.2
+      <div class="grid-cell grid4">
+        <div class="chart chart--vAv">
+          <h3>Viewability</h3>
+          <div id="chart--vAvData" class="chart__render"></div>
+          <div id="chart--vAvBenchmarks" class="chart__render"></div>
+          <div class="chart__legend">
+            <div class="chart__legend__left">
+              <span class="legend__label">TT: </span>
+              <span class="legend__value"><%= chartData.topAndTail.benchmarks.viewability %>%2</span>
+            </div>
+            <div class="chart__legend__right">
+              <span class="legend__label">IAB: </span>
+              <span class="legend__value"><%= chartData.iab.benchmarks.viewability %>%</span>
+            </div>
           </div>
-          <div class="bm__pgxyz">
-            -0.3
+        </div>
+      </div>
+
+      <div class="grid-cell grid4">
+        <div class="chart chart--erAv">
+          <h3>Engagement Rate</h3>
+          <div id="chart--erAv" class="chart__render">
+            <div class="chart__circle">
+              <div class="chart__circle__value"></div>
+            </div>
+          </div>
+          <div class="chart__legend">
+            <div class="chart__legend__left">
+              <span class="legend__label">PGXYZ: </span>
+              <span class="legend__value">-1.2</span>
+            </div>
+            <div class="chart__legend__right">
+              <span class="legend__label">IAB: </span>
+              <span class="legend__value">+3.2</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="grid-cell grid4">
+        <div class="chart chart--passiveC">
+          <h3>Passive Completion Rate</h3>
+          <div id="chart--passiveC" class="chart__render">
+            <div class="chart__circle">
+              <div class="chart__circle__value"></div>
+            </div>
+          </div>
+          <div class="chart__legend">
+            <div class="chart__legend__left">
+              <span class="legend__label">PGXYZ: </span>
+              <span class="legend__value">-1.2</span>
+            </div>
+            <div class="chart__legend__right">
+              <span class="legend__label">IAB: </span>
+              <span class="legend__value">+3.2</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-cell grid4">
+        <div class="chart chart--engagedC">
+          <h3>Engaged Completion Rate</h3>
+          <div id="chart--engagedC" class="chart__render">
+            <div class="chart__circle">
+              <div class="chart__circle__value"></div>
+            </div>
+          </div>
+          <div class="chart__legend">
+            <div class="chart__legend__left">
+              <span class="legend__label">PGXYZ: </span>
+              <span class="legend__value">-1.2</span>
+            </div>
+            <div class="chart__legend__right">
+              <span class="legend__label">IAB: </span>
+              <span class="legend__value">+3.2</span>
+            </div>
           </div>
         </div>
       </div>
 
       <div class="grid-cell grid12">
-        <div class="chart-wrapper">
-          <div id="chart--erTime" class="chart"></div>
+        <div class="chart">
+          <div id="chart--erTime" class="chart__render"></div>
         </div>
       </div>
 
       <div class="grid-cell grid12">
-        <div class="chart-wrapper">
-          <div id="chart--ctrTime" class="chart"></div>
+        <div class="chart">
+          <div id="chart--ctrTime" class="chart__render"></div>
         </div>
       </div>
 
       <div class="grid-cell grid12">
-        <div class="chart-wrapper">
-          <div id="chart--completionsTime" class="chart"></div>
+        <div class="chart">
+          <div id="chart--completionsTime" class="chart__render"></div>
         </div>
       </div>
 
       <div class="grid-cell grid12">
-        <div class="chart-wrapper">
-          <div id="chart--ecHeat" class="chart"></div>
+        <div class="chart">
+          <div id="chart--ecHeat" class="chart__render"></div>
         </div>
       </div>
 

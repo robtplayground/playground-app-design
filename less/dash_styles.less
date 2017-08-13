@@ -160,49 +160,26 @@ body{
 	width: 1em;
 }
 
-.chart{
-	&:before{
-		content: '?';
-		.flex-center;
-		position:absolute;
-		width: 1.3em;
-		height: 1.3em;
-		font-size: @size-small;
-		border: 1px solid @black;
-		border-radius: 100%;
-		top: 0;
-		right: 0;
-		z-index: 10;
-		margin: 0.6em;
-	}
-}
-
-.chart{
-	height: 20rem;
-}
 
 .chart#chart--cProg{
 	height: 100%;
 }
 
-.chart-single{
-	.flex-center;
-	flex-direction: column;
-}
 
-.chart-single h3{
+
+.chart h3{
 	// no justify-self at the moment
 	position: absolute;
 	top:0;
 	width: 100%;
 	text-align: center;
 	font-weight: 400;
-	font-size: @size-1;
+	font-size: @size-0;
 	margin-top: 1.5rem;
 	text-transform: uppercase;
 }
 
-.chart-single__circle{
+.chart__circle{
 	.flex-center;
 	flex-direction: column;
 	width: 10rem;
@@ -213,36 +190,8 @@ body{
 	border-radius: 100%;
 }
 
-.chart-single__value{
-}
-
-.chart-single__bm{
-	display:flex;
-	justify-content: space-between;
-	position: absolute;
-	bottom:0;
-	width: 100%;
-	text-align: center;
-	font-weight: 400;
-	font-size: @size-0;
-	margin-top: 1.5rem;
-	text-transform: uppercase;
-	margin-bottom: 0.5rem;
-}
-
-.bm__iab{
-	color: lime;
-	&:before{
-		content: 'IAB: ';
-		color: @black;
-	}
-}
-.bm__pgxyz{
-	color: red;
-	&:before{
-		content: 'PGXYZ: ';
-		color: @black;
-	}
+.chart__circle__value{
+	color: white
 }
 
 .campaigns{
@@ -427,8 +376,11 @@ body{
 	}
 }
 
-.st0{
-	display:block !important;
+
+// charts
+
+.content{
+	flex-wrap: wrap;
 }
 
 a[href="http://www.amcharts.com/javascript-charts/"]{
@@ -456,11 +408,40 @@ a[href="http://www.amcharts.com/javascript-charts/"]{
 	}
 }
 
-#chart--vAvData,
-#chart--vAvBenchmarks,
-#chart--impsDelData,
-#chart--impsDelBench{
+.chart{
+	display:flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	position: relative;
+	width: ~"calc(100% - 1rem)";
+	margin: 1rem 0.5rem;
+	height: 20rem;
+	border-radius: 0.5rem;
+	border: 1px solid @lightgrey;
+	background: @palegrey;
+	overflow:hidden;
+
+	&:before{
+		content: '?';
+		.flex-center;
+		position:absolute;
+		width: 1.3em;
+		height: 1.3em;
+		font-size: @size-small;
+		border: 1px solid @black;
+		border-radius: 100%;
+		top: 0;
+		right: 0;
+		z-index: 10;
+		margin: 0.6em;
+	}
+}
+
+.chart__render{
 	position: absolute;
+	.flex-center;
+	top:0;
+	left:0;
 	width: 100%;
 	height: 100%;
 
@@ -478,18 +459,8 @@ a[href="http://www.amcharts.com/javascript-charts/"]{
 	left:0;
 	width:100%;
 	font-size: @size-small;
-	span:before{
-		position: relative;
-		content:'';
-		width: 1.5em;
-		height: 1.5em;
-		display:inline-block;
-		margin-right: 1em;
-		top: 0.3em;
-		background: lighten(@pgxyz-pink, 10%);
-	}
 }
-.legend__format, .legend__iab, .legend__impsDel{
+.chart__legend__left, .chart__legend__right{
 	// box-sizing: content-box;
 	position: absolute;
 	bottom:0;
@@ -497,16 +468,41 @@ a[href="http://www.amcharts.com/javascript-charts/"]{
 	width: 100%;
 	text-align: left;
 	padding: 2em;
-}
-.legend__iab{
-	text-align: right;
-	span:before{
-		background: red;
+	font-size: @size-xsmall;
+	&:before{
+		position: relative;
+		content:'';
+		width: 1.5em;
+		height: 1.5em;
+		display:inline-block;
+		margin-right: 0.5em;
+		top: 0.4em;
+		background: lighten(@pgxyz-pink, 10%);
 	}
 }
 
-.legend__impsDel{
-	span:before{
-		background: red;
+.chart__legend__right{
+	text-align: right;
+}
+
+.chart--execImpsAgg{
+	height: 25rem;
+	.chart__controls{
+		width:100%;
+		height: 10%;
+		margin-top: 3.5rem;
+	}
+	.chart__render{
+		position: relative;
+		height: 75%;
+		width: ~"calc(100% - 2rem)";
+	}
+}
+
+.chart--vAv{
+	.chart__legend__right{
+		&:before{
+			background: red;
+		}
 	}
 }

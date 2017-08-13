@@ -13,7 +13,7 @@ function format (option) {
 
 };
 
-$('.chart-wrapper select').select2({
+$('.chart__select').select2({
   templateResult: format,
   templateSelection: format,
   minimumResultsForSearch: Infinity

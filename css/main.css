@@ -903,7 +903,7 @@ th {
 /*   MEDIA QUERIES */
 html {
   height: 100%;
-  font-size: 18px;
+  font-size: 16px;
 }
 body {
   padding-top: 0.1px;
@@ -963,6 +963,7 @@ body:before {
   min-height: 2rem;
   margin: 0 0.5rem;
   flex: 1;
+  overflow: hidden;
 }
 .grid-cell.no-gutter {
   margin: 0;
@@ -1572,45 +1573,20 @@ body {
   height: 1em;
   width: 1em;
 }
-.chart:before {
-  content: '?';
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  width: 1.3em;
-  height: 1.3em;
-  font-size: 0.833rem;
-  border: 1px solid #222222;
-  border-radius: 100%;
-  top: 0;
-  right: 0;
-  z-index: 10;
-  margin: 0.6em;
-}
-.chart {
-  height: 20rem;
-}
 .chart#chart--cProg {
   height: 100%;
 }
-.chart-single {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-}
-.chart-single h3 {
+.chart h3 {
   position: absolute;
   top: 0;
   width: 100%;
   text-align: center;
   font-weight: 400;
-  font-size: 1.2rem;
+  font-size: 1rem;
   margin-top: 1.5rem;
   text-transform: uppercase;
 }
-.chart-single__circle {
+.chart__circle {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1622,32 +1598,8 @@ body {
   font-size: 2.074rem;
   border-radius: 100%;
 }
-.chart-single__bm {
-  display: flex;
-  justify-content: space-between;
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  text-align: center;
-  font-weight: 400;
-  font-size: 1rem;
-  margin-top: 1.5rem;
-  text-transform: uppercase;
-  margin-bottom: 0.5rem;
-}
-.bm__iab {
-  color: lime;
-}
-.bm__iab:before {
-  content: 'IAB: ';
-  color: #222222;
-}
-.bm__pgxyz {
-  color: red;
-}
-.bm__pgxyz:before {
-  content: 'PGXYZ: ';
-  color: #222222;
+.chart__circle__value {
+  color: white;
 }
 .campaigns {
   align-self: flex-start;
@@ -1806,8 +1758,8 @@ body {
 .campaign__table__body .placements__table td.col__name {
   text-align: left;
 }
-.st0 {
-  display: block !important;
+.content {
+  flex-wrap: wrap;
 }
 a[href="http://www.amcharts.com/javascript-charts/"] {
   display: none !important;
@@ -1827,11 +1779,42 @@ a[href="http://www.amcharts.com/javascript-charts/"] {
   transition: opacity 1s linear 1s;
   opacity: 1;
 }
-#chart--vAvData,
-#chart--vAvBenchmarks,
-#chart--impsDelData,
-#chart--impsDelBench {
+.chart {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  position: relative;
+  width: calc(100% - 1rem);
+  margin: 1rem 0.5rem;
+  height: 20rem;
+  border-radius: 0.5rem;
+  border: 1px solid #efefef;
+  background: #fafafa;
+  overflow: hidden;
+}
+.chart:before {
+  content: '?';
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: absolute;
+  width: 1.3em;
+  height: 1.3em;
+  font-size: 0.833rem;
+  border: 1px solid #222222;
+  border-radius: 100%;
+  top: 0;
+  right: 0;
+  z-index: 10;
+  margin: 0.6em;
+}
+.chart__render {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
 }
@@ -1842,32 +1825,43 @@ a[href="http://www.amcharts.com/javascript-charts/"] {
   width: 100%;
   font-size: 0.833rem;
 }
-.chart__legend span:before {
-  position: relative;
-  content: '';
-  width: 1.5em;
-  height: 1.5em;
-  display: inline-block;
-  margin-right: 1em;
-  top: 0.3em;
-  background: #ee4c83;
-}
-.legend__format,
-.legend__iab,
-.legend__impsDel {
+.chart__legend__left,
+.chart__legend__right {
   position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
   text-align: left;
   padding: 2em;
+  font-size: 0.694rem;
 }
-.legend__iab {
+.chart__legend__left:before,
+.chart__legend__right:before {
+  position: relative;
+  content: '';
+  width: 1.5em;
+  height: 1.5em;
+  display: inline-block;
+  margin-right: 0.5em;
+  top: 0.4em;
+  background: #ee4c83;
+}
+.chart__legend__right {
   text-align: right;
 }
-.legend__iab span:before {
-  background: red;
+.chart--execImpsAgg {
+  height: 25rem;
 }
-.legend__impsDel span:before {
+.chart--execImpsAgg .chart__controls {
+  width: 100%;
+  height: 10%;
+  margin-top: 3.5rem;
+}
+.chart--execImpsAgg .chart__render {
+  position: relative;
+  height: 75%;
+  width: calc(100% - 2rem);
+}
+.chart--vAv .chart__legend__right:before {
   background: red;
 }

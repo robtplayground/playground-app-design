@@ -160,16 +160,16 @@ var chart2 = Chart.vAvData = AmCharts.makeChart('chart--vAvData', {
   allLabels: [{
     text: viewb_Avg,
     align: "right",
-    size: 45,
+    size: 35,
     // bold: true,
-    x: '55%',
-    y: '42%'
+    x: '58%',
+    y: '43%'
   }, {
     text: "%",
     align: "left",
     size: 15,
     bold: false,
-    x: '55%',
+    x: '58%',
     y: '45%'
   }],
 });
@@ -236,18 +236,25 @@ var chart4 = Chart.impsDelData = AmCharts.makeChart('chart--impsDelData', {
   startDuration: 0,
   allLabels: [{
     text: Math.round(thisImpsPercDel),
-    align: "right",
-    size: 45,
+    align: "center",
+    size: 35,
     // bold: true,
-    x: '55%',
-    y: '42%'
+    x: '1%',
+    y: '41%'
   }, {
     text: "%",
-    align: "left",
+    align: "center",
     size: 15,
     bold: false,
-    x: '55%',
-    y: '45%'
+    x: '-11%',
+    y: '42%'
+  },{
+    text: thisImpsDel.toLocaleString(),
+    align: "center",
+    size: 12,
+    bold: false,
+    x: '0%',
+    y: '55%'
   }],
 });
 
@@ -267,7 +274,7 @@ var chart5 = Chart.impsDelBenchmarks = AmCharts.makeChart('chart--impsDelBench',
   addClassNames: true
 });
 
-$('.chart__legend.impsDel span').text('Expected: ' + thisImpsBench + '%');
+$('.chart--impsDel .chart__legend__left span').text('Expected: ' + thisImpsBench + '%');
 
 }); // end AmCharts.ready
 
@@ -382,22 +389,22 @@ Chart.cProg.layout = {
 
 var ativAv = average(chartData.TTM_same.data.ativ, chartData.TTM_same.dates).toFixed(1);
 
-$('#chart--ativAv .chart-single__value').text(ativAv);
+$('#chart--ativAv .chart__circle__value').text(ativAv);
 
 // PASSIVE COMPLETION RATE
 
 var thisPassiveC = (average(chartData.TTM_same.data.passiveCompletionRate, chartData.TTM_same.dates) * 100).toFixed(2);
-$('#chart--passiveC .chart-single__value').text(thisPassiveC);
+$('#chart--passiveC .chart__circle__value').text(thisPassiveC);
 
 // ENGAGED COMPLETION RATE
 
 var thisEngagedC = (average(chartData.TTM_same.data.engagedCompletionRate, chartData.TTM_same.dates) * 100).toFixed(2);
-$('#chart--engagedC .chart-single__value').text(thisEngagedC);
+$('#chart--engagedC .chart__circle__value').text(thisEngagedC);
 
 // ENGAGEMENT RATE
 
 var thisErAv = (average(chartData.TTM_same.data.engagementRate, chartData.TTM_same.dates)).toFixed(2);
-$('#chart--erAv .chart-single__value').text(thisErAv);
+$('#chart--erAv .chart__circle__value').text(thisErAv);
 
 
 
