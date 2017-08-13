@@ -463,20 +463,21 @@ a[href="http://www.amcharts.com/javascript-charts/"]{
 	text-align: left;
 	padding: 2em;
 	font-size: @size-xsmall;
-	&:before{
-		position: relative;
-		content:'';
-		width: 1.5em;
-		height: 1.5em;
-		display:inline-block;
-		margin-right: 0.5em;
-		top: 0.4em;
-		background: lighten(@pgxyz-pink, 10%);
+}
+
+.chart__legend__left{
+	.legend__value{
+		font-weight: 700;
+		color: red
 	}
 }
 
 .chart__legend__right{
 	text-align: right;
+	.legend__value{
+		font-weight: 700;
+		color: lime
+	}
 }
 
 .chart--execImpsAgg{
@@ -493,7 +494,38 @@ a[href="http://www.amcharts.com/javascript-charts/"]{
 	}
 }
 
+.chart--impsDel{
+	.chart__legend__left{
+		&:before{
+			position: relative;
+			content:'';
+			width: 1.5em;
+			height: 1.5em;
+			display:inline-block;
+			margin-right: 0.5em;
+			top: 0.4em;
+			background: red;
+		}
+	}
+}
+
 .chart--vAv{
+	.chart__legend__left,
+	.chart__legend__right{
+		.legend__value{
+			color: @black;
+		}
+		&:before{
+			position: relative;
+			content:'';
+			width: 1.5em;
+			height: 1.5em;
+			display:inline-block;
+			margin-right: 0.5em;
+			top: 0.4em;
+			background: lighten(@pgxyz-pink, 10%);
+		}
+	}
 	.chart__legend__right{
 		&:before{
 			background: red;

@@ -1836,19 +1836,16 @@ a[href="http://www.amcharts.com/javascript-charts/"] {
   padding: 2em;
   font-size: 0.694rem;
 }
-.chart__legend__left:before,
-.chart__legend__right:before {
-  position: relative;
-  content: '';
-  width: 1.5em;
-  height: 1.5em;
-  display: inline-block;
-  margin-right: 0.5em;
-  top: 0.4em;
-  background: #ee4c83;
+.chart__legend__left .legend__value {
+  font-weight: 700;
+  color: red;
 }
 .chart__legend__right {
   text-align: right;
+}
+.chart__legend__right .legend__value {
+  font-weight: 700;
+  color: lime;
 }
 .chart--execImpsAgg {
   height: 25rem;
@@ -1862,6 +1859,31 @@ a[href="http://www.amcharts.com/javascript-charts/"] {
   position: relative;
   height: 75%;
   width: calc(100% - 2rem);
+}
+.chart--impsDel .chart__legend__left:before {
+  position: relative;
+  content: '';
+  width: 1.5em;
+  height: 1.5em;
+  display: inline-block;
+  margin-right: 0.5em;
+  top: 0.4em;
+  background: red;
+}
+.chart--vAv .chart__legend__left .legend__value,
+.chart--vAv .chart__legend__right .legend__value {
+  color: #222222;
+}
+.chart--vAv .chart__legend__left:before,
+.chart--vAv .chart__legend__right:before {
+  position: relative;
+  content: '';
+  width: 1.5em;
+  height: 1.5em;
+  display: inline-block;
+  margin-right: 0.5em;
+  top: 0.4em;
+  background: #ee4c83;
 }
 .chart--vAv .chart__legend__right:before {
   background: red;

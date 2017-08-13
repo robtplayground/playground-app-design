@@ -60,6 +60,7 @@ var chart1;
     chart1.categoryField = "date";
     chart1.startDuration = 0;
     chart1.addClassNames = true;
+    chart1.marginRight = 40;
 
     // chart1.addListener("dataUpdated", zoomChart);
     chart1.addListener("rendered", animChart);
@@ -377,12 +378,15 @@ var chart8 = Chart.erTime = AmCharts.makeChart("chart--erTime",{
   dataProvider: prepData({
     name: 'date',
     values: chartData.campaign.dateList
-  },[
-    {name: 'engagementRate',values: chartData.TTM_same.data.engagementRate}
-  ]),
+  },[{
+    name: 'engagementRate', values: chartData.TTM_same.data.engagementRate
+  },{
+    name: 'clickthroughRate', values: chartData.TTM_same.data.clickRate
+  }]),
   categoryField: "date",
   startDuration: 0,
   addClassNames: true,
+  marginRight: 40,
   categoryAxis: {
     parseDates: true, // in order char to understand dates, we should set parseDates to true
     gridAlpha: 0.07,
@@ -390,16 +394,23 @@ var chart8 = Chart.erTime = AmCharts.makeChart("chart--erTime",{
   },
   valueAxes: [{
     gridAlpha:0.07,
-    title:"Engagement Rate",
+    title:"Engagement",
     minimum: 0,
     maximum: 2
   }],
   graphs: [{
     type: "line", // try to change it to "column"
-    title: "red line",
+    title: "Engagement Rate",
     valueField: "engagementRate",
     lineAlpha: 1,
     lineColor: "#d1cf2a",
+    fillAlphas: 0.3
+  },{
+    type: "line", // try to change it to "column"
+    title: "Clickthrough Rate",
+    valueField: "clickthroughRate",
+    lineAlpha: 1,
+    lineColor: "#e91e63",
     fillAlphas: 0.3
   }],
   chartScrollbar: {},
@@ -407,6 +418,7 @@ var chart8 = Chart.erTime = AmCharts.makeChart("chart--erTime",{
     cursorPosition: "mouse",
     categoryBalloonDateFormat: "JJ:NN, DD MMMM"
   },
+  legend: {},
   listeners: [{
     event: "rendered",
     method: animChart
