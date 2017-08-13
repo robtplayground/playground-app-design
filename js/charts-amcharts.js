@@ -370,12 +370,9 @@ $('#chart--erAv .chart__circle__value').text(thisErAv);
 
 // ** ENGAGEMENT RATE OVER TIME  ** //
 
-Chart.er = {};
-Chart.er.target = "chart--erTime";
-Chart.er.data = [];
 
 // SERIAL CHART
-var chart8 = Chart.execImpsAgg = AmCharts.makeChart("chart--erTime",{
+var chart8 = Chart.erTime = AmCharts.makeChart("chart--erTime",{
   type: 'serial',
   dataProvider: prepData({
     name: 'date',
@@ -391,10 +388,12 @@ var chart8 = Chart.execImpsAgg = AmCharts.makeChart("chart--erTime",{
     gridAlpha: 0.07,
     axisColor: "#DADADA"
   },
-  valueAxis: {
+  valueAxes: [{
     gridAlpha:0.07,
-    title:"Engagement Rate"
-  },
+    title:"Engagement Rate",
+    minimum: 0,
+    maximum: 2
+  }],
   graphs: [{
     type: "line", // try to change it to "column"
     title: "red line",
