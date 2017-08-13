@@ -381,6 +381,7 @@ a[href="http://www.amcharts.com/javascript-charts/"]{
 	display:none !important;
 }
 
+#chart--erTime,
 #chart--execImpsAgg {
 	.amcharts-graph-stroke{
 		opacity:0;
@@ -389,16 +390,15 @@ a[href="http://www.amcharts.com/javascript-charts/"]{
 		transform-origin: bottom center;
 		transform: scaleY(0);
 	}
-}
-
-#chart--execImpsAgg.animateChart {
-	.amcharts-graph-fill{
-		transition: transform 1s linear;
-		transform: scaleY(1);
-	}
-	.amcharts-graph-stroke{
-		transition: opacity 1s linear 1s;
-		opacity: 1;
+	&.animateChart {
+		.amcharts-graph-fill{
+			transition: transform 1s linear;
+			transform: scaleY(1);
+		}
+		.amcharts-graph-stroke{
+			transition: opacity 1s linear 1s;
+			opacity: 1;
+		}
 	}
 }
 

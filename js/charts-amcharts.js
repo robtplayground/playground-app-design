@@ -38,11 +38,15 @@ function prepData(categoryObj, valuesArray) {
   return data;
 }
 
+function animChart(event){
+  setTimeout(function(){
+    $(event.chart.div).addClass('animateChart');
+  }, 500);
+}
+
 // ** EXECUTED IMPS  ** //
 
 var chart1;
-
-AmCharts.ready(function() {
 
     // SERIAL CHART
     var chart1 = Chart.execImpsAgg = new AmCharts.AmSerialChart();
@@ -57,11 +61,6 @@ AmCharts.ready(function() {
     chart1.startDuration = 0;
     chart1.addClassNames = true;
 
-    console.log('data', chart1.dataProvider);
-
-    // data updated event will be fired when chart is first displayed,
-    // also when data will be updated. We'll use it to set some
-    // initial zoom
     // chart1.addListener("dataUpdated", zoomChart);
     chart1.addListener("rendered", animChart);
 
@@ -80,7 +79,7 @@ AmCharts.ready(function() {
 
     // GRAPH 1
     var graph1 = new AmCharts.AmGraph();
-    graph1.type = "column"; // try to change it to "column"
+    graph1.type = "line"; // try to change it to "column"
     graph1.title = "red line";
     graph1.valueField = "execImps";
     graph1.lineAlpha = 1;
@@ -111,11 +110,7 @@ AmCharts.ready(function() {
     // WRITE
     chart1.write("chart--execImpsAgg");
 
-    function animChart(){
-      setTimeout(function(){
-        $("#chart--execImpsAgg").addClass('animateChart');
-      }, 500);
-    }
+
 
   // this method is called when chart is first inited as we listen for "dataUpdated" event
   function zoomChart() {
@@ -125,8 +120,6 @@ AmCharts.ready(function() {
 
   // WRITE
   chart1.write("chart--execImpsAgg");
-
-
 
 
 // ** VIEWABILITY AVERAGE CHART
@@ -350,7 +343,6 @@ var chart6 = Chart.cProg = AmCharts.makeChart('chart--cProg', {
   }
 } );
 
-}); // end AmCharts.ready
 
 
 // ATIV
@@ -382,32 +374,45 @@ Chart.er = {};
 Chart.er.target = "chart--erTime";
 Chart.er.data = [];
 
-Chart.er.data[0] = {
-  name: chartData.TTM_same.name.trunc(10),
-  x: chartData.campaign.dateList,
-  y: chartData.TTM_same.data.engagementRate,
-  type: 'scatter',
-  fill: 'tozeroy',
-  mode: 'line',
-  line: {
-    color: 'rgb(255, 0, 0, 0.5)',
-    width: 0
-  }
-};
-
-Chart.er.layout = {
-  showlegend: true,
-  xaxis: {
-    type: 'date',
-    title: 'Date'
+// SERIAL CHART
+var chart8 = Chart.execImpsAgg = AmCharts.makeChart("chart--erTime",{
+  type: 'serial',
+  dataProvider: prepData({
+    name: 'date',
+    values: chartData.campaign.dateList
+  },[
+    {name: 'engagementRate',values: chartData.TTM_same.data.engagementRate}
+  ]),
+  categoryField: "date",
+  startDuration: 0,
+  addClassNames: true,
+  categoryAxis: {
+    parseDates: true, // in order char to understand dates, we should set parseDates to true
+    gridAlpha: 0.07,
+    axisColor: "#DADADA"
   },
-  yaxis: {
-    range: [0, 2],
-    title: 'Engagement Rate (%)'
+  valueAxis: {
+    gridAlpha:0.07,
+    title:"Engagement Rate"
   },
-  // title: 'Engagement Rate'
-};
-
+  graphs: [{
+    type: "line", // try to change it to "column"
+    title: "red line",
+    valueField: "engagementRate",
+    lineAlpha: 1,
+    lineColor: "#d1cf2a",
+    fillAlphas: 0.3
+  }],
+  chartScrollbar: {},
+  chartCursor: {
+    cursorPosition: "mouse",
+    categoryBalloonDateFormat: "JJ:NN, DD MMMM"
+  },
+  listeners: [{
+    event: "rendered",
+    method: animChart
+  }]
+});
 
 
 // ** CTR OVER TIME ** //
