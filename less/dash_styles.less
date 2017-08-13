@@ -161,12 +161,6 @@ body{
 }
 
 
-.chart#chart--cProg{
-	height: 100%;
-}
-
-
-
 .chart h3{
 	// no justify-self at the moment
 	position: absolute;
@@ -505,4 +499,19 @@ a[href="http://www.amcharts.com/javascript-charts/"]{
 			background: red;
 		}
 	}
+}
+
+.chart--cProg{
+	height: ~"calc(100% - 1rem)";
+	margin: 0.5rem;
+	border-radius: 0;
+	border:0;
+	background: transparent;
+	&:before{
+		display:none;
+	}
+	.chart__render{
+		background:transparent;
+	}
+
 }

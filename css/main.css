@@ -1573,9 +1573,6 @@ body {
   height: 1em;
   width: 1em;
 }
-.chart#chart--cProg {
-  height: 100%;
-}
 .chart h3 {
   position: absolute;
   top: 0;
@@ -1864,4 +1861,17 @@ a[href="http://www.amcharts.com/javascript-charts/"] {
 }
 .chart--vAv .chart__legend__right:before {
   background: red;
+}
+.chart--cProg {
+  height: calc(100% - 1rem);
+  margin: 0.5rem;
+  border-radius: 0;
+  border: 0;
+  background: transparent;
+}
+.chart--cProg:before {
+  display: none;
+}
+.chart--cProg .chart__render {
+  background: transparent;
 }

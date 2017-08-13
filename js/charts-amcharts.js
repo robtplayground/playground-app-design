@@ -276,18 +276,81 @@ var chart5 = Chart.impsDelBenchmarks = AmCharts.makeChart('chart--impsDelBench',
 
 $('.chart--impsDel .chart__legend__left span').text('Expected: ' + thisImpsBench + '%');
 
+
+
+
 }); // end AmCharts.ready
 
-
-
-
 // ** CAMPAIGN PROGRESS
-
-Chart.cProg = {};
 
 var currentDur = moment(new Date()).diff(moment(chartData.campaign.dates.start), 'days');
 var campDur = chartData.campaign.duration;
 var cProgPercent = currentDur / campDur;
+
+var chart6 = Chart.cProg = AmCharts.makeChart('chart--cProg', {
+  "type": "gauge",
+  "axes": [ {
+    backgroundColor: "#000",
+    labelsEnabled: false,
+    "axisThickness": 0,
+    "axisAlpha": 0,
+    "tickAlpha": 0,
+    "startValue": 0,
+    "endValue": 100,
+    "bands": [{
+      "color": "red",
+      "startValue": 0,
+      "endValue": cProgPercent * 100,
+      "radius": "100%",
+      "innerRadius": "85%"
+    }, {
+      "color": "lightgrey",
+      "startValue": cProgPercent * 100,
+      "endValue": 100,
+      "radius": "100%",
+      "innerRadius": "85%",
+      "balloonText": "90%"
+    }],
+  } ],
+  "allLabels": [{
+    "text": moment(chartData.campaign.dates.start).format('ddd D MMMM'),
+    "x": "40%",
+    "y": "80%",
+    "size": 10,
+    "bold": true,
+    "color": "#fff",
+    "align": "right"
+  }, {
+    "text": moment(chartData.campaign.dates.end).format('ddd D MMMM'),
+    "x": "60%",
+    "y": "80%",
+    "size": 10,
+    "bold": true,
+    "color": "#fff",
+    "align": "left"
+  }, {
+    "text": campDur - currentDur,
+    "x": 4,
+    "y": "35%",
+    "size": 25,
+    "bold": false,
+    "color": "#fff",
+    "align": "center"
+  }, {
+    "text": "DAYS LEFT",
+    "x": 0,
+    "y": "60%",
+    "size": 9,
+    "bold": false,
+    "color": "#fff",
+    "align": "center"
+  }],
+  "export": {
+    "enabled": true
+  }
+} );
+
+
 
 Chart.cProg.target = 'chart--cProg';
 Chart.cProg.data = [{
