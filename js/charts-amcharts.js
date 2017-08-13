@@ -505,7 +505,7 @@ var avVid100 = average(chartData.TTM_same.data.video.vid100, chartData.TTM_same.
 
 var ecRates = [{value: avVid25, label: "25% complete"}, {value: avVid50, label: "50% complete"}, {value: avVid75, label: "75% complete"}, {value: avVid100, label: "100% complete"}];
 
-var pcRates = [{value: avVid25 + 10, label: "25% complete"}, {value: avVid50 + 15, label: "50% complete"}, {value: avVid75 + 5, label: "75% complete"}, {value: avVid100 + 12, label: "100% complete"}];
+var pcRates = [{value: avVid25 - 6, label: "25% complete"}, {value: avVid50 + 1, label: "50% complete"}, {value: avVid75 + 2, label: "75% complete"}, {value: avVid100 + 3, label: "100% complete"}];
 
 
 var ecHighVal = 0;
