@@ -159,17 +159,17 @@ var chart2 = Chart.vAvData = AmCharts.makeChart('chart--vAvData', {
   startDuration: 0,
   allLabels: [{
     text: viewb_Avg,
-    align: "right",
+    align: "center",
     size: 35,
     // bold: true,
-    x: '58%',
+    x: 3,
     y: '43%'
   }, {
     text: "%",
-    align: "left",
+    align: "center",
     size: 15,
     bold: false,
-    x: '58%',
+    x: -28,
     y: '45%'
   }],
 });
@@ -239,14 +239,14 @@ var chart4 = Chart.impsDelData = AmCharts.makeChart('chart--impsDelData', {
     align: "center",
     size: 35,
     // bold: true,
-    x: '1%',
+    x: 1,
     y: '41%'
   }, {
     text: "%",
     align: "center",
     size: 15,
     bold: false,
-    x: '-11%',
+    x: -28,
     y: '42%'
   },{
     text: thisImpsDel.toLocaleString(),
