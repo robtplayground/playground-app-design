@@ -5,8 +5,6 @@ var helpers = require( path.resolve( __dirname, "helpers.js" ) );
 
 /***** CAMPAIGN  *****/
 
-// graphing will happen from 27 June 2017
-
 function generateCampaign(options) {
 	var dateList = helpers.listDates(options.dates);
 	var dur = helpers.duration(options.dates);
@@ -66,7 +64,7 @@ var topAndTail = {
 
 /***** METRICS  *****/
 
-function REQUESTED_IMPS(bookedImps, placementDates, errors){
+function REQUESTED_IMPS(placementDates, errors, expectedImps){
 	// create zeros
   var values = helpers.makeZeros(campaign.duration);
 	// work out where placement data sits in campaign metrics
@@ -75,17 +73,11 @@ function REQUESTED_IMPS(bookedImps, placementDates, errors){
 
 	function setMetric(){
 		// create random reqImps value
-		var min = (bookedImps / pDuration) - 500;
-		var max = (bookedImps / pDuration) + 150;
+		var min = expectedImps * 0.90;
+		var max = expectedImps * 1.5;
 		return helpers.randMinMax(min, max, true);
 	}
 
-	function setError(){
-		// create random reqImps error value - delivery under half on errorDates
-		var min = Math.round((bookedImps / pDuration) / 2) - 500;
-		var max = Math.round((bookedImps / pDuration) / 2) - 100;
-		return helpers.randMinMax(min, max, true);
-	}
 	// overwrite zeroes with impressions
   for(var i = pRange.startPos; i < pRange.endPos; i++){
 		values.splice(i, 1, setMetric());
@@ -99,12 +91,12 @@ function REQUESTED_IMPS(bookedImps, placementDates, errors){
   return values;
 }
 
-function EXECUTED_IMPS(reqImpsArray, errors){
+function EXECUTED_IMPS(reqImpsArray, errors, expectedImps){
 	// create zeros
   var values = reqImpsArray.slice();
 	values.forEach(function(value, i){
 		if(value != 0){
-			var difference = helpers.randMinMax(100, 1000, true);
+			var difference = helpers.randMinMax(expectedImps*0.1, expectedImps*0.3, true);
 	    values.splice(i, 1, value - difference);
 		}
   });
@@ -117,12 +109,12 @@ function EXECUTED_IMPS(reqImpsArray, errors){
   return values;
 }
 
-function VIEWABLE_IMPS(execImpsArray, errors){
+function VIEWABLE_IMPS(execImpsArray, errors, expectedImps){
 	// create zeros
   var values = execImpsArray.slice();
 	values.forEach(function(value, i){
 		if(value != 0){
-			var difference = helpers.randMinMax(100, 1000, true);
+			var difference = helpers.randMinMax(expectedImps*0.1, expectedImps*0.2, true);
 	    values.splice(i, 1, value - difference);
 		}
   });
@@ -188,7 +180,7 @@ function PASSIVE_COMPLETIONS(array){
 	var values = array.slice();
 	values.forEach(function(value, i){
 		if(value != 0){
-			var newValue = value/3;
+			var newValue = value/2;
 	    values.splice(i, 1, newValue);
 		}
   });
@@ -199,7 +191,7 @@ function ENGAGED_COMPLETIONS(array){
 	var values = array.slice();
 	values.forEach(function(value, i){
 		if(value != 0){
-			var newValue = value/5;
+			var newValue = value/3;
 	    values.splice(i, 1, newValue);
 		}
   });
@@ -307,11 +299,13 @@ function VIDEO_METRICS(executedImpsArray){
 
 function createPlacement(options){
 	// name is string, dates = dates object, errors = errorsObject{}
-	var requestedImps = REQUESTED_IMPS(options.bookedImps, options.dates, options.errors);
+	var duration = helpers.duration(options.dates);
+	var expectedImps = options.bookedImps / duration;
+	var requestedImps = REQUESTED_IMPS(options.dates, options.errors, expectedImps);
 	var reqImpsAgg = AGGREGATE(requestedImps);
-	var executedImps = EXECUTED_IMPS(requestedImps, options.errors);
+	var executedImps = EXECUTED_IMPS(requestedImps, options.errors, expectedImps);
 	var execImpsAgg = AGGREGATE(executedImps);
-	var viewableImps = VIEWABLE_IMPS(executedImps, options.errors);
+	var viewableImps = VIEWABLE_IMPS(executedImps, options.errors, expectedImps);
 	var viewImpsAgg = AGGREGATE(viewableImps);
 	var viewability = PERCENT(viewableImps, executedImps);
 	// console.log(requestedImps);
@@ -648,11 +642,13 @@ var TTF_opp = createPlacement({
 // console.log(SS1Pre);
 
 module.exports = {
-	chartData: {
+	fm: {
 		superSkin: superSkin,
 		topAndTail: topAndTail,
-		iab: iab,
-		campaign: campaign,
+		iab: iab
+	},
+	cp: campaign,
+	pl:{
 	  SSM_same: SSM_same,
 	  SSM_opp: SSM_opp,
 	  SSF_same: SSF_same,

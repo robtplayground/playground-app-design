@@ -14,26 +14,29 @@ app.set('view engine', 'ejs');
 
 // pages
 
+var allData = {
+  cp: dataGenerator.cp,
+  fm: dataGenerator.fm,
+  pl: dataGenerator.pl,
+  v_cp: JSON.stringify(dataGenerator.cp),
+  v_fm: JSON.stringify(dataGenerator.fm),
+  v_pl: JSON.stringify(dataGenerator.pl)
+};
+
 app.get('/', function(request, response) {
-  response.render('../views/index.html.ejs');
+  response.render('../views/index.html.ejs', allData);
 });
 
 app.get('/login', function(request, response) {
-  response.render('../views/login.html.ejs');
+  response.render('../views/login.html.ejs', allData);
 });
 
 app.get('/charts', function(request, response) {
-  response.render('../views/charts.html.ejs', {
-    chartData: dataGenerator.chartData,
-    v_chartData: JSON.stringify(dataGenerator.chartData)
-  });
+  response.render('../views/charts.html.ejs', allData);
 });
 
 app.get('/campaigns', function(request, response) {
-  response.render('../views/campaigns.html.ejs', {
-    chartData: dataGenerator.chartData,
-    v_chartData: JSON.stringify(dataGenerator.chartData)
-  });
+  response.render('../views/campaigns.html.ejs', allData);
 });
 
 app.listen(app.get('port'), function() {

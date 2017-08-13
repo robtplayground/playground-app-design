@@ -2,10 +2,10 @@
 
   <script>
     $(document).ready( function(){
-      var campaignStart = moment(chartData.campaign.dates.start).format('ddd D MMMM');
-      var campaignEnd = moment(chartData.campaign.dates.end).format('ddd D MMMM');
-      // var cProg = moment(new Date()).diff(moment(chartData.campaign.dates.start), 'days');
-      // cProg = cProg / chartData.campaign.duration * 100;
+      var campaignStart = moment(cp.dates.start).format('ddd D MMMM');
+      var campaignEnd = moment(cp.dates.end).format('ddd D MMMM');
+      // var cProg = moment(new Date()).diff(moment(cp.dates.start), 'days');
+      // cProg = cProg / cp.duration * 100;
       $('.startDate').text(campaignStart);
       $('.endDate').text(campaignEnd);
       // $('.progress-bar').css('width', cProg + '%');
@@ -150,7 +150,7 @@
                               <use x="0" y="0" href="#play" />
                             </svg></td>
                           <td class="col__name">
-                            <%- chartData.SS1Pre.name %>
+                            <%- pl.SSM_same.name %>
                           </td>
                           <td class="col__progress">
                             <div class="chart-container" id="chart--SS1Prog"></div>

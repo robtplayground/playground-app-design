@@ -8,13 +8,18 @@ function setErrors(pathArray, targetArray){
 	// console.log('pathArray', pathArray, 'targetArray', targetArray);
 	var values = targetArray.slice();
 	// console.log(targetArray)
-;	var path = pathArray.slice();
+	var path = pathArray.slice();
 	for(i = 0; i < path.length; i++){
 		// make path value into percentage value
 		var originalValue = values[i];
 		var percent = (path[i] - 100)/100 * -1;
 		var difference = values[i] * percent;
-		values[i] = Math.round(values[i] + difference);
+		var result = Math.round(values[i] + difference);
+		if(result > 0){
+			values[i] = result;
+		}else{
+			values[i] = 0;
+		}
 	}
 
 	return values;
