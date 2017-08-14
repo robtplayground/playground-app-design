@@ -29,31 +29,41 @@ function prepData(categoryObj, valuesArray) {
   return data;
 }
 
-function animChart(event){
-  setTimeout(function(){
-    $(event.chart.div).addClass('animateChart');
-  }, 500);
-}
-
-// ** EXECUTED IMPS  ** //
-
-var execImpsData = {};
-Object.keys(pl).forEach(function(p){
-  execImpsData[p] = prepData({
-    name: 'date',
-    values: cp.dateList
-  },[
-    {name: 'execImps',values: pl[p].data.execImpsAgg},
-    {name: 'viewImps',values: pl[p].data.viewImpsAgg}
-  ]);
-});
+// function animChart(event){
+//   setTimeout(function(){
+//     $(event.chart.div).addClass('animateChart');
+//   }, 500);
+// }
 
 var dataIndex = 0;
 
+// ** EXECUTED IMPS  ** //
+
+var impsData = {};
+Object.keys(pl).forEach(function(p){
+  impsData[p] = prepData({
+    name: 'date',
+    values: cp.dateList
+  },[
+    {name: 'execImpsAgg',values: pl[p].data.execImpsAgg},
+    {name: 'viewImpsAgg',values: pl[p].data.viewImpsAgg}
+  ]);
+});
+
+// get first object in impsData and convert to zeroed array.
+var initData = impsData[(Object.keys(impsData)[0])];
+console.log(initData);
+impsData.init = $.extend(true, [], initData);
+impsData.init.forEach(function(dateEntry){
+  dateEntry.execImpsAgg = 0;
+  dateEntry.viewImpsAgg = 0;
+});
+console.log(impsData);
+
 // SERIAL CHART
-var chart1 = Chart.execImpsAgg = AmCharts.makeChart("chart--execImpsAgg", {
+var chart__ImpsTime = Chart.execImpsAgg = AmCharts.makeChart("chart--execImpsAgg", {
   type: "serial",
-  dataProvider: [],
+  dataProvider: impsData.init, // start chart with zeroes
   categoryField: "date",
   startDuration: 0,
   addClassNames: true,
@@ -72,14 +82,14 @@ var chart1 = Chart.execImpsAgg = AmCharts.makeChart("chart--execImpsAgg", {
   graphs: [{
     type: "line", // try to change it to "column"
     title: "red line",
-    valueField: "execImps",
+    valueField: "execImpsAgg",
     lineAlpha: 1,
     lineColor: "#d1cf2a",
     fillAlphas: 0.3
   },{
     type: "line", // try to change it to "column"
     title: "red line",
-    valueField: "viewImps",
+    valueField: "viewImpsAgg",
     lineAlpha: 1,
     lineColor: "#e91e63",
     fillAlphas: 0.3
@@ -90,41 +100,38 @@ var chart1 = Chart.execImpsAgg = AmCharts.makeChart("chart--execImpsAgg", {
   },
   chartScrollbar: {},
   listeners:[{
-    event: "init",
-    method: function( e ) {
-      var chart = e.chart;
-      var keys = Object.keys(execImpsData);
-      var dataIndex = 0;
-
-      function getData() {
-        var data = execImpsData[keys[dataIndex]];
-        dataIndex++;
-        if (dataIndex > keys.length-1){
-          dataIndex = 0;
-        }
-        return data;
-      }
-
-      function loop() {
-        // chart.allLabels[0].text = currentYear;
-        var data = getData();
-        chart.animateData( data, {
-          duration: 1000,
-          complete: function() {
-            setTimeout( loop, 3000 );
-          }
-        } );
-      }
-
-      loop();
-    }
-  },
-  // {
-  //   event: "rendered",
-  //   method: animChart
-  // }
-]
+    event: "rendered",
+    method: loadChart__ImpsTime
+  }]
 });
+
+function loadChart__ImpsTime(e){
+  updateChart__ImpsTime();
+}
+
+function updateChart__ImpsTime(){
+  var key = Object.keys(impsData)[dataIndex];
+  var newData = impsData[key];
+  chart__ImpsTime.animateData(newData, {
+    duration: 1000,
+    complete: function(){
+      console.log('chart animated');
+      // if(impsData.init){
+      //   delete impsData.init; // first load only
+      // }
+    }
+  });
+}
+
+$('.update-charts').click(function(){
+  updateChart__ImpsTime();
+  if(dataIndex < Object.keys(pl).length){
+    dataIndex++;
+  }else{
+    dataIndex = 0;
+  }
+});
+
 
 // ** VIEWABILITY AVERAGE CHART
 
@@ -422,11 +429,7 @@ var chart8 = Chart.erTime = AmCharts.makeChart("chart--erTime",{
     cursorPosition: "mouse",
     categoryBalloonDateFormat: "JJ:NN, DD MMMM"
   },
-  legend: {},
-  listeners: [{
-    event: "rendered",
-    method: animChart
-  }]
+  legend: {}
 });
 
 
