@@ -47,6 +47,7 @@ var iab = {
 };
 
 var superSkin = {
+	color: "#0078d8",
   benchmarks: {
     viewability: 63,
     er: 0.92,
@@ -55,6 +56,7 @@ var superSkin = {
 };
 
 var topAndTail = {
+	color: "#5d3289",
   benchmarks: {
     viewability: 82,
     er: 0.55,
@@ -327,6 +329,7 @@ function createPlacement(options){
     name: name,
     dates: options.dates,
 		bookedImps: options.bookedImps,
+		color: options.color,
     data: {
 			// dates are always the campaign dates
 			requestedImps: requestedImps,
@@ -372,6 +375,7 @@ var errorPath_eng1Jul_30Aug = [133, 129, 127, 141, 125, 133, 143, 147, 130, 128,
 var SSM_same = createPlacement({
 	name: '146560594_Airwave_GoPro_Target_MalesMetro18-44',
 	bookedImps: 200000,
+	color: "#0078d8",
 	dates: {
 		start: new Date(2017, 6, 1),
 		end: new Date(2017, 7, 31)
@@ -391,7 +395,7 @@ var SSM_same = createPlacement({
 		}
 	},
 	creative: {
-    format: 'super-skin',
+    format: 'superSkin',
     features: ['expand-frame', 'video'],
     content: 'GoPro Hero5 Males Festival'
   },
@@ -411,6 +415,7 @@ var SSM_same = createPlacement({
 var SSM_opp = createPlacement({
 	name: '146560595_Airwave_GoPro_Target_MalesMetro18-44',
 	bookedImps: 50000,
+	color: "#0078d8",
 	dates: {
 		start: new Date(2017, 6, 1),
 		end: new Date(2017, 7, 31)
@@ -430,7 +435,7 @@ var SSM_opp = createPlacement({
 		}
 	},
 	creative: {
-    format: 'super-skin',
+    format: 'superSkin',
     features: ['expand-frame', 'video'],
     content: 'GoPro Hero5 Females Travel'
   },
@@ -450,6 +455,7 @@ var SSM_opp = createPlacement({
 var SSF_same = createPlacement({
 	name: '146560596_Airwave_GoPro_Target_FemalesMetro18-44',
 	bookedImps: 200000,
+	color: "#0078d8",
 	dates: {
 		start: new Date(2017, 6, 1),
 		end: new Date(2017, 7, 31)
@@ -469,7 +475,7 @@ var SSF_same = createPlacement({
 		}
 	},
 	creative: {
-    format: 'side-push',
+    format: 'superSkin',
     features: ['expand-frame', 'video'],
     content: 'GoPro Hero5 Males Festival'
   },
@@ -487,6 +493,7 @@ var SSF_same = createPlacement({
 var SSF_opp = createPlacement({
 	name: '146560597_Airwave_GoPro_Target_FemalesMetro18-44',
 	bookedImps: 50000,
+	color: "#0078d8",
 	dates: {
 		start: new Date(2017, 6, 1),
 		end: new Date(2017, 7, 31)
@@ -506,7 +513,7 @@ var SSF_opp = createPlacement({
 		}
 	},
 	creative: {
-    format: 'side-push',
+    format: 'superSkin',
     features: ['expand-frame', 'video'],
     content: 'GoPro Hero5 Females Travel'
   },
@@ -526,6 +533,7 @@ var SSF_opp = createPlacement({
 var TTM_same = createPlacement({
 	name: '146560598_Airwave_GoPro_Target_MalesMetro18-44',
 	bookedImps: 200000,
+	color: "#5d3289",
 	dates: {
 		start: new Date(2017, 6, 1),
 		end: new Date(2017, 7, 31)
@@ -536,7 +544,7 @@ var TTM_same = createPlacement({
 		}
 	},
 	creative: {
-    format: 'super-skin',
+    format: 'topAndTail',
     features: ['expand-frame', 'video'],
     content: 'GoPro Hero5 Males Festival'
   },
@@ -556,6 +564,7 @@ var TTM_same = createPlacement({
 var TTM_opp = createPlacement({
 	name: '146560599_Airwave_GoPro_Target_MalesMetro18-44',
 	bookedImps: 50000,
+	color: "#5d3289",
 	dates: {
 		start: new Date(2017, 6, 1),
 		end: new Date(2017, 7, 31)
@@ -566,7 +575,7 @@ var TTM_opp = createPlacement({
 		}
 	},
 	creative: {
-    format: 'super-skin',
+    format: 'topAndTail',
     features: ['expand-frame', 'video'],
     content: 'GoPro Hero5 Females Travel'
   },
@@ -586,6 +595,7 @@ var TTM_opp = createPlacement({
 var TTF_same = createPlacement({
 	name: '146560600_Airwave_GoPro_Target_FemalesMetro18-44',
 	bookedImps: 200000,
+	color: "#5d3289",
 	dates: {
 		start: new Date(2017, 6, 1),
 		end: new Date(2017, 7, 31)
@@ -596,7 +606,7 @@ var TTF_same = createPlacement({
 		}
 	},
 	creative: {
-    format: 'side-push',
+    format: 'topAndTail',
     features: ['expand-frame', 'video'],
     content: 'GoPro Hero5 Males Festival'
   },
@@ -614,6 +624,7 @@ var TTF_same = createPlacement({
 var TTF_opp = createPlacement({
 	name: '146560601_Airwave_GoPro_Target_FemalesMetro18-44',
 	bookedImps: 50000,
+	color: "#5d3289",
 	dates: {
 		start: new Date(2017, 6, 1),
 		end: new Date(2017, 7, 31)
@@ -624,7 +635,7 @@ var TTF_opp = createPlacement({
 		}
 	},
 	creative: {
-    format: 'side-push',
+    format: 'topAndTail',
     features: ['expand-frame', 'video'],
     content: 'GoPro Hero5 Females Travel'
   },

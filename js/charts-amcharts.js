@@ -35,6 +35,7 @@ function prepData(categoryObj, valuesArray) {
 //   }, 500);
 // }
 
+var pKeys = Object.keys(pl);
 var dataIndex = 0;
 
 // ** EXECUTED IMPS  ** //
@@ -52,13 +53,11 @@ Object.keys(pl).forEach(function(p){
 
 // get first object in impsData and convert to zeroed array.
 var initData = impsData[(Object.keys(impsData)[0])];
-console.log(initData);
 impsData.init = $.extend(true, [], initData);
 impsData.init.forEach(function(dateEntry){
   dateEntry.execImpsAgg = 0;
   dateEntry.viewImpsAgg = 0;
 });
-console.log(impsData);
 
 // SERIAL CHART
 var chart__ImpsTime = Chart.execImpsAgg = AmCharts.makeChart("chart--execImpsAgg", {
@@ -101,31 +100,22 @@ var chart__ImpsTime = Chart.execImpsAgg = AmCharts.makeChart("chart--execImpsAgg
   chartScrollbar: {},
   listeners:[{
     event: "rendered",
-    method: loadChart__ImpsTime
+    method: updateChart__ImpsTime
   }]
 });
 
-function loadChart__ImpsTime(e){
-  updateChart__ImpsTime();
-}
-
 function updateChart__ImpsTime(){
-  var key = Object.keys(impsData)[dataIndex];
+  var key = pKeys[dataIndex];
   var newData = impsData[key];
   chart__ImpsTime.animateData(newData, {
-    duration: 1000,
-    complete: function(){
-      console.log('chart animated');
-      // if(impsData.init){
-      //   delete impsData.init; // first load only
-      // }
-    }
+    duration: 1000
   });
 }
 
 $('.update-charts').click(function(){
   updateChart__ImpsTime();
-  if(dataIndex < Object.keys(pl).length){
+  updateChart__vAv();
+  if(dataIndex < Object.keys(pKeys).length - 1){
     dataIndex++;
   }else{
     dataIndex = 0;
@@ -135,35 +125,39 @@ $('.update-charts').click(function(){
 
 // ** VIEWABILITY AVERAGE CHART
 
-var viewb_Avg = Math.round(average(pl.TTM_same.data.viewability, pl.TTM_same.dates));
+var vAvData = {};
+Object.keys(pl).forEach(function(p){
+  var viewb_Avg = Math.round(average(pl[p].data.viewability, pl[p].dates));
+  vAvData[p] = [{
+    value: viewb_Avg,
+    color: pl[p].color
+  },{
+    value: 100 - viewb_Avg,
+    color: "lightgrey"
+  }];
+});
 
-console.log(viewb_Avg);
+// get first object in impsData and convert to zeroed array.
+var vAv_initData = vAvData[(Object.keys(vAvData)[0])];
+vAvData.init = $.extend(true, [], vAv_initData);
+vAvData.init.forEach(function(segment){
+  segment.value = 0;
+});
 
-var vAvData = [{viewability: viewb_Avg, label: "TT Viewability", color:"#5d3289"}, {viewability: 100 - viewb_Avg, label: "", color: "lightgrey"}];
+console.log('vAvData', vAvData);
 
-var vAvBenchData = [
-  {segment: fm.iab.benchmarks.viewability, color: "transparent"},
-  {segment: 1, label: "IAB: " + fm.iab.benchmarks.viewability + "%", color: "red"},
-  {segment: fm.topAndTail.benchmarks.viewability - fm.iab.benchmarks.viewability - 1, color: "transparent"},
-  {segment: 1, label: "TT: " + fm.topAndTail.benchmarks.viewability + '%', color: "#e91e63"},
-  {segment: 100 - 1 - fm.topAndTail.benchmarks.viewability, color: "transparent"}
-];
-
-var chart2 = Chart.vAvData = AmCharts.makeChart('chart--vAvData', {
+var chart__vAv = AmCharts.makeChart('chart--vAv', {
   type: "pie",
-  theme: "light",
-  dataProvider: vAvData,
-  valueField: "viewability",
+  dataProvider: vAvData.init,
+  valueField: "value",
   titleField: "label",
   colorField: "color",
   // labelFunction: labelFunction,
   labelsEnabled: false,
   // labelRadius: "-50%",
-  alphaField: "alpha",
   innerRadius: "70%",
-  startDuration: 0,
   allLabels: [{
-    text: viewb_Avg,
+    text: vAvData.init[0].value,
     align: "center",
     size: 35,
     // bold: true,
@@ -177,23 +171,50 @@ var chart2 = Chart.vAvData = AmCharts.makeChart('chart--vAvData', {
     x: -28,
     y: '45%'
   }],
+  listeners:[{
+    event: "rendered",
+    method: updateChart__vAv
+  }]
 });
 
-var chart3 = Chart.vAvBenchmarks = AmCharts.makeChart('chart--vAvBenchmarks', {
-  type: "pie",
-  theme: "light",
-  dataProvider: vAvBenchData,
-  valueField: "segment",
-  titleField: "label",
-  labelsEnabled: false,
-  // labelFunction: labelFunction,
-  // labelRadius: "-5%",
-  colorField: "color",
-  alphaField: "alpha",
-  innerRadius: "70%",
-  startDuration: 0,
-  addClassNames: true
-});
+function updateChart__vAv(){
+  console.log('updating vAv');
+  var key = pKeys[dataIndex];
+  var newData = vAvData[key];
+  console.log(newData);
+  chart__vAv.animateData(newData, {
+    duration: 1000,
+    complete: function(){
+      console.log('anim done');
+    }
+  });
+}
+
+// VIEWABILITY BENCHMARKS OVERLAY
+
+var vAvBenchData = [
+  {segment: fm.iab.benchmarks.viewability, color: "transparent"},
+  {segment: 1, label: "IAB: " + fm.iab.benchmarks.viewability + "%", color: "red"},
+  {segment: fm.topAndTail.benchmarks.viewability - fm.iab.benchmarks.viewability - 1, color: "transparent"},
+  {segment: 1, label: "TT: " + fm.topAndTail.benchmarks.viewability + '%', color: "#e91e63"},
+  {segment: 100 - 1 - fm.topAndTail.benchmarks.viewability, color: "transparent"}
+];
+
+// var chart3 = Chart.vAvBenchmarks = AmCharts.makeChart('chart--vAvBenchmarks', {
+//   type: "pie",
+//   theme: "light",
+//   dataProvider: vAvBenchData,
+//   valueField: "segment",
+//   titleField: "label",
+//   labelsEnabled: false,
+//   // labelFunction: labelFunction,
+//   // labelRadius: "-5%",
+//   colorField: "color",
+//   alphaField: "alpha",
+//   innerRadius: "70%",
+//   startDuration: 0,
+//   addClassNames: true
+// });
 
 function labelFunction(info) {
   var data = info.dataContext;

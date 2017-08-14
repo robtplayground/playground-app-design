@@ -136,6 +136,24 @@
       </div>
 
       <div class="grid-cell grid4">
+        <div class="chart chart--vAv">
+          <h3>Viewability</h3>
+          <div id="chart--vAv" class="chart__render"></div>
+          <div id="chart--vAvBenchmarks" class="chart__render"></div>
+          <div class="chart__legend">
+            <div class="chart__legend__left">
+              <span class="legend__label">TT: </span>
+              <span class="legend__value"><%= fm.topAndTail.benchmarks.viewability %>%</span>
+            </div>
+            <div class="chart__legend__right">
+              <span class="legend__label">IAB: </span>
+              <span class="legend__value"><%= fm.iab.benchmarks.viewability %>%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-cell grid4">
         <div class="chart chart--impsDel">
           <h3>Delivery</h3>
           <div class="chart__render" id="chart--impsDelData"></div>
@@ -163,24 +181,6 @@
             <div class="chart__legend__right">
               <span class="legend__label">IAB: </span>
               <span class="legend__value">+3.2</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="grid-cell grid4">
-        <div class="chart chart--vAv">
-          <h3>Viewability</h3>
-          <div id="chart--vAvData" class="chart__render"></div>
-          <div id="chart--vAvBenchmarks" class="chart__render"></div>
-          <div class="chart__legend">
-            <div class="chart__legend__left">
-              <span class="legend__label">TT: </span>
-              <span class="legend__value"><%= fm.topAndTail.benchmarks.viewability %>%</span>
-            </div>
-            <div class="chart__legend__right">
-              <span class="legend__label">IAB: </span>
-              <span class="legend__value"><%= fm.iab.benchmarks.viewability %>%</span>
             </div>
           </div>
         </div>
