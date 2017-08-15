@@ -22,7 +22,7 @@ function generateCampaign(options) {
 	}
 }
 
-var campaign = generateCampaign({
+campaign = generateCampaign({
 	name:'Hero5 Mark II ',
 	brand: "GoPro",
 	vertical: "Technology",
@@ -38,26 +38,26 @@ var currentDate = new Date(2017, 5, 28);
 
 // BENCHMARKS
 
-var iab = {
-	benchmarks: {
+iab = {
+	bm: {
 		viewability: 28,
     er: 0.5,
     ativ: 3
 	}
 };
 
-var superSkin = {
+superSkin = {
 	color: "#0078d8",
-  benchmarks: {
+  bm: {
     viewability: 63,
     er: 0.92,
     ativ: 9.2
   }
 };
 
-var topAndTail = {
+topAndTail = {
 	color: "#5d3289",
-  benchmarks: {
+  bm: {
     viewability: 82,
     er: 0.55,
     ativ: 14
@@ -320,7 +320,7 @@ function createPlacement(options){
 	var engagementRate = PERCENT(clickEng, executedImps);
 	var passiveCompletionRate = PERCENT(passiveCompletions, executedImps);
 	var engagedCompletionRate = PERCENT(engagedCompletions, executedImps);
-	var ativ = ATIV(executedImps, superSkin.benchmarks.ativ);
+	var ativ = ATIV(executedImps, global[options.creative.format].bm.ativ);
 	var videoViewableImps = VIDEO_VIEWABLE_IMPS(engagements);
 	var video = VIDEO_METRICS(engagements);
 	var name = helpers.breakText(options.name);
@@ -372,7 +372,7 @@ var errorPath_eng1Jul_30Aug = [133, 129, 127, 141, 125, 133, 143, 147, 130, 128,
 
 // SUPER SKIN, male, pre-launch,
 
-var SSM_same = createPlacement({
+SSM_same = createPlacement({
 	name: '146560594_Airwave_GoPro_Target_MalesMetro18-44',
 	bookedImps: 200000,
 	color: "#0078d8",
@@ -412,7 +412,7 @@ var SSM_same = createPlacement({
 
 // SUPER SKIN, females, pre-launch
 
-var SSM_opp = createPlacement({
+SSM_opp = createPlacement({
 	name: '146560595_Airwave_GoPro_Target_MalesMetro18-44',
 	bookedImps: 50000,
 	color: "#0078d8",
@@ -452,7 +452,7 @@ var SSM_opp = createPlacement({
 
 // SIDE-PUSH, males, pre-launch
 
-var SSF_same = createPlacement({
+SSF_same = createPlacement({
 	name: '146560596_Airwave_GoPro_Target_FemalesMetro18-44',
 	bookedImps: 200000,
 	color: "#0078d8",
@@ -490,7 +490,7 @@ var SSF_same = createPlacement({
   }
 });
 
-var SSF_opp = createPlacement({
+SSF_opp = createPlacement({
 	name: '146560597_Airwave_GoPro_Target_FemalesMetro18-44',
 	bookedImps: 50000,
 	color: "#0078d8",
@@ -530,7 +530,7 @@ var SSF_opp = createPlacement({
 
 // SUPER SKIN, males, post-launch
 
-var TTM_same = createPlacement({
+TTM_same = createPlacement({
 	name: '146560598_Airwave_GoPro_Target_MalesMetro18-44',
 	bookedImps: 200000,
 	color: "#5d3289",
@@ -561,7 +561,7 @@ var TTM_same = createPlacement({
 
 // SUPER SKIN, females, post-launch
 
-var TTM_opp = createPlacement({
+TTM_opp = createPlacement({
 	name: '146560599_Airwave_GoPro_Target_MalesMetro18-44',
 	bookedImps: 50000,
 	color: "#5d3289",
@@ -592,7 +592,7 @@ var TTM_opp = createPlacement({
 
 // SIDE-PUSH, males, pre-launch
 
-var TTF_same = createPlacement({
+TTF_same = createPlacement({
 	name: '146560600_Airwave_GoPro_Target_FemalesMetro18-44',
 	bookedImps: 200000,
 	color: "#5d3289",
@@ -621,7 +621,7 @@ var TTF_same = createPlacement({
   }
 });
 
-var TTF_opp = createPlacement({
+TTF_opp = createPlacement({
 	name: '146560601_Airwave_GoPro_Target_FemalesMetro18-44',
 	bookedImps: 50000,
 	color: "#5d3289",

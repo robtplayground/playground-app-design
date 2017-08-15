@@ -143,11 +143,11 @@
           <div class="chart__legend">
             <div class="chart__legend__left">
               <span class="legend__label">TT: </span>
-              <span class="legend__value"><%= fm.topAndTail.benchmarks.viewability %>%</span>
+              <span id="chart--_iabBench" class="legend__value"><%= fm.topAndTail.bm.viewability %>%</span>
             </div>
             <div class="chart__legend__right">
               <span class="legend__label">IAB: </span>
-              <span class="legend__value"><%= fm.iab.benchmarks.viewability %>%</span>
+              <span id="chart--_iabBench" class="legend__value"><%= fm.iab.bm.viewability %>%</span>
             </div>
           </div>
         </div>
@@ -169,18 +169,18 @@
           <h3>Time in View</h3>
           <div class="chart__render">
             <div class="chart__circle">
-              <div class="chart__circle__value"></div>
+              <div id="chart--ativAv_value" class="chart__circle__value"></div>
             </div>
 
           </div>
           <div class="chart__legend">
             <div class="chart__legend__left">
               <span class="legend__label">PGXYZ: </span>
-              <span class="legend__value">-1.2</span>
+              <span id="chart--ativAv_pgBench" class="legend__value">-1.2</span>
             </div>
             <div class="chart__legend__right">
               <span class="legend__label">IAB: </span>
-              <span class="legend__value">+3.2</span>
+              <span id="chart--ativAv_iabBench" class="legend__value">+3.2</span>
             </div>
           </div>
         </div>
@@ -191,17 +191,17 @@
           <h3>Engagement Rate</h3>
           <div id="chart--erAv" class="chart__render">
             <div class="chart__circle">
-              <div class="chart__circle__value"></div>
+              <div id="chart--erAv_value" class="chart__circle__value"></div>
             </div>
           </div>
           <div class="chart__legend">
             <div class="chart__legend__left">
               <span class="legend__label">PGXYZ: </span>
-              <span class="legend__value">-1.2</span>
+              <span id="chart--erAv_pgBench" class="legend__value">-1.2</span>
             </div>
             <div class="chart__legend__right">
               <span class="legend__label">IAB: </span>
-              <span class="legend__value">+3.2</span>
+              <span id="chart--erAv_iabBench" class="legend__value">+3.2</span>
             </div>
           </div>
         </div>
@@ -223,17 +223,17 @@
           <h3>Passive Completion Rate</h3>
           <div id="chart--passiveC" class="chart__render">
             <div class="chart__circle">
-              <div class="chart__circle__value"></div>
+              <div id="chart--passiveC_value" class="chart__circle__value"></div>
             </div>
           </div>
           <div class="chart__legend">
             <div class="chart__legend__left">
               <span class="legend__label">PGXYZ: </span>
-              <span class="legend__value">-1.2</span>
+              <span id="chart--passiveC_pgBench" class="legend__value">-1.2</span>
             </div>
             <div class="chart__legend__right">
               <span class="legend__label">IAB: </span>
-              <span class="legend__value">+3.2</span>
+              <span id="chart--passiveC_iabBench" class="legend__value">+3.2</span>
             </div>
           </div>
         </div>
@@ -244,17 +244,17 @@
           <h3>Engaged Completion Rate</h3>
           <div id="chart--engagedC" class="chart__render">
             <div class="chart__circle">
-              <div class="chart__circle__value"></div>
+              <div id="chart--engagedC_value" class="chart__circle__value"></div>
             </div>
           </div>
           <div class="chart__legend">
             <div class="chart__legend__left">
               <span class="legend__label">PGXYZ: </span>
-              <span class="legend__value">-1.2</span>
+              <span id="chart--engagedC_pgBench" class="legend__value">-1.2</span>
             </div>
             <div class="chart__legend__right">
               <span class="legend__label">IAB: </span>
-              <span class="legend__value">+3.2</span>
+              <span id="chart--engagedC_iabBench" class="legend__value">+3.2</span>
             </div>
           </div>
         </div>
