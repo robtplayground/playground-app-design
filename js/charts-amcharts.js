@@ -166,6 +166,7 @@ var chart__vAv = AmCharts.makeChart('chart--vAv', {
     x: -28,
     y: '45%'
   }],
+  balloonText: "",
   listeners: [{
     event: "rendered",
     method: function(e){
@@ -177,67 +178,102 @@ var chart__vAv = AmCharts.makeChart('chart--vAv', {
   }]
 });
 
-
-
 // VIEWABILITY BENCHMARKS OVERLAY
 
-var vAvBenchData = [{
-    segment: fm.iab.bm.viewability,
+var vAvBench = {};
+
+Object.keys(pl).forEach(function(p) {
+  var format = pl[p].creative.format;
+  var formatViewb = fm[format].bm.viewability;
+  var iabBench = fm.iab.bm.viewability;
+  vAvBench[p] = {};
+  vAvBench[p].formatViewb = formatViewb;
+  vAvBench[p].iabBench = iabBench;
+  vAvBench[p].data = [{
+    label: "space1",
+    value: iabBench,
     color: "transparent"
-  },
-  {
-    segment: 1,
-    label: "IAB: " + fm.iab.bm.viewability + "%",
+  },{
+    label: "IAB",
+    // description: "IAB: " + iabBench + "%",
+    value: 1,
     color: "red"
-  },
-  {
-    segment: fm.topAndTail.bm.viewability - fm.iab.bm.viewability - 1,
+  },{
+    label: "space2",
+    value: formatViewb - iabBench - 1,
     color: "transparent"
-  },
-  {
-    segment: 1,
-    label: "TT: " + fm.topAndTail.bm.viewability + '%',
+  },{
+    label: "format",
+    value: 1,
     color: "#e91e63"
-  },
-  {
-    segment: 100 - 1 - fm.topAndTail.bm.viewability,
+  },{
+    label: "space3",
+    value: 100 - 1 - formatViewb,
     color: "transparent"
-  }
-];
+  }];
+});
+
+vAvBench.init = {};
+vAvBench.init.formatViewb = 0;
+vAvBench.init.iabBench = 0;
+vAvBench.init.data = [{
+  label: "space1",
+  value: 0,
+  color: "transparent"
+},{
+  label: "IAB",
+  description: "IAB",
+  value: 0,
+  color: "red"
+},{
+  label: "space2",
+  value: 0,
+  color: "transparent"
+},{
+  label: "format",
+  value: 0,
+  color: "#e91e63"
+},{
+  label: "space3",
+  value: 100,
+  color: "transparent"
+}];
+
+console.log('vAvBench',vAvBench);
 
 var chart__vAvBenchmarks = AmCharts.makeChart('chart--vAvBenchmarks', {
   type: "pie",
   theme: "light",
-  dataProvider: vAvBenchData,
-  valueField: "segment",
+  dataProvider: vAvBench.init.data,
+  valueField: "value",
   titleField: "label",
   labelsEnabled: false,
-  // labelFunction: labelFunction,
-  // labelRadius: "-5%",
   colorField: "color",
   alphaField: "alpha",
   innerRadius: "70%",
   startDuration: 0,
-  addClassNames: true
+  addClassNames: true,
+  balloonText: "",
+  listeners: [{
+    event: "rendered",
+    method: function(e){
+      $('#chart--vAv_pgBench').text(vAvBench.SSM_same.formatViewb + '%');
+      $('#chart--vAv_iabBench').text(vAvBench.SSM_same.iabBench + '%');
+      e.chart.animateData( vAvBench.SSM_same.data,{
+        duration: 3000
+      });
+    }
+  }]
 });
-
-function labelFunction(info) {
-  var data = info.dataContext;
-  if (info.index != null && data.label) {
-    return data.label;
-  } else {
-    return "";
-  }
-}
 
 // IMPS DELIVERED
 
-var thisPCurDur = moment(new Date()).diff(moment(pl.TTM_same.dates.start), 'days');
+var thisPCurDur = moment(new Date()).diff(moment(pl.SSM_same.dates.start), 'days');
 
-var thisImpsDel = pl.TTM_same.data.execImpsAgg[thisPCurDur - 1];
+var thisImpsDel = pl.SSM_same.data.execImpsAgg[thisPCurDur - 1];
 
-var thisImpsBooked = pl.TTM_same.bookedImps;
-var thisImpsBookedDaily = thisImpsBooked / duration(pl.TTM_same.dates);
+var thisImpsBooked = pl.SSM_same.bookedImps;
+var thisImpsBookedDaily = thisImpsBooked / duration(pl.SSM_same.dates);
 var thisImpsPercDel = thisImpsDel / thisImpsBooked * 100;
 
 // execImps bench is 10% below reqImps bench
@@ -247,7 +283,7 @@ var thisImpsBench = Math.round(((thisImpsBookedDaily * 0.9 * thisPCurDur) / this
 var impsDelData = [{
   progress: thisImpsPercDel,
   label: "Executed Impressions",
-  color: "#5d3289"
+  color: fm.superSkin.color
 }, {
   progress: 100 - thisImpsPercDel,
   label: "",
@@ -434,29 +470,28 @@ function totalsChart(containerID, initValue, initPG, initIAB) {
 
 // ATIV
 
-var ativAv = average(pl.TTM_same.data.ativ, pl.TTM_same.dates).toFixed(1);
+var ativAv = average(pl.SSM_same.data.ativ, pl.SSM_same.dates).toFixed(1);
 var ativAv_pg = ativAv - fm.topAndTail.bm.ativ;
 var ativAv_iab = ativAv - fm.iab.bm.ativ;
 var chart__ativAv = new totalsChart('chart--ativAv', ativAv, ativAv_pg, ativAv_iab);
 
 chart__ativAv.startCount();
 
-// $('#chart--ativAv .chart__circle__value').text(ativAv);
+var engagedC = average(pl.SSM_same.data.engagedCompletionRate, pl.SSM_same.dates).toFixed(1);
+var engagedC_pg = engagedC - fm.topAndTail.bm.engagedCompletionRate;
+var engagedC_iab = engagedC - fm.iab.bm.engagedCompletionRate;
+var chart__engagedC = new totalsChart('chart--engagedC', engagedC, engagedC_pg, engagedC_iab);
 
-// PASSIVE COMPLETION RATE
-
-var thisPassiveC = (average(pl.TTM_same.data.passiveCompletionRate, pl.TTM_same.dates) * 100).toFixed(2);
-$('#chart--passiveC .chart__circle__value').text(thisPassiveC);
-
-// ENGAGED COMPLETION RATE
-
-var thisEngagedC = (average(pl.TTM_same.data.engagedCompletionRate, pl.TTM_same.dates) * 100).toFixed(2);
-$('#chart--engagedC .chart__circle__value').text(thisEngagedC);
+chart__engagedC.startCount();
 
 // ENGAGEMENT RATE
 
-var thisErAv = (average(pl.TTM_same.data.engagementRate, pl.TTM_same.dates)).toFixed(2);
-$('#chart--erAv .chart__circle__value').text(thisErAv);
+var erAv = average(pl.SSM_same.data.engagementRate, pl.SSM_same.dates).toFixed(1);
+var erAv_pg = erAv - fm.topAndTail.bm.engagementRate;
+var erAv_iab = erAv - fm.iab.bm.engagementRate;
+var chart__erAv = new totalsChart('chart--erAv', erAv, erAv_pg, erAv_iab);
+
+chart__erAv.startCount();
 
 
 
@@ -471,10 +506,10 @@ var chart__erTime = AmCharts.makeChart("chart--erTime", {
     values: cp.dateList
   }, [{
     name: 'engagementRate',
-    values: pl.TTM_same.data.engagementRate
+    values: pl.SSM_same.data.engagementRate
   }, {
     name: 'clickthroughRate',
-    values: pl.TTM_same.data.clickRate
+    values: pl.SSM_same.data.clickRate
   }]),
   categoryField: "date",
   startDuration: 0,
@@ -524,7 +559,7 @@ chart__completionsTime.data = [];
 chart__completionsTime.data[0] = {
   name: 'Completion Rate (Engaged)',
   x: cp.dateList,
-  y: pl.TTM_same.data.engagedCompletionRate,
+  y: pl.SSM_same.data.engagedCompletionRate,
   type: 'scatter',
   fill: 'tozeroy',
   mode: 'line',
@@ -537,7 +572,7 @@ chart__completionsTime.data[0] = {
 chart__completionsTime.data[1] = {
   name: 'Completion Rate (Passive)',
   x: cp.dateList,
-  y: pl.TTM_same.data.passiveCompletionRate,
+  y: pl.SSM_same.data.passiveCompletionRate,
   type: 'scatter',
   fill: 'tozeroy',
   mode: 'line',
@@ -595,11 +630,11 @@ function pickHex(color1, color2, weight) {
   return rgb;
 }
 
-var avVid0 = average(pl.TTM_same.data.video.vid0, pl.TTM_same.dates);
-var avVid25 = average(pl.TTM_same.data.video.vid25, pl.TTM_same.dates);
-var avVid50 = average(pl.TTM_same.data.video.vid50, pl.TTM_same.dates);
-var avVid75 = average(pl.TTM_same.data.video.vid75, pl.TTM_same.dates);
-var avVid100 = average(pl.TTM_same.data.video.vid100, pl.TTM_same.dates);
+var avVid0 = average(pl.SSM_same.data.video.vid0, pl.SSM_same.dates);
+var avVid25 = average(pl.SSM_same.data.video.vid25, pl.SSM_same.dates);
+var avVid50 = average(pl.SSM_same.data.video.vid50, pl.SSM_same.dates);
+var avVid75 = average(pl.SSM_same.data.video.vid75, pl.SSM_same.dates);
+var avVid100 = average(pl.SSM_same.data.video.vid100, pl.SSM_same.dates);
 
 var ecRates = [{
   value: avVid25,

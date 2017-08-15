@@ -41,8 +41,9 @@ var currentDate = new Date(2017, 5, 28);
 iab = {
 	bm: {
 		viewability: 28,
-    er: 0.5,
-    ativ: 3
+    engagementRate: 0.5,
+    ativ: 3,
+		engagedCompletionRate: 4.1
 	}
 };
 
@@ -50,8 +51,9 @@ superSkin = {
 	color: "#0078d8",
   bm: {
     viewability: 63,
-    er: 0.92,
-    ativ: 9.2
+    engagementRate: 0.92,
+    ativ: 9.2,
+		engagedCompletionRate: 15.1
   }
 };
 
@@ -59,8 +61,9 @@ topAndTail = {
 	color: "#5d3289",
   bm: {
     viewability: 82,
-    er: 0.55,
-    ativ: 14
+    engagementRate: 0.55,
+    ativ: 14,
+		engagedCompletionRate: 14.1
   }
 };
 
