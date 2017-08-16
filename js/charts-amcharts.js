@@ -268,24 +268,100 @@ var chart__vAvBenchmarks = AmCharts.makeChart('chart--vAvBenchmarks', {
 
 // IMPS DELIVERED
 
-var thisPCurDur = moment(new Date()).diff(moment(pl.SSM_same.dates.start), 'days');
+var impsDelData = {};
+Object.keys(pl).forEach(function(p) {
+  var currentDur = moment(new Date()).diff(moment(pl[p].dates.start), 'days');
+  var impsDel = pl[p].data.execImpsAgg[currentDur - 1];
+  var impsBooked = pl[p].bookedImps;
+  var impsBookedDaily = impsBooked / duration(pl[p].dates);
+  var percentDel = impsDel / impsBooked * 100;
+  // note: label is crucial for animation
+  impsDelData[p] = [{
+    label: 'progress',
+    value: percentDel,
+    impsDel: impsDel,
+    percentDel: percentDel,
+    color: pl[p].color
+  }, {
+    label: 'remainder',
+    value: 100 - percentDel,
+    color: "#dadada"
+  }];
+});
 
-var thisImpsDel = pl.SSM_same.data.execImpsAgg[thisPCurDur - 1];
+console.log('impsDelData', impsDelData);
 
-var thisImpsBooked = pl.SSM_same.bookedImps;
-var thisImpsBookedDaily = thisImpsBooked / duration(pl.SSM_same.dates);
-var thisImpsPercDel = thisImpsDel / thisImpsBooked * 100;
+// get first object in impsData and convert to zeroed array.
+var impsDel_initData = [{
+  label: 'progress',
+  value: 0,
+  impsDel: 0,
+  percentDel: 0,
+  color: "#FFF"
+}, {
+  label: 'remainder',
+  value: 100,
+  color: "#dadada"
+}];
+
+
+var chart__impsDel = AmCharts.makeChart('chart--impsDel', {
+  type: "pie",
+  theme: "light",
+  dataProvider: impsDel_initData,
+  valueField: "value",
+  titleField: "label",
+  colorField: "color",
+  // labelFunction: labelFunction,
+  labelsEnabled: false,
+  // labelRadius: "-50%",
+  alphaField: "alpha",
+  innerRadius: "70%",
+  startDuration: 0,
+  allLabels: [{
+    text: Math.round(impsDel_initData[0].percentDel),
+    align: "center",
+    size: 35,
+    // bold: true,
+    x: 1,
+    y: '41%'
+  }, {
+    text: "%",
+    align: "center",
+    size: 15,
+    bold: false,
+    x: -28,
+    y: '42%'
+  }, {
+    text: impsDel_initData[0].impsDel.toLocaleString(),
+    align: "center",
+    size: 12,
+    bold: false,
+    x: '0%',
+    y: '55%'
+  }],
+  listeners: [{
+    event: "rendered",
+    method: function(e){
+      e.chart.allLabels[0].text = Math.round(impsDelData.SSM_same[0].value);
+      e.chart.allLabels[2].text = impsDelData.SSM_same[0].impsDel.toLocaleString();
+      e.chart.animateData( impsDelData.SSM_same,{
+        duration: 3000
+      });
+    }
+  }]
+});
+
 
 // execImps bench is 10% below reqImps bench
-var thisImpsBench = Math.round(((thisImpsBookedDaily * 0.9 * thisPCurDur) / thisImpsBooked) * 100);
-
+var thisImpsBench = Math.round(((impsBookedDaily * 0.9 * currentDur) / impsBooked) * 100);
 
 var impsDelData = [{
-  progress: thisImpsPercDel,
+  progress: percentDel,
   label: "Executed Impressions",
   color: fm.superSkin.color
 }, {
-  progress: 100 - thisImpsPercDel,
+  progress: 100 - percentDel,
   label: "",
   color: "#dadada"
 }];
@@ -304,43 +380,6 @@ var impsDelBench = [{
     color: "transparent"
   }
 ];
-
-var chart__impsDelData = AmCharts.makeChart('chart--impsDelData', {
-  type: "pie",
-  theme: "light",
-  dataProvider: impsDelData,
-  valueField: "progress",
-  titleField: "label",
-  colorField: "color",
-  // labelFunction: labelFunction,
-  labelsEnabled: false,
-  // labelRadius: "-50%",
-  alphaField: "alpha",
-  innerRadius: "70%",
-  startDuration: 0,
-  allLabels: [{
-    text: Math.round(thisImpsPercDel),
-    align: "center",
-    size: 35,
-    // bold: true,
-    x: 1,
-    y: '41%'
-  }, {
-    text: "%",
-    align: "center",
-    size: 15,
-    bold: false,
-    x: -28,
-    y: '42%'
-  }, {
-    text: thisImpsDel.toLocaleString(),
-    align: "center",
-    size: 12,
-    bold: false,
-    x: '0%',
-    y: '55%'
-  }],
-});
 
 var chart__impsDelBench = AmCharts.makeChart('chart--impsDelBench', {
   type: "pie",
