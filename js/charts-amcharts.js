@@ -269,6 +269,7 @@ var chart__vAvBenchmarks = AmCharts.makeChart('chart--vAvBenchmarks', {
 // IMPS DELIVERED
 
 var impsDelData = {};
+var impsDelBenchData = {};
 Object.keys(pl).forEach(function(p) {
   var currentDur = moment(new Date()).diff(moment(pl[p].dates.start), 'days');
   var impsDel = pl[p].data.execImpsAgg[currentDur - 1];
@@ -276,33 +277,66 @@ Object.keys(pl).forEach(function(p) {
   var impsBookedDaily = impsBooked / duration(pl[p].dates);
   var percentDel = impsDel / impsBooked * 100;
   // note: label is crucial for animation
+
+  // MAIN ARC
   impsDelData[p] = [{
     label: 'progress',
     value: percentDel,
     impsDel: impsDel,
-    percentDel: percentDel,
     color: pl[p].color
   }, {
     label: 'remainder',
     value: 100 - percentDel,
     color: "#dadada"
   }];
+  // BENCHMARKS
+  var impsDelBench = Math.round(((impsBookedDaily * 0.9 * currentDur) / impsBooked) * 100);
+  console.log(impsDelBench);
+
+  impsDelBenchData[p] = [{
+      label: "1",
+      value: impsDelBench,
+      color: "transparent",
+    },{
+        label: "2",
+      value: 1,
+      label: "Expected: " + impsDelBench + "%",
+      color: "red"
+    },{
+        label: "3",
+      value: 100 - (impsDelBench + 1),
+      color: "transparent"
+    }];
 });
 
 console.log('impsDelData', impsDelData);
+
 
 // get first object in impsData and convert to zeroed array.
 var impsDel_initData = [{
   label: 'progress',
   value: 0,
   impsDel: 0,
-  percentDel: 0,
   color: "#FFF"
 }, {
   label: 'remainder',
   value: 100,
   color: "#dadada"
 }];
+
+var impsDelBench_initData = [{
+    label: "1",
+    value: 0,
+    color: "transparent"
+  },{
+    label: "2",
+    value: 0,
+    color: "red"
+  },{
+      label: "3",
+    value: 100,
+    color: "transparent"
+  }];
 
 
 var chart__impsDel = AmCharts.makeChart('chart--impsDel', {
@@ -352,40 +386,13 @@ var chart__impsDel = AmCharts.makeChart('chart--impsDel', {
   }]
 });
 
-
-// execImps bench is 10% below reqImps bench
-var thisImpsBench = Math.round(((impsBookedDaily * 0.9 * currentDur) / impsBooked) * 100);
-
-var impsDelData = [{
-  progress: percentDel,
-  label: "Executed Impressions",
-  color: fm.superSkin.color
-}, {
-  progress: 100 - percentDel,
-  label: "",
-  color: "#dadada"
-}];
-
-var impsDelBench = [{
-    segment: thisImpsBench,
-    color: "transparent"
-  },
-  {
-    segment: 1,
-    label: "Expected: " + thisImpsBench + "%",
-    color: "red"
-  },
-  {
-    segment: 100 - (thisImpsBench + 1),
-    color: "transparent"
-  }
-];
+$('.chart--impsDel .chart__legend__left span').text('Expected: 0%');
 
 var chart__impsDelBench = AmCharts.makeChart('chart--impsDelBench', {
   type: "pie",
   theme: "light",
-  dataProvider: impsDelBench,
-  valueField: "segment",
+  dataProvider: impsDelBench_initData,
+  valueField: "value",
   titleField: "label",
   labelsEnabled: false,
   // labelFunction: labelFunction,
@@ -394,10 +401,21 @@ var chart__impsDelBench = AmCharts.makeChart('chart--impsDelBench', {
   alphaField: "alpha",
   innerRadius: "70%",
   startDuration: 0,
-  addClassNames: true
+  addClassNames: true,
+  listeners: [{
+    event: "rendered",
+    method: function(e){
+      $('.chart--impsDel .chart__legend__left span').text('Expected: ' + impsDelBenchData.SSM_same[0].value + '%');
+      e.chart.animateData( impsDelBenchData.SSM_same,{
+        duration: 3000
+      });
+    }
+  }]
 });
 
-$('.chart--impsDel .chart__legend__left span').text('Expected: ' + thisImpsBench + '%');
+
+
+
 
 // ** CAMPAIGN PROGRESS
 
