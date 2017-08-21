@@ -34,7 +34,7 @@
 
     <div class="grid-cell grid4">
       <div class="chart chart--cProg">
-        <div id="chart--cProg" class="chart__render" ></div>
+        <div id="chart--cProg" class="chart__render"></div>
       </div>
 
       <!-- Plotly graph -->
@@ -58,38 +58,40 @@
 
   <div class="main grid">
 
-    <div class="data-filter grid-cell grid2 no-gutter">
+    <div class="grid-cell grid3 no-gutter">
+      <div class="data-filter">
+        <div class="grid-cell">
 
-      <div class="grid-cell">
-        <button class="update-charts">Update Charts</button>
-        <h2>Group by:</h2>
+          <div class="data-filter__date-slider" id="slider" style="height: 40px; width:100%;"></div>
 
-        <select class="data-filter__group-select">
-          <option value="Delivery">Campaign</option>
-          <option value="Audience" selected>Placement</option>
-          <option value="Category">Format</option>
-          <option value="Format">Features</option>
-        </select>
+          <h2>Group by:</h2>
 
-        <div class="data-filter__placement-select">
+          <select class="data-filter__group-select">
+            <option value="Delivery">Campaign</option>
+            <option value="Audience" selected>Placement</option>
+            <option value="Category">Format</option>
+            <option value="Format">Features</option>
+          </select>
 
-          <input type="checkbox" id="check-SS1" name="placement-select" checked/>
-          <label for="check-SS1"><span></span><%- pl.SSM_same.name %></label>
+          <div class="data-filter__placement-select">
 
-          <input type="checkbox" id="check-SS2" name="placement-select" checked/>
-          <label for="check-SS2"><span></span><%- pl.SSM_opp.name %></label>
+            <input type="checkbox" id="check-SS1" name="placement-select" checked/>
+            <label for="check-SS1"><span></span><%- pl.SSM_same.name %></label>
 
-          <input type="checkbox" id="check-SS2" name="placement-select" />
-          <label for="check-SS2"><span></span><%- pl.TTF_same.name %></label>
+            <input type="checkbox" id="check-SS2" name="placement-select" checked/>
+            <label for="check-SS2"><span></span><%- pl.SSM_opp.name %></label>
 
-          <input type="checkbox" id="check-SS2" name="placement-select" />
-          <label for="check-SS2"><span></span><%- pl.TTF_opp.name %></label>
+            <input type="checkbox" id="check-SS2" name="placement-select" />
+            <label for="check-SS2"><span></span><%- pl.TTF_same.name %></label>
 
-        </div>
+            <input type="checkbox" id="check-SS2" name="placement-select" />
+            <label for="check-SS2"><span></span><%- pl.TTF_opp.name %></label>
 
-        <h2>Split by:</h2>
+          </div>
 
-        <select class="data-filter__split-select">
+          <h2>Split by:</h2>
+
+          <select class="data-filter__split-select">
           <option value="Delivery">Sites</option>
           <option value="Audience">Location</option>
           <option value="Category">Gender</option>
@@ -97,24 +99,26 @@
         </select>
 
 
-        <div id="treemap" class="data-filter__treemap">
-          <div class="dm">Daily Mail</div>
-          <div class="smh">SMH</div>
-          <div class="elle">Elle</div>
-          <div class="roar">The Roar</div>
-          <div class="bm">Big Mobile</div>
-          <div class="giz">Gizmodo</div>
-          <div class="junk">Junkee</div>
-          <div class="cnet">CNet</div>
-          <div class="huff">Huffington Post</div>
-          <div class="mix">In The Mix</div>
+          <div id="treemap" class="data-filter__treemap">
+            <div class="dm">Daily Mail</div>
+            <div class="smh">SMH</div>
+            <div class="elle">Elle</div>
+            <div class="roar">The Roar</div>
+            <div class="bm">Big Mobile</div>
+            <div class="giz">Gizmodo</div>
+            <div class="junk">Junkee</div>
+            <div class="cnet">CNet</div>
+            <div class="huff">Huffington Post</div>
+            <div class="mix">In The Mix</div>
+          </div>
+
         </div>
 
       </div>
 
     </div>
 
-    <div class="content grid-cell grid10 no-gutter">
+    <div class="content grid-cell grid9 no-gutter">
 
 
       <div class="grid-cell grid8">
@@ -272,7 +276,9 @@
 
   </div>
 
-
+  <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
+  <script src="/js/jQRangeSlider-min.js"></script>
+  <script src="/js/jQDateRangeSlider-min.js"></script>
   <script src="/js/site.js"></script>
   <script src="/js/charts-amcharts.js"></script>
 

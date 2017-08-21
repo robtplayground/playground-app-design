@@ -22,3 +22,5 @@ $('.chart__select').select2({
 $('.data-filter select').select2({
   minimumResultsForSearch: Infinity
 });
+
+$('#slider').dateRangeSlider();
