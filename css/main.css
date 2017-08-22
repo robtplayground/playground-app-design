@@ -1291,6 +1291,7 @@ a {
   position: relative;
   padding-left: 1.95em;
   height: 1.5rem;
+  line-height: 1.5rem;
   cursor: pointer;
   margin-bottom: 0.5rem;
 }
@@ -1547,20 +1548,62 @@ body {
   flex-wrap: wrap;
 }
 .data-filter {
-  background: #e91e63;
-  color: white;
+  background: #efefef;
+  color: #222222;
   flex-direction: column;
   flex: 1 0;
-  margin: 0 1rem 0 0;
+  margin: 0 0.5rem 0 0;
   padding: 1rem;
+  width: 100%;
+}
+.data-filter input {
+  width: auto;
+}
+.data-filter input.start {
+  margin-right: 0.5em;
 }
 .data-filter h2 {
   text-transform: uppercase;
   font-size: 1.2rem;
   font-weight: 700;
 }
+.data-filter__date-slider {
+  width: 100%;
+  overflow: visible;
+}
+.data-filter__date-picker {
+  display: flex;
+  height: 1rem;
+  width: 76%;
+  margin: 2rem 0 2rem 10%;
+  overflow: visible;
+  justify-content: space-between;
+  border-width: 0px 2px 2px 2px;
+  border-color: #333333;
+  border-style: solid;
+  padding: 0.3em;
+}
+.data-filter__date-picker .date {
+  height: 1rem;
+}
+.data-filter__date-picker .date.start {
+  transform: translate(-50%, -170%);
+}
+.data-filter__date-picker .date.end {
+  transform: translate(50%, -170%);
+}
+.data-filter .select2-container,
+.data-filter .select2-dropdown {
+  width: 100% !important;
+}
+.data-filter .select2-container:focus,
+.data-filter .select2-dropdown:focus {
+  outline: none;
+}
 .data-filter__placement-select > label {
   display: block;
+  position: relative;
+  margin: 1rem 0;
   max-width: calc(90% - 1.25em);
   white-space: nowrap;
   overflow: hidden;
@@ -1593,59 +1636,61 @@ body {
   flex-direction: column;
 }
 .data-filter__treemap {
-  height: 20rem;
+  height: 25rem;
   font-size: 0.694rem;
   font-weight: 700;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
+  color: white;
+  margin-top: 1rem;
 }
 .data-filter__treemap > div {
   display: flex;
-  border: 1px solid #e91e63;
+  border: 1px solid #cccccc;
   align-items: center;
   justify-content: center;
   width: 33%;
   text-align: center;
 }
 .data-filter__treemap .dm {
-  height: 9rem;
+  height: 50%;
   background: #ee4c83;
 }
 .data-filter__treemap .smh {
-  height: 9rem;
+  height: 50%;
   background: #ee4c83;
 }
 .data-filter__treemap .elle {
-  height: 7rem;
+  height: 40%;
   background: #ef5e8f;
 }
 .data-filter__treemap .roar {
-  height: 6rem;
+  height: 35%;
   background: #f06f9b;
 }
 .data-filter__treemap .bm {
-  height: 5rem;
+  height: 25%;
   background: #f181a7;
 }
 .data-filter__treemap .giz {
-  height: 5rem;
+  height: 25%;
   background: #f392b3;
 }
 .data-filter__treemap .junk {
-  height: 5rem;
+  height: 25%;
   background: #f4a3bf;
 }
 .data-filter__treemap .cnet {
-  height: 3rem;
+  height: 25%;
   background: #f5b5ca;
 }
 .data-filter__treemap .huff {
-  height: 3rem;
+  height: 15%;
   background: #f6c6d6;
 }
 .data-filter__treemap .mix {
-  height: 2rem;
+  height: 10%;
   background: #f8d7e2;
 }
 .select2 svg,
@@ -1917,6 +1962,16 @@ a[href="http://www.amcharts.com/javascript-charts/"] {
   width: 100%;
   height: 10%;
   margin-top: 3.5rem;
+}
+.chart--execImpsAgg .chart__controls .select2-container,
+.chart--execImpsAgg .chart__controls .select2-dropdown {
+  position: absolute;
+  width: 20% !important;
+  right: 4rem;
+}
+.chart--execImpsAgg .chart__controls .select2-container *:focus,
+.chart--execImpsAgg .chart__controls .select2-dropdown *:focus {
+  outline: none;
 }
 .chart--execImpsAgg .chart__render {
   position: relative;

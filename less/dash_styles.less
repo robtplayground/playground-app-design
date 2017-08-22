@@ -46,12 +46,19 @@ body{
 }
 
 .data-filter{
-	background: @pgxyz-pink;
-	color: white;
+	background: @lightgrey;
+	color: @black;
 	flex-direction: column;
 	flex: 1 0;
-	margin: 0 1rem 0 0;
+	margin: 0 0.5rem 0 0;
 	padding: 1rem;
+	width: 100%;
+	input{
+		width: auto;
+		&.start{
+			margin-right: 0.5em;
+		}
+	}
 
 	h2{
 		text-transform: uppercase;
@@ -60,13 +67,52 @@ body{
 	}
 }
 
+.data-filter__date-slider{
+	width: 100%;
+	// height: 5rem !important;
+	overflow: visible;
+}
+
 .data-filter__date-picker{
-	
+	display:flex;
+	height: 1rem;
+	width: 76%;
+	margin: 2rem 0 2rem 10%;
+	overflow: visible;
+	justify-content: space-between;
+	border-width: 0px 2px 2px 2px;
+	border-color: @darkgrey;
+	border-style: solid;
+	padding: 0.3em;
+	.date{
+		height: 1rem;
+		&.start{
+			transform: translate(-50%, -170%);
+		}
+		&.end{
+			transform: translate(50%, -170%);
+		}
+
+
+	}
+}
+
+.data-filter{
+	 .select2-container,
+	 .select2-dropdown{
+		 width: 100% !important;
+		 &:focus{
+			 outline: none;
+		 }
+	 }
 }
 
 .data-filter__placement-select > label{
 	display:block;
-	max-width: ~"calc(90% - 1.25em)";	white-space: nowrap;
+	position: relative;
+	margin: 1rem 0;
+	max-width: ~"calc(90% - 1.25em)";
+	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
@@ -102,58 +148,60 @@ body{
 @palePink: lighten(@pgxyz-pink, 10%);
 
 .data-filter__treemap{
-	height: 20rem;
+	height: 25rem;
 	font-size: @size-xsmall;
 	font-weight: 700;
 	display: flex;
   flex-direction: column;
   flex-wrap: wrap;
+	color: white;
+	margin-top: 1rem;
 	> div{
 		display:flex;
-		border: 1px solid @pgxyz-pink;
+		border: 1px solid @midgrey;
 		align-items: center;
 		justify-content: center;
 		width: 33%;
 		text-align: center;
 	}
 	.dm{
-		height: 9rem;
+		height: 50%;
 		background: mix(@palePink, @palegrey, 100%);
 	}
 	.smh{
-		height: 9rem;
+		height: 50%;
 		background: mix(@palePink, @palegrey, 100%);
 	}
 	.elle{
-		height: 7rem;
+		height: 40%;
 		background: mix(@palePink, @palegrey, 90%);
 	}
 	.roar{
-		height: 6rem;
+		height: 35%;
 		background: mix(@palePink, @palegrey, 80%);
 	}
 	.bm{
-		height: 5rem;
+		height: 25%;
 		background: mix(@palePink, @palegrey, 70%);
 	}
 	.giz{
-		height: 5rem;
+		height: 25%;
 		background: mix(@palePink, @palegrey, 60%);
 	}
 	.junk{
-		height: 5rem;
+		height: 25%;
 		background: mix(@palePink, @palegrey, 50%);
 	}
 	.cnet{
-		height: 3rem;
+		height: 25%;
 		background: mix(@palePink, @palegrey, 40%);
 	}
 	.huff{
-		height: 3rem;
+		height: 15%;
 		background: mix(@palePink, @palegrey, 30%);
 	}
 	.mix{
-		height: 2rem;
+		height: 10%;
 		background: mix(@palePink, @palegrey, 20%);
 	}
 
@@ -492,6 +540,15 @@ a[href="http://www.amcharts.com/javascript-charts/"]{
 		width:100%;
 		height: 10%;
 		margin-top: 3.5rem;
+		.select2-container,
+ 	 	.select2-dropdown{
+			position: absolute;
+ 		 width: 20% !important;
+		 right:4rem;
+ 		 *:focus{
+ 			 outline: none;
+ 		 }
+ 	 }
 	}
 	.chart__render{
 		position: relative;

@@ -9,7 +9,7 @@ function generateCampaign(options) {
 	var dateList = helpers.listDates(options.dates);
 	var dur = helpers.duration(options.dates);
 	return {
-		name: helpers.breakText(options.name),
+		name: options.name,
 		brand: options.brand,
 		objective: options.objective,
 		vertical: options.vertical,
@@ -326,7 +326,7 @@ function createPlacement(options){
 	var ativ = ATIV(executedImps, global[options.creative.format].bm.ativ);
 	var videoViewableImps = VIDEO_VIEWABLE_IMPS(engagements);
 	var video = VIDEO_METRICS(engagements);
-	var name = helpers.breakText(options.name);
+	var name = options.name;
 
   return {
     name: name,

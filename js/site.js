@@ -20,7 +20,8 @@ $('.chart__select').select2({
 });
 
 $('.data-filter select').select2({
-  minimumResultsForSearch: Infinity
+  minimumResultsForSearch: Infinity,
+  width: 'resolve' 
 });
 
-$('#slider').dateRangeSlider();
+// $('#slider').dateRangeSlider();

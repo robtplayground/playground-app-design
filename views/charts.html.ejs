@@ -60,9 +60,13 @@
 
     <div class="grid-cell grid3 no-gutter">
       <div class="data-filter">
-        <div class="grid-cell">
+        <!-- <div class="grid-cell"> -->
 
-          <div class="data-filter__date-slider" id="slider" style="height: 40px; width:100%;"></div>
+          <!-- <div class="data-filter__date-slider" id="slider"></div> -->
+          <div class="data-filter__date-picker">
+            <div class="date start">Sat 1 July</div>
+            <div class="date end">Thurs 31 August</div>
+          </div>
 
           <h2>Group by:</h2>
 
@@ -92,10 +96,10 @@
           <h2>Split by:</h2>
 
           <select class="data-filter__split-select">
-          <option value="Delivery">Sites</option>
-          <option value="Audience">Location</option>
-          <option value="Category">Gender</option>
-          <option value="Format">Category</option>
+          <option value="Location">Audience: Location</option>
+          <option value="Gender">Audience: Gender</option>
+          <option value="Domain" selected>Site: Domain</option>
+          <option value="Category">Site: Category</option>
         </select>
 
 
@@ -112,7 +116,7 @@
             <div class="mix">In The Mix</div>
           </div>
 
-        </div>
+        <!-- </div> -->
 
       </div>
 
