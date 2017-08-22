@@ -982,7 +982,7 @@ input.ui-editRangeSlider-inputValue {
 /*   MEDIA QUERIES */
 html {
   height: 100%;
-  font-size: 16px;
+  font-size: 14px;
 }
 body {
   padding-top: 0.1px;
@@ -1742,10 +1742,10 @@ body {
   font-size: 1rem;
 }
 .campaign__table__body tr {
-  height: 5rem;
+  height: 3rem;
 }
 .campaign__table__body td {
-  text-align: center;
+  text-align: left;
 }
 .campaign__table__body .col__thumb {
   width: 5rem;
@@ -1754,43 +1754,26 @@ body {
   width: 5rem;
 }
 .campaign__table__body .col__brand {
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: #0078d8;
   width: 7em;
+  font-weight: 700;
   text-align: left;
 }
 .campaign__table__body .col__expand {
-  width: 5rem;
+  width: 3rem;
+  padding-left: 0.5rem;
 }
 .campaign__table__body .col__expand svg {
-  height: 30%;
+  height: 15%;
 }
 .campaign__table__body .col__name {
-  font-size: 1.2rem;
-}
-.campaign__table__body .col__objective {
-  width: 12em;
-  color: #999999;
-}
-.campaign__table__body .col__objective svg {
-  fill: #999999;
-  width: 1em;
-}
-.campaign__table__body .col__vertical {
-  width: 12em;
-  color: #999999;
-}
-.campaign__table__body .col__vertical svg {
-  fill: #999999;
-  width: 1em;
+  width: 12rem;
 }
 .campaign__table__body .col__dates {
   position: relative;
   width: 16em;
 }
 .campaign__table__body .col__progress {
-  width: 4rem;
+  width: 10rem;
   text-align: left;
 }
 .campaign__table__body .col__actions {
