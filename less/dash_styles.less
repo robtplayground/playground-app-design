@@ -243,16 +243,22 @@ body{
 }
 
 .campaigns{
+	align-self: flex-start;
 	width: 100%;
+	td{
+		height: 3rem;
+	}
+}
+
+table, td{
+	border: 1px solid red;
 }
 
 .campaign__table{
 	position: relative;
-	width: 95%;
-	margin: 1rem;
-	background: @palegrey;
+	width: ~"calc(100% - 1rem)";
+	margin: 0.5rem;
 	border: 1px solid @midgrey;
-	width: 100%;
 	font-size: @size-0;
 	tr{
 		height: 3rem;
@@ -261,22 +267,25 @@ body{
 		// text-align: left;
 	}
 	td{
+		position: relative;
 		text-align: left;
 	}
 	svg{
 		width: 3rem;
 	}
+	.campaign__expand{
+		width: 8.33%;
+		padding-left: 0.5rem;
+		svg{
+			height: 2rem;
+		}
+	}
 	.campaign__brand{
+		width: 13%;
 		font-weight: 700;
 		text-align: left;
 	}
 
-	.campaign__expand{
-		padding-left: 0.5rem;
-		svg{
-			height: 15%;
-		}
-	}
 	.campaign__name{
 
 	}
@@ -308,20 +317,22 @@ body{
 }
 
 .creative__title__name{
-	padding: 1rem;
 	color: white;
 
 }
-
-.creative__title__format{
-	fill: white;
-	width: 4rem;
-	height: 2rem;
-}
-
-.creative__title__thumbs{
+.creative__title__thumb{
+	width: 8.33%;
 	img{
 		width: 3rem;
+	}
+}
+.creative__title__format{
+	position:relative;
+	width: 13%;
+	svg{
+		fill: white;
+		width: 7rem;
+		height: 100%;
 	}
 }
 
@@ -344,7 +355,6 @@ body{
 
 .placements__table{
 	width: 100%;
-	background: rgba(255,255,255, 0.7);
 	color: @black;
 }
 

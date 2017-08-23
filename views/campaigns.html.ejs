@@ -26,13 +26,16 @@
               <use x="0" y="0" href="#arrow-down"></use>
             </svg>
           </td>
-          <td class="campaign__title">
-            Hero 5 Mark II Release
-          </td>
           <td class="campaign__brand">
             Go Pro
           </td>
+          <td class="campaign__name">
+            Hero 5 Mark II Release
+          </td>
           <td class="campaign__dates">
+            <span class="startDate"></span> - <span class="endDate"></span>
+          </td>
+          <td class="campaign__progress">
             <span class="startDate"></span> - <span class="endDate"></span>
           </td>
           <td class="campaign__actions">
@@ -42,19 +45,25 @@
           </td>
         </tr>
         <tr>
-          <td colspan="5" class="creatives">
+          <td colspan="6" class="creatives">
             <table class="creative__table">
               <tr class="creative__title">
-                <td class="creative__title__name">
-                  <%= SSM_same.name %>
+                <td class="creative__title__thumb">
+                  <img src="/images/ss2.png" alt="">
                 </td>
                 <td class="creative__title__format">
                   <svg viewBox="0 0 980 300" preserveAspectRatio="xMidYMid meet">
                     <use x="0" y="0" href="#super-skin" />
                   </svg>
                 </td>
-                <td class="creative__title__thumbs">
-                  <img src="/images/ss2.png" alt="">
+                <td class="creative__title__name">
+                  <%= SSM_same.name %>
+                </td>
+                <td class="creative__title__author">
+                  <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
+                    <use x="0" y="0" href="#lock" />
+                  </svg>
+                  1/7/2017 Steve Nash
                 </td>
                 <td class="creative__title__actions">
                   <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
@@ -63,12 +72,15 @@
                 </td>
               </tr>
               <tr>
-                <td colspan="4" class="creative__placements">
+                <td colspan="5" class="creative__placements">
                   <table class="placements__table">
                     <thead>
                       <tr>
                         <th class="placement__status">
                           Status
+                        </th>
+                        <th class="placement__audience">
+                          Audience
                         </th>
                         <th class="placement__name">Name</th>
                         <th class="placement__progress">
@@ -85,7 +97,11 @@
                       <td class="placement__status">
                         <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
                           <use x="0" y="0" href="#play" />
-                        </svg></td>
+                        </svg>
+                      </td>
+                      <td class="placement__audience">
+                        Males Metro AU Tech
+                      </td>
                       <td class="placement__name">
                         <%- pl.SSM_same.name %>
                       </td>
