@@ -1,7 +1,7 @@
 <% include partials/header.html.ejs %>
 
   <script>
-    $(document).ready( function(){
+    $(document).ready(function() {
       var campaignStart = moment(cp.dates.start).format('ddd D MMMM');
       var campaignEnd = moment(cp.dates.end).format('ddd D MMMM');
       // var cProg = moment(new Date()).diff(moment(cp.dates.start), 'days');
@@ -19,143 +19,101 @@
     <div class="campaigns">
       <!-- <h1>Campaigns</h1> -->
 
-      <div class="campaign__table">
-        <!-- <table class="campaigns__table__header">
-          <thead>
-            <tr>
-            <th class="col__progress">Progress</th>
-              <th class="col__thumb">Thumb</th>
-              <th class="col__name">Name</th>
-              <th class="col__dates">dates</th>
-              <th class="col__objective">Objective</th>
-              <th class="col__vertical">Vertical</th>
-              <th class="col__actions">Actions</th>
-            </tr>
-          </thead>
-        </table> -->
-
-        <!-- Campaign Rows -->
-
-        <table class="campaign__table__body">
-          <tbody>
-            <tr>
-              <td class="col__expand">
-                <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
-                  <use x="0" y="0" href="#arrow-down" />
-                </svg>
-              </td>
-              <td class="col__name">
-                Hero 5 Mark II Release
-              </td>
-              <td class="col__brand">
-                Go Pro
-              </td>
-              <td class="col__dates">
-                <span class="startDate"></span> - <span class="endDate"></span>
-              </td>
-              <td class="col__progress">
-                <div class="col__progress__bar">
-                  <span class="col__progress__bar__text">42 / 60 days</span>
-                </div>
-              </td>
-
-              <td class="col__actions">
-                <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
-                  <use x="0" y="0" href="#menu" />
-                </svg>
-              </td>
-
-            </tr>
-
-            <tr class="creatives">
-              <td colspan="8">
-
-
-                  <div class="creative">
-                    <div class="creative__title">
-                      <div class="creative__title__thumb">
-                        <img src="/images/ss2.png" alt="">
-                      </div>
-                      <div class="creative__title__format">
-                        <svg viewBox="0 0 980 300" preserveAspectRatio="xMidYMid meet">
-                          <use x="0" y="0" href="#super-skin" />
-                        </svg>
-
-                      </div>
-                      <div class="creative__title__template">
-                        Expanding | Video
-                      </div>
-                      <div class="creative__title__name"></div>
-                      <div class="creative__title__status">
+      <table class="campaign__table">
+        <tr class="campaign__title">
+          <td class="campaign__expand">
+            <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
+              <use x="0" y="0" href="#arrow-down"></use>
+            </svg>
+          </td>
+          <td class="campaign__title">
+            Hero 5 Mark II Release
+          </td>
+          <td class="campaign__brand">
+            Go Pro
+          </td>
+          <td class="campaign__dates">
+            <span class="startDate"></span> - <span class="endDate"></span>
+          </td>
+          <td class="campaign__actions">
+            <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
+              <use x="0" y="0" href="#menu"></use>
+            </svg>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="5" class="creatives">
+            <table class="creative__table">
+              <tr class="creative__title">
+                <td class="creative__title__name">
+                  <%= SSM_same.name %>
+                </td>
+                <td class="creative__title__format">
+                  <svg viewBox="0 0 980 300" preserveAspectRatio="xMidYMid meet">
+                    <use x="0" y="0" href="#super-skin" />
+                  </svg>
+                </td>
+                <td class="creative__title__thumbs">
+                  <img src="/images/ss2.png" alt="">
+                </td>
+                <td class="creative__title__actions">
+                  <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
+                    <use x="0" y="0" href="#menu" />
+                  </svg>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="4" class="creative__placements">
+                  <table class="placements__table">
+                    <thead>
+                      <tr>
+                        <th class="placement__status">
+                          Status
+                        </th>
+                        <th class="placement__name">Name</th>
+                        <th class="placement__progress">
+                          Progress
+                        </th>
+                        <th class="placement__imps">Impressions</th>
+                        <th class="placement__viewability">Viewability</th>
+                        <th class="placement__ctr">Clickthrough Rate</th>
+                        <th class="placement__er">Engagement Rate</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="placement">
+                      <td class="placement__status">
                         <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
-                          <use x="0" y="0" href="#pencil-square" />
-                        </svg>
-                        <span>1/7/2017</span>
-                      </div>
-                      <div class="creative__title__actions">
-                        <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
-                          <use x="0" y="0" href="#menu" />
-                        </svg>
-                      </div>
-                    </div>
-
-                      <table class="placements__table">
-                        <thead>
-                          <tr>
-                            <th class="col__status">
-                              Status
-                            </th>
-                            <th class="col__name">Name</th>
-                            <th class="col__progress">
-                              Progress
-                            </th>
-                            <th class="col__imps">Impressions</th>
-                            <th class="col__viewability">Viewability</th>
-                            <th class="col__ctr">Clickthrough Rate</th>
-                            <th class="col__er">Engagement Rate</th>
-                          </tr>
-                      </thead>
-                      <tbody>
-                        <tr class="placement">
-                          <td class="col__status">
-                            <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
-                              <use x="0" y="0" href="#play" />
-                            </svg></td>
-                          <td class="col__name">
-                            <%- pl.SSM_same.name %>
-                          </td>
-                          <td class="col__progress">
-                            <div class="chart-container" id="chart--SS1Prog"></div>
-                          </td>
-                          <td class="col__imps">
-                            <div class="chart-container" id="chart--SS1Imps"></div>
-                          </td>
-                          <td class="col__viewability">
-                            <div class="chart-container" id="chart--SS1View"></div>
-                          </td>
-                          <td class="col__ctr">
-                            <div class="chart-container" id="chart--SS1CTR"></div>
-                          </td>
-                          <td class="col__er">
-                            <div class="chart-container" id="chart--SS1ER"></div>
-                          </td>
-                        </tr>
-
-                      </tbody>
-
-                        </thead>
-                      </table>
-
-
-
-              </td>
+                          <use x="0" y="0" href="#play" />
+                        </svg></td>
+                      <td class="placement__name">
+                        <%- pl.SSM_same.name %>
+                      </td>
+                      <td class="placement__progress">
+                        <div class="chart-container" id="chart--SS1Prog">
+                      </td>
+                      <td class="placement__imps">
+                        <div class="chart-container" id="chart--SS1Imps">
+                      </td>
+                      <td class="placement__viewability">
+                        <div class="chart-container" id="chart--SS1View">
+                      </td>
+                      <td class="placement__ctr">
+                        <div class="chart-container" id="chart--SS1CTR">
+                      </td>
+                      <td class="placement__er">
+                        <div class="chart-container" id="chart--SS1ER">
+                      </td>
+                    </tr>
+                  </tbody>
+                  </table>
+                </td> <!-- end placements -->
             </tr>
-          </tbody>
-        </table>
-
-
-
-      </div>
+            </table>
+          </td> <!-- end creative -->
+        </tr>
+      </table>
+      <!-- end campaign -->
     </div>
 
   </div>

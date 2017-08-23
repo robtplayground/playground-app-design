@@ -243,14 +243,10 @@ body{
 }
 
 .campaigns{
-	align-self: flex-start;
-	display:flex;
-	justify-content: center;
-	flex-wrap: wrap;
 	width: 100%;
 }
 
-.campaign__table__body{
+.campaign__table{
 	position: relative;
 	width: 95%;
 	margin: 1rem;
@@ -267,109 +263,69 @@ body{
 	td{
 		text-align: left;
 	}
-	.col__thumb{
-		width: 5rem;
-		img{
-			width:5rem;
-		}
+	svg{
+		width: 3rem;
 	}
-
-	.col__brand{
-		width:7em;
+	.campaign__brand{
 		font-weight: 700;
 		text-align: left;
 	}
 
-	.col__expand{
-		width: 3rem;
+	.campaign__expand{
 		padding-left: 0.5rem;
 		svg{
 			height: 15%;
 		}
 	}
-	.col__name{
-		width: 12rem;
-		// font-weight: 700;
+	.campaign__name{
+
 	}
-	// .col__objective{
-	// 	width: 12em;
-	// 	color: lighten(@darkgrey, 40%);
-	// 	svg{
-	// 		fill: lighten(@darkgrey, 40%);
-	// 		width: 1em;
-	// 	}
-	// }
-	// .col__vertical{
-	// 	width: 12em;
-	// 	color: lighten(@darkgrey, 40%);
-	// 	svg{
-	// 		fill: lighten(@darkgrey, 40%);
-	// 		width: 1em;
-	// 	}
-	// }
-	.col__dates{
+	.campaign__dates{
 		position: relative;
-		width: 16em;
+
 	}
-	.col__progress{
-		width: 10rem;
+	.campaign__progress{
+
 		text-align:left;
 	}
-	.col__actions{
-		width:4rem;
+	.campaign__actions{
 		svg{
-			width: 50%
+			width: 3rem
 		}
 	}
-	.col__progress .chart-container{
+	.campaign__progress .chart-container{
 		width: 5rem;
 		height: 4rem;
 		margin: 0.2rem 0 0 0.2rem;
 	}
 }
 
-
-
-.creatives__wrapper{
-	background: @midgrey;
-	padding: 1rem;
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: space-between;
-	align-items: center;
-	button{
-		background: @white;
-		// width: 10em;
-	}
-}
-
-.creative{
+.creative__table{
 	width: 100%;
 }
-
 .creative__title{
-	padding: 1rem;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	color: white;
 	background: @ss-blue;
+}
+
+.creative__title__name{
+	padding: 1rem;
+	color: white;
+
 }
 
 .creative__title__format{
 	fill: white;
-	width: 10rem;
+	width: 4rem;
+	height: 2rem;
 }
 
-.creative__title__thumb{
+.creative__title__thumbs{
 	img{
 		width: 3rem;
 	}
 }
 
 .creative__title__status{
-	display:flex;
-	align-items: center;
 	svg{
 		width: 1.5em;
 		height: 1.5em;
@@ -379,48 +335,17 @@ body{
 }
 
 .creative__title__actions{
-	width: 4rem;
 	svg{
 		fill:white;
-		width: 50%;
+		width: 1.5em;
+		height: 1.5em;
 	}
 }
 
-.placements__wrapper{
-	padding: 1rem;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	flex-wrap: wrap;
-	color: white;
-	background: lighten(@ss-blue, 30%);
-	button{
-		color: @darkgrey;
-	}
-}
-
-.campaign__table__body .placements__table{
+.placements__table{
 	width: 100%;
 	background: rgba(255,255,255, 0.7);
 	color: @black;
-	[class*="col__"]{
-		width: 5rem;
-		height: 4rem;
-	}
-	.col__status{
-		svg{
-			width: 2rem;
-		}
-	}
-	.col__name{
-		font-size: @size-0;
-		width: 12em;
-		padding: 0 1em;
-	}
-	td.col__name{
-		text-align: left;
-
-	}
 }
 
 
