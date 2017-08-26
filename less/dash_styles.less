@@ -467,6 +467,17 @@ table, td{
 	width: 100%;
 	table-layout: fixed;
 }
+
+.table__actions{
+	text-align:right !important;
+	padding-right: 1em;
+	svg{
+		display: inline-block;
+		// fill:white;
+		width: 1.5em;
+		height: 1.5em;
+	}
+}
 .campaign__table{
 	width: ~"calc(100% - 1rem)";
 	margin: 0.5rem;
@@ -482,9 +493,7 @@ table, td{
 		position: relative;
 		text-align: left;
 	}
-	svg{
-		width: 3rem;
-	}
+
 	.campaign__expand{
 		padding-left: 0.5rem;
 		svg{
@@ -504,11 +513,7 @@ table, td{
 	.campaign__progress{
 		text-align:left;
 	}
-	.campaign__actions{
-		svg{
-			width: 3rem
-		}
-	}
+
 	.campaign__progress .chart-container{
 		height: 4rem;
 		margin: 0.2rem 0 0 0.2rem;
@@ -530,8 +535,12 @@ table, td{
 
 }
 .creative__title__thumb{
+	padding-left: 2em;
 	img{
-		width: 3rem;
+		border-radius: 100%;
+		width: 2.5rem;
+		margin: 0.25rem;
+		border: 1px solid white;
 	}
 }
 .creative__title__format{
@@ -566,13 +575,6 @@ table, td{
 	}
 }
 
-.creative__title__actions{
-	svg{
-		fill:white;
-		width: 1.5em;
-		height: 1.5em;
-	}
-}
 
 .placements__table{
 	position: relative;
@@ -582,8 +584,11 @@ table, td{
 }
 
 .placement__status{
+	padding-left: 2em;
 	svg{
-		width: 3rem;
+		display: inline-block;
+		width: 1.5rem;
+		height: 1.5rem;
 	}
 }
 .placement__audience{
@@ -597,4 +602,31 @@ table, td{
 .placement__viewability,
 .placement__ctr,
 .placement__er{
+}
+
+.chart__progress-bar{
+	position: relative;
+	width: 100%;
+	height: 1rem;
+	background:@midgrey;
+	margin-top: 1rem;
+}
+.chart__progress-bar__prog{
+	position: absolute;
+	top:0;
+	left:0;
+	height:100%;
+	width: 80%;
+	background: red;
+	overflow:visible;
+	text-align: right;
+}
+
+.chart__progress-bar__text{
+	display:inline-block;
+	posiiton: absolute;
+	font-size: 0.9em;
+	right:0;
+	width: auto;
+	transform: translate(0, -120%);
 }
