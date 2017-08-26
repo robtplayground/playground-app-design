@@ -575,12 +575,16 @@ table, td{
 	}
 }
 
-
 .placements__table{
 	position: relative;
 	// width: 100%;
 	color: @black;
 	border: 2px solid @ss-blue;
+	td{
+		box-sizing: content-box;
+		padding-top: 1.5em;
+		padding-bottom: 0.5em;
+	}
 }
 
 .placement__status{
@@ -594,15 +598,12 @@ table, td{
 .placement__audience{
 }
 .placement__name{
+	overflow:hidden;
 	text-overflow: ellipsis;
   white-space: nowrap;
+	padding-right: 2em;
 }
-.placement__imps,
-.placement__progress,
-.placement__viewability,
-.placement__ctr,
-.placement__er{
-}
+
 
 .chart__progress-bar{
 	position: relative;
@@ -629,4 +630,45 @@ table, td{
 	right:0;
 	width: auto;
 	transform: translate(0, -120%);
+}
+.placement__progress{
+	position: relative;
+}
+
+.plch{
+	h6{
+		position: absolute;
+		width: 100%;
+		top:-1.5em;
+		text-transform: uppercase;
+		text-align: center;
+		font-size: @size-xsmall;
+		margin:0;
+	}
+	display: inline-block;
+	position: relative;
+	width: 3.4rem;
+	height: 100%;
+	margin:0.2em;
+	// background-color: lime;
+	svg{
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		circle{
+			stroke-width: 4px;
+			transform-origin: 50% 50%;
+			transform: rotate(-90deg);
+		}
+	}
+}
+
+.plch__result-text{
+	position: absolute;
+	width:100%;
+	height:100%;
+	display: flex;
+	font-size: 0.9em;
+	justify-content: center;
+	align-items: center;
 }

@@ -86,11 +86,22 @@
                         <%= moment(SSM_same.dates.start).format('ddd D MMMM') %> - <%= moment(SSM_same.dates.end).format('ddd D MMMM') %>
                       </td>
                       <td class="placement__progress grid3">
-                        <div class="chart-container" id="chart--SS1Prog"></div>
-                        <div class="chart-container" id="chart--SS1Imps"></div>
-                        <div class="chart-container" id="chart--SS1View"></div>
-                        <div class="chart-container" id="chart--SS1CTR"></div>
-                        <div class="chart-container" id="chart--SS1ER"></div>
+                        <div class="plch chart-container" id="chart--SS1Prog">
+                          <h6>Delivery</h6>
+                          <svg class="plch__bg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMax meet">
+                            <circle cx="50" cy="50" r="45" fill="transparent" stroke-width="2" stroke="grey"></circle>
+                          </svg>
+                          <svg class="plch__result" viewBox="0 0 100 100" preserveAspectRatio="xMidYMax meet">
+                            <circle cx="50" cy="50" r="45" fill="transparent" style="stroke-dasharray: 20em; stroke-dashoffset: 10em;   stroke:red;"></circle>
+                          </svg>
+                          <div class="plch__result-text">
+                                37%
+                          </div>
+                        </div>
+                        <div class="plch chart-container" id="chart--SS1Imps"></div>
+                        <div class="plch chart-container" id="chart--SS1View"></div>
+                        <div class="plch chart-container" id="chart--SS1CTR"></div>
+                        <div class="plch chart-container" id="chart--SS1ER"></div>
                       </td>
                       <td class="placement__actions table__actions grid1">
                         <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
