@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 
 var data = require('./content/content.json');
-// var moment = require('moment');
+var moment = require('moment');
 var dataGenerator = require('./js/dataGenerator.js');
 
 app.set('port', (process.env.PORT || 5000));
@@ -20,7 +20,8 @@ var allData = {
   pl: dataGenerator.pl,
   v_cp: JSON.stringify(dataGenerator.cp),
   v_fm: JSON.stringify(dataGenerator.fm),
-  v_pl: JSON.stringify(dataGenerator.pl)
+  v_pl: JSON.stringify(dataGenerator.pl),
+  moment:moment
 };
 
 app.get('/', function(request, response) {

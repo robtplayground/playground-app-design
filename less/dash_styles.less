@@ -242,122 +242,6 @@ body{
 	color: white
 }
 
-.campaigns{
-	align-self: flex-start;
-	width: 100%;
-	td{
-		height: 3rem;
-	}
-}
-
-table, td{
-	border: 1px solid red;
-}
-
-.campaign__table{
-	position: relative;
-	width: ~"calc(100% - 1rem)";
-	margin: 0.5rem;
-	border: 1px solid @midgrey;
-	font-size: @size-0;
-	tr{
-		height: 3rem;
-	}
-	th{
-		// text-align: left;
-	}
-	td{
-		position: relative;
-		text-align: left;
-	}
-	svg{
-		width: 3rem;
-	}
-	.campaign__expand{
-		width: 8.33%;
-		padding-left: 0.5rem;
-		svg{
-			height: 2rem;
-		}
-	}
-	.campaign__brand{
-		width: 13%;
-		font-weight: 700;
-		text-align: left;
-	}
-
-	.campaign__name{
-
-	}
-	.campaign__dates{
-		position: relative;
-
-	}
-	.campaign__progress{
-
-		text-align:left;
-	}
-	.campaign__actions{
-		svg{
-			width: 3rem
-		}
-	}
-	.campaign__progress .chart-container{
-		width: 5rem;
-		height: 4rem;
-		margin: 0.2rem 0 0 0.2rem;
-	}
-}
-
-.creative__table{
-	width: 100%;
-}
-.creative__title{
-	background: @ss-blue;
-}
-
-.creative__title__name{
-	color: white;
-
-}
-.creative__title__thumb{
-	width: 8.33%;
-	img{
-		width: 3rem;
-	}
-}
-.creative__title__format{
-	position:relative;
-	width: 13%;
-	svg{
-		fill: white;
-		width: 7rem;
-		height: 100%;
-	}
-}
-
-.creative__title__status{
-	svg{
-		width: 1.5em;
-		height: 1.5em;
-		margin-right: 0.3em;
-		fill:white;
-	}
-}
-
-.creative__title__actions{
-	svg{
-		fill:white;
-		width: 1.5em;
-		height: 1.5em;
-	}
-}
-
-.placements__table{
-	width: 100%;
-	color: @black;
-}
-
 
 // charts
 
@@ -388,7 +272,7 @@ a[href="http://www.amcharts.com/javascript-charts/"]{
 // 			opacity: 1;
 // 		}
 // 	}
-// }
+// }`
 
 .chart{
 	display:flex;
@@ -567,4 +451,150 @@ a[href="http://www.amcharts.com/javascript-charts/"]{
 		font-size: 15px;
 		// margin-bottom: 30px;
 	}
+}
+
+
+.campaigns{
+	align-self: flex-start;
+	width: 100%;
+	td{
+		height: 3rem;
+	}
+}
+
+table, td{
+	position: relative;
+	width: 100%;
+	table-layout: fixed;
+}
+.campaign__table{
+	width: ~"calc(100% - 1rem)";
+	margin: 0.5rem;
+	border: 1px solid @midgrey;
+	font-size: @size-0;
+	tr{
+		height: 3rem;
+	}
+	th{
+		// text-align: left;
+	}
+	td{
+		position: relative;
+		text-align: left;
+	}
+	svg{
+		width: 3rem;
+	}
+	.campaign__expand{
+		padding-left: 0.5rem;
+		svg{
+			height: 2rem;
+		}
+	}
+	.campaign__brand{
+		font-weight: 700;
+		text-align: left;
+	}
+
+	.campaign__name{
+	}
+	.campaign__dates{
+		position: relative;
+	}
+	.campaign__progress{
+		text-align:left;
+	}
+	.campaign__actions{
+		svg{
+			width: 3rem
+		}
+	}
+	.campaign__progress .chart-container{
+		height: 4rem;
+		margin: 0.2rem 0 0 0.2rem;
+	}
+}
+
+.creative__table{
+	position: relative;
+	// width: 100%;
+}
+.creative__title{
+	background: @ss-blue;
+}
+
+.creative__title__name{
+	color: white;
+	text-overflow: ellipsis;
+  white-space: nowrap;
+
+}
+.creative__title__thumb{
+	img{
+		width: 3rem;
+	}
+}
+.creative__title__format{
+	position:relative;
+	svg{
+		fill: white;
+		width: 7rem;
+		height: 100%;
+	}
+}
+
+.creative__title__author{
+	svg{
+		display: inline-block;
+		vertical-align: middle;
+		fill: white;
+		width: 1.5em;
+		height: 1.5em;
+		margin-right: 0.5em;
+	}
+	span{
+		color: @white;
+		vertical-align: middle;
+	}
+}
+
+.creative__title__status{
+	svg{
+		height: 1.5em;
+		margin-right: 0.3em;
+		fill:white;
+	}
+}
+
+.creative__title__actions{
+	svg{
+		fill:white;
+		width: 1.5em;
+		height: 1.5em;
+	}
+}
+
+.placements__table{
+	position: relative;
+	// width: 100%;
+	color: @black;
+	border: 2px solid @ss-blue;
+}
+
+.placement__status{
+	svg{
+		width: 3rem;
+	}
+}
+.placement__audience{
+}
+.placement__name{
+	text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.placement__imps,
+.placement__progress,
+.placement__viewability,
+.placement__ctr,
+.placement__er{
 }

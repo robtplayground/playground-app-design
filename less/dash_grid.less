@@ -96,10 +96,11 @@ section{
 }
 
 .baseGridWidths(@i: 1) when (@i <= (@numColumns)) {
-  .grid-cell.grid@{i} {
+  .grid@{i} {
     width: ~"calc(("@baseWidth~" * "@i/@numColumns~") - 1rem)";
 		flex:none;
-		&.no-gutter{
+		&.no-gutter,
+		table &{
 			width: ~"calc("@baseWidth~" * "@i/@numColumns~")";
 			margin:0;
 		}

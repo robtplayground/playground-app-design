@@ -1050,99 +1050,111 @@ body:before {
 section {
   margin-top: 1rem;
 }
-.grid-cell.grid1 {
+.grid1 {
   width: calc(( 100%  *  0.08333333 ) - 1rem);
   flex: none;
 }
-.grid-cell.grid1.no-gutter {
+.grid1.no-gutter,
+table .grid1 {
   width: calc( 100%  *  0.08333333 );
   margin: 0;
 }
-.grid-cell.grid2 {
+.grid2 {
   width: calc(( 100%  *  0.16666667 ) - 1rem);
   flex: none;
 }
-.grid-cell.grid2.no-gutter {
+.grid2.no-gutter,
+table .grid2 {
   width: calc( 100%  *  0.16666667 );
   margin: 0;
 }
-.grid-cell.grid3 {
+.grid3 {
   width: calc(( 100%  *  0.25 ) - 1rem);
   flex: none;
 }
-.grid-cell.grid3.no-gutter {
+.grid3.no-gutter,
+table .grid3 {
   width: calc( 100%  *  0.25 );
   margin: 0;
 }
-.grid-cell.grid4 {
+.grid4 {
   width: calc(( 100%  *  0.33333333 ) - 1rem);
   flex: none;
 }
-.grid-cell.grid4.no-gutter {
+.grid4.no-gutter,
+table .grid4 {
   width: calc( 100%  *  0.33333333 );
   margin: 0;
 }
-.grid-cell.grid5 {
+.grid5 {
   width: calc(( 100%  *  0.41666667 ) - 1rem);
   flex: none;
 }
-.grid-cell.grid5.no-gutter {
+.grid5.no-gutter,
+table .grid5 {
   width: calc( 100%  *  0.41666667 );
   margin: 0;
 }
-.grid-cell.grid6 {
+.grid6 {
   width: calc(( 100%  *  0.5 ) - 1rem);
   flex: none;
 }
-.grid-cell.grid6.no-gutter {
+.grid6.no-gutter,
+table .grid6 {
   width: calc( 100%  *  0.5 );
   margin: 0;
 }
-.grid-cell.grid7 {
+.grid7 {
   width: calc(( 100%  *  0.58333333 ) - 1rem);
   flex: none;
 }
-.grid-cell.grid7.no-gutter {
+.grid7.no-gutter,
+table .grid7 {
   width: calc( 100%  *  0.58333333 );
   margin: 0;
 }
-.grid-cell.grid8 {
+.grid8 {
   width: calc(( 100%  *  0.66666667 ) - 1rem);
   flex: none;
 }
-.grid-cell.grid8.no-gutter {
+.grid8.no-gutter,
+table .grid8 {
   width: calc( 100%  *  0.66666667 );
   margin: 0;
 }
-.grid-cell.grid9 {
+.grid9 {
   width: calc(( 100%  *  0.75 ) - 1rem);
   flex: none;
 }
-.grid-cell.grid9.no-gutter {
+.grid9.no-gutter,
+table .grid9 {
   width: calc( 100%  *  0.75 );
   margin: 0;
 }
-.grid-cell.grid10 {
+.grid10 {
   width: calc(( 100%  *  0.83333333 ) - 1rem);
   flex: none;
 }
-.grid-cell.grid10.no-gutter {
+.grid10.no-gutter,
+table .grid10 {
   width: calc( 100%  *  0.83333333 );
   margin: 0;
 }
-.grid-cell.grid11 {
+.grid11 {
   width: calc(( 100%  *  0.91666667 ) - 1rem);
   flex: none;
 }
-.grid-cell.grid11.no-gutter {
+.grid11.no-gutter,
+table .grid11 {
   width: calc( 100%  *  0.91666667 );
   margin: 0;
 }
-.grid-cell.grid12 {
+.grid12 {
   width: calc(( 100%  *  1 ) - 1rem);
   flex: none;
 }
-.grid-cell.grid12.no-gutter {
+.grid12.no-gutter,
+table .grid12 {
   width: calc( 100%  *  1 );
   margin: 0;
 }
@@ -1724,99 +1736,6 @@ body {
 .chart__circle__value {
   color: white;
 }
-.campaigns {
-  align-self: flex-start;
-  width: 100%;
-}
-.campaigns td {
-  height: 3rem;
-}
-table,
-td {
-  border: 1px solid red;
-}
-.campaign__table {
-  position: relative;
-  width: calc(100% - 1rem);
-  margin: 0.5rem;
-  border: 1px solid #cccccc;
-  font-size: 1rem;
-}
-.campaign__table tr {
-  height: 3rem;
-}
-.campaign__table td {
-  position: relative;
-  text-align: left;
-}
-.campaign__table svg {
-  width: 3rem;
-}
-.campaign__table .campaign__expand {
-  width: 8.33%;
-  padding-left: 0.5rem;
-}
-.campaign__table .campaign__expand svg {
-  height: 2rem;
-}
-.campaign__table .campaign__brand {
-  width: 13%;
-  font-weight: 700;
-  text-align: left;
-}
-.campaign__table .campaign__dates {
-  position: relative;
-}
-.campaign__table .campaign__progress {
-  text-align: left;
-}
-.campaign__table .campaign__actions svg {
-  width: 3rem;
-}
-.campaign__table .campaign__progress .chart-container {
-  width: 5rem;
-  height: 4rem;
-  margin: 0.2rem 0 0 0.2rem;
-}
-.creative__table {
-  width: 100%;
-}
-.creative__title {
-  background: #0078d8;
-}
-.creative__title__name {
-  color: white;
-}
-.creative__title__thumb {
-  width: 8.33%;
-}
-.creative__title__thumb img {
-  width: 3rem;
-}
-.creative__title__format {
-  position: relative;
-  width: 13%;
-}
-.creative__title__format svg {
-  fill: white;
-  width: 7rem;
-  height: 100%;
-}
-.creative__title__status svg {
-  width: 1.5em;
-  height: 1.5em;
-  margin-right: 0.3em;
-  fill: white;
-}
-.creative__title__actions svg {
-  fill: white;
-  width: 1.5em;
-  height: 1.5em;
-}
-.placements__table {
-  width: 100%;
-  color: #222222;
-}
 .content {
   flex-wrap: wrap;
 }
@@ -1976,4 +1895,112 @@ a[href="http://www.amcharts.com/javascript-charts/"] {
 }
 .chart--heat .amcharts-graph-label {
   font-size: 15px;
+}
+.campaigns {
+  align-self: flex-start;
+  width: 100%;
+}
+.campaigns td {
+  height: 3rem;
+}
+table,
+td {
+  position: relative;
+  width: 100%;
+  table-layout: fixed;
+}
+.campaign__table {
+  width: calc(100% - 1rem);
+  margin: 0.5rem;
+  border: 1px solid #cccccc;
+  font-size: 1rem;
+}
+.campaign__table tr {
+  height: 3rem;
+}
+.campaign__table td {
+  position: relative;
+  text-align: left;
+}
+.campaign__table svg {
+  width: 3rem;
+}
+.campaign__table .campaign__expand {
+  padding-left: 0.5rem;
+}
+.campaign__table .campaign__expand svg {
+  height: 2rem;
+}
+.campaign__table .campaign__brand {
+  font-weight: 700;
+  text-align: left;
+}
+.campaign__table .campaign__dates {
+  position: relative;
+}
+.campaign__table .campaign__progress {
+  text-align: left;
+}
+.campaign__table .campaign__actions svg {
+  width: 3rem;
+}
+.campaign__table .campaign__progress .chart-container {
+  height: 4rem;
+  margin: 0.2rem 0 0 0.2rem;
+}
+.creative__table {
+  position: relative;
+}
+.creative__title {
+  background: #0078d8;
+}
+.creative__title__name {
+  color: white;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.creative__title__thumb img {
+  width: 3rem;
+}
+.creative__title__format {
+  position: relative;
+}
+.creative__title__format svg {
+  fill: white;
+  width: 7rem;
+  height: 100%;
+}
+.creative__title__author svg {
+  display: inline-block;
+  vertical-align: middle;
+  fill: white;
+  width: 1.5em;
+  height: 1.5em;
+  margin-right: 0.5em;
+}
+.creative__title__author span {
+  color: #ffffff;
+  vertical-align: middle;
+}
+.creative__title__status svg {
+  height: 1.5em;
+  margin-right: 0.3em;
+  fill: white;
+}
+.creative__title__actions svg {
+  fill: white;
+  width: 1.5em;
+  height: 1.5em;
+}
+.placements__table {
+  position: relative;
+  color: #222222;
+  border: 2px solid #0078d8;
+}
+.placement__status svg {
+  width: 3rem;
+}
+.placement__name {
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
