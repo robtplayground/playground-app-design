@@ -1901,7 +1901,8 @@ a[href="http://www.amcharts.com/javascript-charts/"] {
   align-self: flex-start;
   width: 100%;
 }
-.campaigns td {
+.campaigns td,
+.campaigns th {
   height: 3rem;
 }
 table,
@@ -1923,10 +1924,15 @@ td {
   width: calc(100% - 1rem);
   margin: 0.5rem;
   border: 1px solid #cccccc;
+  background: #333333;
+  color: #ffffff;
   font-size: 1rem;
 }
 .campaign__table tr {
   height: 3rem;
+}
+.campaign__table td {
+  height: 5rem;
 }
 .campaign__table td {
   position: relative;
@@ -1936,6 +1942,7 @@ td {
   padding-left: 0.5rem;
 }
 .campaign__table .campaign__expand svg {
+  fill: #ffffff;
   height: 2rem;
 }
 .campaign__table .campaign__brand {
@@ -1948,12 +1955,24 @@ td {
 .campaign__table .campaign__progress {
   text-align: left;
 }
+.campaign__table .campaign__actions svg {
+  fill: #ffffff;
+}
 .campaign__table .campaign__progress .chart-container {
   height: 4rem;
   margin: 0.2rem 0 0 0.2rem;
 }
 .creative__table {
   position: relative;
+  background: #ffffff;
+  color: #222222;
+}
+.creative__table thead,
+.creative__table th {
+  height: 4rem;
+}
+.creative__table tbody tr:nth-child(even) {
+  background: #fafafa;
 }
 .creative__title {
   background: #0078d8;
@@ -2059,10 +2078,12 @@ td {
 .plch h6 {
   position: absolute;
   width: 100%;
-  top: -1.5em;
+  top: 0.8em;
   text-transform: uppercase;
   text-align: center;
   font-size: 0.694rem;
+  color: #cccccc;
+  mix-blend-mode: multiply;
   margin: 0;
 }
 .plch svg {
@@ -2080,6 +2101,7 @@ td {
   width: 100%;
   height: 100%;
   display: flex;
+  margin-top: 20%;
   font-size: 0.9em;
   justify-content: center;
   align-items: center;

@@ -1,16 +1,61 @@
 var moment = require('moment');
 var path = require('path');
-const {
-	setErrors,
-	randMinMax,
-	duration,
-	arrayRange,
-	average,
-	total,
-	makeZeros,
-	listDates,
-	breakText,
-} = require( path.resolve( __dirname, "helpers.js" ) );
+var helpers = require( path.resolve( __dirname, "helpers.js" ) );
+
+
+/***** CAMPAIGN  *****/
+
+function generateCampaign(options) {
+	var dateList = helpers.listDates(options.dates);
+	var dur = helpers.duration(options.dates);
+	return {
+		name: options.name,
+		brand: options.brand,
+		objective: options.objective,
+		vertical: options.vertical,
+		dates: {
+			start: options.dates.start,
+			end: options.dates.end
+		},
+		dateList: dateList,
+		duration: dur
+	}
+}
+
+cp_gopro = generateCampaign({
+	name:'Hero5 Mark II ',
+	brand: "GoPro",
+	vertical: "Technology",
+	objective: "Awareness",
+	dates: {
+		start: new Date(2017, 6, 1),
+		end: new Date(2017, 7, 31)
+	}
+});
+
+cp_mcdonalds = generateCampaign({
+	name:'Chicken Tenders',
+	brand: "McDonalds",
+	vertical: "Food and Beverage",
+	objective: "Direct Response",
+	dates: {
+		start: new Date(2017, 9, 1),
+		end: new Date(2017, 10, 31)
+	}
+});
+
+cp_woolworths = generateCampaign({
+	name:'Spring Specials',
+	brand: "Woolworths",
+	vertical: "FMCG",
+	objective: "Awareness",
+	dates: {
+		start: new Date(2017, 10, 1),
+		end: new Date(2017, 11, 31)
+	}
+});
+
+campaigns = [cp_gopro, cp_mcdonalds, cp_woolworths];
 
 // BENCHMARKS
 
@@ -83,16 +128,16 @@ subWay = {
 
 function REQUESTED_IMPS(placementDates, errors, expectedImps, campaign){
 	// create zeros
-  var values = makeZeros(campaign.duration);
+  var values = helpers.makeZeros(campaign.duration);
 	// work out where placement data sits in campaign metrics
-	var pDuration = duration(placementDates);
-	var pRange = arrayRange(placementDates, campaign);
+	var pDuration = helpers.duration(placementDates);
+	var pRange = helpers.arrayRange(placementDates, campaign);
 
 	function setMetric(){
 		// create random reqImps value
 		var min = expectedImps * 0.90;
 		var max = expectedImps * 1.5;
-		return randMinMax(min, max, true);
+		return helpers.randMinMax(min, max, true);
 	}
 
 	// overwrite zeroes with impressions
@@ -103,7 +148,7 @@ function REQUESTED_IMPS(placementDates, errors, expectedImps, campaign){
 	// there are errors for this metric...
 
 	if(errors.reqImps){
-		values = setErrors(errors.reqImps.differences, values);
+		values = helpers.setErrors(errors.reqImps.differences, values);
 	}
   return values;
 }
@@ -113,7 +158,7 @@ function EXECUTED_IMPS(reqImpsArray, errors, expectedImps){
   var values = reqImpsArray.slice();
 	values.forEach(function(value, i){
 		if(value != 0){
-			var difference = randMinMax(expectedImps*0.1, expectedImps*0.3, true);
+			var difference = helpers.randMinMax(expectedImps*0.1, expectedImps*0.3, true);
 	    values.splice(i, 1, value - difference);
 		}
   });
@@ -121,7 +166,7 @@ function EXECUTED_IMPS(reqImpsArray, errors, expectedImps){
 	// there are errors for this metric...
 
 	if(errors.execImps){
-		values = setErrors(errors.execImps.differences, values);
+		values = helpers.setErrors(errors.execImps.differences, values);
 	}
   return values;
 }
@@ -131,7 +176,7 @@ function VIEWABLE_IMPS(execImpsArray, errors, expectedImps){
   var values = execImpsArray.slice();
 	values.forEach(function(value, i){
 		if(value != 0){
-			var difference = randMinMax(expectedImps*0.1, expectedImps*0.2, true);
+			var difference = helpers.randMinMax(expectedImps*0.1, expectedImps*0.2, true);
 	    values.splice(i, 1, value - difference);
 		}
   });
@@ -139,7 +184,7 @@ function VIEWABLE_IMPS(execImpsArray, errors, expectedImps){
 	// there are errors for this metric...
 
 	if(errors.viewImps){
-		values = setErrors(errors.viewImps.differences, values);
+		values = helpers.setErrors(errors.viewImps.differences, values);
 	}
 
   return values;
@@ -165,7 +210,7 @@ function CLICKS(array){
 		if(value != 0){
 			var min = 24/10000;
 			var max = 36/10000;
-			var newValue = Math.round(value * randMinMax(min, max));
+			var newValue = Math.round(value * helpers.randMinMax(min, max));
 	    values.splice(i, 1, newValue);
 		}
   });
@@ -179,7 +224,7 @@ function ENGAGEMENTS(array, errors){
 		if(value != 0){
 			var min = 63/10000;
 			var max = 84/10000;
-			var newValue = Math.round(value * randMinMax(min, max));
+			var newValue = Math.round(value * helpers.randMinMax(min, max));
 	    values.splice(i, 1, newValue);
 		}
   });
@@ -187,7 +232,7 @@ function ENGAGEMENTS(array, errors){
 	// there are errors for this metric...
 
 	if(errors.engagements){
-		values = setErrors(errors.engagements.differences, values);
+		values = helpers.setErrors(errors.engagements.differences, values);
 	}
 
   return values;
@@ -232,7 +277,7 @@ function ATIV(executedImpsArray, ativBenchmark){
 	var values = executedImpsArray.slice();
 	values.forEach(function(value, i){
 		if(value != 0){
-			var newValue = Number((ativBenchmark + randMinMax(-1, 4)).toFixed(2));
+			var newValue = Number((ativBenchmark + helpers.randMinMax(-1, 4)).toFixed(2));
 	    values.splice(i, 1, newValue);
 		}
   });
@@ -244,7 +289,7 @@ function VIDEO_VIEWABLE_IMPS(engagementsArray){
 	var values = engagementsArray.slice();
 	values.forEach(function(value, i){
 		if(value != 0){
-			var newValue = value + randMinMax(-1, -3, true);
+			var newValue = value + helpers.randMinMax(-1, -3, true);
 	    values.splice(i, 1, newValue);
 		}
   });
@@ -277,7 +322,7 @@ function VIDEO_METRICS(executedImpsArray){
     var percents = [];
     // generate 5 random numbers
     for(var i = 0; i < 5; i++){
-      var value = randMinMax(1, 10);
+      var value = helpers.randMinMax(1, 10);
       randoms.push(value);
     }
     // sum randoms
@@ -314,81 +359,11 @@ function VIDEO_METRICS(executedImpsArray){
   return video;
 }
 
-/***** CAMPAIGN  *****/
-
-function makeCampaign(options) {
-	var dateList = listDates(options.dates);
-	var dur = duration(options.dates);
-	return {
-		name: options.name,
-		brand: options.brand,
-		objective: options.objective,
-		vertical: options.vertical,
-		dates: {
-			start: options.dates.start,
-			end: options.dates.end
-		},
-		dateList: dateList,
-		duration: dur,
-		creatives: []
-	}
-}
-
-cp_gopro = makeCampaign({
-	name:'Hero5 Mark II ',
-	brand: "GoPro",
-	vertical: "Technology",
-	objective: "Awareness",
-	dates: {
-		start: new Date(2017, 6, 1),
-		end: new Date(2017, 7, 31)
-	},
-});
-
-cp_mcdonalds = makeCampaign({
-	name:'Chicken Tenders',
-	brand: "McDonalds",
-	vertical: "Food and Beverage",
-	objective: "Direct Response",
-	dates: {
-		start: new Date(2017, 9, 1),
-		end: new Date(2017, 10, 31)
-	},
-});
-
-cp_woolworths = makeCampaign({
-	name:'Spring Specials',
-	brand: "Woolworths",
-	vertical: "FMCG",
-	objective: "Awareness",
-	dates: {
-		start: new Date(2017, 10, 1),
-		end: new Date(2017, 11, 31)
-	},
-});
-
-
-
-function makeCreative(campaign, options){
-	campaign.creatives[options.id] = {
-		name: options.desc,
-		content: options.content,
-		thumb: options.thumb,
-		author: options.author,
-		status: options.status,
-		modified: options.modified,
-		format: options.format,
-		features: options.features,
-		placements: {}
-	};
-}
-
-
-const makePlacement = function(campaign, creative, options){
+function createPlacement(options){
 	// name is string, dates = dates object, errors = errorsObject{}
-	var dur = duration(options.dates);
-	var expectedImps = options.bookedImps / dur;
-	var requestedImps = REQUESTED_IMPS(options.dates, options.errors, expectedImps, campaign);
+	var duration = helpers.duration(options.dates);
+	var expectedImps = options.bookedImps / duration;
+	var requestedImps = REQUESTED_IMPS(options.dates, options.errors, expectedImps, options.campaign);
 	var reqImpsAgg = AGGREGATE(requestedImps);
 	var executedImps = EXECUTED_IMPS(requestedImps, options.errors, expectedImps);
 	var execImpsAgg = AGGREGATE(executedImps);
@@ -405,16 +380,16 @@ const makePlacement = function(campaign, creative, options){
 	var engagementRate = PERCENT(clickEng, executedImps);
 	var passiveCompletionRate = PERCENT(passiveCompletions, executedImps);
 	var engagedCompletionRate = PERCENT(engagedCompletions, executedImps);
-	var ativ = ATIV(executedImps, campaign.creatives[creative].format.bm.ativ);
+	var ativ = ATIV(executedImps, options.creative.format.bm.ativ);
 	var videoViewableImps = VIDEO_VIEWABLE_IMPS(engagements);
 	var video = VIDEO_METRICS(engagements);
 	var name = options.name;
 
-  campaign.creatives[options.id] = {
+  return {
     name: name,
     dates: options.dates,
 		bookedImps: options.bookedImps,
-		audience: options.audience,
+		color: options.color,
     data: {
 			// dates are always the campaign dates
 			requestedImps: requestedImps,
@@ -436,11 +411,12 @@ const makePlacement = function(campaign, creative, options){
 			ativ: ativ,
 			videoViewableImps: videoViewableImps,
 			video: video
-  	}
-	};
+  	},
+		creative: options.creative,
+	  audience: options.audience,
+		campaign: options.campaign
+	}
 }
-
-
 
 /***** ERRORS  *****/
 
@@ -453,22 +429,14 @@ var errorPath_reqImps1Jul_30Aug = [100, 100, 100, 100, 100, 100, 100, 100, 100, 
 var errorPath_eng1Jul_30Aug = [133, 129, 127, 141, 125, 133, 143, 147, 130, 128, 123, 117, 123, 119, 118, 119, 119, 119, 119, 119, 119, 109, 109, 109, 109, 109, 109, 109, 109, 90, 90, 90, 90, 82, 82, 82, 82, 82, 82, 82, 68, 68, 68, 68, 68, 68, 68, 68, 68, 68, 68, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60];
 
 
-makeCreative(cp_gopro, {
-		id: 'SS_Males',
-		name: 'GoPro Hero5 Males Festival SS',
-		content: 'GoPro Hero5 Males Festival',
-		thumb: 'thumb-gopro-males.png',
-		author: 'Steve Nash',
-		status: 'locked',
-		modified: new Date(2017, 7, 1),
-		format: superSkin,
-    features: ['expand-frame', 'video'],
-});
+/***** GENERATE  *****/
 
-makePlacement(cp_gopro, 'SS_Males', {
-	id: 'SSM_same',
+// SUPER SKIN, male, pre-launch,
+
+SSM_same = createPlacement({
 	name: '146560594_Airwave_GoPro_Target_MalesMetro18-44',
 	bookedImps: 200000,
+	color: "#0078d8",
 	dates: {
 		start: new Date(2017, 6, 1),
 		end: new Date(2017, 7, 31)
@@ -487,6 +455,17 @@ makePlacement(cp_gopro, 'SS_Males', {
 			differences: errorPath_execImps1_8Aug
 		}
 	},
+	campaign: cp_gopro,
+	creative: {
+		thumb: 'thumb-gopro-males.png',
+		author: 'Steve Nash',
+		status: 'locked',
+		modified: new Date(2017, 7, 1),
+		format: superSkin,
+    features: ['expand-frame', 'video'],
+    content: 'GoPro Hero5 Males Festival',
+    name: 'GoPro Hero5 Males Festival SS'
+  },
   audience: {
 		shortName: 'Male AU Metro Tech',
     gender: 'male',
@@ -499,10 +478,12 @@ makePlacement(cp_gopro, 'SS_Males', {
   }
 });
 
-makePlacement(cp_gopro, 'SS_Males', {
-	id: 'SSM_opp',
+// SUPER SKIN, females, pre-launch
+
+SSM_opp = createPlacement({
 	name: '146560595_Airwave_GoPro_Target_MalesMetro18-44',
 	bookedImps: 50000,
+	color: "#0078d8",
 	dates: {
 		start: new Date(2017, 6, 1),
 		end: new Date(2017, 7, 31)
@@ -521,6 +502,17 @@ makePlacement(cp_gopro, 'SS_Males', {
 			differences: errorPath_execImps1_8Aug
 		}
 	},
+	campaign: cp_gopro,
+	creative: {
+		thumb: 'thumb-gopro-males.png',
+		author: 'Steve Nash',
+		status: 'locked',
+		modified: new Date(2017, 7, 1),
+		format: superSkin,
+    features: ['expand-frame', 'video'],
+    content: 'GoPro Hero5 Females Travel',
+    name: 'GoPro Hero5 Males Festival SS'
+  },
   audience: {
 		shortName: 'Female AU Metro Lifestyle',
     gender: 'female',
@@ -533,74 +525,86 @@ makePlacement(cp_gopro, 'SS_Males', {
   }
 });
 
-makeCreative(cp_gopro, {
-		id: 'SS_Females',
-		name: 'GoPro Hero5 Females Travel SS',
-		content: 'GoPro Hero5 Females Travel',
+// SIDE-PUSH, males, pre-launch
+
+SSF_same = createPlacement({
+	name: '146560596_Airwave_GoPro_Target_FemalesMetro18-44',
+	bookedImps: 200000,
+	color: "#0078d8",
+	dates: {
+		start: new Date(2017, 6, 1),
+		end: new Date(2017, 7, 31)
+	},
+	errors: {
+		reqImps: {
+			differences: errorPath_reqImps1Jul_30Aug
+		},
+		viewImps: {
+			differences: errorPath_viewb26_30July
+		},
+		engagements: {
+			differences: errorPath_eng1Jul_30Aug
+		},
+		execImps: {
+			differences: errorPath_execImps1_8Aug
+		}
+	},
+	campaign: cp_gopro,
+	creative: {
+		thumb: 'thumb-gopro-females.png',
+		author: 'Vinko Kraljevic',
+		status: 'locked',
+		modified: new Date(2017, 7, 7),
+		format: superSkin,
+    features: ['expand-frame', 'video'],
+    content: 'GoPro Hero5 Females Travel',
+    name: 'GoPro Hero5 Females Travel SS'
+  },
+  audience: {
+		shortName: 'Male AU Metro Tech',
+    gender: 'male',
+    age: {
+      from: 18,
+      to: 44
+    },
+    interests: ['Entertainment', 'Tech', 'Lifestyle', 'News' ],
+    locations: ['AU Metro']
+  }
+});
+
+SSF_opp = createPlacement({
+	name: '146560597_Airwave_GoPro_Target_FemalesMetro18-44',
+	bookedImps: 50000,
+	color: "#0078d8",
+	dates: {
+		start: new Date(2017, 6, 1),
+		end: new Date(2017, 7, 31)
+	},
+	errors: {
+		reqImps: {
+			differences: errorPath_reqImps1Jul_30Aug
+		},
+		viewImps: {
+			differences: errorPath_viewb26_30July
+		},
+		engagements: {
+			differences: errorPath_eng1Jul_30Aug
+		},
+		execImps: {
+			differences: errorPath_execImps1_8Aug
+		}
+	},
+	campaign: cp_gopro,
+	creative: {
 		thumb: 'thumb-gopro-females.png',
 		author: 'Vinko Kraljevic',
 		status: 'locked',
 		modified: new Date(2017, 7, 8),
 		format: superSkin,
     features: ['expand-frame', 'video'],
-});
-
-makePlacement(cp_gopro, 'SS_Females',{
-	id: 'SSF_same',
-	name: '146560596_Airwave_GoPro_Target_FemalesMetro18-44',
-	bookedImps: 200000,
-	dates: {
-		start: new Date(2017, 6, 1),
-		end: new Date(2017, 7, 31)
-	},
-	errors: {
-		reqImps: {
-			differences: errorPath_reqImps1Jul_30Aug
-		},
-		viewImps: {
-			differences: errorPath_viewb26_30July
-		},
-		engagements: {
-			differences: errorPath_eng1Jul_30Aug
-		},
-		execImps: {
-			differences: errorPath_execImps1_8Aug
-		}
-	},
-  audience: {
-		shortName: 'Male AU Metro Tech',
-    gender: 'male',
-    age: {
-      from: 18,
-      to: 44
-    },
-    interests: ['Entertainment', 'Tech', 'Lifestyle', 'News' ],
-    locations: ['AU Metro']
-  }
-});
-
-makePlacement(cp_gopro, 'SS_Females',{
-	id: 'SSF_opp',
-	name: '146560597_Airwave_GoPro_Target_FemalesMetro18-44',
-	bookedImps: 50000,
-	dates: {
-		start: new Date(2017, 6, 1),
-		end: new Date(2017, 7, 31)
-	},
-	errors: {
-		reqImps: {
-			differences: errorPath_reqImps1Jul_30Aug
-		},
-		viewImps: {
-			differences: errorPath_viewb26_30July
-		},
-		engagements: {
-			differences: errorPath_eng1Jul_30Aug
-		},
-		execImps: {
-			differences: errorPath_execImps1_8Aug
-		}
-	},
+    content: 'GoPro Hero5 Females Travel',
+    name: 'GoPro Hero5 Females Travel SS'
+  },
   audience: {
 		shortName: 'Female AU Metro Travel',
     gender: 'female',
@@ -613,31 +617,32 @@ makePlacement(cp_gopro, 'SS_Females',{
   }
 });
 
-makeCreative(cp_gopro, {
-		id: 'TT_Males',
-		name: 'GoPro Hero5 Males Festival TT',
-		content: 'GoPro Hero5 Males Festival',
+// SUPER SKIN, males, post-launch
+
+TTM_same = createPlacement({
+	name: '146560598_Airwave_GoPro_Target_MalesMetro18-44',
+	bookedImps: 200000,
+	color: "#5d3289",
+	dates: {
+		start: new Date(2017, 6, 1),
+		end: new Date(2017, 7, 31)
+	},
+	errors: {
+		reqImps: {
+			differences: errorPath_reqImps1Jul_30Aug
+		}
+	},
+	campaign: cp_gopro,
+	creative: {
 		thumb: 'thumb-gopro-males.png',
 		author: 'Rob Thwaites',
 		status: 'locked',
 		modified: new Date(2017, 7, 10),
 		format: topTail,
-    features: ['expand-frame', 'video']
-});
-
-makePlacement(cp_gopro, 'TT_Males',{
-	 id: 'TTM_same',
-	name: '146560598_Airwave_GoPro_Target_MalesMetro18-44',
-	bookedImps: 200000,
-	dates: {
-		start: new Date(2017, 6, 1),
-		end: new Date(2017, 7, 31)
-	},
-	errors: {
-		reqImps: {
-			differences: errorPath_reqImps1Jul_30Aug
-		}
-	},
+    features: ['expand-frame', 'video'],
+    content: 'GoPro Hero5 Males Festival',
+    name: 'GoPro Hero5 Males Festival TT'
+  },
   audience: {
 		shortName: 'Male AU Metro Tech',
     gender: 'male',
@@ -650,10 +655,12 @@ makePlacement(cp_gopro, 'TT_Males',{
   }
 });
 
-makePlacement(cp_gopro, 'TT_Males', {
-	 id: 'TTM_opp',
+// SUPER SKIN, females, post-launch
+
+TTM_opp = createPlacement({
 	name: '146560599_Airwave_GoPro_Target_MalesMetro18-44',
 	bookedImps: 50000,
+	color: "#5d3289",
 	dates: {
 		start: new Date(2017, 6, 1),
 		end: new Date(2017, 7, 31)
@@ -663,6 +670,17 @@ makePlacement(cp_gopro, 'TT_Males', {
 			differences: errorPath_reqImps1Jul_30Aug
 		}
 	},
+	campaign: cp_gopro,
+	creative: {
+		thumb: 'thumb-gopro-males.png',
+		author: 'Rob Thwaites',
+		status: 'locked',
+		modified: new Date(2017, 7, 10),
+		format: topTail,
+    features: ['expand-frame', 'video'],
+    content: 'GoPro Hero5 Females Travel',
+    name: 'GoPro Hero5 Males Festival TT'
+  },
   audience: {
 		shortName: 'Female AU Metro Travel',
     gender: 'female',
@@ -675,22 +693,12 @@ makePlacement(cp_gopro, 'TT_Males', {
   }
 });
 
-makeCreative(cp_gopro, {
-		id: 'TT_Females',
-		name: 'GoPro Hero5 Females Travel TT',
-		content: 'GoPro Hero5 Females Travel',
-		thumb: 'thumb-gopro-females.png',
-		author: 'Rob Thwaites',
-		status: 'locked',
-		modified: new Date(2017, 7, 9),
-		format: topTail,
-    features: ['expand-frame', 'video']
-});
+// SIDE-PUSH, males, pre-launch
 
-makePlacement(cp_gopro, 'TT_Females',{
-	 id: 'TTF_same',
+TTF_same = createPlacement({
 	name: '146560600_Airwave_GoPro_Target_FemalesMetro18-44',
 	bookedImps: 200000,
+	color: "#5d3289",
 	dates: {
 		start: new Date(2017, 6, 1),
 		end: new Date(2017, 7, 31)
@@ -723,10 +731,10 @@ makePlacement(cp_gopro, 'TT_Females',{
   }
 });
 
-makePlacement(cp_gopro, 'TT_Females', {
-	id: 'TTF_opp',
+TTF_opp = createPlacement({
 	name: '146560601_Airwave_GoPro_Target_FemalesMetro18-44',
 	bookedImps: 50000,
+	color: "#5d3289",
 	dates: {
 		start: new Date(2017, 6, 1),
 		end: new Date(2017, 7, 31)
@@ -736,6 +744,17 @@ makePlacement(cp_gopro, 'TT_Females', {
 			differences: errorPath_reqImps1Jul_30Aug
 		}
 	},
+	campaign: cp_gopro,
+	creative: {
+		thumb: 'thumb-gopro-females.png',
+		author: 'Rob Thwaites',
+		status: 'locked',
+		modified: new Date(2017, 7, 10),
+		format: topTail,
+    features: ['expand-frame', 'video'],
+    content: 'GoPro Hero5 Females Travel',
+    name: 'GoPro Hero5 Females Travel'
+  },
   audience: {
 		shortName: 'Female AU Metro Lifestyle',
     gender: 'female',
@@ -748,28 +767,26 @@ makePlacement(cp_gopro, 'TT_Females', {
   }
 });
 
-makeCreative(cp_mcdonalds, {
-		id: 'HT_Tenders',
-		name: 'HT Chicken Tenders Anim HT',
-		content: 'HT Chicken Tenders Anim',
-		thumb: 'thumb-maccers.png',
-		author: 'Steve Nash',
-		status: 'pending',
-		modified: new Date(2017, 7, 1),
-		format: hangTime,
-    features: ['video'],
-});
-
-
-makePlacement(cp_mcdonalds, 'HT_Tenders', {
-	id: 'HT_mac_1',
+HT_mac_1 = createPlacement({
 	name: '5124365_McD_Tenders_Nov',
 	bookedImps: 50000,
+	color: "#fd7732",
 	dates: {
 		start: new Date(2017, 9, 1),
 		end: new Date(2017, 10, 31)
 	},
 	errors: {},
+	campaign: cp_mcdonalds,
+	creative: {
+		thumb: 'thumb-maccers.png',
+		author: 'Steve Nash',
+		status: 'pending',
+		modified: new Date(2017, 7, 1),
+		format: hangTime,
+    features: [],
+    content: 'HT Chicken Tenders Anim',
+    name: 'HT Chicken Tenders Anim HT'
+  },
   audience: {
 		shortName: 'Young Families',
     gender: 'both',
@@ -782,27 +799,26 @@ makePlacement(cp_mcdonalds, 'HT_Tenders', {
   }
 });
 
-makeCreative(cp_woolworths, {
-		id: 'SP_Snacks',
-		name: 'Woolies Snackfood Combos SP',
+SP_woolworths_1 = createPlacement({
+	name: '654871_Woolies_Spring_Catalogue',
+	bookedImps: 50000,
+	color: "#fd7732",
+	dates: {
+		start: new Date(2017, 9, 1),
+		end: new Date(2017, 10, 31)
+	},
+	errors: {},
+	campaign: cp_woolworths,
+	creative: {
 		thumb: 'thumb-woolies.png',
 		author: 'Steve Nash',
 		status: 'pending',
 		modified: new Date(2017, 7, 1),
 		format: sidePush,
     features: ['expand-frame', 'image'],
-    content: 'Woolies Snackfood Combos'
-});
-
-makePlacement(cp_woolworths, 'SP_Snacks', {
-	id: 'SP_Snacks1',
-	name: '654871_Woolies_Spring_Catalogue',
-	bookedImps: 50000,
-	dates: {
-		start: new Date(2017, 9, 1),
-		end: new Date(2017, 10, 31)
-	},
-	errors: {},
+    content: 'Woolies Snackfood Combos',
+    name: 'Woolies Snackfood Combos SP'
+  },
   audience: {
 		shortName: 'Entertainers Fem 25-39',
     gender: 'both',
@@ -815,43 +831,40 @@ makePlacement(cp_woolworths, 'SP_Snacks', {
   }
 });
 
-makePlacement(cp_woolworths, 'SP_Snacks', {
-	id: 'SP_Snacks2',
+SP_woolworths_2 = createPlacement({
 	name: '654872_Woolies_Spring_Catalogue',
 	bookedImps: 50000,
+	color: "#005558",
 	dates: {
 		start: new Date(2017, 10, 1),
 		end: new Date(2017, 11, 31)
 	},
 	errors: {},
-  audience: {
-		shortName: 'Entertainers Fem 25-39',
-    gender: 'both',
-    age: {
-      from: 18,
-      to: 44
-    },
-    interests: ['Entertainment', 'Food', 'Lifestyle', 'News' ],
-    locations: ['AU Metro']
-  }
-});
-
-makeCreative(cp_woolworths, {
-		id: 'SW_Lamb_1',
-		name: 'Woolies Leg Lamb Special SP',
+	campaign: cp_woolworths,
+	creative: {
 		thumb: 'thumb-woolies.png',
 		author: 'Vinko Kraljevic',
 		status: 'edit',
 		modified: new Date(2017, 7, 1),
 		format: sidePush,
     features: ['expand-frame', 'image'],
-    content: 'Woolies Leg Lamb Special'
+    content: 'Woolies Leg Lamb Special',
+    name: 'Woolies Leg Lamb Special SP'
+  },
+  audience: {
+		shortName: 'Entertainers Fem 25-39',
+    gender: 'both',
+    age: {
+      from: 18,
+      to: 44
+    },
+    interests: ['Entertainment', 'Food', 'Lifestyle', 'News' ],
+    locations: ['AU Metro']
+  }
 });
 
-
-makePlacement(cp_woolworths, 'SW_Lamb_1', {
-	id: 'Lamb1',
-	name: '654873_Woolies_Spring_Catalogue',
+SW_woolworths_1 = createPlacement({
+	name: '654872_Woolies_Spring_Catalogue',
 	bookedImps: 50000,
 	color: "#ffc200",
 	dates: {
@@ -859,6 +872,17 @@ makePlacement(cp_woolworths, 'SW_Lamb_1', {
 		end: new Date(2017, 11, 31)
 	},
 	errors: {},
+	campaign: cp_woolworths,
+	creative: {
+		thumb: 'thumb-woolies.png',
+		author: 'Vinko Kraljevic',
+		status: 'edit',
+		modified: new Date(2017, 7, 1),
+		format: subWay,
+    features: ['expand-frame', 'image'],
+    content: 'Woolies Leg Lamb Special',
+    name: 'Woolies Leg Lamb Special SW'
+  },
   audience: {
 		shortName: 'Entertainers Fem 25-39',
     gender: 'both',
@@ -870,6 +894,99 @@ makePlacement(cp_woolworths, 'SW_Lamb_1', {
     locations: ['AU Metro']
   }
 });
+
+allPl = [
+	SSM_same,
+	SSM_opp,
+	SSF_same,
+	SSF_opp,
+	TTM_same,
+	TTM_opp,
+	TTF_same,
+	TTF_opp,
+	HT_mac_1,
+	SP_woolworths_1,
+	SP_woolworths_2,
+	SW_woolworths_1
+];
+
+function prepCampaigns(placements){
+	var cpNames = [];
+	var cps = [];
+	placements.forEach(function(pl) {
+    if (!cpNames.includes(pl.campaign.name)) {
+      cpNames.push(pl.campaign.name);
+    }
+  });
+	cpNames.forEach(function(thisName) {
+    var obj = {};
+    obj.name = thisName;
+    // clones placements before filtering
+    obj.placements = placements.slice();
+    obj.placements = obj.placements.filter(function(pl) {
+      // console.log(pl);
+      return pl.campaign.name === thisName;
+    }); // returns an array of objects
+		obj.brand = obj.placements[0].campaign.brand;
+		obj.vertical = obj.placements[0].campaign.vertical;
+		obj.objective = obj.placements[0].campaign.objective;
+		obj.dates = obj.placements[0].campaign.dates
+    obj.placements.forEach(function(pl) {
+      delete campaign;
+    });
+    cps.push(obj);
+  });
+  return cps;
+}
+
+allCp = prepCampaigns(allPl);
+
+console.log(allCp[0].placements[0].creative);
+
+function prepCreatives(campaign) {
+  var cName= [];
+  var crs = [];
+	// console.log(campaigns.placement[0]);
+  campaign.placements.forEach(function(pl) {
+    if (!cName.includes(pl.creative.name)) {
+      cName.push(pl.creative.name);
+    }
+  });
+	// console.log('C CONTENT', cName);
+  cName.forEach(function(thisName) {
+    var obj = {};
+    obj.name = thisName;
+    // clones placements before filtering
+    obj.placements = campaign.placements.slice();
+    obj.placements = obj.placements.filter(function(pl) {
+      // console.log(pl);
+      return pl.creative.name === thisName;
+    }); // returns an array of objects
+		// console.log('PLACEMENTS BY CAMPAIGN', obj.placements);
+    obj.thumb = obj.placements[0].creative.thumb;
+    obj.author = obj.placements[0].creative.author;
+    obj.status = obj.placements[0].creative.status;
+    obj.modified = obj.placements[0].creative.modified;
+    obj.format = obj.placements[0].creative.format;
+		obj.content = obj.placements[0].creative.content;
+    obj.features = obj.placements[0].creative.features;
+    // obj.id = obj.placements[0].creative.id;
+    obj.placements.forEach(function(pl) {
+      delete creative;
+    });
+    crs.push(obj);
+		// console.log('CREATIVES', crs);
+  });
+	delete campaign.placements;
+  campaign.creatives = crs;
+}
+
+allCp.forEach(function(campaign){
+	prepCreatives(campaign);
+});
+
+// console.log('ALL CP', allCp[0].creatives);
+
 
 // console.log(SS1Pre);
 
@@ -882,9 +999,31 @@ module.exports = {
 		subWay: subWay,
 		iab: iab
 	},
-	allCp: {
-		cp_gopro,
-		cp_mcdonalds,
-		cp_woolworths
-	}
+	cp: cp_gopro,
+	allCp: allCp,
+	pl:{
+	  SSM_same: SSM_same,
+	  SSM_opp: SSM_opp,
+	  SSF_same: SSF_same,
+	  SSF_opp: SSF_opp,
+	  TTM_same: TTM_same,
+	  TTM_opp: TTM_opp,
+	  TTF_same: TTF_same,
+	  TTF_opp: TTF_opp
+	},
+	allPl:{
+	  SSM_same: SSM_same,
+	  SSM_opp: SSM_opp,
+	  SSF_same: SSF_same,
+	  SSF_opp: SSF_opp,
+	  TTM_same: TTM_same,
+	  TTM_opp: TTM_opp,
+	  TTF_same: TTF_same,
+	  TTF_opp: TTF_opp,
+		HT_mac_1: HT_mac_1,
+		SP_woolworths_1: SP_woolworths_1,
+		SP_woolworths_2: SP_woolworths_2,
+		SW_woolworths_1: SW_woolworths_1
+	},
+	helpers: helpers
 };

@@ -1,8 +1,25 @@
 var express = require('express');
 var app = express();
 
-var data = require('./content/content.json');
+// var data = require('./content/content.json');
 var moment = require('moment');
+const {
+	setErrors,
+	randMinMax,
+	duration,
+	arrayRange,
+	average,
+	total,
+	makeZeros,
+	listDates,
+	breakText,
+} = require( path.resolve( __dirname, "helpers.js" ) );
+
+const {
+	allCp,
+  fm
+} = require( path.resolve( __dirname, "helpers.js" ) );
+
 var dataGenerator = require('./js/dataGenerator.js');
 
 app.set('port', (process.env.PORT || 5000));
@@ -15,14 +32,14 @@ app.set('view engine', 'ejs');
 // pages
 
 var allData = {
-  cp: dataGenerator.cp,
-  fm: dataGenerator.fm,
-  pl: dataGenerator.pl,
-  v_cp: JSON.stringify(dataGenerator.cp),
-  v_fm: JSON.stringify(dataGenerator.fm),
-  v_pl: JSON.stringify(dataGenerator.pl),
-  moment:moment
+  allCp: allCp,
+  v_allCp: JSON.stringify(allCp),
+  v_fm: JSON.stringify(fm),
+  moment:moment,
+  helpers:helpers
 };
+
+// console.log('HELPERS', dataGenerator.helpers);
 
 app.get('/', function(request, response) {
   response.render('../views/index.html.ejs', allData);

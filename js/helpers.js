@@ -4,7 +4,7 @@ if(typeof require != "undefined"){
 }
 
 
-function setErrors(pathArray, targetArray){
+const setErrors = function(pathArray, targetArray){
 	// console.log('pathArray', pathArray, 'targetArray', targetArray);
 	var values = targetArray.slice();
 	// console.log(targetArray)
@@ -29,25 +29,41 @@ function setErrors(pathArray, targetArray){
 
 var rem = 16;
 
-var randMinMax = Math.randMinMax = function(min, max, round) {
+const randMinMax = Math.randMinMax = function(min, max, round) {
 	var val = min + (Math.random() * (max - min));
 	if( round ) val = Math.round( val );
 	return val;
 };
 
-function duration(dates){
+const duration = function(dates){
 	// eg dates: {start: new Date(2017, 4, 1), end: new Date(2017, 6, 32)}
 	return moment(dates.end).diff(moment(dates.start), 'days')
 }
 
-function arrayRange(segmentDates, campaign){
+const total = function(array, dates, campaign) {
+  var rangeTotal = 0;
+  var arrayR = arrayRange(dates, campaign);
+  // only add totals of array within this Range
+  for (var i = arrayR.startPos; i < arrayR.endPos; i++) {
+    rangeTotal += array[i];
+  }
+  return rangeTotal;
+}
+
+const average = function(array, dates) {
+  // only add totals of array within this Range
+  var rangeTotal = total(array, dates);
+  return rangeTotal / duration(dates);
+}
+
+const arrayRange = function(segmentDates, campaign){
 	return {
   	startPos: moment(segmentDates.start).diff(moment(campaign.dates.start), 'days'),
   	endPos: moment(segmentDates.end).diff(moment(campaign.dates.start), 'days')
 	}
 }
 
-function makeZeros(duration){
+const makeZeros = function(duration){
 	var array = [];
 	for(var i = 0; i < duration; i++){
 		array.push(0);
@@ -55,7 +71,7 @@ function makeZeros(duration){
 	return array;
 }
 
-function listDates(dates){
+const listDates = function(dates){
 	// eg dates: {start: new Date(2017, 4, 1), end: new Date(2017, 6, 32)}
 	var datesArray = [];
 	for(var i=0; i < duration(dates); i++){
@@ -69,7 +85,7 @@ function listDates(dates){
 	return datesArray;
 }
 
-function breakText(string){
+const breakText = function(string){
 	if(string.indexOf('_') > 0){
 		return string.replace(/_/g, '<wbr>_');
 	}else{
@@ -81,14 +97,15 @@ function breakText(string){
 
 if(typeof module != 'undefined'){
 	module.exports = {
-		setErrors: setErrors,
-		randMinMax: randMinMax,
-		duration: duration,
-		arrayRange: arrayRange,
-		makeZeros: makeZeros,
-		listDates: listDates,
-		breakText: breakText,
-
+		setErrors,
+		randMinMax,
+		duration,
+		arrayRange,
+		average,
+		total,
+		makeZeros,
+		listDates,
+		breakText
 	};
 }
 
