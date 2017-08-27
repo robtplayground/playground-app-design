@@ -13,14 +13,12 @@ const {
 	makeZeros,
 	listDates,
 	breakText,
-} = require( path.resolve( __dirname, "helpers.js" ) );
+} = require( "./js/helpers.js" );
 
 const {
 	allCp,
   fm
-} = require( path.resolve( __dirname, "helpers.js" ) );
-
-var dataGenerator = require('./js/dataGenerator.js');
+} = require("./js/dataGenerator.js" );
 
 app.set('port', (process.env.PORT || 5000));
 
@@ -33,10 +31,20 @@ app.set('view engine', 'ejs');
 
 var allData = {
   allCp: allCp,
+  fm: fm,
   v_allCp: JSON.stringify(allCp),
   v_fm: JSON.stringify(fm),
   moment:moment,
-  helpers:helpers
+  setErrors:setErrors,
+	randMinMax:randMinMax,
+	duration:duration,
+	arrayRange:arrayRange,
+	average:average,
+	total:total,
+	makeZeros:makeZeros,
+	listDates:listDates,
+	breakText:breakText,
+	extend: extend
 };
 
 // console.log('HELPERS', dataGenerator.helpers);

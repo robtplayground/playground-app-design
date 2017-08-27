@@ -6,9 +6,9 @@
     <div class="campaigns">
       <!-- <h1>Campaigns</h1> -->
 
-    <% console.log('ALL', allCp[0].creatives[0].placements) %>
+      <% console.log(allCp); %>
 
-      <% allCp.forEach(function(cp){  %>
+      <% Object.keys(allCp).forEach(function(cp){  %>
 
         <table class="campaign__table">
 
@@ -19,13 +19,13 @@
               </svg>
             </td>
             <td class="campaign__brand grid2">
-              <%= cp.brand %>
+              <%= allCp[cp].brand %>
             </td>
             <td class="campaign__name grid3">
-              <%= cp.name %>
+              <%= allCp[cp].name %>
             </td>
             <td class="campaign__dates grid2">
-              <%= moment(cp.dates.start).format('ddd D MMM') %> - <%= moment(cp.dates.end).format('ddd D MMM') %>
+              <%= moment(allCp[cp].dates.start).format('ddd D MMM') %> - <%= moment(allCp[cp].dates.end).format('ddd D MMM') %>
             </td>
             <td class="campaign__progress grid3">
               <div class="chart__progress-bar">
@@ -42,7 +42,7 @@
             </td>
           </tr>
 
-          <% cp.creatives.forEach(function(cr){ %>
+          <% allCp[cp].creatives.forEach(function(cr){ %>
 
 
 

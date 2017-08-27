@@ -9,25 +9,25 @@
       <div class="campaign-details__brand grid-cell">
         <h5>Brand</h5>
         <p>
-          <%= cp.brand %>
+          <%= allCp.cp_gopro.brand %>
         </p>
       </div>
       <div class="campaign-details__name grid-cell">
         <h5>Name</h5>
         <p>
-          <%= cp.name %>
+          <%= allCp.cp_gopro.name %>
         </p>
       </div>
       <div class="campaign-details__objective grid-cell">
         <h5>Objective</h5>
         <p>
-          <%= cp.objective %>
+          <%= allCp.cp_gopro.objective %>
         </p>
       </div>
       <div class="campaign-details__vertical grid-cell">
         <h5>Vertical</h5>
         <p>
-          <%= cp.vertical %>
+          <%= allCp.cp_gopro.vertical %>
         </p>
       </div>
     </div>
@@ -80,16 +80,16 @@
           <div class="data-filter__placement-select">
 
             <input type="checkbox" id="check-SS1" name="placement-select" checked/>
-            <label for="check-SS1"><span></span><%- pl.SSM_same.name %></label>
+            <label for="check-SS1"><span></span><%- allCp.cp_gopro.SSM_same.name %></label>
 
             <input type="checkbox" id="check-SS2" name="placement-select" checked/>
-            <label for="check-SS2"><span></span><%- pl.SSM_opp.name %></label>
+            <label for="check-SS2"><span></span><%- allCp.cp_gopro.SSM_opp.name %></label>
 
             <input type="checkbox" id="check-SS2" name="placement-select" />
-            <label for="check-SS2"><span></span><%- pl.TTF_same.name %></label>
+            <label for="check-SS2"><span></span><%- allCp.cp_gopro.TTF_same.name %></label>
 
             <input type="checkbox" id="check-SS2" name="placement-select" />
-            <label for="check-SS2"><span></span><%- pl.TTF_opp.name %></label>
+            <label for="check-SS2"><span></span><%- allCp.cp_gopro.TTF_opp.name %></label>
 
           </div>
 

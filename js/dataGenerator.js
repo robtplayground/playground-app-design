@@ -10,7 +10,8 @@ const {
 	makeZeros,
 	listDates,
 	breakText,
-} = require( path.resolve( __dirname, "helpers.js" ) );
+	extend
+} = require( "./helpers.js" );
 
 // BENCHMARKS
 
@@ -410,7 +411,7 @@ const makePlacement = function(campaign, creative, options){
 	var video = VIDEO_METRICS(engagements);
 	var name = options.name;
 
-  campaign.creatives[options.id] = {
+  campaign.creatives[creative].placements[options.id] = {
     name: name,
     dates: options.dates,
 		bookedImps: options.bookedImps,
@@ -871,7 +872,21 @@ makePlacement(cp_woolworths, 'SW_Lamb_1', {
   }
 });
 
-// console.log(SS1Pre);
+let allCp = {
+	cp_gopro,
+	cp_mcdonalds,
+	cp_woolworths
+};
+
+console.log(allCp.cp_gopro.creatives.SS_Males.placements);
+
+// let goProPl = {};
+//
+// Object.keys(allCp.cp_gopro.creatives).forEach(function(cr){
+// 	goProPl = extend(goProPl, allCp.cp_gopro.creatives[cr]);
+// });
+//
+// console.log('GO PRO PLACEMENTS', goProPl);
 
 module.exports = {
 	fm: {
@@ -882,9 +897,5 @@ module.exports = {
 		subWay: subWay,
 		iab: iab
 	},
-	allCp: {
-		cp_gopro,
-		cp_mcdonalds,
-		cp_woolworths
-	}
+	allCp: allCp
 };

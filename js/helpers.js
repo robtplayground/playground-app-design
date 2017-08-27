@@ -93,6 +93,11 @@ const breakText = function(string){
 	}
 }
 
+const extend = function(obj, src) {
+    Object.keys(src).forEach(function(key) { obj[key] = src[key]; });
+    return obj;
+};
+
 
 
 if(typeof module != 'undefined'){
@@ -105,7 +110,8 @@ if(typeof module != 'undefined'){
 		total,
 		makeZeros,
 		listDates,
-		breakText
+		breakText,
+		extend
 	};
 }
 
