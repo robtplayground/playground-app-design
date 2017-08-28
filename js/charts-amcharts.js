@@ -1,4 +1,5 @@
 const gopro = campaigns[0];
+const goproDates = listDates(gopro.dates); // array of dates
 const gopro_pments = placements.filter(pl => pl.campaign === 'cp_gopro');
 
 function prepData(categoryObj, valuesArray) {
@@ -14,12 +15,22 @@ function prepData(categoryObj, valuesArray) {
   return data;
 }
 
+function getColor(placement){
+  var crtv = creatives.find(cr => cr.id === placement.creative);
+  return crtv.format.color;
+}
+
 var dataIndex = 0;
 
 // ** EXECUTED IMPS  ** //
 
 var impsData = {};
 gopro_pments.forEach(function(pl) {
+  var colorsE = [];
+  var colorsV = [];
+
+  while (colorsE.length < goproDates.length) {colorsE = colorsE.concat([getColor(pl)])};
+  while (colorsV.length < goproDates.length) {colorsV = colorsV.concat(['grey'])};
   impsData[pl.id] = prepData({
     name: 'date',
     values: listDates(gopro.dates)
@@ -29,10 +40,21 @@ gopro_pments.forEach(function(pl) {
     },
     {
       name: 'viewImpsAgg',
-      values: pl.data.viewImpsAgg
+      values: pl.data.viewImpsAgg,
+      color: 'grey'
+    },
+    {
+      name: 'colorE',
+      values: colorsE
+    },
+    {
+      name: 'colorV',
+      values: colorsV
     }
   ]);
 });
+
+console.log('IMPS DATA', impsData);
 
 // console.log(impsData);
 
@@ -68,14 +90,16 @@ var chart__ImpsTime = AmCharts.makeChart("chart--execImpsAgg", {
     title: "red line",
     valueField: "execImpsAgg",
     lineAlpha: 1,
-    lineColor: "#d1cf2a",
+    lineColorField: "colorE",
+    fillColorsField: "colorE",
     fillAlphas: 0.3
   }, {
     type: "line", // try to change it to "column"
     title: "red line",
     valueField: "viewImpsAgg",
     lineAlpha: 1,
-    lineColor: "#e91e63",
+    lineColorField: "colorV",
+    fillColorsField: "colorV",
     fillAlphas: 0.3
   }],
   chartCursor: {
@@ -103,13 +127,14 @@ $('.update-charts').click(function() {
 
 var vAvData = {};
 gopro_pments.forEach(function(pl) {
-  console.log('placements', pl.dates);
+  // console.log('placements', pl.dates);
   var viewb_Avg = Math.round(average(pl.data.viewability, pl.dates, gopro));
+
   // note: label is crucial for animation
   vAvData[pl.id] = [{
     label: 'viewability',
     value: viewb_Avg,
-    color: pl.color
+    color: getColor(pl)
   }, {
     label: 'remainder',
     value: 100 - viewb_Avg,
@@ -128,7 +153,7 @@ var vAv_initData = [{
   color: "#dadada"
 }];
 
-console.log('vAvData', JSON.stringify(vAvData));
+// console.log('vAvData', JSON.stringify(vAvData));
 
 var chart__vAv = AmCharts.makeChart('chart--vAv', {
   type: "pie",
@@ -228,7 +253,7 @@ vAvBench.init.data = [{
   color: "transparent"
 }];
 
-console.log('vAvBench',vAvBench);
+// console.log('vAvBench',vAvBench);
 
 var chart__vAvBenchmarks = AmCharts.makeChart('chart--vAvBenchmarks', {
   type: "pie",
@@ -280,7 +305,7 @@ gopro_pments.forEach(function(pl) {
   }];
   // BENCHMARKS
   var impsDelBench = Math.round(((impsBookedDaily * 0.9 * currentDur) / impsBooked) * 100);
-  console.log(impsDelBench);
+  // console.log(impsDelBench);
 
   impsDelBenchData[pl.id] = [{
       label: "1",
@@ -298,7 +323,7 @@ gopro_pments.forEach(function(pl) {
     }];
 });
 
-console.log('impsDelData', impsDelData);
+// console.log('impsDelData', impsDelData);
 
 
 // get first object in impsData and convert to zeroed array.
