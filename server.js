@@ -17,9 +17,10 @@ const {
 } = require( "./js/helpers.js" );
 
 const {
-	allCp,
-	gopro_pments,
-  fm
+  fm,
+	campaigns,
+	creatives,
+	placements
 } = require("./js/dataGenerator.js" );
 
 app.set('port', (process.env.PORT || 5000));
@@ -32,10 +33,13 @@ app.set('view engine', 'ejs');
 // pages
 
 var allData = {
-  allCp: allCp,
-	gopro_pments: gopro_pments,
-  fm: fm,
-  v_allCp: JSON.stringify(allCp),
+	fm: fm,
+	campaigns:campaigns,
+	creatives:creatives,
+	placements: placements,
+  v_campaigns: JSON.stringify(campaigns),
+  v_creatives: JSON.stringify(creatives),
+  v_placements: JSON.stringify(placements),
   v_fm: JSON.stringify(fm),
   moment:moment,
   setErrors:setErrors,

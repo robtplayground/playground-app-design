@@ -1,18 +1,5 @@
-function total(array, dates) {
-  var rangeTotal = 0;
-  var arrayR = arrayRange(dates, cp);
-  // only add totals of array within this Range
-  for (var i = arrayR.startPos; i < arrayR.endPos; i++) {
-    rangeTotal += array[i];
-  }
-  return rangeTotal;
-}
-
-function average(array, dates) {
-  // only add totals of array within this Range
-  var rangeTotal = total(array, dates);
-  return rangeTotal / duration(dates);
-}
+const gopro = campaigns[0];
+const gopro_pments = placements.filter(pl => pl.campaign === 'cp_gopro');
 
 function prepData(categoryObj, valuesArray) {
   var data = [];
@@ -27,26 +14,27 @@ function prepData(categoryObj, valuesArray) {
   return data;
 }
 
-var pKeys = Object.keys(pl);
 var dataIndex = 0;
 
 // ** EXECUTED IMPS  ** //
 
 var impsData = {};
-Object.keys(pl).forEach(function(p) {
-  impsData[p] = prepData({
+gopro_pments.forEach(function(pl) {
+  impsData[pl.id] = prepData({
     name: 'date',
-    values: cp.dateList
+    values: listDates(gopro.dates)
   }, [{
       name: 'execImpsAgg',
-      values: pl[p].data.execImpsAgg
+      values: pl.data.execImpsAgg
     },
     {
       name: 'viewImpsAgg',
-      values: pl[p].data.viewImpsAgg
+      values: pl.data.viewImpsAgg
     }
   ]);
 });
+
+// console.log(impsData);
 
 // get first object in impsData and convert to zeroed array.
 var initData = impsData[(Object.keys(impsData)[0])];
@@ -114,13 +102,14 @@ $('.update-charts').click(function() {
 // ** VIEWABILITY AVERAGE CHART
 
 var vAvData = {};
-Object.keys(pl).forEach(function(p) {
-  var viewb_Avg = Math.round(average(pl[p].data.viewability, pl[p].dates));
+gopro_pments.forEach(function(pl) {
+  console.log('placements', pl.dates);
+  var viewb_Avg = Math.round(average(pl.data.viewability, pl.dates, gopro));
   // note: label is crucial for animation
-  vAvData[p] = [{
+  vAvData[pl.id] = [{
     label: 'viewability',
     value: viewb_Avg,
-    color: pl[p].color
+    color: pl.color
   }, {
     label: 'remainder',
     value: 100 - viewb_Avg,
@@ -182,14 +171,14 @@ var chart__vAv = AmCharts.makeChart('chart--vAv', {
 
 var vAvBench = {};
 
-Object.keys(pl).forEach(function(p) {
-  var format = pl[p].creative.format;
-  var formatViewb = fm[format].bm.viewability;
+gopro_pments.forEach(function(pl) {
+  var format = creatives.find(function(cr){return cr.id === pl.creative}).format;
+  var formatViewb = format.bm.viewability;
   var iabBench = fm.iab.bm.viewability;
-  vAvBench[p] = {};
-  vAvBench[p].formatViewb = formatViewb;
-  vAvBench[p].iabBench = iabBench;
-  vAvBench[p].data = [{
+  vAvBench[pl.id] = {};
+  vAvBench[pl.id].formatViewb = formatViewb;
+  vAvBench[pl.id].iabBench = iabBench;
+  vAvBench[pl.id].data = [{
     label: "space1",
     value: iabBench,
     color: "transparent"
@@ -270,20 +259,20 @@ var chart__vAvBenchmarks = AmCharts.makeChart('chart--vAvBenchmarks', {
 
 var impsDelData = {};
 var impsDelBenchData = {};
-Object.keys(pl).forEach(function(p) {
-  var currentDur = moment(new Date()).diff(moment(pl[p].dates.start), 'days');
-  var impsDel = pl[p].data.execImpsAgg[currentDur - 1];
-  var impsBooked = pl[p].bookedImps;
-  var impsBookedDaily = impsBooked / duration(pl[p].dates);
+gopro_pments.forEach(function(pl) {
+  var currentDur = moment(new Date()).diff(moment(pl.dates.start), 'days');
+  var impsDel = pl.data.execImpsAgg[currentDur - 1];
+  var impsBooked = pl.bookedImps;
+  var impsBookedDaily = impsBooked / duration(pl.dates);
   var percentDel = impsDel / impsBooked * 100;
   // note: label is crucial for animation
 
   // MAIN ARC
-  impsDelData[p] = [{
+  impsDelData[pl.id] = [{
     label: 'progress',
     value: percentDel,
     impsDel: impsDel,
-    color: pl[p].color
+    color: pl.color
   }, {
     label: 'remainder',
     value: 100 - percentDel,
@@ -293,7 +282,7 @@ Object.keys(pl).forEach(function(p) {
   var impsDelBench = Math.round(((impsBookedDaily * 0.9 * currentDur) / impsBooked) * 100);
   console.log(impsDelBench);
 
-  impsDelBenchData[p] = [{
+  impsDelBenchData[pl.id] = [{
       label: "1",
       value: impsDelBench,
       color: "transparent",
@@ -419,8 +408,8 @@ var chart__impsDelBench = AmCharts.makeChart('chart--impsDelBench', {
 
 // ** CAMPAIGN PROGRESS
 
-var currentDur = moment(new Date()).diff(moment(cp.dates.start), 'days');
-var campDur = cp.duration;
+var currentDur = moment(new Date()).diff(moment(gopro.dates.start), 'days');
+var campDur = duration(gopro.dates);
 var cProgPercent = currentDur / campDur;
 
 var chart__cProg = AmCharts.makeChart('chart--cProg', {
@@ -449,7 +438,7 @@ var chart__cProg = AmCharts.makeChart('chart--cProg', {
     }],
   }],
   "allLabels": [{
-    "text": moment(cp.dates.start).format('ddd D MMMM'),
+    "text": moment(gopro.dates.start).format('ddd D MMMM'),
     "x": "40%",
     "y": "80%",
     "size": 10,
@@ -457,7 +446,7 @@ var chart__cProg = AmCharts.makeChart('chart--cProg', {
     "color": "#fff",
     "align": "right"
   }, {
-    "text": moment(cp.dates.end).format('ddd D MMMM'),
+    "text": moment(gopro.dates.end).format('ddd D MMMM'),
     "x": "60%",
     "y": "80%",
     "size": 10,
@@ -527,15 +516,15 @@ function totalsChart(containerID, initValue, initPG, initIAB) {
 
 // ATIV
 
-var ativAv = average(pl.SSM_same.data.ativ, pl.SSM_same.dates).toFixed(1);
-var ativAv_pg = ativAv - fm.topAndTail.bm.ativ;
+var ativAv = average(placements[0].data.ativ, placements[0].dates, gopro).toFixed(1);
+var ativAv_pg = ativAv - fm.topTail.bm.ativ;
 var ativAv_iab = ativAv - fm.iab.bm.ativ;
 var chart__ativAv = new totalsChart('chart--ativAv', ativAv, ativAv_pg, ativAv_iab);
 
 chart__ativAv.startCount();
 
-var engagedC = average(pl.SSM_same.data.engagedCompletionRate, pl.SSM_same.dates).toFixed(1);
-var engagedC_pg = engagedC - fm.topAndTail.bm.engagedCompletionRate;
+var engagedC = average(placements[0].data.engagedCompletionRate, placements[0].dates, gopro).toFixed(1);
+var engagedC_pg = engagedC - fm.topTail.bm.engagedCompletionRate;
 var engagedC_iab = engagedC - fm.iab.bm.engagedCompletionRate;
 var chart__engagedC = new totalsChart('chart--engagedC', engagedC, engagedC_pg, engagedC_iab);
 
@@ -543,8 +532,8 @@ chart__engagedC.startCount();
 
 // ENGAGEMENT RATE
 
-var erAv = average(pl.SSM_same.data.engagementRate, pl.SSM_same.dates).toFixed(1);
-var erAv_pg = erAv - fm.topAndTail.bm.engagementRate;
+var erAv = average(placements[0].data.engagementRate, placements[0].dates, gopro).toFixed(1);
+var erAv_pg = erAv - fm.topTail.bm.engagementRate;
 var erAv_iab = erAv - fm.iab.bm.engagementRate;
 var chart__erAv = new totalsChart('chart--erAv', erAv, erAv_pg, erAv_iab);
 
@@ -560,13 +549,13 @@ var chart__erTime = AmCharts.makeChart("chart--erTime", {
   type: 'serial',
   dataProvider: prepData({
     name: 'date',
-    values: cp.dateList
+    values: listDates(gopro.dates)
   }, [{
     name: 'engagementRate',
-    values: pl.SSM_same.data.engagementRate
+    values: placements[0].data.engagementRate
   }, {
     name: 'clickthroughRate',
-    values: pl.SSM_same.data.clickRate
+    values: placements[0].data.clickRate
   }]),
   categoryField: "date",
   startDuration: 0,
@@ -615,8 +604,8 @@ chart__completionsTime.data = [];
 
 chart__completionsTime.data[0] = {
   name: 'Completion Rate (Engaged)',
-  x: cp.dateList,
-  y: pl.SSM_same.data.engagedCompletionRate,
+  x: listDates(gopro.dates),
+  y: placements[0].data.engagedCompletionRate,
   type: 'scatter',
   fill: 'tozeroy',
   mode: 'line',
@@ -628,8 +617,8 @@ chart__completionsTime.data[0] = {
 
 chart__completionsTime.data[1] = {
   name: 'Completion Rate (Passive)',
-  x: cp.dateList,
-  y: pl.SSM_same.data.passiveCompletionRate,
+  x: listDates(gopro.dates),
+  y: placements[0].data.passiveCompletionRate,
   type: 'scatter',
   fill: 'tozeroy',
   mode: 'line',
@@ -687,11 +676,11 @@ function pickHex(color1, color2, weight) {
   return rgb;
 }
 
-var avVid0 = average(pl.SSM_same.data.video.vid0, pl.SSM_same.dates);
-var avVid25 = average(pl.SSM_same.data.video.vid25, pl.SSM_same.dates);
-var avVid50 = average(pl.SSM_same.data.video.vid50, pl.SSM_same.dates);
-var avVid75 = average(pl.SSM_same.data.video.vid75, pl.SSM_same.dates);
-var avVid100 = average(pl.SSM_same.data.video.vid100, pl.SSM_same.dates);
+var avVid0 = average(placements[0].data.video.vid0, placements[0].dates, gopro);
+var avVid25 = average(placements[0].data.video.vid25, placements[0].dates, gopro);
+var avVid50 = average(placements[0].data.video.vid50, placements[0].dates, gopro);
+var avVid75 = average(placements[0].data.video.vid75, placements[0].dates, gopro);
+var avVid100 = average(placements[0].data.video.vid100, placements[0].dates, gopro);
 
 var ecRates = [{
   value: avVid25,

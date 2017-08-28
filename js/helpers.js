@@ -50,9 +50,9 @@ const total = function(array, dates, campaign) {
   return rangeTotal;
 }
 
-const average = function(array, dates) {
+const average = function(array, dates, campaign) {
   // only add totals of array within this Range
-  var rangeTotal = total(array, dates);
+  var rangeTotal = total(array, dates, campaign);
   return rangeTotal / duration(dates);
 }
 

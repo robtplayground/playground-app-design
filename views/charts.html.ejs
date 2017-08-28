@@ -9,25 +9,25 @@
       <div class="campaign-details__brand grid-cell">
         <h5>Brand</h5>
         <p>
-          <%= allCp[0].brand %>
+          <%= campaigns[0].brand %>
         </p>
       </div>
       <div class="campaign-details__name grid-cell">
         <h5>Name</h5>
         <p>
-          <%= allCp[0].name %>
+          <%= campaigns[0].name %>
         </p>
       </div>
       <div class="campaign-details__objective grid-cell">
         <h5>Objective</h5>
         <p>
-          <%= allCp[0].objective %>
+          <%= campaigns[0].objective %>
         </p>
       </div>
       <div class="campaign-details__vertical grid-cell">
         <h5>Vertical</h5>
         <p>
-          <%= allCp[0].vertical %>
+          <%= campaigns[0].vertical %>
         </p>
       </div>
     </div>
@@ -79,6 +79,8 @@
 
           <div class="data-filter__placement-select">
 
+            <% let gopro_pments = placements.filter(pl => pl.campaign === 'cp_gopro'); %>
+            <% console.log(gopro_pments); %>
             <% gopro_pments.forEach(function(pl){ %>
 
               <input type="checkbox" id="check-SS1" name="placement-select" checked/>

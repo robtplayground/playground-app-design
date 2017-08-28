@@ -6,7 +6,7 @@
     <div class="campaigns">
       <!-- <h1>Campaigns</h1> -->
 
-      <% allCp.forEach(function(cp){  %>
+      <% campaigns.forEach(function(cp){  %>
 
         <table class="campaign__table">
 
@@ -40,9 +40,8 @@
             </td>
           </tr>
 
-          <% cp.creatives.forEach(function(cr){ %>
-
-
+          <% let crtvs = creatives.filter(cr => cr.campaign === cp.id); %>
+          <% crtvs.forEach(function(cr){  %>
 
           <tr>
             <td colspan="6" class="creative">
@@ -79,7 +78,8 @@
 
                 <tbody>
 
-                <%cr.placements.forEach(function(pl){ %>
+                <% let pments = placements.filter(pl => pl.campaign === cp.id && pl.creative === cr.id); %>
+                <% pments.forEach(function(pl){ %>
 
                       <tr class="placement">
                         <td class="placement__status grid1">

@@ -331,70 +331,139 @@ function makeCampaign(options) {
 		},
 		dateList: dateList,
 		duration: dur,
-		creatives: []
+		// creatives: []
 	}
 }
 
-cp_gopro = makeCampaign({
-	id: "cp_gopro",
-	name:'Hero5 Mark II ',
-	brand: "GoPro",
-	vertical: "Technology",
-	objective: "Awareness",
-	dates: {
-		start: new Date(2017, 6, 1),
-		end: new Date(2017, 7, 31)
+campaigns = [
+	{
+		id: "cp_gopro",
+		name:'Hero5 Mark II ',
+		brand: "GoPro",
+		vertical: "Technology",
+		objective: "Awareness",
+		dates: {
+			start: new Date(2017, 6, 1),
+			end: new Date(2017, 7, 31)
+		},
 	},
-});
-
-cp_mcdonalds = makeCampaign({
-	id:"cp_mcdonalds",
-	name:'Chicken Tenders',
-	brand: "McDonalds",
-	vertical: "Food and Beverage",
-	objective: "Direct Response",
-	dates: {
-		start: new Date(2017, 9, 1),
-		end: new Date(2017, 10, 31)
+	{
+		id:"cp_mcdonalds",
+		name:'Chicken Tenders',
+		brand: "McDonalds",
+		vertical: "Food and Beverage",
+		objective: "Direct Response",
+		dates: {
+			start: new Date(2017, 9, 1),
+			end: new Date(2017, 10, 31)
+		},
 	},
-});
+	{
+		id: "cp_woolworths",
+		name:'Spring Specials',
+		brand: "Woolworths",
+		vertical: "FMCG",
+		objective: "Awareness",
+		dates: {
+			start: new Date(2017, 10, 1),
+			end: new Date(2017, 11, 31)
+		},
+	}
+];
 
-cp_woolworths = makeCampaign({
-	id: "cp_woolworths",
-	name:'Spring Specials',
-	brand: "Woolworths",
-	vertical: "FMCG",
-	objective: "Awareness",
-	dates: {
-		start: new Date(2017, 10, 1),
-		end: new Date(2017, 11, 31)
-	},
-});
-
-
-
-function makeCreative(campaign, options){
-	campaign.creatives.push({
-		id: options.id,
-		name: options.name,
-		content: options.content,
-		thumb: options.thumb,
-		author: options.author,
-		status: options.status,
-		modified: options.modified,
-		format: options.format,
-		features: options.features,
-		placements: []
-	});
+creatives = [
+	{
+		id: 'SS_Males',
+		name: 'GoPro Hero5 Males Festival SS',
+		content: 'GoPro Hero5 Males Festival',
+		thumb: 'thumb-gopro-males.png',
+		author: 'Steve Nash',
+		status: 'locked',
+		modified: new Date(2017, 7, 1),
+		format: superSkin,
+    features: ['expand-frame', 'video'],
+		campaign: "cp_gopro"
+},
+{
+		id: 'SS_Females',
+		name: 'GoPro Hero5 Females Travel SS',
+		content: 'GoPro Hero5 Females Travel',
+		thumb: 'thumb-gopro-females.png',
+		author: 'Vinko Kraljevic',
+		status: 'locked',
+		modified: new Date(2017, 7, 8),
+		format: superSkin,
+    features: ['expand-frame', 'video'],
+		campaign: "cp_gopro"
+},
+{
+		id: 'TT_Males',
+		name: 'GoPro Hero5 Males Festival TT',
+		content: 'GoPro Hero5 Males Festival',
+		thumb: 'thumb-gopro-males.png',
+		author: 'Rob Thwaites',
+		status: 'locked',
+		modified: new Date(2017, 7, 10),
+		format: topTail,
+    features: ['expand-frame', 'video'],
+		campaign: "cp_gopro"
+},
+{
+		id: 'TT_Females',
+		name: 'GoPro Hero5 Females Travel TT',
+		content: 'GoPro Hero5 Females Travel',
+		thumb: 'thumb-gopro-females.png',
+		author: 'Rob Thwaites',
+		status: 'locked',
+		modified: new Date(2017, 7, 9),
+		format: topTail,
+    features: ['expand-frame', 'video'],
+		campaign: "cp_gopro"
+},
+{
+		id: 'HT_Tenders',
+		name: 'HT Chicken Tenders Anim HT',
+		content: 'HT Chicken Tenders Anim',
+		thumb: 'thumb-maccers.png',
+		author: 'Steve Nash',
+		status: 'pending',
+		modified: new Date(2017, 7, 1),
+		format: hangTime,
+    features: ['video'],
+		campaign: "cp_mcdonalds"
+},
+{
+		id: 'SP_Snacks',
+		name: 'Woolies Snackfood Combos SP',
+		thumb: 'thumb-woolies.png',
+		author: 'Steve Nash',
+		status: 'pending',
+		modified: new Date(2017, 7, 1),
+		format: sidePush,
+    features: ['expand-frame', 'image'],
+    content: 'Woolies Snackfood Combos',
+		campaign: "cp_woolworths"
+},
+{
+		id: 'SW_Lamb_1',
+		name: 'Woolies Leg Lamb Special SP',
+		thumb: 'thumb-woolies.png',
+		author: 'Vinko Kraljevic',
+		status: 'edit',
+		modified: new Date(2017, 7, 1),
+		format: sidePush,
+    features: ['expand-frame', 'image'],
+    content: 'Woolies Leg Lamb Special',
+		campaign: "cp_woolworths"
 }
+];
 
 
-const makePlacement = function(campaign, crtv, options){
+const makePlacement = function(options){
 	// name is string, dates = dates object, errors = errorsObject{}
-	// console.log('creative', crtv);
-	// console.log(campaign.creatives);
-	var targetCr = campaign.creatives.find(function(cr){return cr.id === crtv});
-	console.log('TARGET CREATIVE', targetCr.id, options.id);
+	var campaign = campaigns.find(cp => cp.id === options.campaign);
+	var targetCr = creatives.find(cr => cr.id === options.creative);
+	// console.log('TARGET CREATIVE + CAMPAIGN', targetCr.id, campaign.id);
 
 	var dur = duration(options.dates);
 	var expectedImps = options.bookedImps / dur;
@@ -419,11 +488,13 @@ const makePlacement = function(campaign, crtv, options){
 	var videoViewableImps = VIDEO_VIEWABLE_IMPS(engagements);
 	var video = VIDEO_METRICS(engagements);
 
-  targetCr.placements.push({
+  return {
 		id: options.id,
 		name: options.name,
     dates: options.dates,
 		bookedImps: options.bookedImps,
+		campaign: options.campaign,
+		creative: options.creative,
 		audience: options.audience,
     data: {
 			// dates are always the campaign dates
@@ -447,7 +518,7 @@ const makePlacement = function(campaign, crtv, options){
 			videoViewableImps: videoViewableImps,
 			video: video
   	}
-	});
+	};
 
 	// console.log('FINAL PLACEMENTS', targetCr.id, targetCr.placements);
 }
@@ -465,22 +536,14 @@ var errorPath_reqImps1Jul_30Aug = [100, 100, 100, 100, 100, 100, 100, 100, 100, 
 var errorPath_eng1Jul_30Aug = [133, 129, 127, 141, 125, 133, 143, 147, 130, 128, 123, 117, 123, 119, 118, 119, 119, 119, 119, 119, 119, 109, 109, 109, 109, 109, 109, 109, 109, 90, 90, 90, 90, 82, 82, 82, 82, 82, 82, 82, 68, 68, 68, 68, 68, 68, 68, 68, 68, 68, 68, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60];
 
 
-makeCreative(cp_gopro, {
-		id: 'SS_Males',
-		name: 'GoPro Hero5 Males Festival SS',
-		content: 'GoPro Hero5 Males Festival',
-		thumb: 'thumb-gopro-males.png',
-		author: 'Steve Nash',
-		status: 'locked',
-		modified: new Date(2017, 7, 1),
-		format: superSkin,
-    features: ['expand-frame', 'video'],
-});
 
-makePlacement(cp_gopro, 'SS_Males', {
+
+SSM_same = makePlacement({
 	id: 'SSM_same',
 	name: '146560594_Airwave_GoPro_Target_MalesMetro18-44',
 	bookedImps: 200000,
+	campaign: 'cp_gopro',
+	creative: 'SS_Males',
 	dates: {
 		start: new Date(2017, 6, 1),
 		end: new Date(2017, 7, 31)
@@ -511,10 +574,12 @@ makePlacement(cp_gopro, 'SS_Males', {
   }
 });
 
-makePlacement(cp_gopro, 'SS_Males', {
+SSM_opp = makePlacement({
 	id: 'SSM_opp',
 	name: '146560595_Airwave_GoPro_Target_MalesMetro18-44',
 	bookedImps: 50000,
+	campaign: 'cp_gopro',
+	creative: 'SS_Males',
 	dates: {
 		start: new Date(2017, 6, 1),
 		end: new Date(2017, 7, 31)
@@ -545,19 +610,7 @@ makePlacement(cp_gopro, 'SS_Males', {
   }
 });
 
-makeCreative(cp_gopro, {
-		id: 'SS_Females',
-		name: 'GoPro Hero5 Females Travel SS',
-		content: 'GoPro Hero5 Females Travel',
-		thumb: 'thumb-gopro-females.png',
-		author: 'Vinko Kraljevic',
-		status: 'locked',
-		modified: new Date(2017, 7, 8),
-		format: superSkin,
-    features: ['expand-frame', 'video'],
-});
-
-makePlacement(cp_gopro, 'SS_Females',{
+SSF_same = makePlacement({
 	id: 'SSF_same',
 	name: '146560596_Airwave_GoPro_Target_FemalesMetro18-44',
 	bookedImps: 200000,
@@ -565,6 +618,8 @@ makePlacement(cp_gopro, 'SS_Females',{
 		start: new Date(2017, 6, 1),
 		end: new Date(2017, 7, 31)
 	},
+	campaign: 'cp_gopro',
+	creative: 'SS_Females',
 	errors: {
 		reqImps: {
 			differences: errorPath_reqImps1Jul_30Aug
@@ -591,10 +646,12 @@ makePlacement(cp_gopro, 'SS_Females',{
   }
 });
 
-makePlacement(cp_gopro, 'SS_Females',{
+SSF_opp = makePlacement({
 	id: 'SSF_opp',
 	name: '146560597_Airwave_GoPro_Target_FemalesMetro18-44',
 	bookedImps: 50000,
+	campaign: 'cp_gopro',
+	creative: 'SS_Females',
 	dates: {
 		start: new Date(2017, 6, 1),
 		end: new Date(2017, 7, 31)
@@ -625,22 +682,13 @@ makePlacement(cp_gopro, 'SS_Females',{
   }
 });
 
-makeCreative(cp_gopro, {
-		id: 'TT_Males',
-		name: 'GoPro Hero5 Males Festival TT',
-		content: 'GoPro Hero5 Males Festival',
-		thumb: 'thumb-gopro-males.png',
-		author: 'Rob Thwaites',
-		status: 'locked',
-		modified: new Date(2017, 7, 10),
-		format: topTail,
-    features: ['expand-frame', 'video']
-});
 
-makePlacement(cp_gopro, 'TT_Males',{
+TTM_same = makePlacement({
 	 id: 'TTM_same',
 	name: '146560598_Airwave_GoPro_Target_MalesMetro18-44',
 	bookedImps: 200000,
+	campaign: 'cp_gopro',
+	creative: 'TT_Males',
 	dates: {
 		start: new Date(2017, 6, 1),
 		end: new Date(2017, 7, 31)
@@ -662,10 +710,12 @@ makePlacement(cp_gopro, 'TT_Males',{
   }
 });
 
-makePlacement(cp_gopro, 'TT_Males', {
+TTM_opp = makePlacement({
 	 id: 'TTM_opp',
 	name: '146560599_Airwave_GoPro_Target_MalesMetro18-44',
 	bookedImps: 50000,
+	campaign: 'cp_gopro',
+	creative: 'TT_Males',
 	dates: {
 		start: new Date(2017, 6, 1),
 		end: new Date(2017, 7, 31)
@@ -687,22 +737,12 @@ makePlacement(cp_gopro, 'TT_Males', {
   }
 });
 
-makeCreative(cp_gopro, {
-		id: 'TT_Females',
-		name: 'GoPro Hero5 Females Travel TT',
-		content: 'GoPro Hero5 Females Travel',
-		thumb: 'thumb-gopro-females.png',
-		author: 'Rob Thwaites',
-		status: 'locked',
-		modified: new Date(2017, 7, 9),
-		format: topTail,
-    features: ['expand-frame', 'video']
-});
-
-makePlacement(cp_gopro, 'TT_Females',{
+TTF_same = makePlacement({
 	 id: 'TTF_same',
 	name: '146560600_Airwave_GoPro_Target_FemalesMetro18-44',
 	bookedImps: 200000,
+	campaign: 'cp_gopro',
+	creative: 'TT_Females',
 	dates: {
 		start: new Date(2017, 6, 1),
 		end: new Date(2017, 7, 31)
@@ -724,10 +764,12 @@ makePlacement(cp_gopro, 'TT_Females',{
   }
 });
 
-makePlacement(cp_gopro, 'TT_Females', {
+TTF_opp = makePlacement({
 	id: 'TTF_opp',
 	name: '146560601_Airwave_GoPro_Target_FemalesMetro18-44',
 	bookedImps: 50000,
+	campaign: 'cp_gopro',
+	creative: 'TT_Females',
 	dates: {
 		start: new Date(2017, 6, 1),
 		end: new Date(2017, 7, 31)
@@ -749,23 +791,13 @@ makePlacement(cp_gopro, 'TT_Females', {
   }
 });
 
-makeCreative(cp_mcdonalds, {
-		id: 'HT_Tenders',
-		name: 'HT Chicken Tenders Anim HT',
-		content: 'HT Chicken Tenders Anim',
-		thumb: 'thumb-maccers.png',
-		author: 'Steve Nash',
-		status: 'pending',
-		modified: new Date(2017, 7, 1),
-		format: hangTime,
-    features: ['video'],
-});
 
-
-makePlacement(cp_mcdonalds, 'HT_Tenders', {
+HT_mac_1 = makePlacement({
 	id: 'HT_mac_1',
 	name: '5124365_McD_Tenders_Nov',
 	bookedImps: 50000,
+	campaign: 'cp_mcdonalds',
+	creative: 'HT_Tenders',
 	dates: {
 		start: new Date(2017, 9, 1),
 		end: new Date(2017, 10, 31)
@@ -783,22 +815,12 @@ makePlacement(cp_mcdonalds, 'HT_Tenders', {
   }
 });
 
-makeCreative(cp_woolworths, {
-		id: 'SP_Snacks',
-		name: 'Woolies Snackfood Combos SP',
-		thumb: 'thumb-woolies.png',
-		author: 'Steve Nash',
-		status: 'pending',
-		modified: new Date(2017, 7, 1),
-		format: sidePush,
-    features: ['expand-frame', 'image'],
-    content: 'Woolies Snackfood Combos'
-});
-
-makePlacement(cp_woolworths, 'SP_Snacks', {
+SP_Snacks1 = makePlacement({
 	id: 'SP_Snacks1',
 	name: '654871_Woolies_Spring_Catalogue',
 	bookedImps: 50000,
+	campaign: 'cp_woolworths',
+	creative: 'SP_Snacks',
 	dates: {
 		start: new Date(2017, 9, 1),
 		end: new Date(2017, 10, 31)
@@ -816,9 +838,11 @@ makePlacement(cp_woolworths, 'SP_Snacks', {
   }
 });
 
-makePlacement(cp_woolworths, 'SP_Snacks', {
+SP_Snacks2 = makePlacement({
 	id: 'SP_Snacks2',
 	name: '654872_Woolies_Spring_Catalogue',
+	campaign: 'cp_woolworths',
+	creative: 'SP_Snacks',
 	bookedImps: 50000,
 	dates: {
 		start: new Date(2017, 10, 1),
@@ -837,23 +861,12 @@ makePlacement(cp_woolworths, 'SP_Snacks', {
   }
 });
 
-makeCreative(cp_woolworths, {
-		id: 'SW_Lamb_1',
-		name: 'Woolies Leg Lamb Special SP',
-		thumb: 'thumb-woolies.png',
-		author: 'Vinko Kraljevic',
-		status: 'edit',
-		modified: new Date(2017, 7, 1),
-		format: sidePush,
-    features: ['expand-frame', 'image'],
-    content: 'Woolies Leg Lamb Special'
-});
-
-
-makePlacement(cp_woolworths, 'SW_Lamb_1', {
+Lamb1 = makePlacement({
 	id: 'Lamb1',
 	name: '654873_Woolies_Spring_Catalogue',
 	bookedImps: 50000,
+	campaign: 'cp_woolworths',
+	creative: 'SW_Lamb_1',
 	color: "#ffc200",
 	dates: {
 		start: new Date(2017, 10, 1),
@@ -872,20 +885,7 @@ makePlacement(cp_woolworths, 'SW_Lamb_1', {
   }
 });
 
-let allCp = [
-	cp_gopro,
-	cp_mcdonalds,
-	cp_woolworths
-];
-
-var gopro = allCp.find(function(cp){ return cp.id = "cp_gopro"; });
-let gopro_pments = [];
-// console.log(gopro.creatives);
-gopro.creatives.forEach(function(cr){
-	gopro_pments.push.apply(gopro_pments, cr.placements);
-});
-
-console.log('ALL GOPRO PLACEMENTS', gopro_pments); 
+placements = [SSM_same, SSM_opp, SSF_same, SSF_opp, TTM_same, TTM_opp, TTF_same, TTF_opp, HT_mac_1, SP_Snacks1, SP_Snacks2, Lamb1];
 
 module.exports = {
 	fm: {
@@ -896,6 +896,7 @@ module.exports = {
 		subWay: subWay,
 		iab: iab
 	},
-	allCp: allCp,
-	gopro_pments: gopro_pments
+	campaigns,
+	creatives,
+	placements
 };
