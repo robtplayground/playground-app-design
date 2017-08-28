@@ -336,6 +336,7 @@ function makeCampaign(options) {
 }
 
 cp_gopro = makeCampaign({
+	id: "cp_gopro",
 	name:'Hero5 Mark II ',
 	brand: "GoPro",
 	vertical: "Technology",
@@ -347,6 +348,7 @@ cp_gopro = makeCampaign({
 });
 
 cp_mcdonalds = makeCampaign({
+	id:"cp_mcdonalds",
 	name:'Chicken Tenders',
 	brand: "McDonalds",
 	vertical: "Food and Beverage",
@@ -358,6 +360,7 @@ cp_mcdonalds = makeCampaign({
 });
 
 cp_woolworths = makeCampaign({
+	id: "cp_woolworths",
 	name:'Spring Specials',
 	brand: "Woolworths",
 	vertical: "FMCG",
@@ -371,8 +374,9 @@ cp_woolworths = makeCampaign({
 
 
 function makeCreative(campaign, options){
-	campaign.creatives[options.id] = {
-		name: options.desc,
+	campaign.creatives.push({
+		id: options.id,
+		name: options.name,
 		content: options.content,
 		thumb: options.thumb,
 		author: options.author,
@@ -380,13 +384,18 @@ function makeCreative(campaign, options){
 		modified: options.modified,
 		format: options.format,
 		features: options.features,
-		placements: {}
-	};
+		placements: []
+	});
 }
 
 
-const makePlacement = function(campaign, creative, options){
+const makePlacement = function(campaign, crtv, options){
 	// name is string, dates = dates object, errors = errorsObject{}
+	// console.log('creative', crtv);
+	// console.log(campaign.creatives);
+	var targetCr = campaign.creatives.find(function(cr){return cr.id === crtv});
+	console.log('TARGET CREATIVE', targetCr.id, options.id);
+
 	var dur = duration(options.dates);
 	var expectedImps = options.bookedImps / dur;
 	var requestedImps = REQUESTED_IMPS(options.dates, options.errors, expectedImps, campaign);
@@ -406,13 +415,13 @@ const makePlacement = function(campaign, creative, options){
 	var engagementRate = PERCENT(clickEng, executedImps);
 	var passiveCompletionRate = PERCENT(passiveCompletions, executedImps);
 	var engagedCompletionRate = PERCENT(engagedCompletions, executedImps);
-	var ativ = ATIV(executedImps, campaign.creatives[creative].format.bm.ativ);
+	var ativ = ATIV(executedImps, targetCr.format.bm.ativ);
 	var videoViewableImps = VIDEO_VIEWABLE_IMPS(engagements);
 	var video = VIDEO_METRICS(engagements);
-	var name = options.name;
 
-  campaign.creatives[creative].placements[options.id] = {
-    name: name,
+  targetCr.placements.push({
+		id: options.id,
+		name: options.name,
     dates: options.dates,
 		bookedImps: options.bookedImps,
 		audience: options.audience,
@@ -438,7 +447,9 @@ const makePlacement = function(campaign, creative, options){
 			videoViewableImps: videoViewableImps,
 			video: video
   	}
-	};
+	});
+
+	// console.log('FINAL PLACEMENTS', targetCr.id, targetCr.placements);
 }
 
 
@@ -701,17 +712,6 @@ makePlacement(cp_gopro, 'TT_Females',{
 			differences: errorPath_reqImps1Jul_30Aug
 		}
 	},
-	campaign: cp_gopro,
-	creative: {
-		thumb: 'thumb-gopro-females.png',
-		author: 'Rob Thwaites',
-		status: 'locked',
-		modified: new Date(2017, 7, 10),
-		format: topTail,
-    features: ['expand-frame', 'video'],
-    content: 'GoPro Hero5 Males Festival',
-    name: 'GoPro Hero5 Females Travel'
-  },
   audience: {
 		shortName: 'Male AU Metro Tech',
     gender: 'male',
@@ -872,13 +872,22 @@ makePlacement(cp_woolworths, 'SW_Lamb_1', {
   }
 });
 
-let allCp = {
+let allCp = [
 	cp_gopro,
 	cp_mcdonalds,
 	cp_woolworths
-};
+];
 
-console.log(allCp.cp_gopro.creatives.SS_Males.placements);
+var gopro = allCp.find(function(cp){ return cp.id = "cp_gopro"; });
+let gppl = [];
+// console.log(gopro.creatives);
+gopro.creatives.forEach(function(cr){
+	gppl.push.apply(gppl, cr.placements);
+});
+
+console.log('GOPROOOOOOO', gppl);
+
+// console.log(allCp.cp_gopro.creatives.SS_Males.placements);
 
 // let goProPl = {};
 //
