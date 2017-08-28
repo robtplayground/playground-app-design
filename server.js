@@ -13,10 +13,12 @@ const {
 	makeZeros,
 	listDates,
 	breakText,
+	extend,
 } = require( "./js/helpers.js" );
 
 const {
 	allCp,
+	gopro_pments,
   fm
 } = require("./js/dataGenerator.js" );
 
@@ -31,6 +33,7 @@ app.set('view engine', 'ejs');
 
 var allData = {
   allCp: allCp,
+	gopro_pments: gopro_pments,
   fm: fm,
   v_allCp: JSON.stringify(allCp),
   v_fm: JSON.stringify(fm),

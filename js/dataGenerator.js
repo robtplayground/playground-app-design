@@ -879,23 +879,13 @@ let allCp = [
 ];
 
 var gopro = allCp.find(function(cp){ return cp.id = "cp_gopro"; });
-let gppl = [];
+let gopro_pments = [];
 // console.log(gopro.creatives);
 gopro.creatives.forEach(function(cr){
-	gppl.push.apply(gppl, cr.placements);
+	gopro_pments.push.apply(gopro_pments, cr.placements);
 });
 
-console.log('GOPROOOOOOO', gppl);
-
-// console.log(allCp.cp_gopro.creatives.SS_Males.placements);
-
-// let goProPl = {};
-//
-// Object.keys(allCp.cp_gopro.creatives).forEach(function(cr){
-// 	goProPl = extend(goProPl, allCp.cp_gopro.creatives[cr]);
-// });
-//
-// console.log('GO PRO PLACEMENTS', goProPl);
+console.log('ALL GOPRO PLACEMENTS', gopro_pments); 
 
 module.exports = {
 	fm: {
@@ -906,5 +896,6 @@ module.exports = {
 		subWay: subWay,
 		iab: iab
 	},
-	allCp: allCp
+	allCp: allCp,
+	gopro_pments: gopro_pments
 };
