@@ -1375,8 +1375,7 @@ label:hover:before {
   padding-left: 2rem;
   cursor: pointer;
   line-height: 2rem;
-  display: inline-block;
-  color: #ffffff;
+  color: #333333;
   font-weight: 700;
 }
 [type="radio"]:checked + label:before,
@@ -1396,7 +1395,7 @@ label:hover:before {
   content: '';
   width: 1rem;
   height: 1rem;
-  background: #333333;
+  background: #e91e63;
   position: absolute;
   top: 0.45em;
   left: 0.25rem;

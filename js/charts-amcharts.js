@@ -27,6 +27,75 @@ function getFormat(placement){
 
 var dataIndex = 0;
 
+// ** CAMPAIGN PROGRESS
+
+var currentDur = moment(new Date()).diff(moment(gopro.dates.start), 'days');
+var campDur = duration(gopro.dates);
+var cProgPercent = currentDur / campDur;
+
+var chart__cProg = AmCharts.makeChart('chart--cProg', {
+  "type": "gauge",
+  "axes": [{
+    backgroundColor: "#000",
+    labelsEnabled: false,
+    "axisThickness": 0,
+    "axisAlpha": 0,
+    "tickAlpha": 0,
+    "startValue": 0,
+    "endValue": 100,
+    "bands": [{
+      "color": "red",
+      "startValue": 0,
+      "endValue": cProgPercent * 100,
+      "radius": "100%",
+      "innerRadius": "85%"
+    }, {
+      "color": "#dadada",
+      "startValue": cProgPercent * 100,
+      "endValue": 100,
+      "radius": "100%",
+      "innerRadius": "85%",
+      "balloonText": "90%"
+    }],
+  }],
+  "allLabels": [{
+    "text": moment(gopro.dates.start).format('ddd D MMMM'),
+    "x": "40%",
+    "y": "80%",
+    "size": 10,
+    "bold": true,
+    "color": "#fff",
+    "align": "right"
+  }, {
+    "text": moment(gopro.dates.end).format('ddd D MMMM'),
+    "x": "60%",
+    "y": "80%",
+    "size": 10,
+    "bold": true,
+    "color": "#fff",
+    "align": "left"
+  }, {
+    "text": campDur - currentDur,
+    "x": 4,
+    "y": "35%",
+    "size": 25,
+    "bold": false,
+    "color": "#fff",
+    "align": "center"
+  }, {
+    "text": "DAYS LEFT",
+    "x": 0,
+    "y": "60%",
+    "size": 9,
+    "bold": false,
+    "color": "#fff",
+    "align": "center"
+  }],
+  "export": {
+    "enabled": true
+  }
+});
+
 // ** EXECUTED IMPS  ** //
 
 var impsData = {};
@@ -74,6 +143,7 @@ impsData.init.forEach(function(dateEntry) {
 
 // SERIAL CHART
 var chart__ImpsTime = AmCharts.makeChart("chart--execImpsAgg", {
+  dataObject: impsData,
   type: "serial",
   dataProvider: impsData.init, // start chart with zeroes
   categoryField: "date",
@@ -161,6 +231,7 @@ vAvData.init = [{
 // console.log('vAvData', JSON.stringify(vAvData));
 
 var chart__vAv = AmCharts.makeChart('chart--vAv', {
+  dataObject: vAvData,
   type: "pie",
   dataProvider: vAvData.init,
   valueField: "value",
@@ -262,6 +333,7 @@ vAvBench.init = {
 // console.log('vAvBench',vAvBench);
 
 var chart__vAvBenchmarks = AmCharts.makeChart('chart--vAvBenchmarks', {
+  dataObject: vAvBench,
   type: "pie",
   theme: "light",
   dataProvider: vAvBench.init.data,
@@ -360,6 +432,7 @@ impsDelBenchData.init = [{
 
 
 var chart__impsDel = AmCharts.makeChart('chart--impsDel', {
+  dataObject: impsDelData,
   type: "pie",
   theme: "light",
   dataProvider: impsDelData.init,
@@ -409,6 +482,7 @@ var chart__impsDel = AmCharts.makeChart('chart--impsDel', {
 $('.chart--impsDel .chart__legend__left span').text('Expected: 0%');
 
 var chart__impsDelBench = AmCharts.makeChart('chart--impsDelBench', {
+  dataObject: impsDelBenchData,
   type: "pie",
   theme: "light",
   dataProvider: impsDelBenchData.init,
@@ -434,74 +508,7 @@ var chart__impsDelBench = AmCharts.makeChart('chart--impsDelBench', {
 });
 
 
-// ** CAMPAIGN PROGRESS
 
-var currentDur = moment(new Date()).diff(moment(gopro.dates.start), 'days');
-var campDur = duration(gopro.dates);
-var cProgPercent = currentDur / campDur;
-
-var chart__cProg = AmCharts.makeChart('chart--cProg', {
-  "type": "gauge",
-  "axes": [{
-    backgroundColor: "#000",
-    labelsEnabled: false,
-    "axisThickness": 0,
-    "axisAlpha": 0,
-    "tickAlpha": 0,
-    "startValue": 0,
-    "endValue": 100,
-    "bands": [{
-      "color": "red",
-      "startValue": 0,
-      "endValue": cProgPercent * 100,
-      "radius": "100%",
-      "innerRadius": "85%"
-    }, {
-      "color": "#dadada",
-      "startValue": cProgPercent * 100,
-      "endValue": 100,
-      "radius": "100%",
-      "innerRadius": "85%",
-      "balloonText": "90%"
-    }],
-  }],
-  "allLabels": [{
-    "text": moment(gopro.dates.start).format('ddd D MMMM'),
-    "x": "40%",
-    "y": "80%",
-    "size": 10,
-    "bold": true,
-    "color": "#fff",
-    "align": "right"
-  }, {
-    "text": moment(gopro.dates.end).format('ddd D MMMM'),
-    "x": "60%",
-    "y": "80%",
-    "size": 10,
-    "bold": true,
-    "color": "#fff",
-    "align": "left"
-  }, {
-    "text": campDur - currentDur,
-    "x": 4,
-    "y": "35%",
-    "size": 25,
-    "bold": false,
-    "color": "#fff",
-    "align": "center"
-  }, {
-    "text": "DAYS LEFT",
-    "x": 0,
-    "y": "60%",
-    "size": 9,
-    "bold": false,
-    "color": "#fff",
-    "align": "center"
-  }],
-  "export": {
-    "enabled": true
-  }
-});
 
 function totalsChart(containerID, initValue, initPG, initIAB) {
   this.containerID = containerID;
@@ -675,6 +682,7 @@ engData.init.forEach(function(dateEntry) {
 
 
 var chart__erTime = AmCharts.makeChart("chart--erTime", {
+  dataObject: engData,
   type: 'serial',
   dataProvider: engData.init,
   categoryField: "date",
@@ -734,133 +742,8 @@ var chart__erTime = AmCharts.makeChart("chart--erTime", {
 
 // COMPLETION HEAT
 
-var ecRatesData = {};
-gopro_pments.forEach(function(pl) {
 
-  var color1 = hexToRgb("#0078d8");
-  var color2 = hexToRgb("#dadada");
-
-  // get average for placement
-
-  var avVid0 = average(pl.data.video.vid0, pl.dates, gopro);
-  var avVid25 = average(pl.data.video.vid25, pl.dates, gopro);
-  var avVid50 = average(pl.data.video.vid50, pl.dates, gopro);
-  var avVid75 = average(pl.data.video.vid75, pl.dates, gopro);
-  var avVid100 = average(pl.data.video.vid100, pl.dates, gopro);
-
-  var allRates = [avVid0, avVid25, avVid50, avVid75, avVid100];
-
-  // create array of colors
-
-  ecRatesData[pl.id] = [
-    {
-      label: "25% completion",
-      value: avVid25,
-    },
-    {
-      label: "50% completion",
-      value: avVid50
-    },
-    {
-      label: "75% completion",
-      value: avVid75
-    },
-    {
-      label: "100% completion",
-      value: avVid100
-    },
-  ];
-
-  // calculate colors based on values
-
-  var highest = Math.max.apply(null, allRates);
-  var lowest = Math.min.apply(null, allRates);
-
-  ecRatesData[pl.id].forEach(function(obj) {
-    var colorPos = (obj.value - lowest) / (highest - lowest);
-    obj.color = 'rgb(' + pickHex(color1, color2, colorPos) + ')';
-    obj.stackHeight = 1;
-  });
-
-});
-
-ecRatesData.init = [
-  {
-    label: "25% completion",
-    value: 0,
-    color: '#ffffff',
-    stackHeight: 1
-  },
-  {
-    label: "50% completion",
-    value: 0,
-    color: '#ffffff',
-    stackHeight: 1
-  },
-  {
-    label: "75% completion",
-    value: 0,
-    color: '#ffffff',
-    stackHeight: 1
-  },
-  {
-    label: "100% completion",
-    value: 0,
-    color: '#ffffff',
-    stackHeight: 1
-  },
-];
-
-console.log('ecRatesData', ecRatesData);
-
-var chart9 = AmCharts.makeChart("chart--engagedCHeat", {
-  type: 'serial',
-  dataProvider: ecRatesData.init,
-  categoryField: "label",
-  startDuration: 0,
-  addClassNames: true,
-  categoryAxis: {
-    gridAlpha: 0,
-    axisAlpha: 0
-  },
-  valueAxes: [{
-    stackType: "regular",
-    title: " ",
-    gridAlpha: 0,
-    axisAlpha: 0,
-    minimum: 0,
-    maximum: 1,
-    labelsEnabled: false
-  }],
-  graphs: [{
-    columnWidth: 1,
-    type: "column", // try to change it to "column"
-    title: "Percent Completed",
-    valueField: "stackHeight",
-    colorField: "color",
-    fillAlphas: 0.9,
-    lineAlpha: 0,
-    // "labelOffset": -40,
-    "labelText": "Allo",
-    "labelPosition": "middle",
-    labelAnchor: "middle",
-    "color": "#ffffff",
-    labelFunction: function(item) {
-      return Math.round(item.dataContext.value) + "%";
-    },
-    balloonText: ""
-  }],
-  listeners: [{
-    event: "rendered",
-    method: function(e){
-      e.chart.animateData(ecRatesData.SSM_same, {
-        duration: 1000
-      })
-    }
-  }]
-});
-
-var ecRatesData = {};
+var ecHeatData = {};
 gopro_pments.forEach(function(pl) {
 
   var color1 = hexToRgb(getColor(pl));
@@ -878,7 +761,7 @@ gopro_pments.forEach(function(pl) {
 
   // create array of colors
 
-  ecRatesData[pl.id] = [
+  ecHeatData[pl.id] = [
     {
       label: "25% completion",
       value: avVid25,
@@ -902,7 +785,7 @@ gopro_pments.forEach(function(pl) {
   var highest = Math.max.apply(null, allRates);
   var lowest = Math.min.apply(null, allRates);
 
-  ecRatesData[pl.id].forEach(function(obj) {
+  ecHeatData[pl.id].forEach(function(obj) {
     var colorPos = (obj.value - lowest) / (highest - lowest);
     obj.color = 'rgb(' + pickHex(color1, color2, colorPos) + ')';
     obj.stackHeight = 1;
@@ -910,7 +793,7 @@ gopro_pments.forEach(function(pl) {
 
 });
 
-ecRatesData.init = [
+ecHeatData.init = [
   {
     label: "25% completion",
     value: 0,
@@ -937,11 +820,12 @@ ecRatesData.init = [
   },
 ];
 
-console.log('ecRatesData', ecRatesData);
+console.log('ecHeatData', ecHeatData);
 
-var chart9 = AmCharts.makeChart("chart--engagedCHeat", {
+var chart__ecHeat = AmCharts.makeChart("chart--engagedCHeat", {
+  dataObject: ecHeatData,
   type: 'serial',
-  dataProvider: ecRatesData.init,
+  dataProvider: ecHeatData.init,
   categoryField: "label",
   startDuration: 0,
   addClassNames: true,
@@ -979,7 +863,7 @@ var chart9 = AmCharts.makeChart("chart--engagedCHeat", {
   listeners: [{
     event: "rendered",
     method: function(e){
-      e.chart.animateData(ecRatesData.SSM_same, {
+      e.chart.animateData(ecHeatData.SSM_same, {
         duration: 1000
       })
     }
@@ -989,7 +873,7 @@ var chart9 = AmCharts.makeChart("chart--engagedCHeat", {
 
 // ** PASSIVE COMPLETION RATE - basically a duplicate of Engaged, but I mess with the values to make it look different
 
-var pcRatesData = {};
+var pcHeatData = {};
 gopro_pments.forEach(function(pl) {
 
   var color1 = hexToRgb('#e91e63');
@@ -1007,7 +891,7 @@ gopro_pments.forEach(function(pl) {
 
   // create array of colors
 
-  pcRatesData[pl.id] = [
+  pcHeatData[pl.id] = [
     {
       label: "25% completion",
       value: avVid25,
@@ -1031,7 +915,7 @@ gopro_pments.forEach(function(pl) {
   var highest = Math.max.apply(null, allRates);
   var lowest = Math.min.apply(null, allRates);
 
-  pcRatesData[pl.id].forEach(function(obj) {
+  pcHeatData[pl.id].forEach(function(obj) {
     var colorPos = (obj.value - lowest) / (highest - lowest);
     obj.color = 'rgb(' + pickHex(color1, color2, colorPos) + ')';
     obj.stackHeight = 1;
@@ -1039,7 +923,7 @@ gopro_pments.forEach(function(pl) {
 
 });
 
-pcRatesData.init = [
+pcHeatData.init = [
   {
     label: "25% completion",
     value: 0,
@@ -1066,11 +950,12 @@ pcRatesData.init = [
   },
 ];
 
-console.log('pcRatesData', pcRatesData);
+console.log('pcHeatData', pcHeatData);
 
-var chart9 = AmCharts.makeChart("chart--passiveCHeat", {
+var chart__pcHeat = AmCharts.makeChart("chart--passiveCHeat", {
+  dataObject: pcHeatData,
   type: 'serial',
-  dataProvider: pcRatesData.init,
+  dataProvider: pcHeatData.init,
   categoryField: "label",
   startDuration: 0,
   addClassNames: true,
@@ -1108,9 +993,26 @@ var chart9 = AmCharts.makeChart("chart--passiveCHeat", {
   listeners: [{
     event: "rendered",
     method: function(e){
-      e.chart.animateData(pcRatesData.SSM_same, {
+      e.chart.animateData(pcHeatData.SSM_same, {
         duration: 1000
       })
     }
   }]
+});
+
+
+// push data to all charts on click
+
+var amCharts = [chart__ImpsTime, chart__vAv, chart__vAvBenchmarks, chart__impsDel, chart__impsDelBench, chart__erTime, chart__ecHeat, chart__pcHeat];
+
+var totalsCharts = [chart__ativAv, chart__engagedC, chart__erAv];
+
+$('.data-filter__placement-select label').click(function(){
+  var plID = $(this).data('placement');
+  amCharts.forEach(chart => {
+    var data = chart.dataObject[plID];
+    chart.dataProvider = data;
+  });
+
+
 });

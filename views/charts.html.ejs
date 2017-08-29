@@ -80,10 +80,10 @@
           <div class="data-filter__placement-select">
 
             <% let gopro_pments = placements.filter(pl => pl.campaign === 'cp_gopro'); %>
-            <% gopro_pments.forEach(function(pl){ %>
+            <% gopro_pments.forEach(function(pl, index){ %>
 
-              <input type="checkbox" id="check-SS1" name="placement-select" checked/>
-              <label for="check-SS1"><span></span><%- pl.id %></label>
+              <input type="radio" id="radio<%= index %>" name="placement-select"/>
+              <label for="radio<%= index %>" data-placement="<%= pl.id %>" name="choose-placement"><span></span><%- pl.id %></label>
 
             <% }); %>
 
