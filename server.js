@@ -14,6 +14,8 @@ const {
 	listDates,
 	breakText,
 	extend,
+	pickHex,
+	hexToRgb
 } = require( "./js/helpers.js" );
 
 const {
@@ -51,7 +53,9 @@ var allData = {
 	makeZeros:makeZeros,
 	listDates:listDates,
 	breakText:breakText,
-	extend: extend
+	extend: extend,
+	pickHex: pickHex,
+	hexToRgb: hexToRgb
 };
 
 // console.log('HELPERS', dataGenerator.helpers);

@@ -731,158 +731,91 @@ var chart__erTime = AmCharts.makeChart("chart--erTime", {
 });
 
 
-// ** COMPLETIONS OVER TIME  ** //
-
-var chart__completionsTime = {};
-chart__completionsTime.target = "chart--completionsTime";
-chart__completionsTime.data = [];
-
-chart__completionsTime.data[0] = {
-  name: 'Completion Rate (Engaged)',
-  x: listDates(gopro.dates),
-  y: placements[0].data.engagedCompletionRate,
-  type: 'scatter',
-  fill: 'tozeroy',
-  mode: 'line',
-  line: {
-    color: 'rgb(255, 0, 0, 0.5)',
-    width: 0
-  }
-};
-
-chart__completionsTime.data[1] = {
-  name: 'Completion Rate (Passive)',
-  x: listDates(gopro.dates),
-  y: placements[0].data.passiveCompletionRate,
-  type: 'scatter',
-  fill: 'tozeroy',
-  mode: 'line',
-  line: {
-    // color: 'rgb(255, 0, 0, 0.5)',
-    width: 0
-  }
-};
-
-chart__completionsTime.layout = {
-  showlegend: true,
-  xaxis: {
-    type: 'date',
-    title: 'Date'
-  },
-  yaxis: {
-    title: 'Completion Rate (%)'
-  },
-  // title: 'CTR'
-};
-
-
 
 // COMPLETION HEAT
 
-var ec_color1 = hexToRgb("#0078d8");
-var ec_color2 = hexToRgb("#dadada");
+var ecRatesData = {};
+gopro_pments.forEach(function(pl) {
 
-var pc_color1 = hexToRgb("#000000");
-var pc_color2 = hexToRgb("#dadada");
+  var color1 = hexToRgb("#0078d8");
+  var color2 = hexToRgb("#dadada");
 
+  // get average for placement
 
-function hexToRgb(hex) {
-  var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-  var values = [];
-  if (result) {
-    values.push(parseInt(result[1], 16));
-    values.push(parseInt(result[2], 16));
-    values.push(parseInt(result[3], 16));
-    return values;
-  } else {
-    return null;
-  }
-}
+  var avVid0 = average(pl.data.video.vid0, pl.dates, gopro);
+  var avVid25 = average(pl.data.video.vid25, pl.dates, gopro);
+  var avVid50 = average(pl.data.video.vid50, pl.dates, gopro);
+  var avVid75 = average(pl.data.video.vid75, pl.dates, gopro);
+  var avVid100 = average(pl.data.video.vid100, pl.dates, gopro);
 
-function pickHex(color1, color2, weight) {
-  var p = weight;
-  var w = p * 2 - 1;
-  var w1 = (w / 1 + 1) / 2;
-  var w2 = 1 - w1;
-  var rgb = [Math.round(color1[0] * w1 + color2[0] * w2),
-    Math.round(color1[1] * w1 + color2[1] * w2),
-    Math.round(color1[2] * w1 + color2[2] * w2)
+  var allRates = [avVid0, avVid25, avVid50, avVid75, avVid100];
+
+  // create array of colors
+
+  ecRatesData[pl.id] = [
+    {
+      label: "25% completion",
+      value: avVid25,
+    },
+    {
+      label: "50% completion",
+      value: avVid50
+    },
+    {
+      label: "75% completion",
+      value: avVid75
+    },
+    {
+      label: "100% completion",
+      value: avVid100
+    },
   ];
-  return rgb;
-}
 
-var avVid0 = average(placements[0].data.video.vid0, placements[0].dates, gopro);
-var avVid25 = average(placements[0].data.video.vid25, placements[0].dates, gopro);
-var avVid50 = average(placements[0].data.video.vid50, placements[0].dates, gopro);
-var avVid75 = average(placements[0].data.video.vid75, placements[0].dates, gopro);
-var avVid100 = average(placements[0].data.video.vid100, placements[0].dates, gopro);
+  // calculate colors based on values
 
-var ecRates = [{
-  value: avVid25,
-  label: "25% complete"
-}, {
-  value: avVid50,
-  label: "50% complete"
-}, {
-  value: avVid75,
-  label: "75% complete"
-}, {
-  value: avVid100,
-  label: "100% complete"
-}];
+  var highest = Math.max.apply(null, allRates);
+  var lowest = Math.min.apply(null, allRates);
 
-var pcRates = [{
-  value: avVid25 - 6,
-  label: "25% complete"
-}, {
-  value: avVid50 + 1,
-  label: "50% complete"
-}, {
-  value: avVid75 + 2,
-  label: "75% complete"
-}, {
-  value: avVid100 + 3,
-  label: "100% complete"
-}];
+  ecRatesData[pl.id].forEach(function(obj) {
+    var colorPos = (obj.value - lowest) / (highest - lowest);
+    obj.color = 'rgb(' + pickHex(color1, color2, colorPos) + ')';
+    obj.stackHeight = 1;
+  });
 
-
-var ecHighVal = 0;
-var ecLowVal = 100;
-ecRates.forEach(function(obj) {
-  if (obj.value > ecHighVal) {
-    ecHighVal = obj.value;
-  }
-  if (obj.value < ecLowVal) {
-    ecLowVal = obj.value;
-  }
-});
-ecRates.forEach(function(obj) {
-  obj.color = [];
-  var colorPos = (obj.value - ecLowVal) / (ecHighVal - ecLowVal);
-  obj.color = 'rgb(' + pickHex(ec_color1, ec_color2, colorPos) + ')';
-  obj.stackHeight = 1;
 });
 
-var pcHighVal = 0;
-var pcLowVal = 100;
-pcRates.forEach(function(obj) {
-  if (obj.value > pcHighVal) {
-    pcHighVal = obj.value;
-  }
-  if (obj.value < pcLowVal) {
-    pcLowVal = obj.value;
-  }
-});
-pcRates.forEach(function(obj) {
-  obj.color = [];
-  var colorPos = (obj.value - pcLowVal) / (pcHighVal - pcLowVal);
-  obj.color = 'rgb(' + pickHex(pc_color1, pc_color2, colorPos) + ')';
-  obj.stackHeight = 1;
-});
+ecRatesData.init = [
+  {
+    label: "25% completion",
+    value: 0,
+    color: '#ffffff',
+    stackHeight: 1
+  },
+  {
+    label: "50% completion",
+    value: 0,
+    color: '#ffffff',
+    stackHeight: 1
+  },
+  {
+    label: "75% completion",
+    value: 0,
+    color: '#ffffff',
+    stackHeight: 1
+  },
+  {
+    label: "100% completion",
+    value: 0,
+    color: '#ffffff',
+    stackHeight: 1
+  },
+];
+
+console.log('ecRatesData', ecRatesData);
 
 var chart9 = AmCharts.makeChart("chart--engagedCHeat", {
   type: 'serial',
-  dataProvider: ecRates,
+  dataProvider: ecRatesData.init,
   categoryField: "label",
   startDuration: 0,
   addClassNames: true,
@@ -911,21 +844,104 @@ var chart9 = AmCharts.makeChart("chart--engagedCHeat", {
     "labelText": "Allo",
     "labelPosition": "middle",
     labelAnchor: "middle",
-    "color": "#fff",
+    "color": "#ffffff",
     labelFunction: function(item) {
       return Math.round(item.dataContext.value) + "%";
     },
     balloonText: ""
+  }],
+  listeners: [{
+    event: "rendered",
+    method: function(e){
+      e.chart.animateData(ecRatesData.SSM_same, {
+        duration: 1000
+      })
+    }
   }]
-  // listeners: [{
-  //   event: "rendered",
-  //   method: animChart
-  // }]
 });
 
-var chart10 = AmCharts.makeChart("chart--passiveCHeat", {
+var ecRatesData = {};
+gopro_pments.forEach(function(pl) {
+
+  var color1 = hexToRgb(getColor(pl));
+  var color2 = hexToRgb("#dadada");
+
+  // get average for placement
+
+  var avVid0 = average(pl.data.video.vid0, pl.dates, gopro);
+  var avVid25 = average(pl.data.video.vid25, pl.dates, gopro);
+  var avVid50 = average(pl.data.video.vid50, pl.dates, gopro);
+  var avVid75 = average(pl.data.video.vid75, pl.dates, gopro);
+  var avVid100 = average(pl.data.video.vid100, pl.dates, gopro);
+
+  var allRates = [avVid0, avVid25, avVid50, avVid75, avVid100];
+
+  // create array of colors
+
+  ecRatesData[pl.id] = [
+    {
+      label: "25% completion",
+      value: avVid25,
+    },
+    {
+      label: "50% completion",
+      value: avVid50
+    },
+    {
+      label: "75% completion",
+      value: avVid75
+    },
+    {
+      label: "100% completion",
+      value: avVid100
+    },
+  ];
+
+  // calculate colors based on values
+
+  var highest = Math.max.apply(null, allRates);
+  var lowest = Math.min.apply(null, allRates);
+
+  ecRatesData[pl.id].forEach(function(obj) {
+    var colorPos = (obj.value - lowest) / (highest - lowest);
+    obj.color = 'rgb(' + pickHex(color1, color2, colorPos) + ')';
+    obj.stackHeight = 1;
+  });
+
+});
+
+ecRatesData.init = [
+  {
+    label: "25% completion",
+    value: 0,
+    color: '#ffffff',
+    stackHeight: 1
+  },
+  {
+    label: "50% completion",
+    value: 0,
+    color: '#ffffff',
+    stackHeight: 1
+  },
+  {
+    label: "75% completion",
+    value: 0,
+    color: '#ffffff',
+    stackHeight: 1
+  },
+  {
+    label: "100% completion",
+    value: 0,
+    color: '#ffffff',
+    stackHeight: 1
+  },
+];
+
+console.log('ecRatesData', ecRatesData);
+
+var chart9 = AmCharts.makeChart("chart--engagedCHeat", {
   type: 'serial',
-  dataProvider: pcRates,
+  dataProvider: ecRatesData.init,
   categoryField: "label",
   startDuration: 0,
   addClassNames: true,
@@ -954,14 +970,147 @@ var chart10 = AmCharts.makeChart("chart--passiveCHeat", {
     "labelText": "Allo",
     "labelPosition": "middle",
     labelAnchor: "middle",
-    "color": "#fff",
+    "color": "#ffffff",
     labelFunction: function(item) {
       return Math.round(item.dataContext.value) + "%";
     },
     balloonText: ""
+  }],
+  listeners: [{
+    event: "rendered",
+    method: function(e){
+      e.chart.animateData(ecRatesData.SSM_same, {
+        duration: 1000
+      })
+    }
   }]
-  // listeners: [{
-  //   event: "rendered",
-  //   method: animChart
-  // }]
+});
+
+
+// ** PASSIVE COMPLETION RATE - basically a duplicate of Engaged, but I mess with the values to make it look different
+
+var pcRatesData = {};
+gopro_pments.forEach(function(pl) {
+
+  var color1 = hexToRgb('#e91e63');
+  var color2 = hexToRgb("#dadada");
+
+  // data messed with below
+
+  var avVid0 = average(pl.data.video.vid0, pl.dates, gopro) - 1;
+  var avVid25 = average(pl.data.video.vid25, pl.dates, gopro) - 6;
+  var avVid50 = average(pl.data.video.vid50, pl.dates, gopro) + 1;
+  var avVid75 = average(pl.data.video.vid75, pl.dates, gopro) + 2;
+  var avVid100 = average(pl.data.video.vid100, pl.dates, gopro) + 3;
+
+  var allRates = [avVid0, avVid25, avVid50, avVid75, avVid100];
+
+  // create array of colors
+
+  pcRatesData[pl.id] = [
+    {
+      label: "25% completion",
+      value: avVid25,
+    },
+    {
+      label: "50% completion",
+      value: avVid50
+    },
+    {
+      label: "75% completion",
+      value: avVid75
+    },
+    {
+      label: "100% completion",
+      value: avVid100
+    },
+  ];
+
+  // calculate colors based on values
+
+  var highest = Math.max.apply(null, allRates);
+  var lowest = Math.min.apply(null, allRates);
+
+  pcRatesData[pl.id].forEach(function(obj) {
+    var colorPos = (obj.value - lowest) / (highest - lowest);
+    obj.color = 'rgb(' + pickHex(color1, color2, colorPos) + ')';
+    obj.stackHeight = 1;
+  });
+
+});
+
+pcRatesData.init = [
+  {
+    label: "25% completion",
+    value: 0,
+    color: '#ffffff',
+    stackHeight: 1
+  },
+  {
+    label: "50% completion",
+    value: 0,
+    color: '#ffffff',
+    stackHeight: 1
+  },
+  {
+    label: "75% completion",
+    value: 0,
+    color: '#ffffff',
+    stackHeight: 1
+  },
+  {
+    label: "100% completion",
+    value: 0,
+    color: '#ffffff',
+    stackHeight: 1
+  },
+];
+
+console.log('pcRatesData', pcRatesData);
+
+var chart9 = AmCharts.makeChart("chart--passiveCHeat", {
+  type: 'serial',
+  dataProvider: pcRatesData.init,
+  categoryField: "label",
+  startDuration: 0,
+  addClassNames: true,
+  categoryAxis: {
+    gridAlpha: 0,
+    axisAlpha: 0
+  },
+  valueAxes: [{
+    stackType: "regular",
+    title: " ",
+    gridAlpha: 0,
+    axisAlpha: 0,
+    minimum: 0,
+    maximum: 1,
+    labelsEnabled: false
+  }],
+  graphs: [{
+    columnWidth: 1,
+    type: "column", // try to change it to "column"
+    title: "Percent Completed",
+    valueField: "stackHeight",
+    colorField: "color",
+    fillAlphas: 0.9,
+    lineAlpha: 0,
+    // "labelOffset": -40,
+    "labelText": "Allo",
+    "labelPosition": "middle",
+    labelAnchor: "middle",
+    "color": "#ffffff",
+    labelFunction: function(item) {
+      return Math.round(item.dataContext.value) + "%";
+    },
+    balloonText: ""
+  }],
+  listeners: [{
+    event: "rendered",
+    method: function(e){
+      e.chart.animateData(pcRatesData.SSM_same, {
+        duration: 1000
+      })
+    }
+  }]
 });
