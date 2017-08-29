@@ -148,8 +148,7 @@ gopro_pments.forEach(function(pl) {
   }];
 });
 
-// get first object in impsData and convert to zeroed array.
-var vAv_initData = [{
+vAvData.init = [{
   label: 'viewability',
   value: 0,
   color: "#FFF"
@@ -163,7 +162,7 @@ var vAv_initData = [{
 
 var chart__vAv = AmCharts.makeChart('chart--vAv', {
   type: "pie",
-  dataProvider: vAv_initData,
+  dataProvider: vAvData.init,
   valueField: "value",
   titleField: "label",
   colorField: "color",
@@ -172,7 +171,7 @@ var chart__vAv = AmCharts.makeChart('chart--vAv', {
   // labelRadius: "-50%",
   innerRadius: "70%",
   allLabels: [{
-    text: vAv_initData[0].value,
+    text: vAvData.init.value,
     align: "center",
     size: 35,
     // bold: true,
@@ -233,31 +232,32 @@ gopro_pments.forEach(function(pl) {
   }];
 });
 
-vAvBench.init = {};
-vAvBench.init.formatViewb = 0;
-vAvBench.init.iabBench = 0;
-vAvBench.init.data = [{
-  label: "space1",
-  value: 0,
-  color: "transparent"
-},{
-  label: "IAB",
-  description: "IAB",
-  value: 0,
-  color: "red"
-},{
-  label: "space2",
-  value: 0,
-  color: "transparent"
-},{
-  label: "format",
-  value: 0,
-  color: "#e91e63"
-},{
-  label: "space3",
-  value: 100,
-  color: "transparent"
-}];
+vAvBench.init = {
+  formatViewb: 0,
+  iabBench: 0,
+  data :[{
+    label: "space1",
+    value: 0,
+    color: "transparent"
+  },{
+    label: "IAB",
+    description: "IAB",
+    value: 0,
+    color: "red"
+  },{
+    label: "space2",
+    value: 0,
+    color: "transparent"
+  },{
+    label: "format",
+    value: 0,
+    color: "#e91e63"
+  },{
+    label: "space3",
+    value: 100,
+    color: "transparent"
+  }]
+};
 
 // console.log('vAvBench',vAvBench);
 
@@ -333,7 +333,7 @@ gopro_pments.forEach(function(pl) {
 
 
 // get first object in impsData and convert to zeroed array.
-var impsDel_initData = [{
+impsDelData.init = [{
   label: 'progress',
   value: 0,
   impsDel: 0,
@@ -344,7 +344,7 @@ var impsDel_initData = [{
   color: "#dadada"
 }];
 
-var impsDelBench_initData = [{
+impsDelBenchData.init = [{
     label: "1",
     value: 0,
     color: "transparent"
@@ -362,7 +362,7 @@ var impsDelBench_initData = [{
 var chart__impsDel = AmCharts.makeChart('chart--impsDel', {
   type: "pie",
   theme: "light",
-  dataProvider: impsDel_initData,
+  dataProvider: impsDelData.init,
   valueField: "value",
   titleField: "label",
   colorField: "color",
@@ -373,7 +373,7 @@ var chart__impsDel = AmCharts.makeChart('chart--impsDel', {
   innerRadius: "70%",
   startDuration: 0,
   allLabels: [{
-    text: Math.round(impsDel_initData[0].percentDel),
+    text: Math.round(impsDelBenchData.init[0].percentDel),
     align: "center",
     size: 35,
     // bold: true,
@@ -387,7 +387,7 @@ var chart__impsDel = AmCharts.makeChart('chart--impsDel', {
     x: -28,
     y: '42%'
   }, {
-    text: impsDel_initData[0].impsDel.toLocaleString(),
+    text: impsDelData.init[0].impsDel.toLocaleString(),
     align: "center",
     size: 12,
     bold: false,
@@ -411,7 +411,7 @@ $('.chart--impsDel .chart__legend__left span').text('Expected: 0%');
 var chart__impsDelBench = AmCharts.makeChart('chart--impsDelBench', {
   type: "pie",
   theme: "light",
-  dataProvider: impsDelBench_initData,
+  dataProvider: impsDelBenchData.init,
   valueField: "value",
   titleField: "label",
   labelsEnabled: false,
@@ -559,27 +559,73 @@ gopro_pments.forEach(function(pl) {
 
 });
 
+ativAvData.init = {
+  value: 0,
+  color: '#000000',
+  pgBench: 0,
+  iabBench: 0
+};
+
 console.log(ativAvData);
 
-var chart__ativAv = new totalsChart('chart--ativAv', ativAvData.SSM_same.value, ativAvData.SSM_same.pgBench, ativAvData.SSM_same.iabBench);
+var chart__ativAv = new totalsChart('chart--ativAv', ativAvData.init.value, ativAvData.init.pgBench, ativAvData.init.iabBench);
 
-chart__ativAv.startCount();
+chart__ativAv.updateCount(ativAvData.SSM_same);
 
-var engagedC = average(placements[0].data.engagedCompletionRate, placements[0].dates, gopro).toFixed(1);
-var engagedC_pg = engagedC - fm.topTail.bm.engagedCompletionRate;
-var engagedC_iab = engagedC - fm.iab.bm.engagedCompletionRate;
-var chart__engagedC = new totalsChart('chart--engagedC', engagedC, engagedC_pg, engagedC_iab);
+// ENGAGED COMPLETIONS
+var engagedCData = {};
 
-chart__engagedC.startCount();
+gopro_pments.forEach(function(pl) {
+
+  var plFormat = getFormat(pl);
+
+  engagedCData[pl.id] = {
+    value: average(pl.data.engagedCompletionRate, pl.dates, gopro).toFixed(1),
+    color: format.color,
+    pgBench: plFormat.bm.engagedCompletionRate,
+    iabBench: fm.iab.bm.engagedCompletionRate
+  };
+
+});
+
+engagedCData.init = {
+  value: 0,
+  color: '#000000',
+  pgBench: 0,
+  iabBench: 0
+};
+
+var chart__engagedC = new totalsChart('chart--engagedC', engagedCData.init.value, engagedCData.init.pgBench, engagedCData.init.iabBench);
+
+chart__engagedC.updateCount(engagedCData.SSM_same);
 
 // ENGAGEMENT RATE
 
-var erAv = average(placements[0].data.engagementRate, placements[0].dates, gopro).toFixed(1);
-var erAv_pg = erAv - fm.topTail.bm.engagementRate;
-var erAv_iab = erAv - fm.iab.bm.engagementRate;
-var chart__erAv = new totalsChart('chart--erAv', erAv, erAv_pg, erAv_iab);
+var erAvData = {};
 
-chart__erAv.startCount();
+gopro_pments.forEach(function(pl) {
+
+  var plFormat = getFormat(pl);
+
+  erAvData[pl.id] = {
+    value: average(pl.data.engagementRate, pl.dates, gopro).toFixed(1),
+    color: format.color,
+    pgBench: plFormat.bm.engagementRate,
+    iabBench: fm.iab.bm.engagementRate
+  };
+
+});
+
+erAvData.init = {
+  value: 0,
+  color: '#000000',
+  pgBench: 0,
+  iabBench: 0
+};
+
+var chart__erAv = new totalsChart('chart--erAv', erAvData.init.value, erAvData.init.pgBench, erAvData.init.iabBench);
+
+chart__erAv.updateCount(erAvData.SSM_same);
 
 
 
@@ -617,8 +663,8 @@ gopro_pments.forEach(function(pl) {
 });
 
 // get first object in impsData and convert to zeroed array.
-var endData_init = engData[(Object.keys(engData)[0])];
-engData.init = $.extend(true, [], endData_init);
+engData.init = engData[(Object.keys(engData)[0])];
+engData.init = $.extend(true, [], engData.init);
 engData.init.forEach(function(dateEntry) {
   dateEntry.engagementRate = 0;
   dateEntry.clickthroughRate = 0;
