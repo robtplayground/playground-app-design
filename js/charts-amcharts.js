@@ -20,20 +20,26 @@ function getColor(placement){
   return crtv.format.color;
 }
 
+function getFormat(placement){
+  var crtv = creatives.find(cr => cr.id === placement.creative);
+  return crtv.format;
+}
+
 var dataIndex = 0;
 
 // ** EXECUTED IMPS  ** //
 
 var impsData = {};
 gopro_pments.forEach(function(pl) {
+  // for every date
   var colorsE = [];
   var colorsV = [];
-
   while (colorsE.length < goproDates.length) {colorsE = colorsE.concat([getColor(pl)])};
   while (colorsV.length < goproDates.length) {colorsV = colorsV.concat(['grey'])};
+
   impsData[pl.id] = prepData({
     name: 'date',
-    values: listDates(gopro.dates)
+    values: goproDates
   }, [{
       name: 'execImpsAgg',
       values: pl.data.execImpsAgg
@@ -297,7 +303,7 @@ gopro_pments.forEach(function(pl) {
     label: 'progress',
     value: percentDel,
     impsDel: impsDel,
-    color: pl.color
+    color: getColor(pl)
   }, {
     label: 'remainder',
     value: 100 - percentDel,
@@ -428,9 +434,6 @@ var chart__impsDelBench = AmCharts.makeChart('chart--impsDelBench', {
 });
 
 
-
-
-
 // ** CAMPAIGN PROGRESS
 
 var currentDur = moment(new Date()).diff(moment(gopro.dates.start), 'days');
@@ -534,17 +537,31 @@ function totalsChart(containerID, initValue, initPG, initIAB) {
     this.iabBench.start(this.callback);
   };
   this.callback = function(){
-    console.log('countUp event fired - current countup object value. I want to add plus or minus signs based on current value at this point', this.value);
+    console.log('add Plus or Minus signs + formatting?', this.value);
   };
 }
 
 
 // ATIV
 
-var ativAv = average(placements[0].data.ativ, placements[0].dates, gopro).toFixed(1);
-var ativAv_pg = ativAv - fm.topTail.bm.ativ;
-var ativAv_iab = ativAv - fm.iab.bm.ativ;
-var chart__ativAv = new totalsChart('chart--ativAv', ativAv, ativAv_pg, ativAv_iab);
+var ativAvData = {};
+
+gopro_pments.forEach(function(pl) {
+
+  var plFormat = getFormat(pl);
+
+  ativAvData[pl.id] = {
+    value: average(pl.data.ativ, pl.dates, gopro).toFixed(1),
+    color: format.color,
+    pgBench: plFormat.bm.ativ,
+    iabBench: fm.iab.bm.ativ
+  };
+
+});
+
+console.log(ativAvData);
+
+var chart__ativAv = new totalsChart('chart--ativAv', ativAvData.SSM_same.value, ativAvData.SSM_same.pgBench, ativAvData.SSM_same.iabBench);
 
 chart__ativAv.startCount();
 
@@ -570,18 +587,50 @@ chart__erAv.startCount();
 
 
 // SERIAL CHART
+
+var engData = {};
+gopro_pments.forEach(function(pl) {
+  var colorsE = [];
+  var colorsC = [];
+  while (colorsE.length < goproDates.length) {colorsE = colorsE.concat([getColor(pl)])};
+  while (colorsC.length < goproDates.length) {colorsC = colorsC.concat(['red'])};
+
+  engData[pl.id] = prepData(
+    {
+      name: 'date',
+      values: listDates(gopro.dates)
+    }, [{
+      name: 'engagementRate',
+      values: placements[0].data.engagementRate
+    }, {
+      name: 'clickthroughRate',
+      values: placements[0].data.clickRate
+    },{
+      name: 'colorE',
+      values: colorsE
+    },
+    {
+      name: 'colorC',
+      values: colorsC
+    }
+  ]);
+});
+
+// get first object in impsData and convert to zeroed array.
+var endData_init = engData[(Object.keys(engData)[0])];
+engData.init = $.extend(true, [], endData_init);
+engData.init.forEach(function(dateEntry) {
+  dateEntry.engagementRate = 0;
+  dateEntry.clickthroughRate = 0;
+  dateEntry.colorE = "transparent";
+  dateEntry.colorC = "transparent";
+});
+
+
+
 var chart__erTime = AmCharts.makeChart("chart--erTime", {
   type: 'serial',
-  dataProvider: prepData({
-    name: 'date',
-    values: listDates(gopro.dates)
-  }, [{
-    name: 'engagementRate',
-    values: placements[0].data.engagementRate
-  }, {
-    name: 'clickthroughRate',
-    values: placements[0].data.clickRate
-  }]),
+  dataProvider: engData.init,
   categoryField: "date",
   startDuration: 0,
   addClassNames: true,
@@ -602,14 +651,18 @@ var chart__erTime = AmCharts.makeChart("chart--erTime", {
     title: "Engagement Rate",
     valueField: "engagementRate",
     lineAlpha: 1,
-    lineColor: "#d1cf2a",
+    // colorsField: "colorE",
+    lineColorField: "colorE",
+    fillColorsField: "colorE",
     fillAlphas: 0.3
   }, {
     type: "line", // try to change it to "column"
     title: "Clickthrough Rate",
     valueField: "clickthroughRate",
     lineAlpha: 1,
-    lineColor: "#e91e63",
+    // colorsField: "colorC",
+    lineColorField: "colorC",
+    fillColorsField: "colorC",
     fillAlphas: 0.3
   }],
   chartScrollbar: {},
@@ -617,7 +670,18 @@ var chart__erTime = AmCharts.makeChart("chart--erTime", {
     cursorPosition: "mouse",
     categoryBalloonDateFormat: "JJ:NN, DD MMMM"
   },
-  legend: {}
+  legend: {
+    // "useGraphSettings": true,
+    useMarkerColorForLabels: true
+  },
+  listeners: [{
+    event: "rendered",
+    method: function(e){
+      e.chart.animateData(engData.SSM_same, {
+        duration: 1000
+      })
+    }
+  }]
 });
 
 
@@ -669,11 +733,11 @@ chart__completionsTime.layout = {
 
 // COMPLETION HEAT
 
-var ec_color1 = hexToRgb("#e91e63");
-var ec_color2 = hexToRgb("#666666");
+var ec_color1 = hexToRgb("#0078d8");
+var ec_color2 = hexToRgb("#dadada");
 
-var pc_color1 = hexToRgb("#0078d8");
-var pc_color2 = hexToRgb("#666666");
+var pc_color1 = hexToRgb("#000000");
+var pc_color2 = hexToRgb("#dadada");
 
 
 function hexToRgb(hex) {
