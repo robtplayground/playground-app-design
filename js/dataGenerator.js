@@ -343,8 +343,8 @@ campaigns = [
 		vertical: "Technology",
 		objective: "Awareness",
 		dates: {
-			start: new Date(2017, 6, 1),
-			end: new Date(2017, 7, 31)
+			start: new Date(2017, 7, 1),
+			end: new Date(2017, 8, 30)
 		},
 	},
 	{
@@ -545,8 +545,8 @@ SSM_same = makePlacement({
 	campaign: 'cp_gopro',
 	creative: 'SS_Males',
 	dates: {
-		start: new Date(2017, 6, 1),
-		end: new Date(2017, 7, 31)
+		start: new Date(2017, 7, 1),
+		end: new Date(2017, 8, 30)
 	},
 	errors: {
 		reqImps: {
@@ -581,8 +581,8 @@ SSM_opp = makePlacement({
 	campaign: 'cp_gopro',
 	creative: 'SS_Males',
 	dates: {
-		start: new Date(2017, 6, 1),
-		end: new Date(2017, 7, 31)
+		start: new Date(2017, 7, 1),
+		end: new Date(2017, 8, 30)
 	},
 	errors: {
 		reqImps: {
@@ -615,8 +615,8 @@ SSF_same = makePlacement({
 	name: '146560596_Airwave_GoPro_Target_FemalesMetro18-44',
 	bookedImps: 200000,
 	dates: {
-		start: new Date(2017, 6, 1),
-		end: new Date(2017, 7, 31)
+		start: new Date(2017, 7, 1),
+		end: new Date(2017, 8, 30)
 	},
 	campaign: 'cp_gopro',
 	creative: 'SS_Females',
@@ -653,8 +653,8 @@ SSF_opp = makePlacement({
 	campaign: 'cp_gopro',
 	creative: 'SS_Females',
 	dates: {
-		start: new Date(2017, 6, 1),
-		end: new Date(2017, 7, 31)
+		start: new Date(2017, 7, 1),
+		end: new Date(2017, 8, 30)
 	},
 	errors: {
 		reqImps: {
@@ -690,8 +690,8 @@ TTM_same = makePlacement({
 	campaign: 'cp_gopro',
 	creative: 'TT_Males',
 	dates: {
-		start: new Date(2017, 6, 1),
-		end: new Date(2017, 7, 31)
+		start: new Date(2017, 7, 1),
+		end: new Date(2017, 8, 30)
 	},
 	errors: {
 		reqImps: {
@@ -717,8 +717,8 @@ TTM_opp = makePlacement({
 	campaign: 'cp_gopro',
 	creative: 'TT_Males',
 	dates: {
-		start: new Date(2017, 6, 1),
-		end: new Date(2017, 7, 31)
+		start: new Date(2017, 7, 1),
+		end: new Date(2017, 8, 30)
 	},
 	errors: {
 		reqImps: {
@@ -744,8 +744,8 @@ TTF_same = makePlacement({
 	campaign: 'cp_gopro',
 	creative: 'TT_Females',
 	dates: {
-		start: new Date(2017, 6, 1),
-		end: new Date(2017, 7, 31)
+		start: new Date(2017, 7, 1),
+		end: new Date(2017, 8, 30)
 	},
 	errors: {
 		reqImps: {
@@ -771,8 +771,8 @@ TTF_opp = makePlacement({
 	campaign: 'cp_gopro',
 	creative: 'TT_Females',
 	dates: {
-		start: new Date(2017, 6, 1),
-		end: new Date(2017, 7, 31)
+		start: new Date(2017, 7, 1),
+		end: new Date(2017, 8, 30)
 	},
 	errors: {
 		reqImps: {

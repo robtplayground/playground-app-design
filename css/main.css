@@ -1795,19 +1795,20 @@ a[href="http://www.amcharts.com/javascript-charts/"] {
   left: 0;
   width: 100%;
   text-align: left;
+  text-transform: uppercase;
   padding: 2em;
-  font-size: 0.694rem;
+  font-size: 0.833rem;
 }
 .chart__legend__left .legend__value {
   font-weight: 700;
-  color: red;
+  color: #333333;
 }
 .chart__legend__right {
   text-align: right;
 }
 .chart__legend__right .legend__value {
   font-weight: 700;
-  color: lime;
+  color: #333333;
 }
 .chart--execImpsAgg {
   height: 20rem;
@@ -1846,10 +1847,9 @@ a[href="http://www.amcharts.com/javascript-charts/"] {
 .chart--vAv .chart__legend__right .legend__value {
   color: #222222;
 }
-.chart--vAv .chart__legend__left:before,
-.chart--vAv .chart__legend__right:before {
+.chart--vAv .chart__legend__left .box,
+.chart--vAv .chart__legend__right .box {
   position: relative;
-  content: '';
   width: 1.5em;
   height: 1.5em;
   display: inline-block;
@@ -1857,7 +1857,7 @@ a[href="http://www.amcharts.com/javascript-charts/"] {
   top: 0.4em;
   background: #ee4c83;
 }
-.chart--vAv .chart__legend__right:before {
+.chart--vAv .chart__legend__right .box {
   background: red;
 }
 .chart--cProg {

@@ -145,13 +145,15 @@
           <div id="chart--vAv" class="chart__render"></div>
           <div id="chart--vAvBenchmarks" class="chart__render"></div>
           <div class="chart__legend">
-            <div class="chart__legend__left">
-              <span class="legend__label">TT: </span>
-              <span id="chart--vAv_pgBench" class="legend__value"></span>
+            <div id="chart--vAv_pgBench" class="chart__legend__left">
+              <div class="box"></div>
+              <span class="legend__label"></span>
+              <span class="legend__value"></span>
             </div>
-            <div class="chart__legend__right">
+            <div id="chart--vAv_iabBench" class="chart__legend__right">
+              <div class="box"></div>
               <span class="legend__label">IAB: </span>
-              <span id="chart--vAv_iabBench" class="legend__value"></span>
+              <span class="legend__value"></span>
             </div>
           </div>
         </div>
@@ -163,7 +165,9 @@
           <div class="chart__render" id="chart--impsDel"></div>
           <div class="chart__render" id="chart--impsDelBench"></div>
           <div class="chart__legend">
-            <div class="chart__legend__left"><span></span></div>
+            <div class="chart__legend__left">
+              <span></span>
+            </div>
           </div>
         </div>
       </div>
@@ -259,6 +263,7 @@
   <script src="/js/jQRangeSlider-min.js"></script>
   <script src="/js/jQDateRangeSlider-min.js"></script>
   <script src="/js/site.js"></script>
+  <script src="/js/charts-amcharts1.js"></script>
   <script src="/js/charts-amcharts.js"></script>
 
 

@@ -1,110 +1,18 @@
-const gopro = campaigns[0];
-const goproDates = listDates(gopro.dates); // array of dates
-const gopro_pments = placements.filter(pl => pl.campaign === 'cp_gopro');
-
-function prepData(categoryObj, valuesArray) {
-  var data = [];
-  for (i = 0; i < categoryObj.values.length; i++) {
-    var dataGroup = {};
-    dataGroup[categoryObj.name] = categoryObj.values[i];
-    valuesArray.forEach(function(metric) {
-      dataGroup[metric.name] = metric.values[i];
-    });
-    data.push(dataGroup);
-  }
-  return data;
-}
-
-function getColor(placement){
-  var crtv = creatives.find(cr => cr.id === placement.creative);
-  return crtv.format.color;
-}
-
-function getFormat(placement){
-  var crtv = creatives.find(cr => cr.id === placement.creative);
-  return crtv.format;
-}
-
-var dataIndex = 0;
-
-// ** CAMPAIGN PROGRESS
-
-var currentDur = moment(new Date()).diff(moment(gopro.dates.start), 'days');
-var campDur = duration(gopro.dates);
-var cProgPercent = currentDur / campDur;
-
-var chart__cProg = AmCharts.makeChart('chart--cProg', {
-  "type": "gauge",
-  "axes": [{
-    backgroundColor: "#000",
-    labelsEnabled: false,
-    "axisThickness": 0,
-    "axisAlpha": 0,
-    "tickAlpha": 0,
-    "startValue": 0,
-    "endValue": 100,
-    "bands": [{
-      "color": "red",
-      "startValue": 0,
-      "endValue": cProgPercent * 100,
-      "radius": "100%",
-      "innerRadius": "85%"
-    }, {
-      "color": "#dadada",
-      "startValue": cProgPercent * 100,
-      "endValue": 100,
-      "radius": "100%",
-      "innerRadius": "85%",
-      "balloonText": "90%"
-    }],
-  }],
-  "allLabels": [{
-    "text": moment(gopro.dates.start).format('ddd D MMMM'),
-    "x": "40%",
-    "y": "80%",
-    "size": 10,
-    "bold": true,
-    "color": "#fff",
-    "align": "right"
-  }, {
-    "text": moment(gopro.dates.end).format('ddd D MMMM'),
-    "x": "60%",
-    "y": "80%",
-    "size": 10,
-    "bold": true,
-    "color": "#fff",
-    "align": "left"
-  }, {
-    "text": campDur - currentDur,
-    "x": 4,
-    "y": "35%",
-    "size": 25,
-    "bold": false,
-    "color": "#fff",
-    "align": "center"
-  }, {
-    "text": "DAYS LEFT",
-    "x": 0,
-    "y": "60%",
-    "size": 9,
-    "bold": false,
-    "color": "#fff",
-    "align": "center"
-  }],
-  "export": {
-    "enabled": true
-  }
-});
-
 // ** EXECUTED IMPS  ** //
 
-var impsData = {};
+var impsData = {
+  current: 'init'
+};
 gopro_pments.forEach(function(pl) {
   // for every date
   var colorsE = [];
   var colorsV = [];
-  while (colorsE.length < goproDates.length) {colorsE = colorsE.concat([getColor(pl)])};
-  while (colorsV.length < goproDates.length) {colorsV = colorsV.concat(['grey'])};
+  while (colorsE.length < goproDates.length) {
+    colorsE = colorsE.concat([getColor(pl)])
+  };
+  while (colorsV.length < goproDates.length) {
+    colorsV = colorsV.concat(['grey'])
+  };
 
   impsData[pl.id] = prepData({
     name: 'date',
@@ -145,7 +53,7 @@ impsData.init.forEach(function(dateEntry) {
 var chart__ImpsTime = AmCharts.makeChart("chart--execImpsAgg", {
   dataObject: impsData,
   type: "serial",
-  dataProvider: impsData.init, // start chart with zeroes
+  dataProvider: impsData[impsData.current], // start chart with zeroes
   categoryField: "date",
   startDuration: 0,
   addClassNames: true,
@@ -183,25 +91,23 @@ var chart__ImpsTime = AmCharts.makeChart("chart--execImpsAgg", {
     categoryBalloonDateFormat: "JJ:NN, DD MMMM"
   },
   chartScrollbar: {},
-  listeners: [{
-    event: "rendered",
-    method: function(e){
-      e.chart.animateData(impsData.SSM_same, {
-        duration: 1000
-      })
-    }
-  }]
+  // listeners: [{
+  //   event: "rendered",
+  //   method: function(e){
+  //     e.chart.animateData(impsData.SSM_same, {
+  //       duration: 1000
+  //     })
+  //   }
+  // }]
 });
 
-
-$('.update-charts').click(function() {
-
-});
 
 
 // ** VIEWABILITY AVERAGE CHART
 
-var vAvData = {};
+var vAvData = {
+  current: 'init'
+};
 gopro_pments.forEach(function(pl) {
   // console.log('placements', pl.dates);
   var viewb_Avg = Math.round(average(pl.data.viewability, pl.dates, gopro));
@@ -233,7 +139,8 @@ vAvData.init = [{
 var chart__vAv = AmCharts.makeChart('chart--vAv', {
   dataObject: vAvData,
   type: "pie",
-  dataProvider: vAvData.init,
+  dataProvider: vAvData[vAvData.current],
+  startDuration: 0,
   valueField: "value",
   titleField: "label",
   colorField: "color",
@@ -242,7 +149,7 @@ var chart__vAv = AmCharts.makeChart('chart--vAv', {
   // labelRadius: "-50%",
   innerRadius: "70%",
   allLabels: [{
-    text: vAvData.init.value,
+    text: vAvData[vAvData.current][0].value,
     align: "center",
     size: 35,
     // bold: true,
@@ -257,86 +164,90 @@ var chart__vAv = AmCharts.makeChart('chart--vAv', {
     y: '45%'
   }],
   balloonText: "",
-  listeners: [{
-    event: "rendered",
-    method: function(e){
-      e.chart.allLabels[0].text = vAvData.SSM_same[0].value;
-      e.chart.animateData( vAvData.SSM_same,{
-        duration: 3000
-      });
-    }
-  }]
+  // listeners: [{
+  //   event: "rendered",
+  //   method: function(e){
+  //     e.chart.allLabels[0].text = vAvData.SSM_same[0].value;
+  //     e.chart.animateData( vAvData.SSM_same,{
+  //       duration: 3000
+  //     });
+  //   }
+  // }]
 });
 
 // VIEWABILITY BENCHMARKS OVERLAY
 
-var vAvBench = {};
+var vAvBenchData = {};
 
 gopro_pments.forEach(function(pl) {
-  var format = creatives.find(function(cr){return cr.id === pl.creative}).format;
+  var format = creatives.find(function(cr) {
+    return cr.id === pl.creative
+  }).format;
   var formatViewb = format.bm.viewability;
   var iabBench = fm.iab.bm.viewability;
-  vAvBench[pl.id] = {};
-  vAvBench[pl.id].formatViewb = formatViewb;
-  vAvBench[pl.id].iabBench = iabBench;
-  vAvBench[pl.id].data = [{
+  vAvBenchData[pl.id] = {};
+  vAvBenchData[pl.id].formatViewb = formatViewb;
+  vAvBenchData[pl.id].iabBench = iabBench;
+  vAvBenchData[pl.id].data = [{
     label: "space1",
     value: iabBench,
     color: "transparent"
-  },{
+  }, {
     label: "IAB",
     // description: "IAB: " + iabBench + "%",
     value: 1,
     color: "red"
-  },{
+  }, {
     label: "space2",
     value: formatViewb - iabBench - 1,
     color: "transparent"
-  },{
+  }, {
     label: "format",
+    format: format,
     value: 1,
     color: "#e91e63"
-  },{
+  }, {
     label: "space3",
     value: 100 - 1 - formatViewb,
     color: "transparent"
   }];
 });
 
-vAvBench.init = {
+vAvBenchData.init = {
   formatViewb: 0,
   iabBench: 0,
-  data :[{
+  data: [{
     label: "space1",
     value: 0,
     color: "transparent"
-  },{
+  }, {
     label: "IAB",
-    description: "IAB",
+    // description: "IAB",
     value: 0,
     color: "red"
-  },{
+  }, {
     label: "space2",
     value: 0,
     color: "transparent"
-  },{
+  }, {
     label: "format",
     value: 0,
     color: "#e91e63"
-  },{
+  }, {
     label: "space3",
     value: 100,
     color: "transparent"
   }]
 };
 
-// console.log('vAvBench',vAvBench);
+// console.log('vAvBenchData',vAvBenchData);
 
-var chart__vAvBenchmarks = AmCharts.makeChart('chart--vAvBenchmarks', {
-  dataObject: vAvBench,
+var chart__vAvBench = AmCharts.makeChart('chart--vAvBenchmarks', {
+  dataObject: vAvBenchData,
   type: "pie",
   theme: "light",
-  dataProvider: vAvBench.init.data,
+  dataProvider: vAvBenchData.init.data,
+  startDuration: 0,
   valueField: "value",
   titleField: "label",
   labelsEnabled: false,
@@ -346,22 +257,26 @@ var chart__vAvBenchmarks = AmCharts.makeChart('chart--vAvBenchmarks', {
   startDuration: 0,
   addClassNames: true,
   balloonText: "",
-  listeners: [{
-    event: "rendered",
-    method: function(e){
-      $('#chart--vAv_pgBench').text(vAvBench.SSM_same.formatViewb + '%');
-      $('#chart--vAv_iabBench').text(vAvBench.SSM_same.iabBench + '%');
-      e.chart.animateData( vAvBench.SSM_same.data,{
-        duration: 3000
-      });
-    }
-  }]
+  // listeners: [{
+  //   event: "rendered",
+  //   method: function(e){
+  //     $('#chart--vAv_pgBench').text(vAvBenchData.SSM_same.formatViewb + '%');
+  //     $('#chart--vAv_iabBench').text(vAvBenchData.SSM_same.iabBench + '%');
+  //     e.chart.animateData( vAvBenchData.SSM_same.data,{
+  //       duration: 3000
+  //     });
+  //   }
+  // }]
 });
 
 // IMPS DELIVERED
 
-var impsDelData = {};
-var impsDelBenchData = {};
+var impsDelData = {
+  current: 'init'
+};
+var impsDelBenchData = {
+  current: 'init'
+};
 gopro_pments.forEach(function(pl) {
   var currentDur = moment(new Date()).diff(moment(pl.dates.start), 'days');
   var impsDel = pl.data.execImpsAgg[currentDur - 1];
@@ -386,19 +301,19 @@ gopro_pments.forEach(function(pl) {
   // console.log(impsDelBench);
 
   impsDelBenchData[pl.id] = [{
-      label: "1",
-      value: impsDelBench,
-      color: "transparent",
-    },{
-        label: "2",
-      value: 1,
-      label: "Expected: " + impsDelBench + "%",
-      color: "red"
-    },{
-        label: "3",
-      value: 100 - (impsDelBench + 1),
-      color: "transparent"
-    }];
+    label: "1",
+    value: impsDelBench,
+    color: "transparent",
+  }, {
+    label: "2",
+    value: 1,
+    label: "Expected: " + impsDelBench + "%",
+    color: "red"
+  }, {
+    label: "3",
+    value: 100 - (impsDelBench + 1),
+    color: "transparent"
+  }];
 });
 
 // console.log('impsDelData', impsDelData);
@@ -417,18 +332,18 @@ impsDelData.init = [{
 }];
 
 impsDelBenchData.init = [{
-    label: "1",
-    value: 0,
-    color: "transparent"
-  },{
-    label: "2",
-    value: 0,
-    color: "red"
-  },{
-      label: "3",
-    value: 100,
-    color: "transparent"
-  }];
+  label: "1",
+  value: 0,
+  color: "transparent"
+}, {
+  label: "2",
+  value: 0,
+  color: "red"
+}, {
+  label: "3",
+  value: 100,
+  color: "transparent"
+}];
 
 
 var chart__impsDel = AmCharts.makeChart('chart--impsDel', {
@@ -446,7 +361,7 @@ var chart__impsDel = AmCharts.makeChart('chart--impsDel', {
   innerRadius: "70%",
   startDuration: 0,
   allLabels: [{
-    text: Math.round(impsDelBenchData.init[0].percentDel),
+    text: Math.round(impsDelData.init[0].value),
     align: "center",
     size: 35,
     // bold: true,
@@ -467,16 +382,16 @@ var chart__impsDel = AmCharts.makeChart('chart--impsDel', {
     x: '0%',
     y: '55%'
   }],
-  listeners: [{
-    event: "rendered",
-    method: function(e){
-      e.chart.allLabels[0].text = Math.round(impsDelData.SSM_same[0].value);
-      e.chart.allLabels[2].text = impsDelData.SSM_same[0].impsDel.toLocaleString();
-      e.chart.animateData( impsDelData.SSM_same,{
-        duration: 3000
-      });
-    }
-  }]
+  // listeners: [{
+  //   event: "rendered",
+  //   method: function(e){
+  //     e.chart.allLabels[0].text = Math.round(impsDelData.SSM_same[0].value);
+  //     e.chart.allLabels[2].text = impsDelData.SSM_same[0].impsDel.toLocaleString();
+  //     e.chart.animateData( impsDelData.SSM_same,{
+  //       duration: 3000
+  //     });
+  //   }
+  // }]
 });
 
 $('.chart--impsDel .chart__legend__left span').text('Expected: 0%');
@@ -496,15 +411,15 @@ var chart__impsDelBench = AmCharts.makeChart('chart--impsDelBench', {
   innerRadius: "70%",
   startDuration: 0,
   addClassNames: true,
-  listeners: [{
-    event: "rendered",
-    method: function(e){
-      $('.chart--impsDel .chart__legend__left span').text('Expected: ' + impsDelBenchData.SSM_same[0].value + '%');
-      e.chart.animateData( impsDelBenchData.SSM_same,{
-        duration: 3000
-      });
-    }
-  }]
+  // listeners: [{
+  //   event: "rendered",
+  //   method: function(e){
+  //     $('.chart--impsDel .chart__legend__left span').text('Expected: ' + impsDelBenchData.SSM_same[0].value + '%');
+  //     e.chart.animateData( impsDelBenchData.SSM_same,{
+  //       duration: 3000
+  //     });
+  //   }
+  // }]
 });
 
 
@@ -543,7 +458,7 @@ function totalsChart(containerID, initValue, initPG, initIAB) {
     this.pgBench.start(this.callback);
     this.iabBench.start(this.callback);
   };
-  this.callback = function(){
+  this.callback = function() {
     console.log('add Plus or Minus signs + formatting?', this.value);
   };
 }
@@ -551,7 +466,9 @@ function totalsChart(containerID, initValue, initPG, initIAB) {
 
 // ATIV
 
-var ativAvData = {};
+var ativAvData = {
+  current: 'init'
+};
 
 gopro_pments.forEach(function(pl) {
 
@@ -577,10 +494,12 @@ console.log(ativAvData);
 
 var chart__ativAv = new totalsChart('chart--ativAv', ativAvData.init.value, ativAvData.init.pgBench, ativAvData.init.iabBench);
 
-chart__ativAv.updateCount(ativAvData.SSM_same);
+
 
 // ENGAGED COMPLETIONS
-var engagedCData = {};
+var engagedCData = {
+  current: 'init'
+};
 
 gopro_pments.forEach(function(pl) {
 
@@ -604,11 +523,13 @@ engagedCData.init = {
 
 var chart__engagedC = new totalsChart('chart--engagedC', engagedCData.init.value, engagedCData.init.pgBench, engagedCData.init.iabBench);
 
-chart__engagedC.updateCount(engagedCData.SSM_same);
+
 
 // ENGAGEMENT RATE
 
-var erAvData = {};
+var erAvData = {
+  current: 'init'
+};
 
 gopro_pments.forEach(function(pl) {
 
@@ -632,7 +553,7 @@ erAvData.init = {
 
 var chart__erAv = new totalsChart('chart--erAv', erAvData.init.value, erAvData.init.pgBench, erAvData.init.iabBench);
 
-chart__erAv.updateCount(erAvData.SSM_same);
+
 
 
 
@@ -641,24 +562,29 @@ chart__erAv.updateCount(erAvData.SSM_same);
 
 // SERIAL CHART
 
-var engData = {};
+var engData = {
+  current: 'init'
+};
 gopro_pments.forEach(function(pl) {
   var colorsE = [];
   var colorsC = [];
-  while (colorsE.length < goproDates.length) {colorsE = colorsE.concat([getColor(pl)])};
-  while (colorsC.length < goproDates.length) {colorsC = colorsC.concat(['red'])};
+  while (colorsE.length < goproDates.length) {
+    colorsE = colorsE.concat([getColor(pl)])
+  };
+  while (colorsC.length < goproDates.length) {
+    colorsC = colorsC.concat(['red'])
+  };
 
-  engData[pl.id] = prepData(
-    {
-      name: 'date',
-      values: listDates(gopro.dates)
-    }, [{
+  engData[pl.id] = prepData({
+    name: 'date',
+    values: listDates(gopro.dates)
+  }, [{
       name: 'engagementRate',
       values: placements[0].data.engagementRate
     }, {
       name: 'clickthroughRate',
       values: placements[0].data.clickRate
-    },{
+    }, {
       name: 'colorE',
       values: colorsE
     },
@@ -728,14 +654,14 @@ var chart__erTime = AmCharts.makeChart("chart--erTime", {
     // "useGraphSettings": true,
     useMarkerColorForLabels: true
   },
-  listeners: [{
-    event: "rendered",
-    method: function(e){
-      e.chart.animateData(engData.SSM_same, {
-        duration: 1000
-      })
-    }
-  }]
+  // listeners: [{
+  //   event: "rendered",
+  //   method: function(e){
+  //     e.chart.animateData(engData.SSM_same, {
+  //       duration: 1000
+  //     })
+  //   }
+  // }]
 });
 
 
@@ -743,7 +669,9 @@ var chart__erTime = AmCharts.makeChart("chart--erTime", {
 // COMPLETION HEAT
 
 
-var ecHeatData = {};
+var ecHeatData = {
+  current: 'init'
+};
 gopro_pments.forEach(function(pl) {
 
   var color1 = hexToRgb(getColor(pl));
@@ -761,8 +689,7 @@ gopro_pments.forEach(function(pl) {
 
   // create array of colors
 
-  ecHeatData[pl.id] = [
-    {
+  ecHeatData[pl.id] = [{
       label: "25% completion",
       value: avVid25,
     },
@@ -793,8 +720,7 @@ gopro_pments.forEach(function(pl) {
 
 });
 
-ecHeatData.init = [
-  {
+ecHeatData.init = [{
     label: "25% completion",
     value: 0,
     color: '#ffffff',
@@ -860,20 +786,22 @@ var chart__ecHeat = AmCharts.makeChart("chart--engagedCHeat", {
     },
     balloonText: ""
   }],
-  listeners: [{
-    event: "rendered",
-    method: function(e){
-      e.chart.animateData(ecHeatData.SSM_same, {
-        duration: 1000
-      })
-    }
-  }]
+  // listeners: [{
+  //   event: "rendered",
+  //   method: function(e){
+  //     e.chart.animateData(ecHeatData.SSM_same, {
+  //       duration: 1000
+  //     })
+  //   }
+  // }]
 });
 
 
 // ** PASSIVE COMPLETION RATE - basically a duplicate of Engaged, but I mess with the values to make it look different
 
-var pcHeatData = {};
+var pcHeatData = {
+  current: 'init'
+};
 gopro_pments.forEach(function(pl) {
 
   var color1 = hexToRgb('#e91e63');
@@ -891,8 +819,7 @@ gopro_pments.forEach(function(pl) {
 
   // create array of colors
 
-  pcHeatData[pl.id] = [
-    {
+  pcHeatData[pl.id] = [{
       label: "25% completion",
       value: avVid25,
     },
@@ -923,8 +850,7 @@ gopro_pments.forEach(function(pl) {
 
 });
 
-pcHeatData.init = [
-  {
+pcHeatData.init = [{
     label: "25% completion",
     value: 0,
     color: '#ffffff',
@@ -990,29 +916,60 @@ var chart__pcHeat = AmCharts.makeChart("chart--passiveCHeat", {
     },
     balloonText: ""
   }],
-  listeners: [{
-    event: "rendered",
-    method: function(e){
-      e.chart.animateData(pcHeatData.SSM_same, {
-        duration: 1000
-      })
-    }
-  }]
+  // listeners: [{
+  //   event: "rendered",
+  //   method: function(e){
+  //     e.chart.animateData(pcHeatData.SSM_same, {
+  //       duration: 1000
+  //     })
+  //   }
+  // }]
 });
 
 
 // push data to all charts on click
 
-var amCharts = [chart__ImpsTime, chart__vAv, chart__vAvBenchmarks, chart__impsDel, chart__impsDelBench, chart__erTime, chart__ecHeat, chart__pcHeat];
+var amCharts = [chart__ImpsTime, chart__vAv, chart__vAvBench, chart__impsDel, chart__impsDelBench, chart__erTime, chart__ecHeat, chart__pcHeat];
 
 var totalsCharts = [chart__ativAv, chart__engagedC, chart__erAv];
 
-$('.data-filter__placement-select label').click(function(){
+$('.data-filter__placement-select label').click(function() {
   var plID = $(this).data('placement');
+  updateAllCharts(plID);
+});
+
+function updateAllCharts(pment_ID) {
+
+  var pment = gopro_pments.find(pl => pl.id === pment_ID);
+  console.log(pment);
+  var plFormat = getFormat(pment);
+  var plColor = getColor(pment);
+
   amCharts.forEach(chart => {
-    var data = chart.dataObject[plID];
-    chart.dataProvider = data;
+
+
+    var data = chart.dataObject[pment_ID];
+    chart.animateData(data, {
+      duration: 1000
+    });
   });
 
+  chart__vAvBench.animateData(chart__vAvBench.dataObject[pment_ID].data, {
+    duration: 1000
+  });
 
-});
+  chart__vAv.allLabels[0].text = vAvData[pment_ID][0].value;
+  chart__impsDel.allLabels[0].text = Math.round(impsDelData[pment_ID][0].value);
+  chart__impsDel.allLabels[2].text = Math.round(impsDelData[pment_ID][0].impsDel).toLocaleString();
+  $('.chart--impsDel .chart__legend__left span').text(impsDelBenchData[pment_ID][1].label);
+
+  $('#chart--vAv_pgBench .legend__label').text(plFormat.name);
+  $('#chart--vAv_pgBench .legend__label .box').css('background', plColor);
+  $('#chart--vAv_pgBench .legend__value').text(vAvBenchData[pment_ID].formatViewb + '%');
+  $('#chart--vAv_iabBench .legend__value').text(vAvBenchData[pment_ID].iabBench + '%');
+
+
+  chart__ativAv.updateCount(ativAvData[pment_ID]);
+  chart__engagedC.updateCount(engagedCData[pment_ID]);
+  chart__erAv.updateCount(erAvData[pment_ID]);
+}
