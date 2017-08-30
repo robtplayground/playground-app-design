@@ -26,9 +26,15 @@
               <%= moment(cp.dates.start).format('ddd D MMM') %> - <%= moment(cp.dates.end).format('ddd D MMM') %>
             </td>
             <td class="campaign__progress grid3">
+
+              <% var dur = duration(cp.dates); %>
+              <% var cur = moment(new Date()).diff(cp.dates.start, 'days'); %>
+              <% var percent = cur / dur * 100; %>
+              <% var progString = cur > 0 ? cur + ' / ' + dur + 'days' : (cur * -1) + 'days til start' %>
+
               <div class="chart__progress-bar">
-                <span class="chart__progress-bar__prog">
-                  <span class="chart__progress-bar__text">31 / 47 Days</span>
+                <span class="chart__progress-bar__prog" style="width: <%= progString %>%; background: #e91e63;">
+                  <span class="chart__progress-bar__text"><%= cur %> / <%= dur %> Days</span>
                 </span>
 
               </div>

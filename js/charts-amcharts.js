@@ -938,6 +938,13 @@ $('.data-filter__placement-select label').click(function() {
   updateAllCharts(plID);
 });
 
+$(window).on('load', function(){
+  setTimeout(function(){
+    updateAllCharts('SSM_same');
+  }, 1000);
+
+});
+
 function updateAllCharts(pment_ID) {
 
   var pment = gopro_pments.find(pl => pl.id === pment_ID);
