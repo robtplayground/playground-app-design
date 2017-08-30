@@ -543,6 +543,31 @@ table, td{
 	}
 	// width: 100%;
 }
+tr{
+	width:100%;
+}
+
+.creative-wrapper{
+	max-height: 1000px;
+	overflow:hidden;
+	transition: all 1s ease;
+}
+
+.campaign__table.collapse{
+	tr:not(.campaign__title){
+		height:0 !important;
+		td.creative{
+			height:0 !important;
+		}
+	}
+}
+
+
+
+.collapse .creative-wrapper{
+	max-height: 0;
+}
+
 .creative__title{
 	background: @ss-blue;
 }

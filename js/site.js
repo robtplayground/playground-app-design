@@ -21,7 +21,12 @@ $('.chart__select').select2({
 
 $('.data-filter select').select2({
   minimumResultsForSearch: Infinity,
-  width: 'resolve' 
+  width: 'resolve'
+});
+
+$('.campaign__expand').click(function(){
+  var target = $(this).data('cp');
+  $('.' + target).toggleClass('collapse');
 });
 
 // $('#slider').dateRangeSlider();

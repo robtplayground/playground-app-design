@@ -1973,6 +1973,23 @@ td {
 .creative__table tbody tr:nth-child(even) {
   background: #fafafa;
 }
+tr {
+  width: 100%;
+}
+.creative-wrapper {
+  max-height: 1000px;
+  overflow: hidden;
+  transition: all 1s ease;
+}
+.campaign__table.collapse tr:not(.campaign__title) {
+  height: 0 !important;
+}
+.campaign__table.collapse tr:not(.campaign__title) td.creative {
+  height: 0 !important;
+}
+.collapse .creative-wrapper {
+  max-height: 0;
+}
 .creative__title {
   background: #0078d8;
 }

@@ -6,12 +6,12 @@
     <div class="campaigns">
       <!-- <h1>Campaigns</h1> -->
 
-      <% campaigns.forEach(function(cp){  %>
+      <% campaigns.forEach(function(cp, index){  %>
 
-        <table class="campaign__table">
+        <table class="campaign__table  <%= cp.id %>">
 
           <tr class="campaign__title">
-            <td class="campaign__expand grid1">
+            <td class="campaign__expand grid1" data-cp="<%= cp.id %>">
               <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
                 <use x="0" y="0" href="#arrow-down"></use>
               </svg>
@@ -51,6 +51,8 @@
 
           <tr>
             <td colspan="6" class="creative">
+
+              <div class="creative-wrapper">
 
                <!-- start creative -->
 
@@ -199,7 +201,7 @@
                         <% }); %>
                     </tbody>
                     </table>
-
+              </div> <!--end creative-wrapper -->
             </td>
           </tr>
 
