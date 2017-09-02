@@ -1574,13 +1574,16 @@ body {
   flex-wrap: wrap;
 }
 .data-filter {
+  position: absolute;
+  right: 0;
   background: #efefef;
   color: #222222;
+  display: flex;
   flex-direction: column;
   flex: 1 0;
-  margin: 0 0.5rem 0 0;
+  margin: 0;
   padding: 1rem;
-  width: 100%;
+  width: 26rem;
 }
 .data-filter input {
   width: auto;
@@ -1598,25 +1601,21 @@ body {
   overflow: visible;
 }
 .data-filter__date-picker {
-  display: flex;
-  height: 1rem;
-  width: 76%;
-  margin: 2rem 0 2rem 10%;
-  overflow: visible;
-  justify-content: space-between;
-  border-width: 0px 2px 2px 2px;
-  border-color: #333333;
-  border-style: solid;
-  padding: 0.3em;
+  position: relative;
+  height: 2rem;
 }
-.data-filter__date-picker .date {
-  height: 1rem;
+.data-filter__date-picker input {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
-.data-filter__date-picker .date.start {
-  transform: translate(-50%, -170%);
-}
-.data-filter__date-picker .date.end {
-  transform: translate(50%, -170%);
+.data-filter__date-picker svg {
+  display: block;
+  width: 1.3em;
+  height: 80%;
+  position: absolute;
+  top: 0.2em;
+  right: 0.2em;
 }
 .data-filter .select2-container,
 .data-filter .select2-dropdown {
@@ -1626,7 +1625,8 @@ body {
 .data-filter .select2-dropdown:focus {
   outline: none;
 }
-.data-filter__placement-select > label {
+.data-filter__placement-select > label,
+.data-filter__format-select > label {
   display: block;
   position: relative;
   margin: 1rem 0;
@@ -1634,6 +1634,18 @@ body {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+.grouping.format .data-filter__placement-select {
+  display: none;
+}
+.grouping.format .data-filter__format-select {
+  display: block;
+}
+.grouping.placement .data-filter__placement-select {
+  display: block;
+}
+.grouping.placement .data-filter__format-select {
+  display: none;
 }
 .campaign-details {
   position: absolute;

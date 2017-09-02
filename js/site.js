@@ -19,7 +19,11 @@ $('.chart__select').select2({
   minimumResultsForSearch: Infinity
 });
 
-$('.data-filter select').select2({
+$('.data-filter__group-select').select2({
+  minimumResultsForSearch: Infinity,
+  width: 'resolve'
+});
+$('.data-filter__split-select').select2({
   minimumResultsForSearch: Infinity,
   width: 'resolve'
 });
@@ -78,6 +82,11 @@ function initControls(){
 
 });
 
+$('.data-filter__group-select').on('change', function(e){
+  var val = $(this).val();
+  $('.grouping').attr('class', 'grouping ' + val);
+});
+
 }
 
 initControls();
@@ -102,7 +111,7 @@ $('.login__box .button').click(function(e){
 
 $(document).ready(function(){
   var page = document.location.href.split('/')[3];
-  $('body').addClass(page);
+  $('body').addClass(page).addClass('side');
   $('menu__' + page).addClass('current').siblings().removeClass('current');
 
 });

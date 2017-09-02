@@ -54,28 +54,46 @@
 
           <!-- <div class="data-filter__date-slider" id="slider"></div> -->
           <div class="data-filter__date-picker">
-            <div class="date start">Sat 1 July</div>
-            <div class="date end">Thurs 31 August</div>
+            <input type="text" placeholder="<%= moment(cp.dates.start).format('D/M/YYYY') %> – <%= moment(cp.dates.end).format('D/M/YYYY') %>">
+            <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMax meet">
+              <use x="0" y="0" href="#calendar" />
+            </svg>
+
           </div>
+
+          <div class="grouping placement">
+
 
           <h2>Group by:</h2>
 
-          <select class="data-filter__group-select">
-            <option value="Delivery">Campaign</option>
-            <option value="Audience" selected>Placement</option>
-            <option value="Category">Format</option>
-            <option value="Format">Features</option>
-          </select>
+            <select class="data-filter__group-select">
+              <option value="campaign">Campaign</option>
+              <option value="placement" selected>Placement</option>
+              <option value="format">Format</option>
+              <option value="features">Features</option>
+            </select>
 
-          <div class="data-filter__placement-select">
+            <div class="data-filter__placement-select">
 
-            <% let gopro_pments = placements.filter(pl => pl.campaign === 'cp_gopro'); %>
-            <% gopro_pments.forEach(function(pl, index){ %>
+              <% let gopro_pments = placements.filter(pl => pl.campaign === 'cp_gopro'); %>
+              <% gopro_pments.forEach(function(pl, index){ %>
 
-              <input type="radio" id="radio<%= index %>" name="placement-select"/>
-              <label for="radio<%= index %>" data-placement="<%= pl.id %>" name="choose-placement"><span></span><%- pl.id %></label>
+                <input type="radio" id="radio<%= index %>" name="placement-select"/>
+                <label for="radio<%= index %>" data-placement="<%= pl.id %>" name="choose-placement"><span></span><%- pl.id %></label>
 
-            <% }); %>
+              <% }); %>
+
+            </div>
+            <div class="data-filter__format-select">
+
+                <input type="radio" id="radio10" name="format-select"/>
+                <label for="radio10" data-placement="SSM_same" name="choose-format"><span></span>Super Skin</label>
+
+                <input type="radio" id="radio11" name="format-select"/>
+                <label for="radio11" data-placement="TTM_same" name="choose-format"><span></span>Top and Tail</label>
+
+
+            </div>
 
           </div>
 
