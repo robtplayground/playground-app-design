@@ -254,6 +254,7 @@ body{
 	flex-wrap: wrap;
 	display: flex !important;
 	transition: width 0.5s ease;
+	padding-left: 2rem;
 }
 
 .sidebar{
@@ -818,6 +819,26 @@ align-items: flex-end;
 	width:100%;
 }
 
-body.reporting .app__body{
-	margin-top: 6rem;
+body.report {
+	.campaign-details{
+		background: @darkgrey;
+	}
+	.app__body, .main{
+		margin-top: 6rem;
+	}
+}
+
+.show-filter{
+	display:block;
+	position: absolute;
+	width: 2.5rem;
+	height: 100%;
+	background: @midgrey;
+	top: 0rem;
+	left: 0rem;
+	border-radius:0;
+	svg{
+		fill: @white;
+		margin-top: 1rem;
+	}
 }

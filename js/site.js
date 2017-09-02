@@ -101,7 +101,12 @@ $('.login__box .button').click(function(e){
 });
 
 $(document).ready(function(){
-
-  $('menu__' + document.location.href.split('/')[3]).addClass('current').siblings().removeClass('current');
+  var page = document.location.href.split('/')[3];
+  $('body').addClass(page);
+  $('menu__' + page).addClass('current').siblings().removeClass('current');
 
 });
+
+$('.show-filter').click(function(){
+  $('body').toggleClass('side');
+})

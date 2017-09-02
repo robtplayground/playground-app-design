@@ -1759,6 +1759,7 @@ body {
   flex-wrap: wrap;
   display: flex !important;
   transition: width 0.5s ease;
+  padding-left: 2rem;
 }
 .sidebar {
   width: 0 !important;
@@ -2219,6 +2220,24 @@ td {
 .report {
   width: 100%;
 }
-body.reporting .app__body {
+body.report .campaign-details {
+  background: #333333;
+}
+body.report .app__body,
+body.report .main {
   margin-top: 6rem;
+}
+.show-filter {
+  display: block;
+  position: absolute;
+  width: 2.5rem;
+  height: 100%;
+  background: #aaaaaa;
+  top: 0rem;
+  left: 0rem;
+  border-radius: 0;
+}
+.show-filter svg {
+  fill: #ffffff;
+  margin-top: 1rem;
 }

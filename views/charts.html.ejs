@@ -3,7 +3,7 @@
 <% var cp = campaigns.filter(cp => cp.id === 'cp_gopro')[0]; %>
 
 
-<div class="report-header">
+<div class="campaign-details">
   <table class="campaign__table  <%= cp.id %>">
 
     <tr class="campaign__title">
@@ -48,6 +48,7 @@
   <div class="main grid">
 
     <div class="sidebar grid-cell grid3 no-gutter">
+
       <div class="data-filter">
         <!-- <div class="grid-cell"> -->
 
@@ -109,6 +110,11 @@
 
     <div class="content grid-cell grid9 no-gutter">
 
+      <div class="show-filter">
+        <svg viewBox="0 0 300 300" preserveAspectRatio="xMinYMid meet">
+          <use x="0" y="0" href="#filter" />
+        </svg>
+      </div>
 
       <div class="grid-cell grid8">
 
