@@ -489,10 +489,20 @@ const makePlacement = function(options){
 	var video = VIDEO_METRICS(engagements);
 
 	var delPerc = Math.round(total(requestedImps, {start: options.dates.start, end: new Date()}, campaign) / options.bookedImps * 100);
-	if(delPerc < 0){delPerc = 0};
-	var viewAv = average(viewability, options.dates, campaign).toFixed(1);
-	var engAv = average(engagementRate, options.dates, campaign).toFixed(2);
-	var ctrAv = average(clickRate, options.dates, campaign).toFixed(2);
+	var viewAv;
+	var engAv;
+	var ctrAv;
+	if(delPerc <= 0){
+		delPerc = 0;
+		viewAv = 0;
+		engAv = 0;
+		ctrAv = 0;
+	}else{
+		viewAv = average(viewability, options.dates, campaign).toFixed(1);
+		engAv = average(engagementRate, options.dates, campaign).toFixed(2);
+		ctrAv = average(clickRate, options.dates, campaign).toFixed(2);
+	}
+
 
   return {
 		id: options.id,

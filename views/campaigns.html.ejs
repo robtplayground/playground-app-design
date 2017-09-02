@@ -3,14 +3,37 @@
 
   <div class="app__body">
 
+
+
     <div class="campaigns">
+      <h1>Welcome Rob!</h1>
+
+      <div class="campaigns__filter">
+        <div class="expand-toggles">
+          <button class="expand-all">Expand All</button>
+          <button class="collapse-all">Collapse All</button>
+        </div>
+
+        <div class="campaigns__search">
+          <input type="search" placeholder="search">
+
+          <select class="data-filter__group-select">
+            <option value="Delivery">Campaign</option>
+            <option value="Audience" selected>Placement</option>
+            <option value="Category">Format</option>
+            <option value="Format">Features</option>
+          </select>
+
+        </div>
+
+      </div>
 
         <% var active = campaigns.filter(cp => moment(cp.dates.start).diff(new Date()) < 0); %>
         <% var pending = campaigns.filter(cp => moment(cp.dates.start).diff(new Date()) > 0); %>
 
         <% if (active.length > 0){ %>
 
-          <h2>You have <%= active.length %> active campaign</h2>
+          <h3>You have <%= active.length %> active campaign</h3>
 
         <% } %>
 
@@ -22,7 +45,7 @@
 
         <% if (pending.length > 0){ %>
 
-          <h2>You have <%= pending.length %> pending campaigns</h2>
+          <h3>You have <%= pending.length %> pending campaigns</h3>
 
         <% } %>
 

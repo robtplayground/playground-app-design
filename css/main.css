@@ -2182,3 +2182,10 @@ td {
 .campaign__table tr.placement td {
   height: 5.5rem;
 }
+.campaigns__filter {
+  display: flex;
+  justify-content: space-between;
+}
+.expand-toggles {
+  display: flex;
+}

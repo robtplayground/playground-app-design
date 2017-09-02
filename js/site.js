@@ -24,14 +24,23 @@ $('.data-filter select').select2({
   width: 'resolve'
 });
 
+$('.campaigns__filter select').select2({
+  minimumResultsForSearch: Infinity,
+  width: 'resolve'
+});
+
 function initControls(){
 
   $('.campaign__expand').click(function(){
     var target = $(this).data('cp');
     $('.' + target).toggleClass('collapse');
   });
-  
+
 }
+
+initControls();
+
+
 
 // $('#slider').dateRangeSlider();
 
