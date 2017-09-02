@@ -1,3 +1,8 @@
+const goproDates = listDates(gopro.dates); // array of dates
+const gopro_pments = placements.filter(pl => pl.campaign === 'cp_gopro');
+
+
+
 // ** EXECUTED IMPS  ** //
 
 var impsData = {

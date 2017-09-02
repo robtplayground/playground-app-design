@@ -24,9 +24,27 @@ $('.data-filter select').select2({
   width: 'resolve'
 });
 
-$('.campaign__expand').click(function(){
-  var target = $(this).data('cp');
-  $('.' + target).toggleClass('collapse');
-});
+function initControls(){
+
+  $('.campaign__expand').click(function(){
+    var target = $(this).data('cp');
+    $('.' + target).toggleClass('collapse');
+  });
+  
+}
 
 // $('#slider').dateRangeSlider();
+
+$('.login__box .button').click(function(e){
+  e.preventDefault();
+  // alert('clicked');
+
+  $.get('/campaigns', function(data) {
+    var thisData = $(data);
+    var campaigns = $('.campaigns', data);
+    console.log(campaigns);
+    $('.app__body').html(campaigns);
+    initControls();
+  });
+
+});

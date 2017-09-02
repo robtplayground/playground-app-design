@@ -488,6 +488,12 @@ const makePlacement = function(options){
 	var videoViewableImps = VIDEO_VIEWABLE_IMPS(engagements);
 	var video = VIDEO_METRICS(engagements);
 
+	var delPerc = Math.round(total(requestedImps, {start: options.dates.start, end: new Date()}, campaign) / options.bookedImps * 100);
+	if(delPerc < 0){delPerc = 0};
+	var viewAv = average(viewability, options.dates, campaign).toFixed(1);
+	var engAv = average(engagementRate, options.dates, campaign).toFixed(2);
+	var ctrAv = average(clickRate, options.dates, campaign).toFixed(2);
+
   return {
 		id: options.id,
 		name: options.name,
@@ -516,7 +522,11 @@ const makePlacement = function(options){
 			engagementRate: engagementRate,
 			ativ: ativ,
 			videoViewableImps: videoViewableImps,
-			video: video
+			video: video,
+			delPerc: delPerc,
+			viewAv: viewAv,
+			engAv: engAv,
+			ctrAv: ctrAv
   	}
 	};
 
@@ -885,7 +895,8 @@ Lamb1 = makePlacement({
   }
 });
 
-placements = [SSM_same, SSM_opp, SSF_same, SSF_opp, TTM_same, TTM_opp, TTF_same, TTF_opp, HT_mac_1, SP_Snacks1, SP_Snacks2, Lamb1];
+// placements = [SSM_same, SSM_opp, SSF_same, SSF_opp, TTM_same, TTM_opp, TTF_same, TTF_opp, HT_mac_1, SP_Snacks1, SP_Snacks2, Lamb1];
+placements = [SSM_same, SSF_same, TTM_same, TTF_same, HT_mac_1, SP_Snacks1, SP_Snacks2, Lamb1];
 
 module.exports = {
 	fm: {

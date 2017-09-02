@@ -22,7 +22,7 @@ body{
 		margin-bottom: 1.5rem;
 	}
 
-	button{
+	button, .button{
 		display: block;
 		background: @darkgrey;
 		color: @white;
@@ -30,6 +30,7 @@ body{
 		position:relative;
 		margin: 2rem auto;
 		font-size: @size-1;
+		cursor: pointer;
 	}
 	a{
 		font-size: @size-small;
@@ -471,6 +472,7 @@ table, td{
 .table__actions{
 	text-align:right !important;
 	padding-right: 1em;
+	width: 3%;
 	svg{
 		display: inline-block;
 		// fill:white;
@@ -485,6 +487,12 @@ table, td{
 	background: @darkgrey;
 	color: @white;
 	font-size: @size-0;
+	use.plus{
+		display:none;
+	}
+	use.minus{
+		display:block;
+	}
 	tr{
 		height: 3rem;
 	}
@@ -501,6 +509,7 @@ table, td{
 
 	.campaign__expand{
 		padding-left: 0.5rem;
+		cursor: pointer;
 		svg{
 			fill: @white;
 			height: 2rem;
@@ -509,9 +518,11 @@ table, td{
 	.campaign__brand{
 		font-weight: 700;
 		text-align: left;
+		padding-left: 1em;
 	}
 
 	.campaign__name{
+		padding-left: 1em;
 	}
 	.campaign__dates{
 		position: relative;
@@ -531,6 +542,21 @@ table, td{
 	}
 }
 
+.campaign__table.collapse{
+	tr:not(.campaign__title){
+		height:0 !important;
+		td.creative{
+			height:0 !important;
+		}
+	}
+	use.plus{
+		display:block;
+	}
+	use.minus{
+		display:none;
+	}
+}
+
 .creative__table{
 	position: relative;
 	background: @white;
@@ -543,25 +569,12 @@ table, td{
 	}
 	// width: 100%;
 }
-tr{
-	width:100%;
-}
 
 .creative-wrapper{
 	max-height: 1000px;
 	overflow:hidden;
-	transition: all 1s ease;
+	transition: all 1s ease-out;
 }
-
-.campaign__table.collapse{
-	tr:not(.campaign__title){
-		height:0 !important;
-		td.creative{
-			height:0 !important;
-		}
-	}
-}
-
 
 
 .collapse .creative-wrapper{
@@ -576,8 +589,17 @@ tr{
 	color: white;
 	text-overflow: ellipsis;
   white-space: nowrap;
+	padding-left: 1em;
 
 }
+
+.image--thumb{
+	border-radius: 100%;
+	width: 2.5rem;
+	margin: 0.25rem;
+	border: 1px solid white;
+}
+
 .creative__title__thumb{
 	padding-left: 2em;
 	img{
@@ -589,6 +611,7 @@ tr{
 }
 .creative__title__format{
 	position:relative;
+	padding-left: 1em;
 	svg{
 		fill: white;
 		width: 7rem;
@@ -597,6 +620,7 @@ tr{
 }
 
 .creative__title__author{
+	width: 20%;
 	svg{
 		display: inline-block;
 		vertical-align: middle;
@@ -631,8 +655,14 @@ tr{
 	}
 }
 
+.creative__title__thumb,
+.placement__status,
+.campaign__expand{
+	width: 6%;
+}
+
 .placement__status{
-	padding-left: 2em;
+	padding-left: 3em;
 	svg{
 		display: inline-block;
 		width: 1.5rem;
@@ -640,18 +670,20 @@ tr{
 	}
 }
 .placement__audience{
+	padding-left: 1em;
 }
 .placement__name{
 	overflow:hidden;
 	text-overflow: ellipsis;
   white-space: nowrap;
 	padding-right: 2em;
+	padding-left: 1em;
 }
 
 
 .chart__progress-bar{
 	position: relative;
-	width: 100%;
+	width: 70%;
 	height: 1rem;
 	background:@midgrey;
 	margin-top: 1rem;
@@ -673,6 +705,7 @@ tr{
 	font-size: 0.9em;
 	right:0;
 	width: auto;
+	min-width: 8.5em;
 	transform: translate(0, -120%);
 }
 .placement__progress{
@@ -683,26 +716,28 @@ tr{
 	h6{
 		position: absolute;
 		width: 100%;
-		top:0.8em;
+		bottom:25%;
 		text-transform: uppercase;
 		text-align: center;
-		font-size: @size-xsmall;
+		font-size: 8px;
 		color: @midgrey;
-		mix-blend-mode: multiply;
+		// mix-blend-mode: multiply;
 		margin:0;
+		z-index: 10;
 	}
 	display: inline-block;
 	position: relative;
-	width: 3.4rem;
+	width: 5rem;
 	height: 100%;
-	margin:0.2em;
+	margin:0.5em;
 	// background-color: lime;
 	svg{
 		position: absolute;
 		width: 100%;
+		// margin-left: 5%;
 		height: 100%;
 		circle{
-			stroke-width: 4px;
+			stroke-width: 3px;
 			transform-origin: 50% 50%;
 			transform: rotate(-90deg);
 		}
@@ -711,11 +746,41 @@ tr{
 
 .plch__result-text{
 	position: absolute;
-	width:100%;
-	height:100%;
-	display: flex;
-	margin-top: 20%;
-	font-size: 0.9em;
-	justify-content: center;
-	align-items: center;
+width: 100%;
+height: 100%;
+display: flex;
+bottom: 40%;
+font-size: 1.2em;
+font-weight: 500;
+justify-content: center;
+align-items: flex-end;
+}
+
+.campaign__table{
+
+	.creative__title__format,
+	.campaign__brand,
+	.placement__audience{
+			width: 12%;
+	}
+
+	.campaign__name{
+		width:27% !important;
+	}
+
+	.campaign__dates{
+		width: 18% !important;
+	}
+
+	.campaign__progress{
+		width: 40% !important;
+		padding-left: 3em;
+	}
+	.placement__progress{
+		white-space: nowrap;
+	}
+
+	tr.placement td{
+		height: 5.5rem;
+	}
 }

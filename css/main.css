@@ -1540,7 +1540,8 @@ body {
   text-align: center;
   margin-bottom: 1.5rem;
 }
-.login__box button {
+.login__box button,
+.login__box .button {
   display: block;
   background: #333333;
   color: #ffffff;
@@ -1548,6 +1549,7 @@ body {
   position: relative;
   margin: 2rem auto;
   font-size: 1.2rem;
+  cursor: pointer;
 }
 .login__box a {
   font-size: 0.833rem;
@@ -1658,7 +1660,7 @@ body {
 }
 .data-filter__treemap > div {
   display: flex;
-  border: 1px solid #cccccc;
+  border: 1px solid #aaaaaa;
   align-items: center;
   justify-content: center;
   width: 33%;
@@ -1913,6 +1915,7 @@ td {
 .table__actions {
   text-align: right !important;
   padding-right: 1em;
+  width: 3%;
 }
 .table__actions svg {
   display: inline-block;
@@ -1922,10 +1925,16 @@ td {
 .campaign__table {
   width: calc(100% - 1rem);
   margin: 0.5rem;
-  border: 1px solid #cccccc;
+  border: 1px solid #aaaaaa;
   background: #333333;
   color: #ffffff;
   font-size: 1rem;
+}
+.campaign__table use.plus {
+  display: none;
+}
+.campaign__table use.minus {
+  display: block;
 }
 .campaign__table tr {
   height: 3rem;
@@ -1939,6 +1948,7 @@ td {
 }
 .campaign__table .campaign__expand {
   padding-left: 0.5rem;
+  cursor: pointer;
 }
 .campaign__table .campaign__expand svg {
   fill: #ffffff;
@@ -1947,6 +1957,10 @@ td {
 .campaign__table .campaign__brand {
   font-weight: 700;
   text-align: left;
+  padding-left: 1em;
+}
+.campaign__table .campaign__name {
+  padding-left: 1em;
 }
 .campaign__table .campaign__dates {
   position: relative;
@@ -1961,6 +1975,18 @@ td {
   height: 4rem;
   margin: 0.2rem 0 0 0.2rem;
 }
+.campaign__table.collapse tr:not(.campaign__title) {
+  height: 0 !important;
+}
+.campaign__table.collapse tr:not(.campaign__title) td.creative {
+  height: 0 !important;
+}
+.campaign__table.collapse use.plus {
+  display: block;
+}
+.campaign__table.collapse use.minus {
+  display: none;
+}
 .creative__table {
   position: relative;
   background: #ffffff;
@@ -1973,19 +1999,10 @@ td {
 .creative__table tbody tr:nth-child(even) {
   background: #fafafa;
 }
-tr {
-  width: 100%;
-}
 .creative-wrapper {
   max-height: 1000px;
   overflow: hidden;
-  transition: all 1s ease;
-}
-.campaign__table.collapse tr:not(.campaign__title) {
-  height: 0 !important;
-}
-.campaign__table.collapse tr:not(.campaign__title) td.creative {
-  height: 0 !important;
+  transition: all 1s ease-out;
 }
 .collapse .creative-wrapper {
   max-height: 0;
@@ -1997,6 +2014,13 @@ tr {
   color: white;
   text-overflow: ellipsis;
   white-space: nowrap;
+  padding-left: 1em;
+}
+.image--thumb {
+  border-radius: 100%;
+  width: 2.5rem;
+  margin: 0.25rem;
+  border: 1px solid white;
 }
 .creative__title__thumb {
   padding-left: 2em;
@@ -2009,11 +2033,15 @@ tr {
 }
 .creative__title__format {
   position: relative;
+  padding-left: 1em;
 }
 .creative__title__format svg {
   fill: white;
   width: 7rem;
   height: 100%;
+}
+.creative__title__author {
+  width: 20%;
 }
 .creative__title__author svg {
   display: inline-block;
@@ -2042,25 +2070,34 @@ tr {
   padding-top: 1.5em;
   padding-bottom: 0.5em;
 }
+.creative__title__thumb,
+.placement__status,
+.campaign__expand {
+  width: 6%;
+}
 .placement__status {
-  padding-left: 2em;
+  padding-left: 3em;
 }
 .placement__status svg {
   display: inline-block;
   width: 1.5rem;
   height: 1.5rem;
 }
+.placement__audience {
+  padding-left: 1em;
+}
 .placement__name {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   padding-right: 2em;
+  padding-left: 1em;
 }
 .chart__progress-bar {
   position: relative;
-  width: 100%;
+  width: 70%;
   height: 1rem;
-  background: #cccccc;
+  background: #aaaaaa;
   margin-top: 1rem;
 }
 .chart__progress-bar__prog {
@@ -2079,6 +2116,7 @@ tr {
   font-size: 0.9em;
   right: 0;
   width: auto;
+  min-width: 8.5em;
   transform: translate(0, -120%);
 }
 .placement__progress {
@@ -2087,20 +2125,20 @@ tr {
 .plch {
   display: inline-block;
   position: relative;
-  width: 3.4rem;
+  width: 5rem;
   height: 100%;
-  margin: 0.2em;
+  margin: 0.5em;
 }
 .plch h6 {
   position: absolute;
   width: 100%;
-  top: 0.8em;
+  bottom: 25%;
   text-transform: uppercase;
   text-align: center;
-  font-size: 0.694rem;
-  color: #cccccc;
-  mix-blend-mode: multiply;
+  font-size: 8px;
+  color: #aaaaaa;
   margin: 0;
+  z-index: 10;
 }
 .plch svg {
   position: absolute;
@@ -2108,7 +2146,7 @@ tr {
   height: 100%;
 }
 .plch svg circle {
-  stroke-width: 4px;
+  stroke-width: 3px;
   transform-origin: 50% 50%;
   transform: rotate(-90deg);
 }
@@ -2117,8 +2155,30 @@ tr {
   width: 100%;
   height: 100%;
   display: flex;
-  margin-top: 20%;
-  font-size: 0.9em;
+  bottom: 40%;
+  font-size: 1.2em;
+  font-weight: 500;
   justify-content: center;
-  align-items: center;
+  align-items: flex-end;
+}
+.campaign__table .creative__title__format,
+.campaign__table .campaign__brand,
+.campaign__table .placement__audience {
+  width: 12%;
+}
+.campaign__table .campaign__name {
+  width: 27% !important;
+}
+.campaign__table .campaign__dates {
+  width: 18% !important;
+}
+.campaign__table .campaign__progress {
+  width: 40% !important;
+  padding-left: 3em;
+}
+.campaign__table .placement__progress {
+  white-space: nowrap;
+}
+.campaign__table tr.placement td {
+  height: 5.5rem;
 }

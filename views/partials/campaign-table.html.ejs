@@ -1,0 +1,180 @@
+<table class="campaign__table  <%= cp.id %>">
+
+  <tr class="campaign__title">
+    <td class="campaign__expand" data-cp="<%= cp.id %>">
+      <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
+        <use class="plus" x="0" y="0" href="#expand-plus"></use>
+        <use class="minus"  x="0" y="0" href="#expand-minus"></use>
+      </svg>
+    </td>
+    <td class="campaign__brand">
+      <%= cp.brand %>
+    </td>
+    <td class="campaign__name grid3">
+      <%= cp.name %>
+    </td>
+    <td class="campaign__dates grid2">
+      <%= moment(cp.dates.start).format('ddd D MMM') %> - <%= moment(cp.dates.end).format('ddd D MMM') %>
+    </td>
+    <td class="campaign__progress grid3">
+
+      <% var dur = duration(cp.dates); %>
+      <% var cur = moment(new Date()).diff(cp.dates.start, 'days'); %>
+      <% var percent = (cur / dur * 100) > 0 ? (cur / dur * 100) : 0; %>
+      <% var progString = cur <= 0 ? (cur * -1) + ' days til start' : cur + ' / ' + dur + ' days';  %>
+
+      <div class="chart__progress-bar">
+        <span class="chart__progress-bar__prog" style="width: <%= percent %>%; background: #e91e63;">
+          <span class="chart__progress-bar__text"><%= progString %></span>
+        </span>
+
+      </div>
+    </td>
+    <td class="campaign__actions table__actions">
+      <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
+        <use x="0" y="0" href="#menu"></use>
+      </svg>
+    </td>
+  </tr>
+
+  <% let crtvs = creatives.filter(cr => cr.campaign === cp.id); %>
+  <% crtvs.forEach(function(cr){  %>
+
+  <tr>
+    <td colspan="6" class="creative">
+
+      <div class="creative-wrapper">
+
+       <!-- start creative -->
+
+      <table class="creative__table">
+        <thead>
+        <tr class="creative__title" style="background-color: <%= cr.format.color %> ">
+          <th class="creative__title__thumb">
+            <img src="/images/<%= cr.thumb %>" alt="">
+          </th>
+          <th class="creative__title__format">
+            <svg viewBox="0 0 980 300" preserveAspectRatio="xMidYMid meet">
+              <use x="0" y="0" href="#<%= cr.format.name %>" />
+            </svg>
+          </th>
+          <th class="creative__title__name grid3" >
+            <%= cr.name %>
+          </th>
+          <th class="creative__title__author">
+
+            <span><svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
+              <use x="0" y="0" href="#lock" />
+            </svg><%= moment(cr.modified).format('D/M/YY') %> <%= cr.author %></span>
+          </th>
+
+          <th><!-- empty --> </th>
+          <th class="creative__title__actions table__actions">
+            <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
+              <use x="0" y="0" href="#menu" />
+            </svg>
+          </th>
+        </tr>
+        </thead>
+
+        <tbody>
+
+        <% let pments = placements.filter(pl => pl.campaign === cp.id && pl.creative === cr.id); %>
+        <% pments.forEach(function(pl){ %>
+
+              <tr class="placement">
+                <td class="placement__status">
+                  <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
+                    <use x="0" y="0" href="#play" />
+                  </svg>
+                </td>
+                <td class="placement__audience">
+                  <%- pl.audience.shortName %>
+                </td>
+                <td class="placement__name grid3">
+                  <%- pl.name %>
+                </td>
+                <td class="placement__dates">
+                  <%= moment(pl.dates.start).format('ddd D MMM') %> - <%= moment(pl.dates.end).format('ddd D MMM') %>
+                </td>
+                <td class="placement__progress grid5">
+
+                  <!-- DELIVERY -->
+
+
+
+
+                  <div class="plch chart-container" id="chart--SS1Prog">
+                    <h6>Del.</h6>
+                    <svg class="plch__bg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
+                      <circle cx="50" cy="50" r="45" fill="transparent" stroke-width="2" stroke="<%= cr.format.color %>"></circle>
+                    </svg>
+                    <svg class="plch__result" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
+                      <circle cx="50" cy="50" r="45" fill="transparent" style="stroke-dasharray: 20em; stroke-dashoffset: <%= pl.data.delPerc/100 * -20 %>em; stroke:lightgrey;"></circle>
+                    </svg>
+                    <div class="plch__result-text">
+                          <%= pl.data.delPerc %>%
+                    </div>
+                  </div>
+
+                  <!-- VIEWABILITY -->
+
+                  <div class="plch chart-container" id="chart--SS1Prog">
+                    <h6>Viewb.</h6>
+                    <svg class="plch__bg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
+                      <circle cx="50" cy="50" r="45" fill="transparent" stroke-width="2" stroke="<%= cr.format.color %>"></circle>
+                    </svg>
+                    <svg class="plch__result" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
+                      <circle cx="50" cy="50" r="45" fill="transparent" style="stroke-dasharray: 20em; stroke-dashoffset: <%= pl.data.viewAv/100 * -20 %>em; stroke:lightgrey;"></circle>
+                    </svg>
+                    <div class="plch__result-text">
+                        <%= pl.data.viewAv %>%
+                    </div>
+                  </div>
+
+                  <!-- ENGAGEMENT RATE -->
+
+                  <div class="plch chart-container" id="chart--SS1Prog">
+                    <h6>Eng.Rate</h6>
+                    <svg class="plch__result" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
+                      <circle cx="50" cy="50" r="45" fill="transparent" stroke-width="0" stroke="#ccc"></circle>
+                    </svg>
+                    <div class="plch__result-text" style="color: <%= cr.format.color %> ">
+                          <%= pl.data.engAv %>%
+                    </div>
+                  </div>
+
+                  <!-- CTR -->
+
+
+                  <div class="plch chart-container" id="chart--SS1Prog">
+                    <h6>CTR</h6>
+                    <svg class="plch__bg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
+                      <circle cx="50" cy="50" r="45" fill="transparent" stroke-width="0" stroke="#ccc"></circle>
+                    </svg>
+                    <div class="plch__result-text"  style="color: <%= cr.format.color %> ">
+                          <%= pl.data.ctrAv %>%
+                    </div>
+                  </div>
+
+
+                </td>
+                <td class="placement__actions table__actions">
+                  <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
+                    <use x="0" y="0" href="#menu" />
+                  </svg>
+                </td>
+
+              </tr>
+
+                <% }); %>
+            </tbody>
+            </table>
+      </div> <!--end creative-wrapper -->
+    </td>
+  </tr>
+
+  <% }); %> <!-- end creative -->
+
+
+</table>
