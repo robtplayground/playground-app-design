@@ -68,7 +68,7 @@ app.get('/login', function(request, response) {
   response.render('../views/login.html.ejs', allData);
 });
 
-app.get('/charts', function(request, response) {
+app.get('/report', function(request, response) {
   response.render('../views/charts.html.ejs', allData);
 });
 

@@ -1,64 +1,53 @@
 <% include partials/header.html.ejs %>
 
-  <header class="campaign__header grid">
+<% var cp = campaigns.filter(cp => cp.id === 'cp_gopro')[0]; %>
 
 
+<div class="report-header">
+  <table class="campaign__table  <%= cp.id %>">
 
-
-    <div class="campaign-details grid-cell grid7">
-      <div class="campaign-details__brand grid-cell">
-        <h5>Brand</h5>
-        <p>
-          <%= campaigns[0].brand %>
-        </p>
-      </div>
-      <div class="campaign-details__name grid-cell">
-        <h5>Name</h5>
-        <p>
-          <%= campaigns[0].name %>
-        </p>
-      </div>
-      <div class="campaign-details__objective grid-cell">
-        <h5>Objective</h5>
-        <p>
-          <%= campaigns[0].objective %>
-        </p>
-      </div>
-      <div class="campaign-details__vertical grid-cell">
-        <h5>Vertical</h5>
-        <p>
-          <%= campaigns[0].vertical %>
-        </p>
-      </div>
-    </div>
-
-    <div class="grid-cell grid4">
-      <div class="chart chart--cProg">
-        <div id="chart--cProg" class="chart__render"></div>
-      </div>
-
-      <!-- Plotly graph -->
-    </div>
-    <div class="campaign-edit grid-cell grid1">
-      <button class="icon-only">
-        <svg viewBox="0 0 300 300" preserveAspectRatio="xMinYMid meet">
-          <use x="0" y="0" href="#menu" />
+    <tr class="campaign__title">
+      <td class="campaign__expand" data-cp="<%= cp.id %>">
+        <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
+          <use class="plus" x="0" y="0" href="#expand-plus"></use>
+          <use class="minus"  x="0" y="0" href="#expand-minus"></use>
         </svg>
-        <span>Menu</span>
+      </td>
+      <td class="campaign__brand">
+        <%= cp.brand %>
+      </td>
+      <td class="campaign__name grid3">
+        <%= cp.name %>
+      </td>
+      <td class="campaign__dates grid2">
+        <%= moment(cp.dates.start).format('ddd D MMM') %> - <%= moment(cp.dates.end).format('ddd D MMM') %>
+      </td>
+      <td class="campaign__progress grid3">
 
-      </button>
-      <button class="icon-only">
-        <svg viewBox="0 0 300 300" preserveAspectRatio="xMinYMid meet">
-          <use x="0" y="0" href="#comments-old" />
+        <% var dur = duration(cp.dates); %>
+        <% var cur = moment(new Date()).diff(cp.dates.start, 'days'); %>
+        <% var percent = (cur / dur * 100) > 0 ? (cur / dur * 100) : 0; %>
+        <% var progString = cur <= 0 ? (cur * -1) + ' days til start' : cur + ' / ' + dur + ' days';  %>
+
+        <div class="chart__progress-bar">
+          <span class="chart__progress-bar__prog" style="width: <%= percent %>%; background: #e91e63;">
+            <span class="chart__progress-bar__text"><%= progString %></span>
+          </span>
+
+        </div>
+      </td>
+      <td class="campaign__actions table__actions">
+        <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
+          <use x="0" y="0" href="#menu"></use>
         </svg>
-        <span>Comments</span>
-      </button>
-    </div>
-  </header>
+      </td>
+    </tr>
+  </table>
+</div>
 
   <div class="main grid">
 
-    <div class="grid-cell grid3 no-gutter">
+    <div class="sidebar grid-cell grid3 no-gutter">
       <div class="data-filter">
         <!-- <div class="grid-cell"> -->
 
@@ -256,15 +245,17 @@
 
     </div>
 
+    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
+    <script src="/js/jQRangeSlider-min.js"></script>
+    <script src="/js/jQDateRangeSlider-min.js"></script>
+    <script src="/js/site.js"></script>
+    <script src="/js/charts-amcharts1.js"></script>
+    <script src="/js/charts-amcharts.js"></script>
+
 
   </div>
 
-  <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
-  <script src="/js/jQRangeSlider-min.js"></script>
-  <script src="/js/jQDateRangeSlider-min.js"></script>
-  <script src="/js/site.js"></script>
-  <script src="/js/charts-amcharts1.js"></script>
-  <script src="/js/charts-amcharts.js"></script>
+
 
 
 

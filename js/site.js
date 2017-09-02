@@ -36,6 +36,48 @@ function initControls(){
     $('.' + target).toggleClass('collapse');
   });
 
+  $('.campaign__table.cp_gopro').click(function(){
+    var header = $(this).clone();
+
+    var rem = parseInt($('html').css('font-size').replace('px', ''));
+    var offset = $(this).offset().top - 4.5*rem;
+    $('.campaign-details').css('transform', 'translateY(' + offset + 'px)');
+
+    header.find('.creative-row').remove();
+    header.appendTo('.campaign-details');
+    var rh = $('.app__body .campaigns').height();
+
+    $('.app__body .campaigns').fadeOut(500, function(){
+      $('body').addClass('reporting');
+      $('.app__body .report').css('min-height', rh + 'px');
+      $('.campaign-details').css({
+        transition: 'transform 0.5s ease-out',
+        transform: 'translateY(0)'
+      });
+
+      // window.history.pushState("", "", '/report');
+      $('.menu__report').addClass('current').siblings().removeClass('current');
+
+      $.ajax({
+          type:'GET',
+          url: '/report',
+          dataType: 'html',
+          success: function (data) {
+        var thisData = $(data).filter('.main');
+        $('.report').html(thisData);
+        setTimeout(function(){
+          updateAllCharts('SSM_same');
+        }, 1000);
+        // window.history.pushState("", "", '/report');
+        // $('.menu__report').addClass('current').siblings().removeClass('current');
+        // initControls();
+      }
+
+    });
+  });
+
+});
+
 }
 
 initControls();
@@ -49,11 +91,17 @@ $('.login__box .button').click(function(e){
   // alert('clicked');
 
   $.get('/campaigns', function(data) {
-    var thisData = $(data);
-    var campaigns = $('.campaigns', data);
-    console.log(campaigns);
+    var campaigns = $(data).filter('.app__body').contents();
     $('.app__body').html(campaigns);
+    window.history.pushState("", "", '/campaigns');
+    $('.menu__campaigns').addClass('current').siblings().removeClass('current');
     initControls();
   });
+
+});
+
+$(document).ready(function(){
+
+  $('menu__' + document.location.href.split('/')[3]).addClass('current').siblings().removeClass('current');
 
 });

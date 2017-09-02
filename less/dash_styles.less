@@ -119,11 +119,13 @@ body{
 }
 
 .campaign-details{
-	position:relative;
+	position:absolute;
+	top:4rem;
+	width:100%;
 	color: white;
 	display:flex;
 	flex-wrap: wrap;
-	padding: 1rem 0 2rem;
+	background: @darkgrey;
 	.grid-cell{
 		width: ~"calc(50% - 1rem)";
 		flex: none;
@@ -247,7 +249,25 @@ body{
 // charts
 
 .content{
+	position: relative;
+	width: 100% !important;
 	flex-wrap: wrap;
+	display: flex !important;
+	transition: width 0.5s ease;
+}
+
+.sidebar{
+	width:0 !important;
+	transition: width 0.5s ease;
+}
+
+body.side{
+	.sidebar{
+		width: 25% !important;
+	}
+	.content{
+		width: 75% !important;
+	}
 }
 
 a[href="http://www.amcharts.com/javascript-charts/"]{
@@ -456,7 +476,7 @@ a[href="http://www.amcharts.com/javascript-charts/"]{
 
 
 .campaigns{
-	align-self: flex-start;
+	// align-self: flex-start;
 	width: 100%;
 	td, th{
 		height: 3rem;
@@ -483,7 +503,7 @@ table, td{
 .campaign__table{
 	width: ~"calc(100% - 1rem)";
 	margin: 0.5rem;
-	border: 1px solid @midgrey;
+	// border: 1px solid @midgrey;
 	background: @darkgrey;
 	color: @white;
 	font-size: @size-0;
@@ -792,4 +812,12 @@ align-items: flex-end;
 
 .expand-toggles{
 	display:flex;
+}
+
+.report{
+	width:100%;
+}
+
+body.reporting .app__body{
+	margin-top: 6rem;
 }
