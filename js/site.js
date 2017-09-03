@@ -19,11 +19,11 @@ $('.chart__select').select2({
   minimumResultsForSearch: Infinity
 });
 
-$('.data-filter__group-select').select2({
+$('.filter__group-select').select2({
   minimumResultsForSearch: Infinity,
   width: 'resolve'
 });
-$('.data-filter__split-select').select2({
+$('.filter__split-select').select2({
   minimumResultsForSearch: Infinity,
   width: 'resolve'
 });
@@ -82,7 +82,7 @@ function initControls(){
 
 });
 
-$('.data-filter__group-select').on('change', function(e){
+$('.filter__group-select').on('change', function(e){
   var val = $(this).val();
   $('.grouping').attr('class', 'grouping ' + val);
 });

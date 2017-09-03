@@ -1596,37 +1596,44 @@ body {
   font-size: 1.2rem;
   font-weight: 700;
 }
-.data-filter__date-slider {
+.filter__date-slider {
   width: 100%;
   overflow: visible;
 }
-.data-filter__date-picker {
-  position: relative;
-  height: 2rem;
+.filter {
+  border-top: 1px solid #aaaaaa;
+  margin: 1rem 0 0.5rem;
 }
-.data-filter__date-picker input {
+.filter:first-of-type {
+  border-top: 0;
+}
+.filter__date-picker {
+  position: relative;
+}
+.filter__date-picker input {
+  position: relative;
   display: block;
   width: 100%;
   height: 100%;
 }
-.data-filter__date-picker svg {
+.filter__date-picker svg {
   display: block;
   width: 1.3em;
-  height: 80%;
+  height: 100%;
   position: absolute;
-  top: 0.2em;
+  top: 0em;
   right: 0.2em;
 }
-.data-filter .select2-container,
-.data-filter .select2-dropdown {
+.filter .select2-container,
+.filter .select2-dropdown {
   width: 100% !important;
 }
-.data-filter .select2-container:focus,
-.data-filter .select2-dropdown:focus {
+.filter .select2-container:focus,
+.filter .select2-dropdown:focus {
   outline: none;
 }
-.data-filter__placement-select > label,
-.data-filter__format-select > label {
+.filter__placement-select > label,
+.filter__format-select > label {
   display: block;
   position: relative;
   margin: 1rem 0;
@@ -1635,17 +1642,28 @@ body {
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.grouping.format .data-filter__placement-select {
+.filter.group-by.format .filter__placement-select {
   display: none;
 }
-.grouping.format .data-filter__format-select {
+.filter.group-by.format .filter__format-select {
   display: block;
 }
-.grouping.placement .data-filter__placement-select {
+.filter.group-by.placement .filter__placement-select {
   display: block;
 }
-.grouping.placement .data-filter__format-select {
+.filter.group-by.placement .filter__format-select {
   display: none;
+}
+.input__wrapper label {
+  font-size: 0.833rem;
+  font-weight: bold;
+  display: block;
+  padding-left: 0.2em;
+  margin: 0.8rem 0 0.5rem;
+  text-transform: uppercase;
+}
+.input__wrapper .select2 {
+  width: 80% f;
 }
 .campaign-details {
   position: absolute;
@@ -1675,7 +1693,7 @@ body {
   display: flex;
   flex-direction: column;
 }
-.data-filter__treemap {
+.filter__treemap {
   height: 25rem;
   font-size: 0.694rem;
   font-weight: 700;
@@ -1685,7 +1703,7 @@ body {
   color: white;
   margin-top: 1rem;
 }
-.data-filter__treemap > div {
+.filter__treemap > div {
   display: flex;
   border: 1px solid #aaaaaa;
   align-items: center;
@@ -1693,43 +1711,43 @@ body {
   width: 33%;
   text-align: center;
 }
-.data-filter__treemap .dm {
+.filter__treemap .dm {
   height: 50%;
   background: #ee4c83;
 }
-.data-filter__treemap .smh {
+.filter__treemap .smh {
   height: 50%;
   background: #ee4c83;
 }
-.data-filter__treemap .elle {
+.filter__treemap .elle {
   height: 40%;
   background: #ef5e8f;
 }
-.data-filter__treemap .roar {
+.filter__treemap .roar {
   height: 35%;
   background: #f06f9b;
 }
-.data-filter__treemap .bm {
+.filter__treemap .bm {
   height: 25%;
   background: #f181a7;
 }
-.data-filter__treemap .giz {
+.filter__treemap .giz {
   height: 25%;
   background: #f392b3;
 }
-.data-filter__treemap .junk {
+.filter__treemap .junk {
   height: 25%;
   background: #f4a3bf;
 }
-.data-filter__treemap .cnet {
+.filter__treemap .cnet {
   height: 25%;
   background: #f5b5ca;
 }
-.data-filter__treemap .huff {
+.filter__treemap .huff {
   height: 15%;
   background: #f6c6d6;
 }
-.data-filter__treemap .mix {
+.filter__treemap .mix {
   height: 10%;
   background: #f8d7e2;
 }
@@ -1886,6 +1904,9 @@ a[href="http://www.amcharts.com/javascript-charts/"] {
   margin-right: 0.5em;
   top: 0.4em;
   background: red;
+}
+#chart--impsDelBench {
+  pointer-events: none;
 }
 .chart--vAv .chart__legend__left .legend__value,
 .chart--vAv .chart__legend__right .legend__value {

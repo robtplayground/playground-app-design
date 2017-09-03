@@ -52,28 +52,37 @@
       <div class="data-filter">
         <!-- <div class="grid-cell"> -->
 
-          <!-- <div class="data-filter__date-slider" id="slider"></div> -->
-          <div class="data-filter__date-picker">
+          <!-- <div class="filter__date-slider" id="slider"></div> -->
+
+
+          <div class="filter filter__date-picker">
+            <div class="input__wrapper">
+              <label for="group-by">Date Range:</label>
+
             <input type="text" placeholder="<%= moment(cp.dates.start).format('D/M/YYYY') %> – <%= moment(cp.dates.end).format('D/M/YYYY') %>">
             <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMax meet">
               <use x="0" y="0" href="#calendar" />
             </svg>
 
           </div>
+        </div>
 
-          <div class="grouping placement">
+          <div class="filter grouping placement">
+
+            <div class="input__wrapper">
+              <label for="group-by">Group by:</label>
+
+                <select id="group-by" class="filter__group-select">
+                  <option value="campaign">Campaign</option>
+                  <option value="placement" selected>Placement</option>
+                  <option value="format">Format</option>
+                  <option value="features">Features</option>
+                </select>
+
+            </div>
 
 
-          <h2>Group by:</h2>
-
-            <select class="data-filter__group-select">
-              <option value="campaign">Campaign</option>
-              <option value="placement" selected>Placement</option>
-              <option value="format">Format</option>
-              <option value="features">Features</option>
-            </select>
-
-            <div class="data-filter__placement-select">
+            <div class="filter__placement-select">
 
               <% let gopro_pments = placements.filter(pl => pl.campaign === 'cp_gopro'); %>
               <% gopro_pments.forEach(function(pl, index){ %>
@@ -84,7 +93,8 @@
               <% }); %>
 
             </div>
-            <div class="data-filter__format-select">
+
+            <div class="filter__format-select">
 
                 <input type="radio" id="radio10" name="format-select"/>
                 <label for="radio10" data-placement="SSM_same" name="choose-format"><span></span>Super Skin</label>
@@ -97,17 +107,23 @@
 
           </div>
 
-          <h2>Split by:</h2>
+          <div class="filter tree-map">
 
-          <select class="data-filter__split-select">
-          <option value="Location">Audience: Location</option>
-          <option value="Gender">Audience: Gender</option>
-          <option value="Domain" selected>Site: Domain</option>
-          <option value="Category">Site: Category</option>
-        </select>
+          <div class="input__wrapper">
+            <label for="split-by">Split by:</label>
+              <select class="filter__split-select">
+              <option value="Location">Audience: Location</option>
+              <option value="Gender">Audience: Gender</option>
+              <option value="Domain" selected>Site: Domain</option>
+              <option value="Category">Site: Category</option>
+            </select>
+
+          </div>
 
 
-          <div id="treemap" class="data-filter__treemap">
+
+          <div id="treemap" class="filter__treemap">
+
             <div class="dm">Daily Mail</div>
             <div class="smh">SMH</div>
             <div class="elle">Elle</div>
@@ -120,7 +136,8 @@
             <div class="mix">In The Mix</div>
           </div>
 
-        <!-- </div> -->
+          </div>
+
 
       </div>
 

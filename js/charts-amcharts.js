@@ -1,4 +1,5 @@
 const goproDates = listDates(gopro.dates); // array of dates
+console.log('dates', goproDates);
 const gopro_pments = placements.filter(pl => pl.campaign === 'cp_gopro');
 
 
@@ -12,11 +13,15 @@ gopro_pments.forEach(function(pl) {
   // for every date
   var colorsE = [];
   var colorsV = [];
+  var comments = [];
   while (colorsE.length < goproDates.length) {
     colorsE = colorsE.concat([getColor(pl)])
   };
   while (colorsV.length < goproDates.length) {
     colorsV = colorsV.concat(['grey'])
+  };
+  while (comments.length < goproDates.length) {
+    comments = comments.concat([' '])
   };
 
   impsData[pl.id] = prepData({
@@ -24,7 +29,7 @@ gopro_pments.forEach(function(pl) {
     values: goproDates
   }, [{
       name: 'execImpsAgg',
-      values: pl.data.execImpsAgg
+      values: pl.data.execImpsAgg,
     },
     {
       name: 'viewImpsAgg',
@@ -38,11 +43,17 @@ gopro_pments.forEach(function(pl) {
     {
       name: 'colorV',
       values: colorsV
+    },
+    {
+      name: 'comment',
+      values: comments
     }
   ]);
 });
 
 console.log('IMPS DATA', impsData);
+
+impsData.SSM_same[8].comment = 'PGXYZ fixed your tag <br/> to stop 100% fallback <br/> (unsupported devices)';
 
 // console.log(impsData);
 
@@ -70,7 +81,7 @@ var chart__ImpsTime = AmCharts.makeChart("chart--execImpsAgg", {
   },
   valueAxes: [{
     gridAlpha: 0.07,
-    title: "Executed Impressions",
+    title: "Impressions",
     minimum: 0,
     maximum: 300000
   }],
@@ -81,7 +92,15 @@ var chart__ImpsTime = AmCharts.makeChart("chart--execImpsAgg", {
     lineAlpha: 1,
     lineColorField: "colorE",
     fillColorsField: "colorE",
-    fillAlphas: 0.3
+    fillAlphas: 0.3,
+    balloonFunction: function(graphItem, graph){
+      if(graphItem.dataContext.comment !== ' '){
+        console.log(graphItem);
+        return '<strong>Executed: </strong>' + graphItem.values.value + '<br/><em>' + graphItem.dataContext.comment + '</em>';
+      }else{
+        return '<strong>Executed: </strong>' + graphItem.values.value;
+      }
+    }
   }, {
     type: "line", // try to change it to "column"
     title: "red line",
@@ -89,13 +108,16 @@ var chart__ImpsTime = AmCharts.makeChart("chart--execImpsAgg", {
     lineAlpha: 1,
     lineColorField: "colorV",
     fillColorsField: "colorV",
-    fillAlphas: 0.3
+    fillAlphas: 0.3,
+    balloonFunction: function(graphItem, graph){
+        return '<strong>Viewable: </strong>' + graphItem.values.value;
+    }
   }],
   chartCursor: {
     cursorPosition: "mouse",
-    categoryBalloonDateFormat: "JJ:NN, DD MMMM"
+    categoryBalloonDateFormat: "DD MMMM"
   },
-  chartScrollbar: {},
+  chartScrollbar:{}
   // listeners: [{
   //   event: "rendered",
   //   method: function(e){
@@ -106,6 +128,12 @@ var chart__ImpsTime = AmCharts.makeChart("chart--execImpsAgg", {
   // }]
 });
 
+setTimeout(function(){
+  chart__ImpsTime.chartCursor.showCursorAt('2017-08-09');
+}, 3000);
+
+//
+// chart__ImpsTime.chartCursor.showCursorAt('Aug 15');
 
 
 // ** VIEWABILITY AVERAGE CHART
@@ -261,7 +289,7 @@ var chart__vAvBench = AmCharts.makeChart('chart--vAvBenchmarks', {
   innerRadius: "70%",
   startDuration: 0,
   addClassNames: true,
-  balloonText: "",
+  balloonText: ""
   // listeners: [{
   //   event: "rendered",
   //   method: function(e){
@@ -416,6 +444,7 @@ var chart__impsDelBench = AmCharts.makeChart('chart--impsDelBench', {
   innerRadius: "70%",
   startDuration: 0,
   addClassNames: true,
+  balloonText: ""
   // listeners: [{
   //   event: "rendered",
   //   method: function(e){

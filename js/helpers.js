@@ -78,7 +78,7 @@ const listDates = function(dates){
 		var thisStart = dates.start;
 		// console.log(thisStart);
 		// var value = moment(thisStart).add(i, 'days').format('YYYY-MM-DD');
-		var value = moment(thisStart).add(i, 'days');
+		var value = moment(thisStart).add(i, 'days').format('YYYY-MM-DD');
 		// console.log(value);
 		datesArray.push(value);
 	}
