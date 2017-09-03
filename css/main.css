@@ -1487,6 +1487,7 @@ button.icon-only svg {
   align-items: center;
 }
 .app__body {
+  position: relative;
   display: flex;
   flex: 1;
   align-items: center;
@@ -1697,7 +1698,7 @@ body.side .data-filter button.close-filter {
 }
 .campaign-details {
   position: absolute;
-  top: 4rem;
+  top: 0;
   width: 100%;
   color: white;
   display: flex;
@@ -2309,8 +2310,8 @@ td {
 body.report .campaign-details {
   background: #333333;
 }
-body.report .app__body,
-body.report .main {
+body.report .report {
+  width: 100%;
   margin-top: 6rem;
 }
 .filter-summary {
@@ -2391,4 +2392,32 @@ body.side .filter-summary button.show-filter {
 }
 .filter.split-by.domain .filter__treemap {
   display: flex;
+}
+.spinner {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.7);
+  z-index: 10;
+  display: none;
+}
+.spinner svg {
+  fill: #e91e63;
+  width: 4rem;
+  height: 4rem;
+  transform-origin: center;
+}
+body.loading .spinner {
+  display: flex;
+}
+.spinner__icon {
+  animation: spin 1s steps(8, end) infinite;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }

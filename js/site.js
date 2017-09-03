@@ -52,7 +52,6 @@ function initControls(){
     var rh = $('.app__body .campaigns').height();
 
     $('.app__body .campaigns').fadeOut(500, function(){
-      $('body').addClass('reporting');
       $('.app__body .report').css('min-height', rh + 'px');
       $('.campaign-details').css({
         transition: 'transform 0.5s ease-out',
@@ -67,8 +66,10 @@ function initControls(){
           url: '/report',
           dataType: 'html',
           success: function (data) {
+
         var thisData = $(data).filter('.main');
         $('.report').html(thisData);
+        $('body').addClass('report');
         setTimeout(function(){
           updateAllCharts('SSM_same');
         }, 1000);
@@ -99,18 +100,24 @@ initControls();
 
 
 // $('#slider').dateRangeSlider();
-
+//
 $('.login__box .button').click(function(e){
-  e.preventDefault();
+  // e.preventDefault();
   // alert('clicked');
 
-  $.get('/campaigns', function(data) {
-    var campaigns = $(data).filter('.app__body').contents();
-    $('.app__body').html(campaigns);
-    window.history.pushState("", "", '/campaigns');
-    $('.menu__campaigns').addClass('current').siblings().removeClass('current');
-    initControls();
-  });
+  // $.get('/campaigns', function(data) {
+  //   var campaigns = $(data).filter('.app__body').contents();
+  //   $('.app__body').html(campaigns);
+  //   window.history.pushState("", "", '/campaigns');
+  //   $('.menu__campaigns').addClass('current').siblings().removeClass('current');
+  //   initControls();
+  // });
+
+  $('body').addClass('loading');
+
+  setTimeout(function(){
+      document.location.href = '/campaigns';
+  }, 1000);
 
 });
 
