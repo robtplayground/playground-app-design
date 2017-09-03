@@ -53,7 +53,7 @@ gopro_pments.forEach(function(pl) {
 
 console.log('IMPS DATA', impsData);
 
-impsData.SSM_same[8].comment = 'PGXYZ fixed your tag <br/> to stop 100% fallback <br/> (unsupported devices)';
+impsData.SSM_same[8].comment = 'Scot Liddell corrected tag to stop 100% fallback';
 
 // console.log(impsData);
 
@@ -81,7 +81,7 @@ var chart__ImpsTime = AmCharts.makeChart("chart--execImpsAgg", {
   },
   valueAxes: [{
     gridAlpha: 0.07,
-    title: "Impressions",
+    // title: "Impressions",
     minimum: 0,
     maximum: 300000
   }],
@@ -93,12 +93,19 @@ var chart__ImpsTime = AmCharts.makeChart("chart--execImpsAgg", {
     lineColorField: "colorE",
     fillColorsField: "colorE",
     fillAlphas: 0.3,
+    balloon: {
+      textAlign: "left",
+      borderThickness: 0,
+      // fillColor: impsData.SSM_same[0].colorE,
+      fillColor: 'transparent',
+      color: impsData.SSM_same[0].colorE,
+    },
     balloonFunction: function(graphItem, graph){
       if(graphItem.dataContext.comment !== ' '){
         console.log(graphItem);
-        return '<strong>Executed: </strong>' + graphItem.values.value + '<br/><em>' + graphItem.dataContext.comment + '</em>';
+        return '<span>EXECUTED: ' + graphItem.values.value + '</span> <div class="chart__comment">' + graphItem.dataContext.comment + '</div>';
       }else{
-        return '<strong>Executed: </strong>' + graphItem.values.value;
+        return '<span>EXECUTED: ' + graphItem.values.value + '</span>';
       }
     }
   }, {
@@ -109,13 +116,23 @@ var chart__ImpsTime = AmCharts.makeChart("chart--execImpsAgg", {
     lineColorField: "colorV",
     fillColorsField: "colorV",
     fillAlphas: 0.3,
+    balloon: {
+      textAlign: "left",
+      borderThickness: 0,
+      fillColor: 'transparent',
+      color: impsData.SSM_same[0].color,
+    },
     balloonFunction: function(graphItem, graph){
-        return '<strong>Viewable: </strong>' + graphItem.values.value;
+        return '<span>VIEWABLE: ' + graphItem.values.value + '</span>';
     }
   }],
   chartCursor: {
-    cursorPosition: "mouse",
-    categoryBalloonDateFormat: "DD MMMM"
+    cursorPosition: "middle",
+    // categoryBalloonEnabled: false,
+    categoryBalloonDateFormat: "DD MMMM",
+    cursorColor: "#e91e63",
+    cursorAlpha: 0.5,
+    // bulletsEnabled:true
   },
   chartScrollbar:{}
   // listeners: [{
@@ -682,7 +699,9 @@ var chart__erTime = AmCharts.makeChart("chart--erTime", {
   chartScrollbar: {},
   chartCursor: {
     cursorPosition: "mouse",
-    categoryBalloonDateFormat: "JJ:NN, DD MMMM"
+    categoryBalloonDateFormat: "DD MMMM",
+    cursorColor: "#e91e63",
+    cursorAlpha: 0.5
   },
   legend: {
     // "useGraphSettings": true,

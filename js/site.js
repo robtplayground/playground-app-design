@@ -84,7 +84,12 @@ function initControls(){
 
 $('.filter__group-select').on('change', function(e){
   var val = $(this).val();
-  $('.grouping').attr('class', 'grouping ' + val);
+  $('.group-by').attr('class', 'filter group-by ' + val);
+});
+
+$('.filter__split-select').on('change', function(e){
+  var val = $(this).val();
+  $('.filter.split-by').attr('class', 'filter split-by ' + val);
 });
 
 }
@@ -111,11 +116,17 @@ $('.login__box .button').click(function(e){
 
 $(document).ready(function(){
   var page = document.location.href.split('/')[3];
-  $('body').addClass(page).addClass('side');
+  $('body').addClass(page);
   $('menu__' + page).addClass('current').siblings().removeClass('current');
+
+  // $('#radio1').attr('selected');
 
 });
 
 $('.show-filter').click(function(){
-  $('body').toggleClass('side');
+  $('body').addClass('side');
+})
+
+$('.close-filter').click(function(){
+  $('body').removeClass('side');
 })

@@ -1376,7 +1376,7 @@ label:hover:before {
   cursor: pointer;
   line-height: 2rem;
   color: #333333;
-  font-weight: 700;
+  font-weight: 400;
 }
 [type="radio"]:checked + label:before,
 [type="radio"]:not(:checked) + label:before {
@@ -1573,10 +1573,12 @@ body {
   background: #efefef;
   flex-wrap: wrap;
 }
+.sidebar {
+  background: #efefef;
+}
 .data-filter {
   position: absolute;
   right: 0;
-  background: #efefef;
   color: #222222;
   display: flex;
   flex-direction: column;
@@ -1585,11 +1587,38 @@ body {
   padding: 1rem;
   width: 26rem;
 }
+.data-filter button.close-filter {
+  outline: none;
+  color: #222222;
+  fill: #222222;
+  position: absolute;
+  width: 6rem;
+  height: 3rem;
+  background: transparent;
+  top: 0;
+  right: 0;
+  border-radius: 0;
+  transition: all 0.5s ease;
+  opacity: 0;
+}
+.data-filter button.close-filter svg {
+  height: 100%;
+  width: 50%;
+}
+body.side .data-filter button.close-filter {
+  opacity: 1;
+}
 .data-filter input {
   width: auto;
 }
 .data-filter input.start {
   margin-right: 0.5em;
+}
+.data-filter h1 {
+  margin: 0;
+  font-size: 1.2rem;
+  line-height: 1em;
+  padding-left: 0.2em;
 }
 .data-filter h2 {
   text-transform: uppercase;
@@ -1606,6 +1635,7 @@ body {
 }
 .filter:first-of-type {
   border-top: 0;
+  margin-top: 0.5rem;
 }
 .filter__date-picker {
   position: relative;
@@ -1789,7 +1819,6 @@ body {
   flex-wrap: wrap;
   display: flex !important;
   transition: width 0.5s ease;
-  padding-left: 2rem;
 }
 .sidebar {
   width: 0 !important;
@@ -1876,24 +1905,48 @@ a[href="http://www.amcharts.com/javascript-charts/"] {
   height: 20rem;
 }
 .chart--execImpsAgg .chart__controls {
+  position: absolute;
+  top: 0;
   width: 100%;
   height: 10%;
-  margin-top: 3.5rem;
+  padding-top: 0.5rem;
 }
 .chart--execImpsAgg .chart__controls .select2-container,
 .chart--execImpsAgg .chart__controls .select2-dropdown {
   position: absolute;
   width: 20% !important;
+  top: 0.8rem;
   right: 4rem;
 }
 .chart--execImpsAgg .chart__controls .select2-container *:focus,
 .chart--execImpsAgg .chart__controls .select2-dropdown *:focus {
   outline: none;
 }
+.chart--execImpsAgg h3 {
+  position: absolute;
+  top: 0.5rem;
+  width: 100%;
+  margin: 0;
+}
 .chart--execImpsAgg .chart__render {
   position: relative;
-  height: 70%;
+  height: 85%;
+  top: 15%;
   width: calc(100% - 2rem);
+}
+.chart__comment {
+  position: absolute;
+  width: 150%;
+  color: #e91e63;
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  top: -7.5em;
+  left: -0.5em;
+  line-height: 1.5em;
+}
+.amcharts-balloon-div span {
+  display: block;
+  transform: translate(-0.5em, -3em);
 }
 .chart--impsDel .chart__legend__left:before {
   position: relative;
@@ -2260,17 +2313,82 @@ body.report .app__body,
 body.report .main {
   margin-top: 6rem;
 }
-.show-filter {
-  display: block;
-  position: absolute;
-  width: 2.5rem;
-  height: 100%;
-  background: #aaaaaa;
-  top: 0rem;
-  left: 0rem;
-  border-radius: 0;
-}
-.show-filter svg {
+.filter-summary {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 3rem;
+  background: #666;
+  color: white;
   fill: #ffffff;
-  margin-top: 1rem;
+}
+.filter-summary button.show-filter {
+  outline: none;
+  overflow: hidden;
+  display: block;
+  width: 8rem;
+  height: 100%;
+  background: #888;
+  border-radius: 0;
+  max-width: 1000px;
+  padding: 0;
+}
+.filter-summary button.show-filter span {
+  display: block;
+  color: #ffffff;
+  margin-left: 1em;
+  height: 100%;
+}
+.filter-summary button.show-filter svg {
+  fill: #ffffff;
+  height: 100%;
+  width: 15%;
+}
+.filter-summary button.show-filter .wrapper {
+  width: 15rem;
+  display: flex;
+  align-items: center;
+  padding-left: 0.5rem;
+}
+body.side .filter-summary button.show-filter {
+  max-width: 0;
+  transition: all 0.5s ease-in;
+}
+.filter-summary button.download-file {
+  background: transparent;
+  width: 4rem;
+  position: absolute;
+  height: 100%;
+  top: 0;
+  right: 4rem;
+}
+.filter-summary button.download-file svg {
+  width: 100%;
+}
+.filter-summary button.menu {
+  background: transparent;
+  width: 4rem;
+  position: absolute;
+  height: 100%;
+  top: 0;
+  right: 0;
+}
+.filter-summary button.menu svg {
+  width: 100%;
+}
+.filter-summary h3 {
+  font-size: 0.833rem;
+  margin: 0 0.5rem 0 1rem;
+  text-transform: uppercase;
+}
+.filter-summary p {
+  font-size: 1rem;
+  margin: 0;
+}
+.filter.split-by.none .filter__treemap {
+  display: none;
+}
+.filter.split-by.domain .filter__treemap {
+  display: flex;
 }

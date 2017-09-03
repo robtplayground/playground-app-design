@@ -46,10 +46,13 @@ body{
 	flex-wrap:wrap;
 }
 
+.sidebar{
+	background: @lightgrey
+}
+
 .data-filter{
 	position: absolute;
 	right:0;
-	background: @lightgrey;
 	color: @black;
 	display:flex;
 	flex-direction: column;
@@ -57,11 +60,40 @@ body{
 	margin: 0;
 	padding: 1rem;
 	width: 26rem;
+	button.close-filter{
+		outline: none;
+		color: @black;
+		fill: @black;
+		position: absolute;
+		width: 6rem;
+		height: 3rem;
+		background:transparent;
+		top:0;
+		right:0;
+		border-radius: 0;
+		transition: all 0.5s ease;
+		opacity:0;
+		div{
+		}
+		svg{
+			height: 100%;
+			width: 50%;
+		}
+		body.side &{
+			opacity:1;
+		}
+	}
 	input{
 		width: auto;
 		&.start{
 			margin-right: 0.5em;
 		}
+	}
+	h1{
+		margin:0;
+		font-size: @size-1;
+		line-height: 1em;
+		padding-left: 0.2em;
 	}
 
 	h2{
@@ -106,6 +138,7 @@ body{
 }
 .filter:first-of-type{
 	border-top:0;
+	margin-top:0.5rem;
 }
 
 .filter__date-picker{
@@ -182,8 +215,6 @@ body{
 		width:80%f
 	}
 }
-
-
 
 .campaign-details{
 	position:absolute;
@@ -321,7 +352,6 @@ body{
 	flex-wrap: wrap;
 	display: flex !important;
 	transition: width 0.5s ease;
-	padding-left: 2rem;
 }
 
 .sidebar{
@@ -361,7 +391,7 @@ a[href="http://www.amcharts.com/javascript-charts/"]{
 // 			opacity: 1;
 // 		}
 // 	}
-// }`
+// }
 
 .chart{
 	display:flex;
@@ -445,24 +475,61 @@ a[href="http://www.amcharts.com/javascript-charts/"]{
 .chart--execImpsAgg{
 	height: 20rem;
 	.chart__controls{
+		position: absolute;
+		top:0;
 		width:100%;
 		height: 10%;
-		margin-top: 3.5rem;
+		padding-top:0.5rem;
 		.select2-container,
  	 	.select2-dropdown{
 			position: absolute;
  		 width: 20% !important;
+		 top: 0.8rem;
 		 right:4rem;
  		 *:focus{
  			 outline: none;
  		 }
  	 }
 	}
+	h3{
+		position: absolute;
+		top:0.5rem;
+		width:100%;
+		margin:0;
+	}
 	.chart__render{
 		position: relative;
-		height: 70%;
+		height: 85%;
+		top: 15%;
 		width: ~"calc(100% - 2rem)";
 	}
+}
+
+.chart__comment{
+	position: absolute;
+	width: 150%;
+	color: @pgxyz-pink;
+	text-decoration: underline;
+	text-decoration-style: dotted;
+	line-height: 1.5em;
+	top:-7.5em;
+	left:-0.5em;
+	line-height: 1.5em;
+	// &:before{
+	// 	content: '⋆';
+	// 	display:block;
+	// 	position: absolute;
+	// 	width: auto;
+	// 	font-size: 3em;
+	// 	top: -0.1em;
+	// 	color: @pgxyz-pink;
+	// 	transform: translateX(-110%);
+	// }
+}
+
+.amcharts-balloon-div span{
+	display:block;
+	transform: translate(-0.5em, -3em);
 }
 
 .chart--impsDel{
@@ -899,17 +966,94 @@ body.report {
 	}
 }
 
-.show-filter{
-	display:block;
-	position: absolute;
-	width: 2.5rem;
-	height: 100%;
-	background: @midgrey;
-	top: 0rem;
-	left: 0rem;
-	border-radius:0;
-	svg{
-		fill: @white;
-		margin-top: 1rem;
+.filter-summary{
+	position: relative;
+	display:flex;
+	align-items: center;
+	width: 100%;
+	height: 3rem;
+	background: #666;
+	color:white;
+	fill:@white;
+
+
+	button.show-filter{
+		outline: none;
+		overflow:hidden;
+		display:block;
+		width: 8rem;
+		height: 100%;
+		background: #888;
+		// box-shadow: 0.2em .2em 0.5em rgba(0,0,0,0.3);
+		border-radius: 0;
+		max-width: 1000px;
+		padding:0;
+		span{
+			display:block;
+			color: @white;
+			margin-left: 1em;
+			height: 100%;
+		}
+		svg{
+			fill: @white;
+			height: 100%;
+			width: 15%;
+		}
+		.wrapper{
+			width: 15rem;
+			display: flex;
+			align-items: center;
+			padding-left: 0.5rem;
+		}
+		body.side &{
+			max-width:0;
+			transition: all 0.5s ease-in;
+		}
+	}
+	button.download-file{
+		background: transparent;
+		width: 4rem;
+		position:absolute;
+		height:100%;
+		top:0;
+		right:4rem;
+		svg{
+			width:100%;
+		}
+	}
+	button.menu{
+		background: transparent;
+		width: 4rem;
+		position:absolute;
+		height:100%;
+		top:0;
+		right:0;
+		svg{
+			width:100%;
+		}
+	}
+
+	h3{
+		font-size: @size-small;
+		margin: 0 0.5rem 0 1rem;
+		text-transform: uppercase;
+
+	}
+	p{
+		font-size: @size-0;
+		margin:0
+	}
+}
+
+.filter.split-by{
+	&.none{
+		.filter__treemap{
+			display:none;
+		}
+	}
+	&.domain{
+		.filter__treemap{
+			display:flex;
+		}
 	}
 }

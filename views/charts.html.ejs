@@ -54,6 +54,15 @@
 
           <!-- <div class="filter__date-slider" id="slider"></div> -->
 
+          <h1>Filters</h1>
+
+          <button class="close-filter">
+            <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
+              <use x="0" y="0" href="#close" />
+            </svg>
+            <div>Close</div>
+          </button>
+
 
           <div class="filter filter__date-picker">
             <div class="input__wrapper">
@@ -67,7 +76,7 @@
           </div>
         </div>
 
-          <div class="filter grouping placement">
+          <div class="filter group-by placement">
 
             <div class="input__wrapper">
               <label for="group-by">Group by:</label>
@@ -88,7 +97,7 @@
               <% gopro_pments.forEach(function(pl, index){ %>
 
                 <input type="radio" id="radio<%= index %>" name="placement-select"/>
-                <label for="radio<%= index %>" data-placement="<%= pl.id %>" name="choose-placement"><span></span><%- pl.id %></label>
+                <label for="radio<%= index %>" data-placement="<%= pl.id %>" name="choose-placement"><span></span><%- pl.name %></label>
 
               <% }); %>
 
@@ -96,45 +105,45 @@
 
             <div class="filter__format-select">
 
-                <input type="radio" id="radio10" name="format-select"/>
-                <label for="radio10" data-placement="SSM_same" name="choose-format"><span></span>Super Skin</label>
+                <input type="radio" id="radio10" name="format-select" selected/>
+                <label for="radio10" data-placement="SSM_same" name="choose-format" selected><span></span>Super Skin</label>
 
                 <input type="radio" id="radio11" name="format-select"/>
                 <label for="radio11" data-placement="TTM_same" name="choose-format"><span></span>Top and Tail</label>
-
 
             </div>
 
           </div>
 
-          <div class="filter tree-map">
+          <div class="filter split-by none">
 
-          <div class="input__wrapper">
-            <label for="split-by">Split by:</label>
-              <select class="filter__split-select">
-              <option value="Location">Audience: Location</option>
-              <option value="Gender">Audience: Gender</option>
-              <option value="Domain" selected>Site: Domain</option>
-              <option value="Category">Site: Category</option>
-            </select>
+            <div class="input__wrapper">
+              <label for="split-by">Split by:</label>
+                <select id="split-by" class="filter__split-select">
+                <option value="none" selected>None</option>
+                <option value="location">Audience: Location</option>
+                <option value="gender">Audience: Gender</option>
+                <option value="domain">Site: Domain</option>
+                <option value="category">Site: Category</option>
+              </select>
 
-          </div>
+            </div>
 
 
 
-          <div id="treemap" class="filter__treemap">
+            <div id="treemap" class="filter__treemap">
 
-            <div class="dm">Daily Mail</div>
-            <div class="smh">SMH</div>
-            <div class="elle">Elle</div>
-            <div class="roar">The Roar</div>
-            <div class="bm">Big Mobile</div>
-            <div class="giz">Gizmodo</div>
-            <div class="junk">Junkee</div>
-            <div class="cnet">CNet</div>
-            <div class="huff">Huffington Post</div>
-            <div class="mix">In The Mix</div>
-          </div>
+              <div class="dm">Daily Mail</div>
+              <div class="smh">SMH</div>
+              <div class="elle">Elle</div>
+              <div class="roar">The Roar</div>
+              <div class="bm">Big Mobile</div>
+              <div class="giz">Gizmodo</div>
+              <div class="junk">Junkee</div>
+              <div class="cnet">CNet</div>
+              <div class="huff">Huffington Post</div>
+              <div class="mix">In The Mix</div>
+            </div>
 
           </div>
 
@@ -145,19 +154,57 @@
 
     <div class="content grid-cell grid9 no-gutter">
 
-      <div class="show-filter">
-        <svg viewBox="0 0 300 300" preserveAspectRatio="xMinYMid meet">
-          <use x="0" y="0" href="#filter" />
-        </svg>
+      <div class="filter-summary">
+
+        <button class="show-filter">
+          <div class="wrapper">
+            <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
+            <use x="0" y="0" href="#arrow-left" />
+          </svg>
+          <span>Filter</span>
+        </div>
+        </button>
+
+        <h3>Grouped by:</h3>
+        <p class="group">Placement</p>
+
+        <h3>Split:</h3>
+        <p class="group">None</p>
+
+        <button class="download-file">
+          <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
+            <use x="0" y="0" href="#download-file" />
+          </svg>
+        </button>
+
+        <button class="menu">
+          <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
+            <use x="0" y="0" href="#menu" />
+          </svg>
+        </button>
+
+      </div>
+
+
+      <div class="grid-cell grid4">
+        <div class="chart chart--impsDel">
+          <h3>Delivery</h3>
+          <div class="chart__render" id="chart--impsDel"></div>
+          <div class="chart__render" id="chart--impsDelBench"></div>
+          <div class="chart__legend">
+            <div class="chart__legend__left">
+              <span></span>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="grid-cell grid8">
 
         <div class="chart chart--execImpsAgg">
 
-          <h3>Campaign Delivery: All Sites</h3>
-
           <div class="chart__controls">
+            <h3>Impressions</h3>
             <select class="chart__select">
             <option value="Cumulative">Cumulative</option>
             <option value="Individual">Individual</option>
@@ -190,13 +237,21 @@
       </div>
 
       <div class="grid-cell grid4">
-        <div class="chart chart--impsDel">
-          <h3>Delivery</h3>
-          <div class="chart__render" id="chart--impsDel"></div>
-          <div class="chart__render" id="chart--impsDelBench"></div>
+        <div class="chart chart--erAv">
+          <h3>Engagement Rate</h3>
+          <div id="chart--erAv" class="chart__render">
+            <div class="chart__circle">
+              <div id="chart--erAv_value" class="chart__circle__value"></div>
+            </div>
+          </div>
           <div class="chart__legend">
             <div class="chart__legend__left">
-              <span></span>
+              <span class="legend__label">PGXYZ: </span>
+              <span id="chart--erAv_pgBench" class="legend__value">-1.2</span>
+            </div>
+            <div class="chart__legend__right">
+              <span class="legend__label">IAB: </span>
+              <span id="chart--erAv_iabBench" class="legend__value">+3.2</span>
             </div>
           </div>
         </div>
@@ -224,34 +279,10 @@
         </div>
       </div>
 
-      <div class="grid-cell grid4">
-        <div class="chart chart--erAv">
-          <h3>Engagement Rate</h3>
-          <div id="chart--erAv" class="chart__render">
-            <div class="chart__circle">
-              <div id="chart--erAv_value" class="chart__circle__value"></div>
-            </div>
-          </div>
-          <div class="chart__legend">
-            <div class="chart__legend__left">
-              <span class="legend__label">PGXYZ: </span>
-              <span id="chart--erAv_pgBench" class="legend__value">-1.2</span>
-            </div>
-            <div class="chart__legend__right">
-              <span class="legend__label">IAB: </span>
-              <span id="chart--erAv_iabBench" class="legend__value">+3.2</span>
-            </div>
-          </div>
-        </div>
-      </div>
 
-      <div class="grid-cell grid8">
-        <div class="chart chart--heat">
-          <h3>Completion Rates</h3>
-          <h4>Passive</h4>
-          <div id="chart--passiveCHeat" class="chart__render"></div>
-          <h4>Engaged</h4>
-          <div id="chart--engagedCHeat" class="chart__render"></div>
+      <div class="grid-cell grid12">
+        <div class="chart">
+          <div id="chart--erTime" class="chart__render"></div>
         </div>
       </div>
 
@@ -277,11 +308,16 @@
         </div>
       </div>
 
-      <div class="grid-cell grid12">
-        <div class="chart">
-          <div id="chart--erTime" class="chart__render"></div>
+      <div class="grid-cell grid8">
+        <div class="chart chart--heat">
+          <h3>Completion Rates</h3>
+          <h4>Passive</h4>
+          <div id="chart--passiveCHeat" class="chart__render"></div>
+          <h4>Engaged</h4>
+          <div id="chart--engagedCHeat" class="chart__render"></div>
         </div>
       </div>
+
 
 
     </div>
