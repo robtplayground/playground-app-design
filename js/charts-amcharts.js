@@ -986,7 +986,7 @@ var amCharts = [chart__ImpsTime, chart__vAv, chart__vAvBench, chart__impsDel, ch
 
 var totalsCharts = [chart__ativAv, chart__engagedC, chart__erAv];
 
-$('.data-filter__placement-select label').click(function() {
+$('.filter__placement-select label').click(function() {
   var plID = $(this).data('placement');
   updateAllCharts(plID);
 });
