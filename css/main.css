@@ -1474,6 +1474,7 @@ button.icon-only svg {
 .app__header__menu {
   display: flex;
   justify-content: flex-end;
+  margin-right: 1.5rem;
 }
 .app__header__menu a {
   display: flex;
@@ -1481,7 +1482,7 @@ button.icon-only svg {
   text-decoration: none;
   text-transform: uppercase;
   color: white;
-  margin-right: 1em;
+  margin: 0 1em;
   height: 100%;
 }
 .app__header__menu .current {
@@ -1493,19 +1494,29 @@ button.icon-only svg {
   align-items: center;
 }
 .app__header__profile button {
-  width: 8rem;
-  justify-content: center;
+  border-radius: 0;
+  border-left: 1px solid rgba(255, 255, 255, 0.5);
+  height: 60%;
+  position: relative;
+  display: flex;
+  width: 10rem;
+  justify-content: flex-start;
+  background: transparent;
 }
 .app__header__profile button svg {
-  position: absolute;
   left: 0.5em;
-  width: 2em;
-  height: 2em;
+  width: 4rem;
+  height: 100%;
   margin-right: 0.5em;
-  fill: #222222;
+  fill: #ffffff;
 }
 .app__header__profile button div {
-  margin-left: 1.5em;
+  color: white;
+  font-weight: 700;
+  margin-right: 0.5em;
+}
+.app__header__profile button span {
+  color: #ffffff;
 }
 .app__body {
   position: relative;
