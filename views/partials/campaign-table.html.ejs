@@ -1,4 +1,4 @@
-<table class="campaign__table  <%= cp.id %>">
+<table class="campaign__table  <%= cp.id %> <% if (cp.id === 'cp_gopro'){ %> collapse <%} %>">
 
   <tr class="campaign__title">
     <td class="campaign__expand" data-cp="<%= cp.id %>">
@@ -34,6 +34,14 @@
       <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
         <use x="0" y="0" href="#menu"></use>
       </svg>
+      <div class="table__actions__menu">
+        <ul>
+          <li>Edit Campaign</li>
+          <li>Report</li>
+          <li>Clone</li>
+          <li>Archive</li>
+        </ul>
+      </div>
     </td>
   </tr>
 
@@ -47,7 +55,7 @@
 
        <!-- start creative -->
 
-      <table class="creative__table">
+      <table class="creative__table" style="border: 2px solid <%= cr.format.color %>">
         <thead>
         <tr class="creative__title" style="background-color: <%= cr.format.color %> ">
           <th class="creative__title__thumb">

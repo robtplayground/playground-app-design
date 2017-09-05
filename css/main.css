@@ -1437,6 +1437,12 @@ button.icon-only svg {
   height: 2rem;
   fill: white;
 }
+#__bs_notify__ {
+  top: 95% !important;
+  right: 10px !important;
+  border-radius: 15px !important;
+  height: 60px !important;
+}
 .app__svg-icons {
   display: none;
 }
@@ -1454,7 +1460,7 @@ button.icon-only svg {
   box-sizing: content-box;
   border: 0;
   background: white;
-  padding: 0.3em 1em;
+  padding: 0.3em 1em 0.3em 0.4em;
   border-radius: 5em;
 }
 .app__header__logo {
@@ -1485,6 +1491,21 @@ button.icon-only svg {
 .app__header__profile {
   display: flex;
   align-items: center;
+}
+.app__header__profile button {
+  width: 8rem;
+  justify-content: center;
+}
+.app__header__profile button svg {
+  position: absolute;
+  left: 0.5em;
+  width: 2em;
+  height: 2em;
+  margin-right: 0.5em;
+  fill: #222222;
+}
+.app__header__profile button div {
+  margin-left: 1.5em;
 }
 .app__body {
   position: relative;
@@ -1562,11 +1583,16 @@ body {
   text-align: center;
   position: relative;
   margin: 2rem auto;
+  width: 8rem;
+  box-sizing: content-box;
+  padding: 0.8em;
+  border-radius: 4rem;
   font-size: 1.2rem;
   cursor: pointer;
 }
 .login__box a {
   font-size: 0.833rem;
+  margin-left: 11rem;
 }
 .charts {
   display: flex;
@@ -1697,7 +1723,7 @@ body.side .data-filter button.close-filter {
   width: 80% f;
 }
 .campaign-details {
-  position: absolute;
+  position: relative;
   top: 0;
   width: 100%;
   color: white;
@@ -2022,6 +2048,42 @@ a[href="http://www.amcharts.com/javascript-charts/"] {
 .campaigns th {
   height: 3rem;
 }
+.campaigns-welcome {
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+.greeting-text {
+  font-weight: 300;
+  font-size: 2.489rem;
+  padding-left: 3rem;
+}
+.greeting-comments {
+  position: relative;
+  color: #222222;
+  fill: #222222;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 5rem;
+  padding-right: 1rem;
+}
+.greeting-comments button {
+  background: transparent;
+  width: 4rem;
+  height: 100%;
+}
+.greeting-comments button svg {
+  width: 100%;
+  height: 100%;
+}
+.greeting-comments input {
+  height: 1.8rem;
+  border-radius: 5px;
+  border: 1px solid #aaaaaa;
+  padding: 0.2em 0.5em;
+  width: 15rem;
+}
 table,
 td {
   position: relative;
@@ -2031,19 +2093,65 @@ td {
 .table__actions {
   text-align: right !important;
   padding-right: 1em;
-  width: 3%;
+  width: 10%;
+  cursor: pointer;
 }
 .table__actions svg {
   display: inline-block;
-  width: 1.5em;
+  width: 50%;
   height: 1.5em;
 }
+.table__actions:hover .table__actions__menu {
+  display: block;
+}
+.table__actions__menu {
+  position: absolute;
+  width: 10rem;
+  height: auto;
+  background: rgba(255, 255, 255, 0.9);
+  color: #222222;
+  z-index: 10;
+  bottom: -160%;
+  box-shadow: 5px 5px 8px rgba(0, 0, 0, 0.4);
+  transform: translateX(-25%);
+  overflow: visible;
+  display: none;
+}
+.table__actions__menu:before {
+  content: '';
+  position: absolute;
+  top: -0.8em;
+  left: 68%;
+  width: 0;
+  height: 0;
+  border-left: 0.8em solid transparent;
+  border-right: 0.8em solid transparent;
+  border-bottom: 0.8em solid rgba(255, 255, 255, 0.9);
+}
+.table__actions__menu:hover {
+  display: block;
+}
+.table__actions__menu ul {
+  list-style-type: none;
+  text-align: left;
+  padding: 0;
+}
+.table__actions__menu ul li {
+  padding: 0 1em;
+  line-height: 1.8em;
+  cursor: pointer;
+}
+.table__actions__menu ul li:hover {
+  font-weight: 700;
+  color: #e91e63;
+}
 .campaign__table {
-  width: calc(100% - 1rem);
-  margin: 0.5rem;
-  background: #333333;
+  width: 94%;
+  margin: 1rem 2% 0 4%;
+  border-radius: 10px;
   color: #ffffff;
   font-size: 1rem;
+  margin-bottom: 2rem;
 }
 .campaign__table use.plus {
   display: none;
@@ -2062,12 +2170,14 @@ td {
   text-align: left;
 }
 .campaign__table .campaign__expand {
+  overflow: visible;
   padding-left: 0.5rem;
   cursor: pointer;
 }
 .campaign__table .campaign__expand svg {
-  fill: #ffffff;
-  height: 2rem;
+  fill: #222222;
+  height: 2.5rem;
+  transform: translateX(-3.6rem);
 }
 .campaign__table .campaign__brand {
   font-weight: 700;
@@ -2102,10 +2212,21 @@ td {
 .campaign__table.collapse use.minus {
   display: none;
 }
+.campaign__title {
+  background: #333333;
+}
+.campaign__title td:first-of-type {
+  border-radius: 5px 0 0 0;
+}
+.campaign__title td:last-of-type {
+  border-radius: 0 5px 0 0;
+}
 .creative__table {
   position: relative;
-  background: #ffffff;
+  background: #fafafa;
   color: #222222;
+  border: 1px solid #aaaaaa;
+  margin-top: 0.2rem;
 }
 .creative__table thead,
 .creative__table th {
@@ -2131,24 +2252,18 @@ td {
   white-space: nowrap;
   padding-left: 1em;
 }
-.image--thumb {
-  border-radius: 100%;
-  width: 2.5rem;
-  margin: 0.25rem;
-  border: 1px solid white;
-}
 .creative__title__thumb {
   padding-left: 2em;
 }
 .creative__title__thumb img {
+  display: block;
   border-radius: 100%;
-  width: 2.5rem;
-  margin: 0.25rem;
-  border: 1px solid white;
+  width: 3.5rem;
 }
 .creative__title__format {
   position: relative;
   padding-left: 1em;
+  vertical-align: middle;
 }
 .creative__title__format svg {
   fill: white;
@@ -2231,8 +2346,8 @@ td {
   font-size: 0.9em;
   right: 0;
   width: auto;
-  min-width: 8.5em;
-  transform: translate(0, -120%);
+  min-width: 7em;
+  transform: translate(0, -140%);
 }
 .placement__progress {
   position: relative;
@@ -2240,7 +2355,7 @@ td {
 .plch {
   display: inline-block;
   position: relative;
-  width: 5rem;
+  width: 4.5rem;
   height: 100%;
   margin: 0.5em;
 }
@@ -2288,7 +2403,7 @@ td {
   width: 18% !important;
 }
 .campaign__table .campaign__progress {
-  width: 40% !important;
+  width: 32% !important;
   padding-left: 3em;
 }
 .campaign__table .placement__progress {
@@ -2299,10 +2414,53 @@ td {
 }
 .campaigns__filter {
   display: flex;
+  align-items: center;
   justify-content: space-between;
 }
-.expand-toggles {
+span.select2-selection.select2-selection--single {
+  outline: none;
+}
+.campaigns__search {
   display: flex;
+  justify-content: space-between;
+  padding-right: 1rem;
+  align-items: center;
+}
+.campaigns__search .select2 {
+  width: 10rem !important;
+  margin: 0.5rem;
+}
+.campaigns__search .select2:focus {
+  outline: none;
+}
+.campaigns__search button {
+  margin: 0.5rem 0;
+  background: transparent;
+  padding: 0;
+}
+.campaigns__search button svg {
+  width: 2.5rem;
+  height: 100%;
+}
+.expand-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 17rem;
+}
+.sort-group {
+  width: 15rem;
+  display: flex;
+  align-items: center;
+}
+.campaigns__count h3 {
+  padding-left: 3rem;
+  font-weight: 400;
+}
+.campaigns__count h3 span {
+  font-size: 1.3em;
+  color: #e91e63;
+  margin: 0 0.2em;
 }
 .report {
   width: 100%;
@@ -2314,7 +2472,7 @@ body.report .report {
   width: 100%;
   margin-top: 6rem;
 }
-.filter-summary {
+.filter-actions {
   position: relative;
   display: flex;
   align-items: center;
@@ -2324,68 +2482,46 @@ body.report .report {
   color: white;
   fill: #ffffff;
 }
-.filter-summary button.show-filter {
-  outline: none;
-  overflow: hidden;
+.filter-actions .show-filter {
   display: block;
-  width: 8rem;
+  width: 40%;
   height: 100%;
-  background: #888;
+  display: flex;
+  align-items: center;
   border-radius: 0;
   max-width: 1000px;
   padding: 0;
 }
-.filter-summary button.show-filter span {
-  display: block;
-  color: #ffffff;
-  margin-left: 1em;
-  height: 100%;
-}
-.filter-summary button.show-filter svg {
+.filter-actions .show-filter svg {
   fill: #ffffff;
-  height: 100%;
-  width: 15%;
+  height: 70%;
+  width: 10%;
 }
-.filter-summary button.show-filter .wrapper {
-  width: 15rem;
-  display: flex;
-  align-items: center;
-  padding-left: 0.5rem;
-}
-body.side .filter-summary button.show-filter {
-  max-width: 0;
-  transition: all 0.5s ease-in;
-}
-.filter-summary button.download-file {
-  background: transparent;
-  width: 4rem;
-  position: absolute;
-  height: 100%;
-  top: 0;
-  right: 4rem;
-}
-.filter-summary button.download-file svg {
-  width: 100%;
-}
-.filter-summary button.menu {
-  background: transparent;
-  width: 4rem;
-  position: absolute;
-  height: 100%;
-  top: 0;
-  right: 0;
-}
-.filter-summary button.menu svg {
-  width: 100%;
-}
-.filter-summary h3 {
+.filter-actions .show-filter h3 {
   font-size: 0.833rem;
   margin: 0 0.5rem 0 1rem;
   text-transform: uppercase;
+  line-height: 2rem;
 }
-.filter-summary p {
+.filter-actions .show-filter p {
   font-size: 1rem;
   margin: 0;
+  line-height: 2rem;
+}
+.filter-actions .actions {
+  display: flex;
+  width: auto;
+  justify-content: flex-end;
+  height: 100%;
+  width: 60%;
+}
+.filter-actions .actions button {
+  background: transparent;
+  width: 4rem;
+  height: 100%;
+}
+.filter-actions .actions button svg {
+  width: 100%;
 }
 .filter.split-by.none .filter__treemap {
   display: none;

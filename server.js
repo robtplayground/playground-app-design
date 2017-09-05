@@ -69,7 +69,7 @@ app.get('/login', function(request, response) {
 });
 
 app.get('/report', function(request, response) {
-  response.render('../views/charts.html.ejs', allData);
+  response.render('../views/report.html.ejs', allData);
 });
 
 app.get('/campaigns', function(request, response) {

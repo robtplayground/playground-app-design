@@ -4,40 +4,66 @@
 
     <div class="campaign-details"></div>
 
-    <div class="report"></div>
-
     <div class="campaigns">
 
-      <h1>Welcome Rob!</h1>
+      <div class="campaigns-welcome grid">
+      <h1 class="greeting-text grid-cell grid6">Welcome Rob!</h1>
+      <div class="greeting-comments grid-cell grid6">
+        <input type="search" placeholder="search campaigns, creatives...">
+        <button>
+          <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
+            <use x="0" y="0" href="#comments" />
+          </svg>
+        </button>
+        <!-- <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
+          <use x="0" y="0" href="#filter2" />
+        </svg> -->
+      </div>
+    </div>
 
-      <div class="campaigns__filter">
-        <div class="expand-toggles">
-          <button class="expand-all">Expand All</button>
-          <button class="collapse-all">Collapse All</button>
+      <div class="campaigns__filter grid">
+
+        <% var active = campaigns.filter(cp => moment(cp.dates.start).diff(new Date()) < 0); %>
+
+        <div class="campaigns__count grid-cell grid6">
+          <h3>You have <span><%= active.length %></span> active campaign</h3>
         </div>
 
-        <div class="campaigns__search">
-          <input type="search" placeholder="search">
+        <div class="campaigns__search grid-cell grid6">
 
-          <select class="data-filter__group-select">
+          <div class="expand-buttons">
+
+            <button class="expand-all">
+              <svg viewBox="0 0 300 300" preserveAspectRatio="xMinYMid meet">
+                <use class="plus" x="0" y="0" href="#expand-plus"></use>
+              </svg>
+              Expand All
+            </button>
+            <button class="collapse-all">
+              <svg viewBox="0 0 300 300" preserveAspectRatio="xMinYMid meet">
+                <use class="minus"  x="0" y="0" href="#expand-minus"></use>
+              </svg>
+              Collapse All
+            </button>
+
+          </div>
+
+          <div class="sort-group"><label for="campaign-sort">Sort by:</label>
+
+          <select id="campaign-sort" class="data-filter__group-select">
             <option value="Delivery">Campaign</option>
             <option value="Audience" selected>Placement</option>
             <option value="Category">Format</option>
             <option value="Format">Features</option>
-          </select>
-
+          </select></div>
         </div>
+
 
       </div>
 
-        <% var active = campaigns.filter(cp => moment(cp.dates.start).diff(new Date()) < 0); %>
+
         <% var pending = campaigns.filter(cp => moment(cp.dates.start).diff(new Date()) > 0); %>
 
-        <% if (active.length > 0){ %>
-
-          <h3>You have <%= active.length %> active campaign</h3>
-
-        <% } %>
 
         <% active.forEach(cp => { %>
 
@@ -47,7 +73,13 @@
 
         <% if (pending.length > 0){ %>
 
-          <h3>You have <%= pending.length %> pending campaigns</h3>
+          <div class="grid">
+            <div class="campaigns__count grid-cell">
+              <h3>You have <span><%= pending.length %></span> pending campaigns</h3>
+
+            </div>
+          </div>
+
 
         <% } %>
 

@@ -9,8 +9,7 @@
     <tr class="campaign__title">
       <td class="campaign__expand" data-cp="<%= cp.id %>">
         <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
-          <use class="plus" x="0" y="0" href="#expand-plus"></use>
-          <use class="minus"  x="0" y="0" href="#expand-minus"></use>
+          <use x="0" y="0" href="#arrow-left"></use>
         </svg>
       </td>
       <td class="campaign__brand">
@@ -36,11 +35,11 @@
 
         </div>
       </td>
-      <td class="campaign__actions table__actions">
+      <!-- <td class="campaign__actions table__actions">
         <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
           <use x="0" y="0" href="#menu"></use>
         </svg>
-      </td>
+      </td> -->
     </tr>
   </table>
 </div>
@@ -154,34 +153,42 @@
 
     <div class="content grid-cell grid9 no-gutter">
 
-      <div class="filter-summary">
+      <div class="filter-actions">
 
-        <button class="show-filter">
-          <div class="wrapper">
-            <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
-            <use x="0" y="0" href="#arrow-left" />
+        <div class="show-filter">
+          <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
+            <use x="0" y="0" href="#filter2" />
           </svg>
-          <span>Filter</span>
+
+          <h3>Group:</h3>
+          <p class="group">Placement</p>
+
+          <h3>Split:</h3>
+          <p class="split">None</p>
+
         </div>
-        </button>
 
-        <h3>Grouped by:</h3>
-        <p class="group">Placement</p>
+        <div class="actions">
 
-        <h3>Split:</h3>
-        <p class="group">None</p>
+          <button class="schedule">
+            <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
+              <use x="0" y="0" href="#clock" />
+            </svg>
+          </button>
 
-        <button class="download-file">
-          <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
-            <use x="0" y="0" href="#download-file" />
-          </svg>
-        </button>
+          <button class="download-file">
+            <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
+              <use x="0" y="0" href="#download-file" />
+            </svg>
+          </button>
 
-        <button class="menu">
-          <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
-            <use x="0" y="0" href="#menu" />
-          </svg>
-        </button>
+          <button class="menu">
+            <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
+              <use x="0" y="0" href="#menu" />
+            </svg>
+          </button>
+
+        </div>
 
       </div>
 

@@ -1,3 +1,6 @@
+#__bs_notify__ { top:95% !important; right: 10px !important; border-radius: 15px !important; height:60px !important; }
+
+
 .app__svg-icons{
 	display:none;
 }
@@ -15,7 +18,7 @@
 		box-sizing: content-box;
 		border:0;
 		background:white;
-		padding: 0.3em 1em;
+		padding: 0.3em 1em 0.3em 0.4em;
 		border-radius: 5em;
 	}
 }
@@ -51,6 +54,21 @@
 .app__header__profile{
 	display:flex;
 	align-items:center;
+	button{
+		width: 8rem;
+		justify-content: center;
+		svg{
+			position:absolute;
+			left: 0.5em;
+			width: 2em;
+			height: 2em;
+			margin-right: 0.5em;
+			fill:@black
+		}
+		div{
+			margin-left: 1.5em;
+		}
+	}
 }
 
 .app__body{
