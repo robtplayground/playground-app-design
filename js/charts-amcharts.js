@@ -58,18 +58,20 @@ impsData.SSM_same[8].comment = 'Scot Liddell corrected tag to stop 100% fallback
 // console.log(impsData);
 
 // get first object in impsData and convert to zeroed array.
-var initData = impsData[(Object.keys(impsData)[0])];
+var initData = impsData['SSM_same'];
 impsData.init = $.extend(true, [], initData);
 impsData.init.forEach(function(dateEntry) {
   dateEntry.execImpsAgg = 0;
   dateEntry.viewImpsAgg = 0;
 });
 
+console.log('IMPSDATA', impsData);
+
 // SERIAL CHART
 var chart__ImpsTime = AmCharts.makeChart("chart--execImpsAgg", {
   dataObject: impsData,
   type: "serial",
-  dataProvider: impsData[impsData.current], // start chart with zeroes
+  dataProvider: impsData.init, // start chart with zeroes
   categoryField: "date",
   startDuration: 0,
   addClassNames: true,
@@ -144,10 +146,6 @@ var chart__ImpsTime = AmCharts.makeChart("chart--execImpsAgg", {
   //   }
   // }]
 });
-
-setTimeout(function(){
-  chart__ImpsTime.chartCursor.showCursorAt('2017-08-09');
-}, 3000);
 
 //
 // chart__ImpsTime.chartCursor.showCursorAt('Aug 15');
@@ -228,23 +226,22 @@ var chart__vAv = AmCharts.makeChart('chart--vAv', {
 // VIEWABILITY BENCHMARKS OVERLAY
 
 var vAvBenchData = {};
+var vAvBenchLabels = {}
 
 gopro_pments.forEach(function(pl) {
   var format = creatives.find(function(cr) {
     return cr.id === pl.creative
   }).format;
+
   var formatViewb = format.bm.viewability;
   var iabBench = fm.iab.bm.viewability;
-  vAvBenchData[pl.id] = {};
-  vAvBenchData[pl.id].formatViewb = formatViewb;
-  vAvBenchData[pl.id].iabBench = iabBench;
-  vAvBenchData[pl.id].data = [{
+
+  vAvBenchData[pl.id] = [{
     label: "space1",
     value: iabBench,
     color: "transparent"
   }, {
     label: "IAB",
-    // description: "IAB: " + iabBench + "%",
     value: 1,
     color: "red"
   }, {
@@ -261,18 +258,20 @@ gopro_pments.forEach(function(pl) {
     value: 100 - 1 - formatViewb,
     color: "transparent"
   }];
+
+  vAvBenchLabels[pl.id] = {
+    formatViewb: formatViewb,
+    iabBench: iabBench
+  };
+
 });
 
-vAvBenchData.init = {
-  formatViewb: 0,
-  iabBench: 0,
-  data: [{
+vAvBenchData.init = [{
     label: "space1",
     value: 0,
     color: "transparent"
   }, {
     label: "IAB",
-    // description: "IAB",
     value: 0,
     color: "red"
   }, {
@@ -281,13 +280,18 @@ vAvBenchData.init = {
     color: "transparent"
   }, {
     label: "format",
+    format: "",
     value: 0,
     color: "#e91e63"
   }, {
     label: "space3",
     value: 100,
     color: "transparent"
-  }]
+}];
+
+vAvBenchLabels.init = {
+  formatViewb: 0,
+  iabBench: 0
 };
 
 // console.log('vAvBenchData',vAvBenchData);
@@ -296,7 +300,7 @@ var chart__vAvBench = AmCharts.makeChart('chart--vAvBenchmarks', {
   dataObject: vAvBenchData,
   type: "pie",
   theme: "light",
-  dataProvider: vAvBenchData.init.data,
+  dataProvider: vAvBenchData.init,
   startDuration: 0,
   valueField: "value",
   titleField: "label",
@@ -527,7 +531,7 @@ gopro_pments.forEach(function(pl) {
 
   ativAvData[pl.id] = {
     value: average(pl.data.ativ, pl.dates, gopro).toFixed(1),
-    color: format.color,
+    color: plFormat.color,
     pgBench: plFormat.bm.ativ,
     iabBench: fm.iab.bm.ativ
   };
@@ -558,7 +562,7 @@ gopro_pments.forEach(function(pl) {
 
   engagedCData[pl.id] = {
     value: average(pl.data.engagedCompletionRate, pl.dates, gopro).toFixed(1),
-    color: format.color,
+    color: plFormat.color,
     pgBench: plFormat.bm.engagedCompletionRate,
     iabBench: fm.iab.bm.engagedCompletionRate
   };
@@ -588,7 +592,7 @@ gopro_pments.forEach(function(pl) {
 
   erAvData[pl.id] = {
     value: average(pl.data.engagementRate, pl.dates, gopro).toFixed(1),
-    color: format.color,
+    color: plFormat.color,
     pgBench: plFormat.bm.engagementRate,
     iabBench: fm.iab.bm.engagementRate
   };
@@ -647,7 +651,7 @@ gopro_pments.forEach(function(pl) {
 });
 
 // get first object in impsData and convert to zeroed array.
-engData.init = engData[(Object.keys(engData)[0])];
+engData.init = engData['SSM_same'];
 engData.init = $.extend(true, [], engData.init);
 engData.init.forEach(function(dateEntry) {
   dateEntry.engagementRate = 0;
@@ -991,32 +995,39 @@ $('.filter__placement-select label').click(function() {
   updateAllCharts(plID);
 });
 
-$(window).on('load', function(){
-  setTimeout(function(){
-    updateAllCharts('SSM_same');
-  }, 1000);
-
-});
+// $(window).on('load', function(){
+//   setTimeout(function(){
+//     updateAllCharts('SSM_same');
+//   }, 1000);
+//
+// });
 
 function updateAllCharts(pment_ID) {
 
   var pment = gopro_pments.find(pl => pl.id === pment_ID);
-  console.log(pment);
   var plFormat = getFormat(pment);
   var plColor = getColor(pment);
 
-  amCharts.forEach(chart => {
+  let chartsRendered = 0;
 
+  renderCharts();
 
-    var data = chart.dataObject[pment_ID];
-    chart.animateData(data, {
-      duration: 1000
-    });
-  });
+  function renderCharts(){
+    if(chartsRendered < amCharts.length){
+      var chart = amCharts[chartsRendered];
+      console.log('CHART', chart.div);
+      var data = chart.dataObject[pment_ID];
+      chartsRendered++;
+      chart.animateData(data, {
+        duration: 500,
+        complete: renderCharts
+      });
+    }else{
+      console.log('ALL CHARTS LOADED');
+      chart__ImpsTime.chartCursor.showCursorAt('2017-08-09');
+    }
+  }
 
-  chart__vAvBench.animateData(chart__vAvBench.dataObject[pment_ID].data, {
-    duration: 1000
-  });
 
   chart__vAv.allLabels[0].text = vAvData[pment_ID][0].value;
   chart__impsDel.allLabels[0].text = Math.round(impsDelData[pment_ID][0].value);
@@ -1025,8 +1036,8 @@ function updateAllCharts(pment_ID) {
 
   $('#chart--vAv_pgBench .legend__label').text(plFormat.name);
   $('#chart--vAv_pgBench .legend__label .box').css('background', plColor);
-  $('#chart--vAv_pgBench .legend__value').text(vAvBenchData[pment_ID].formatViewb + '%');
-  $('#chart--vAv_iabBench .legend__value').text(vAvBenchData[pment_ID].iabBench + '%');
+  $('#chart--vAv_pgBench .legend__value').text(vAvBenchLabels[pment_ID].formatViewb + '%');
+  $('#chart--vAv_iabBench .legend__value').text(vAvBenchLabels[pment_ID].iabBench + '%');
 
 
   chart__ativAv.updateCount(ativAvData[pment_ID]);
