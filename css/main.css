@@ -1992,17 +1992,79 @@ a[href="http://www.amcharts.com/javascript-charts/"] {
 }
 .chart__comment {
   position: absolute;
-  width: 150%;
+  width: 15em;
   color: #e91e63;
   text-decoration: underline;
   text-decoration-style: dotted;
-  top: -7.5em;
-  left: -0.5em;
   line-height: 1.5em;
 }
 .amcharts-balloon-div span {
   display: block;
-  transform: translate(-0.5em, -3em);
+  transform: translate(-0.5em, -6em);
+  width: 10em;
+  line-height: 1.5em;
+}
+.amcharts-graph-line circle {
+  cursor: pointer;
+}
+.amcharts-graph-bullet:hover + circle {
+  fill: rgba(233, 30, 99, 0.1);
+  fill-opacity: 1;
+}
+.chart--impsDel {
+  overflow: visible;
+}
+.error-chart {
+  overflow: visible;
+  z-index: 99;
+}
+.chart__error-button {
+  position: absolute;
+  top: 2px;
+  right: 4px;
+  height: 2em;
+  width: 2em;
+  background: url(../images/alert-icon.png);
+  background-size: cover;
+  z-index: 10;
+}
+.chart__error {
+  position: absolute;
+  right: 1em;
+  top: 3.5em;
+  width: 18em;
+  height: 14em;
+  padding: 1em;
+  border: 1px solid #aaaaaa;
+  background: #ffffff;
+  border-radius: 0.5rem 0rem 0.5rem 0.5rem;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
+  z-index: 10;
+}
+.chart__error:before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: -1.5em;
+  right: -1px;
+  width: 1.5em;
+  height: 1.5em;
+  background: url(../images/bubble-stem.svg);
+  background-size: contain;
+  background-position: bottom right;
+  background-repeat: no-repeat;
+}
+.chart__error h6 {
+  margin: 0;
+  font-size: 1rem;
+  color: red;
+}
+.chart__error p {
+  line-height: 1.2em;
+}
+.chart__error p.date {
+  font-size: 0.833rem;
+  color: #aaaaaa;
 }
 .chart--impsDel .chart__legend__left:before {
   position: relative;
@@ -2627,4 +2689,39 @@ body.loading .spinner {
 }
 .placement__header td {
   height: 2rem;
+}
+#chart_SSM_same_del,
+#chart_SSF_same_del {
+  position: relative;
+}
+#chart_SSM_same_del:before,
+#chart_SSF_same_del:before {
+  content: '';
+  display: block;
+  position: absolute;
+  width: 1.8rem;
+  height: 1.8rem;
+  right: 0;
+  top: 0;
+  z-index: 10;
+  background-image: url(../images/alert-icon.png);
+  background-size: cover;
+}
+.chart--execImpsAgg.SSM_same {
+  position: relative;
+}
+.chart--execImpsAgg.SSM_same .marker {
+  position: absolute;
+  width: 1rem;
+  height: 1rem;
+  background: #e91e63;
+  border-radius: 100%;
+  top: 86%;
+  z-index: 100;
+}
+.chart--execImpsAgg.SSM_same .marker.marker1 {
+  left: 20.5%;
+}
+.chart--execImpsAgg.SSM_same .marker.marker2 {
+  left: 50.5%;
 }

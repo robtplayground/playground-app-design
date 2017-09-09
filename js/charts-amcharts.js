@@ -14,6 +14,7 @@ gopro_pments.forEach(function(pl) {
   var colorsE = [];
   var colorsV = [];
   var comments = [];
+  var commentVals = [];
   while (colorsE.length < goproDates.length) {
     colorsE = colorsE.concat([getColor(pl)])
   };
@@ -22,6 +23,9 @@ gopro_pments.forEach(function(pl) {
   };
   while (comments.length < goproDates.length) {
     comments = comments.concat([' '])
+  };
+  while (commentVals.length < goproDates.length) {
+    commentVals = commentVals.concat([null])
   };
 
   impsData[pl.id] = prepData({
@@ -33,8 +37,7 @@ gopro_pments.forEach(function(pl) {
     },
     {
       name: 'viewImpsAgg',
-      values: pl.data.viewImpsAgg,
-      color: 'grey'
+      values: pl.data.viewImpsAgg
     },
     {
       name: 'colorE',
@@ -45,6 +48,10 @@ gopro_pments.forEach(function(pl) {
       values: colorsV
     },
     {
+      name: 'commentVal',
+      values: commentVals
+    },
+    {
       name: 'comment',
       values: comments
     }
@@ -53,7 +60,10 @@ gopro_pments.forEach(function(pl) {
 
 console.log('IMPS DATA', impsData);
 
-impsData.SSM_same[8].comment = 'Scot Liddell corrected tag to stop 100% fallback';
+impsData.SSM_same[8].comment = 'Corrected tag';
+impsData.SSM_same[8].commentVal = 0;
+impsData.SSM_same[35].commentVal = 0;
+impsData.SSM_same[41].commentVal = 0;
 
 // console.log(impsData);
 
@@ -89,7 +99,7 @@ var chart__ImpsTime = AmCharts.makeChart("chart--execImpsAgg", {
   }],
   graphs: [{
     type: "line", // try to change it to "column"
-    title: "red line",
+    title: "Exec Imps",
     valueField: "execImpsAgg",
     lineAlpha: 1,
     lineColorField: "colorE",
@@ -103,16 +113,11 @@ var chart__ImpsTime = AmCharts.makeChart("chart--execImpsAgg", {
       color: impsData.SSM_same[0].colorE,
     },
     balloonFunction: function(graphItem, graph){
-      if(graphItem.dataContext.comment !== ' '){
-        console.log(graphItem);
-        return '<span>EXECUTED: ' + graphItem.values.value + '</span> <div class="chart__comment">' + graphItem.dataContext.comment + '</div>';
-      }else{
-        return '<span>EXECUTED: ' + graphItem.values.value + '</span>';
+        return '<span class="offset">EXECUTED: ' + graphItem.values.value + '</span>';
       }
-    }
-  }, {
+    },{
     type: "line", // try to change it to "column"
-    title: "red line",
+    title: "Viewable Imps",
     valueField: "viewImpsAgg",
     lineAlpha: 1,
     lineColorField: "colorV",
@@ -125,26 +130,50 @@ var chart__ImpsTime = AmCharts.makeChart("chart--execImpsAgg", {
       color: impsData.SSM_same[0].color,
     },
     balloonFunction: function(graphItem, graph){
-        return '<span>VIEWABLE: ' + graphItem.values.value + '</span>';
+        return '<span class="offset">VIEWABLE: ' + graphItem.values.value + '</span>';
+    }
+  },{
+    type: "line", // try to change it to "column"
+    title: "comments",
+    valueField: "commentVal",
+    lineAlpha: 0,
+    bullet: 'triangleUp',
+    bulletColor: '#e91e63',
+    bulletSize: 10,
+    bulletOffset:4,
+    bulletHitAreaSize: 30,
+    balloon: {
+      textAlign: "left",
+      borderThickness: 0,
+      // fillColor: impsData.SSM_same[0].colorE,
+      fillColor: 'transparent',
+      color: impsData.SSM_same[0].colorE,
+      hideBalloonTime: 1000, // 1 second
+      // fixedPosition: true,
+    },
+    balloonFunction: function(graphItem, graph){
+      if(graphItem.dataContext.comment !== ' '){
+        // console.log(graphItem);
+        return '<span class="chart__comment">' + graphItem.dataContext.comment + ': Click for more info</span>';
+      }
     }
   }],
   chartCursor: {
-    cursorPosition: "middle",
+    cursorPosition: "left",
     // categoryBalloonEnabled: false,
+    // "balloonPointerOrientation": "vertical",
     categoryBalloonDateFormat: "DD MMMM",
     cursorColor: "#e91e63",
     cursorAlpha: 0.5,
     // bulletsEnabled:true
   },
-  chartScrollbar:{}
-  // listeners: [{
-  //   event: "rendered",
-  //   method: function(e){
-  //     e.chart.animateData(impsData.SSM_same, {
-  //       duration: 1000
-  //     })
-  //   }
-  // }]
+  chartScrollbar:{},
+  listeners: [{
+    event: "clickGraphItem",
+    method: function(e){
+      console.log('EVENT', e);
+    }
+  }]
 });
 
 //
@@ -1015,8 +1044,12 @@ function updateAllCharts(pment_ID) {
   function renderCharts(){
     if(chartsRendered < amCharts.length){
       var chart = amCharts[chartsRendered];
-      console.log('CHART', chart.div);
       var data = chart.dataObject[pment_ID];
+      // var chartDiv = chart.containerDiv.offsetParent.id;
+      // console.log(chartDiv);
+      // if( chartDiv === "chart--execImpsAgg"){
+      //   $('.chart--execImpsAgg').attr('class', 'chart chart--execImpsAgg ' + pment.id);
+      // }
       chartsRendered++;
       chart.animateData(data, {
         duration: 500,
@@ -1024,7 +1057,7 @@ function updateAllCharts(pment_ID) {
       });
     }else{
       console.log('ALL CHARTS LOADED');
-      chart__ImpsTime.chartCursor.showCursorAt('2017-08-09');
+      // chart__ImpsTime.chartCursor.showCursorAt('2017-08-09');
     }
   }
 

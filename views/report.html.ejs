@@ -195,9 +195,16 @@
       </div>
 
 
-      <div class="grid-cell grid4">
+      <div class="grid-cell grid4 error-chart">
         <div class="chart chart--impsDel">
           <h3>Delivery</h3>
+          <div class="chart__error-button"></div>
+          <div class="chart__error">
+            <p class="note">Executed Impressions below benchmark due to 100% Fallback: non-certified article pages on Bauer sites.</p>
+            <h6 class="optim">Optimisations</h6>
+            <p class="remedy">Scot Liddell corrected the tag to reinstate impressions</p>
+            <p class="date">15 Aug 2017</p>
+          </div>
           <div class="chart__render" id="chart--impsDel"></div>
           <div class="chart__render" id="chart--impsDelBench"></div>
           <div class="chart__legend">
@@ -219,8 +226,11 @@
             <option value="Individual">Individual</option>
           </select>
           </div>
+          <div class="marker marker1"></div>
+          <div class="marker marker2"></div>
 
-          <div id="chart--execImpsAgg" class="chart__render"></div>
+          <div id="chart--execImpsAgg" class="chart__render">
+          </div>
 
         </div>
       </div>

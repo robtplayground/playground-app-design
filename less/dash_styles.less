@@ -525,13 +525,10 @@ a[href="http://www.amcharts.com/javascript-charts/"]{
 
 .chart__comment{
 	position: absolute;
-	width: 150%;
+	width: 15em;
 	color: @pgxyz-pink;
 	text-decoration: underline;
 	text-decoration-style: dotted;
-	line-height: 1.5em;
-	top:-7.5em;
-	left:-0.5em;
 	line-height: 1.5em;
 	// &:before{
 	// 	content: '⋆';
@@ -545,10 +542,91 @@ a[href="http://www.amcharts.com/javascript-charts/"]{
 	// }
 }
 
-.amcharts-balloon-div span{
-	display:block;
-	transform: translate(-0.5em, -3em);
+.amcharts-balloon-div{
+	span{
+		display:block;
+		transform: translate(-0.5em, -6em);
+		width: 10em;
+		line-height: 1.5em;
+	}
 }
+
+.amcharts-graph-line circle{
+	// position: relative;
+	cursor: pointer;
+// z-index:-10;
+}
+
+.amcharts-graph-bullet{
+	// position:relative;
+	// z-index: 10
+}
+
+.amcharts-graph-bullet:hover + circle{
+	fill: fade(@pgxyz-pink, 10%);
+	fill-opacity: 1;
+}
+
+.chart--impsDel{
+	overflow: visible;
+}
+
+.error-chart{
+	overflow:visible;
+	z-index: 99;
+}
+
+.chart__error-button{
+	position: absolute;
+	top:2px;
+	right:4px;
+	height: 2em;
+	width: 2em;
+	background: url(../images/alert-icon.png);
+	background-size: cover;
+	z-index: 10;
+}
+
+.chart__error{
+	position:absolute;
+	right:1em;
+	top:3.5em;
+	width: 18em;
+	height:14em;
+	padding: 1em;
+	border: 1px solid @midgrey;
+	background: @white;
+	border-radius: 0.5rem 0rem 0.5rem 0.5rem;
+	box-shadow: 2px 2px 8px rgba(0,0,0,0.4);
+	z-index: 10;
+	&:before{
+		content:'';
+		display: block;
+		position: absolute;
+		top:-1.5em;
+		right:-1px;
+		width:1.5em;
+		height:1.5em;
+		background:url(../images/bubble-stem.svg);
+		background-size: contain;
+		background-position: bottom right;
+		background-repeat: no-repeat;
+	}
+	h6{
+		margin: 0;
+		font-size: @size-0;
+		color: red;
+	}
+	p{
+		line-height: 1.2em;
+	}
+	p.date{
+		font-size: @size-small;
+		color:@midgrey;
+	}
+}
+
+
 
 .chart--impsDel{
 	.chart__legend__left{
@@ -1302,5 +1380,43 @@ body.loading{
 	font-weight: 500;
 	td{
 		height: 2rem;
+	}
+}
+
+#chart_SSM_same_del,
+#chart_SSF_same_del{
+	position: relative;
+	&:before{
+		content:'';
+		display: block;
+		position: absolute;
+		width: 1.8rem;
+		height: 1.8rem;
+		// background: red;
+		right:0;
+		top:0;
+		z-index: 10;
+		background-image: url(../images/alert-icon.png);
+		background-size:cover;
+	}
+}
+
+.chart--execImpsAgg.SSM_same{
+	position:relative;
+	.marker{
+		position:absolute;
+		width: 1rem;
+		height: 1rem;
+		background:@pgxyz-pink;
+		border-radius: 100%;
+		top:86%;
+		z-index: 100;
+		&.marker1{
+			left:20.5%;
+		}
+		&.marker2{
+			left:50.5%;
+		}
+
 	}
 }

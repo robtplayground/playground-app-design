@@ -495,7 +495,7 @@ const makePlacement = function(options){
 	var videoViewableImps = VIDEO_VIEWABLE_IMPS(engagements);
 	var video = VIDEO_METRICS(engagements);
 
-	var delPerc = Math.round(total(requestedImps, {start: options.dates.start, end: new Date()}, campaign) / options.bookedImps * 100);
+	var delPerc = Math.round(total(executedImps, {start: options.dates.start, end: new Date()}, campaign) / options.bookedImps * 100);
 	var viewAv;
 	var engAv;
 	var ctrAv;
