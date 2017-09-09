@@ -18,6 +18,9 @@ const {
 	hexToRgb
 } = require( "./js/helpers.js" );
 
+const tinycolor = require("tinycolor2");
+
+
 const {
   fm,
 	campaigns,
@@ -55,7 +58,8 @@ var allData = {
 	breakText:breakText,
 	extend: extend,
 	pickHex: pickHex,
-	hexToRgb: hexToRgb
+	hexToRgb: hexToRgb,
+	tinycolor: tinycolor
 };
 
 // console.log('HELPERS', dataGenerator.helpers);

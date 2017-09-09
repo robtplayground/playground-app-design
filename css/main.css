@@ -1499,7 +1499,7 @@ button.icon-only svg {
   height: 60%;
   position: relative;
   display: flex;
-  width: 10rem;
+  width: 8rem;
   justify-content: flex-start;
   background: transparent;
 }
@@ -1517,6 +1517,14 @@ button.icon-only svg {
 }
 .app__header__profile button span {
   color: #ffffff;
+}
+.app__header__notifications {
+  display: flex;
+  align-items: center;
+  width: 5rem;
+}
+.app__header__notifications svg {
+  height: 70%;
 }
 .app__body {
   position: relative;
@@ -1571,10 +1579,6 @@ body {
   display: flex;
   min-height: 100vh;
   flex-direction: column;
-}
-.campaign__header {
-  height: 9rem;
-  background: black;
 }
 .login__box {
   width: 40vw;
@@ -1732,7 +1736,7 @@ body.side .data-filter button.close-filter {
   text-transform: uppercase;
 }
 .input__wrapper .select2 {
-  width: 80% f;
+  width: 80%;
 }
 .campaign-details {
   position: relative;
@@ -1742,6 +1746,9 @@ body.side .data-filter button.close-filter {
   display: flex;
   flex-wrap: wrap;
   z-index: 10;
+}
+.campaign-details .campaign__expand svg {
+  fill: white !important;
 }
 .campaign-details .grid-cell {
   width: calc(50% - 1rem);
@@ -1764,6 +1771,9 @@ body.side .data-filter button.close-filter {
   height: 100%;
   background: #333333;
   transform-origin: 50% 33%;
+}
+.campaign-details .campaign__actions svg {
+  display: none;
 }
 .campaign-edit {
   display: flex;
@@ -2071,6 +2081,7 @@ a[href="http://www.amcharts.com/javascript-charts/"] {
   height: 100%;
   display: flex;
   align-items: center;
+  background: #fafafa;
 }
 .greeting-text {
   font-weight: 300;
@@ -2166,11 +2177,11 @@ td {
 }
 .campaign__table {
   width: 94%;
-  margin: 1rem 2% 0 4%;
-  border-radius: 10px;
+  margin: 0rem 2% 0.5rem 4%;
+  border: 2px solid #333333;
+  background: #333333;
   color: #ffffff;
   font-size: 1rem;
-  margin-bottom: 2rem;
 }
 .campaign__table use.plus {
   display: none;
@@ -2231,14 +2242,17 @@ td {
 .campaign__table.collapse use.minus {
   display: none;
 }
-.campaign__title {
-  background: #333333;
+.campaign__table__head {
+  border: 0;
+  color: #aaaaaa;
+  font-size: 0.8em;
+  text-transform: uppercase;
+  margin-bottom: 0;
 }
-.campaign__title td:first-of-type {
-  border-radius: 5px 0 0 0;
-}
-.campaign__title td:last-of-type {
-  border-radius: 0 5px 0 0;
+.campaign__table__head tr,
+.campaign__table__head td {
+  height: 1.1rem;
+  padding-top: 0.8em;
 }
 .creative__table {
   position: relative;
@@ -2252,7 +2266,14 @@ td {
   height: 4rem;
 }
 .creative__table tbody tr:nth-child(even) {
-  background: #fafafa;
+  background: rgba(255, 255, 255, 0.5);
+}
+.campaign__title td {
+  height: 4rem;
+}
+.campaign__title .campaign__brand {
+  font-size: 1.2rem;
+  padding-left: 0.7em;
 }
 .creative-wrapper {
   max-height: 1000px;
@@ -2272,16 +2293,16 @@ td {
   padding-left: 1em;
 }
 .creative__title__thumb {
-  padding-left: 2em;
+  padding-left: 0.3em;
+  padding-bottom: 0.3em;
 }
 .creative__title__thumb img {
   display: block;
-  border-radius: 100%;
   width: 3.5rem;
 }
 .creative__title__format {
   position: relative;
-  padding-left: 1em;
+  padding-left: 0.5em;
   vertical-align: middle;
 }
 .creative__title__format svg {
@@ -2304,6 +2325,24 @@ td {
   color: #ffffff;
   vertical-align: middle;
 }
+.creative__title__status {
+  padding-left: 1em;
+}
+.creative__title__status svg {
+  display: inline-block;
+  vertical-align: middle;
+  fill: white;
+  width: 1.5em;
+  height: 1.5em;
+  margin-right: 0.5em;
+}
+.creative__title__status span {
+  text-transform: uppercase;
+  color: #ffffff;
+  vertical-align: middle;
+  font-size: 0.833rem;
+  font-weight: 400;
+}
 .creative__title__status svg {
   height: 1.5em;
   margin-right: 0.3em;
@@ -2325,7 +2364,7 @@ td {
   width: 6%;
 }
 .placement__status {
-  padding-left: 3em;
+  padding-left: 1em;
 }
 .placement__status svg {
   display: inline-block;
@@ -2439,38 +2478,34 @@ td {
 span.select2-selection.select2-selection--single {
   outline: none;
 }
-.campaigns__search {
+.sort-group {
   display: flex;
   justify-content: space-between;
   padding-right: 1rem;
   align-items: center;
 }
-.campaigns__search .select2 {
+.sort-group .select2 {
   width: 10rem !important;
   margin: 0.5rem;
 }
-.campaigns__search .select2:focus {
+.sort-group .select2:focus {
   outline: none;
-}
-.campaigns__search button {
-  margin: 0.5rem 0;
-  background: transparent;
-  padding: 0;
-}
-.campaigns__search button svg {
-  width: 2.5rem;
-  height: 100%;
 }
 .expand-buttons {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  width: 17rem;
+  justify-content: flex-start;
+  padding-left: 3rem;
 }
-.sort-group {
-  width: 15rem;
-  display: flex;
-  align-items: center;
+.expand-buttons button {
+  margin: 0.5rem 1rem 0;
+  background: transparent;
+  padding: 0;
+  width: 8rem;
+}
+.expand-buttons button svg {
+  width: 2.5rem;
+  height: 100%;
 }
 .campaigns__count h3 {
   padding-left: 3rem;
@@ -2579,4 +2614,13 @@ body.loading .spinner {
   to {
     transform: rotate(360deg);
   }
+}
+.placement__header {
+  color: white;
+  text-transform: uppercase;
+  font-size: 0.85em;
+  font-weight: 500;
+}
+.placement__header td {
+  height: 2rem;
 }

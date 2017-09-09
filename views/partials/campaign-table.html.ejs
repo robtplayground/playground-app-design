@@ -1,5 +1,24 @@
 <table class="campaign__table  <%= cp.id %> <% if (cp.id === 'cp_gopro'){ %> collapse <%} %>">
-
+  <thead class="campaign__table__head"><tr >
+    <td class="campaign__expand">
+    </td>
+    <td class="campaign__brand">
+      Brand
+    </td>
+    <td class="campaign__name grid3">
+      Name
+    </td>
+    <td class="campaign__dates grid2">
+      Dates
+    </td>
+    <td class="campaign__progress grid3">
+      Progress
+    </td>
+    <td class="campaign__actions table__actions">
+    </td>
+  </tr>
+</thead>
+<tbody>
   <tr class="campaign__title">
     <td class="campaign__expand" data-cp="<%= cp.id %>">
       <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
@@ -71,12 +90,13 @@
           </th>
           <th class="creative__title__author">
 
-            <span><svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
-              <use x="0" y="0" href="#lock" />
-            </svg><%= moment(cr.modified).format('D/M/YY') %> <%= cr.author %></span>
+              <span>Modified: <%= moment(cr.modified).format('D/M/YY') %> <%= cr.author %></span>
+
           </th>
 
-          <th><!-- empty --> </th>
+          <th class="creative__title__status"><span><svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
+            <use x="0" y="0" href="#<%= cr.statusIcon %>" />
+          </svg><%= cr.status %></span></th>
           <th class="creative__title__actions table__actions">
             <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
               <use x="0" y="0" href="#menu" />
@@ -85,7 +105,28 @@
         </tr>
         </thead>
 
-        <tbody>
+        <tbody style="background-color: <%= tinycolor(cr.format.color).setAlpha(.2) %>">
+
+          <tr class="placement__header" style="color: <%= tinycolor(cr.format.color).darken(20) %>">
+            <td class="placement__status">
+              <!-- Status -->
+            </td>
+            <td class="placement__audience">
+              Audience
+            </td>
+            <td class="placement__name grid3">
+              Name
+            </td>
+            <td class="placement__dates">
+            Dates
+            </td>
+            <td class="placement__progress grid5">
+              Progress
+            </td>
+            <td class="placement__actions table__actions">
+
+            </td>
+          </tr>
 
         <% let pments = placements.filter(pl => pl.campaign === cp.id && pl.creative === cr.id); %>
         <% pments.forEach(function(pl){ %>
@@ -181,5 +222,5 @@
 
   <% }); %> <!-- end creative -->
 
-
+</tbody>
 </table>

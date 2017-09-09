@@ -986,7 +986,7 @@ var chart__pcHeat = AmCharts.makeChart("chart--passiveCHeat", {
 
 // push data to all charts on click
 
-var amCharts = [chart__ImpsTime, chart__vAv, chart__vAvBench, chart__impsDel, chart__impsDelBench, chart__erTime, chart__ecHeat, chart__pcHeat];
+var amCharts = [chart__impsDel, chart__impsDelBench, chart__ImpsTime, chart__vAv, chart__vAvBench, chart__erTime, chart__ecHeat, chart__pcHeat];
 
 var totalsCharts = [chart__ativAv, chart__engagedC, chart__erAv];
 

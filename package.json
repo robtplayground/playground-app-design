@@ -43,6 +43,7 @@
     "uglify-js": "^2.7.4",
     "autoprefixer": "^6.7.3",
     "lucid-ui": "^2.15.2",
-    "less": "^2.7.2"
+    "less": "^2.7.2",
+    "tinycolor2": "^1.4.1"
   }
 }

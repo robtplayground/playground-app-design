@@ -1,100 +1,67 @@
 <% include partials/header.html.ejs %>
 
-  <div class="app__body">
+  <% var active = campaigns.filter(cp => moment(cp.dates.start).diff(new Date()) < 0); %>
+    <% var pending = campaigns.filter(cp => moment(cp.dates.start).diff(new Date()) > 0); %>
 
-    <div class="campaign-details"></div>
+      <div class="app__body">
 
-    <div class="campaigns">
+        <div class="campaign-details"></div>
 
-      <div class="campaigns-welcome grid">
-      <h1 class="greeting-text grid-cell grid6">Welcome Rob!</h1>
-      <div class="greeting-comments grid-cell grid6">
-        <input type="search" placeholder="search campaigns, creatives...">
-        <button>
-          <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
-            <use x="0" y="0" href="#comments" />
-          </svg>
-        </button>
-        <!-- <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
-          <use x="0" y="0" href="#filter2" />
-        </svg> -->
-      </div>
-    </div>
+        <div class="campaigns">
 
-      <div class="campaigns__filter grid">
+          <div class="campaigns-welcome grid">
+            <h1 class="greeting-text grid-cell grid4">Welcome Rob!</h1>
+            <div class="campaigns__count grid-cell grid8">
+              <h3>You have <span><%= active.length %></span> active campaign and <span><%= pending.length %></span> pending campaigns</h3>
+            </div>
 
-        <% var active = campaigns.filter(cp => moment(cp.dates.start).diff(new Date()) < 0); %>
+          </div>
 
-        <div class="campaigns__count grid-cell grid6">
-          <h3>You have <span><%= active.length %></span> active campaign</h3>
-        </div>
+          <div class="campaigns__filter grid">
 
-        <div class="campaigns__search grid-cell grid6">
+            <div class="expand-buttons grid-cell grid7">
 
-          <div class="expand-buttons">
-
-            <button class="expand-all">
+              <button class="expand-all">
               <svg viewBox="0 0 300 300" preserveAspectRatio="xMinYMid meet">
                 <use class="plus" x="0" y="0" href="#expand-plus"></use>
               </svg>
               Expand All
             </button>
-            <button class="collapse-all">
+              <button class="collapse-all">
               <svg viewBox="0 0 300 300" preserveAspectRatio="xMinYMid meet">
                 <use class="minus"  x="0" y="0" href="#expand-minus"></use>
               </svg>
               Collapse All
             </button>
 
-          </div>
+            </div>
 
-          <div class="sort-group"><label for="campaign-sort">Sort by:</label>
-
-          <select id="campaign-sort" class="data-filter__group-select">
-            <option value="Delivery">Campaign</option>
-            <option value="Audience" selected>Placement</option>
-            <option value="Category">Format</option>
-            <option value="Format">Features</option>
-          </select></div>
-        </div>
+            <div class="greeting-comments grid-cell grid3">
+              <input type="search" placeholder="search campaigns, creatives...">
+            </div>
 
 
-      </div>
+            <div class="sort-group grid-cell grid2">
+              <label for="campaign-sort">Sort by:</label>
 
-
-        <% var pending = campaigns.filter(cp => moment(cp.dates.start).diff(new Date()) > 0); %>
-
-
-        <% active.forEach(cp => { %>
-
-          <% include partials/campaign-table.html.ejs %>
-
-        <% }) %>
-
-        <% if (pending.length > 0){ %>
-
-          <div class="grid">
-            <div class="campaigns__count grid-cell">
-              <h3>You have <span><%= pending.length %></span> pending campaigns</h3>
-
+              <select id="campaign-sort" class="data-filter__group-select">
+          <option value="Delivery">Campaign</option>
+          <option value="Audience" selected>Placement</option>
+          <option value="Category">Format</option>
+          <option value="Format">Features</option>
+        </select>
             </div>
           </div>
 
+          <% campaigns.forEach(cp => { %>
+            <% include partials/campaign-table.html.ejs %>
+              <% }) %>
 
-        <% } %>
+        </div>
 
-        <% pending.forEach(cp => { %>
+      </div>
 
-          <% include partials/campaign-table.html.ejs %>
-
-        <% }) %>
-
-
-    </div>
-
-  </div>
-
-  <script src="/js/site.js"></script>
+      <script src="/js/site.js"></script>
 
 
-  <% include partials/footer.html.ejs %>
+      <% include partials/footer.html.ejs %>

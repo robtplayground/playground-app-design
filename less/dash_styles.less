@@ -4,11 +4,6 @@ body{
 	flex-direction:column;
 }
 
-.campaign__header{
-	height: 9rem;
-	background: black;
-}
-
 // LOGIN
 
 .login__box{
@@ -218,7 +213,7 @@ body{
 		text-transform: uppercase;
 	}
 	.select2{
-		width:80%f
+		width:80%;
 	}
 }
 
@@ -231,6 +226,11 @@ body{
 	flex-wrap: wrap;
 	z-index:10;
 	// transform: translateY(115px);
+	.campaign__expand{
+		svg{
+			fill:white !important;
+		}
+	}
 	.grid-cell{
 		width: ~"calc(50% - 1rem)";
 		flex: none;
@@ -253,6 +253,9 @@ body{
 		background: @darkgrey;
 		// transform: scaleX(0.8) scaleY(0.62);
 		transform-origin: 50% 33%;
+	}
+	.campaign__actions svg{
+		display:none;
 	}
 }
 
@@ -641,6 +644,7 @@ a[href="http://www.amcharts.com/javascript-charts/"]{
 	height: 100%;
 	display:flex;
 	align-items: center;
+	background: @palegrey;
 }
 
 .greeting-text{
@@ -743,13 +747,12 @@ table, td{
 }
 .campaign__table{
 	width: 94%;
-	margin: 1rem 2% 0 4%;
-	// border: 1px solid @midgrey;
-	// background: @darkgrey;
-	border-radius: 10px;
+	margin: 0rem 2% 0.5rem 4%;
+	border: 2px solid @darkgrey;
+	background: @darkgrey;
+	// border-radius: 10px;
 	color: @white;
 	font-size: @size-0;
-	margin-bottom: 2rem;
 	use.plus{
 		display:none;
 	}
@@ -822,15 +825,33 @@ table, td{
 	}
 }
 
-.campaign__title{
-	background: @darkgrey;
-	td:first-of-type{
-		border-radius: 5px 0 0 0;
+.campaign__table__head	{
+	// background: lighten(@darkgrey, 20) !important;
+	border:0;
+	color: @midgrey;
+	font-size: 0.8em;
+	text-transform: uppercase;
+	// font-weight: 700;
+	margin-bottom: 0;
+	tr,td{
+		height: 1.1rem;
+		padding-top: 0.8em;
 	}
-	td:last-of-type{
-		border-radius: 0 5px 0 0;
-	}
+
+	// .campaign__brand{
+	// 	font-weight: 400;
+	// }
 }
+
+// .campaign__title{
+// 	// background: @darkgrey;
+// 	td:first-of-type{
+// 		border-radius: 5px 0 0 0;
+// 	}
+// 	td:last-of-type{
+// 		border-radius: 0 5px 0 0;
+// 	}
+// }
 
 
 .creative__table{
@@ -843,9 +864,18 @@ table, td{
 		height: 4rem;
 	}
 	tbody tr:nth-child(even){
-		background: @palegrey;
+		background: rgba(255,255,255,0.5);
 	}
 	// width: 100%;
+}
+
+.campaign__title td{
+	height: 4rem;
+}
+
+.campaign__title .campaign__brand{
+	font-size: 1.2rem;
+	padding-left: 0.7em;
 }
 
 .creative-wrapper{
@@ -872,17 +902,18 @@ table, td{
 }
 
 .creative__title__thumb{
-	padding-left: 2em;
+	padding-left: 0.3em;
+	padding-bottom: 0.3em;
 	img{
 		display: block;
-		border-radius: 100%;
+		// border-radius: 100%;
 		width: 3.5rem;
 		// box-shadow: inset 0 0 20px rgba(255,0,0,1);
 	}
 }
 .creative__title__format{
 	position:relative;
-	padding-left: 1em;
+	padding-left: 0.5em;
 	vertical-align: middle;
 	svg{
 		fill: white;
@@ -904,6 +935,25 @@ table, td{
 	span{
 		color: @white;
 		vertical-align: middle;
+	}
+}
+
+.creative__title__status{
+	padding-left: 1em;
+	svg{
+		display: inline-block;
+		vertical-align: middle;
+		fill: white;
+		width: 1.5em;
+		height: 1.5em;
+		margin-right: 0.5em;
+	}
+	span{
+		text-transform: uppercase;
+		color: @white;
+		vertical-align: middle;
+		font-size: @size-small;
+		font-weight: 400
 	}
 }
 
@@ -934,7 +984,7 @@ table, td{
 }
 
 .placement__status{
-	padding-left: 3em;
+	padding-left: 1em;
 	svg{
 		display: inline-block;
 		width: 1.5rem;
@@ -1067,7 +1117,7 @@ span.select2-selection.select2-selection--single {
         outline: none;
     }
 
-.campaigns__search{
+.sort-group{
 	display:flex;
 	justify-content: space-between;
 	padding-right: 1rem;
@@ -1079,10 +1129,20 @@ span.select2-selection.select2-selection--single {
 			outline: none;
 		}
 	}
+
+}
+
+.expand-buttons{
+	display:flex;
+	align-items: center;
+	justify-content: flex-start;
+	// width: 20rem;
+	padding-left: 3rem;
 	button{
-		margin: 0.5rem 0;
+		margin: 0.5rem 1rem 0;
 		background: transparent;
 		padding:0;
+		width: 8rem;
 		svg{
 			// margin-right: 0.3rem;
 			width: 2.5rem;
@@ -1091,21 +1151,6 @@ span.select2-selection.select2-selection--single {
 	}
 }
 
-.expand-buttons{
-	display:flex;
-	align-items: center;
-	justify-content: space-between;
-	width: 17rem;
-	button{
-
-	}
-}
-
-.sort-group{
-	width: 15rem;
-	display: flex;
-	align-items: center;
-}
 
 .campaigns__count{
 	h3{
@@ -1241,5 +1286,17 @@ body.loading{
 @keyframes spin{
 	to{
 		transform: rotate(360deg);
+	}
+}
+
+
+
+.placement__header{
+	color: white;
+	text-transform: uppercase;
+	font-size: 0.85em;
+	font-weight: 500;
+	td{
+		height: 2rem;
 	}
 }
