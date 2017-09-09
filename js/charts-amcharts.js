@@ -137,9 +137,9 @@ var chart__ImpsTime = AmCharts.makeChart("chart--execImpsAgg", {
     title: "comments",
     valueField: "commentVal",
     lineAlpha: 0,
-    bullet: 'triangleUp',
+    customBullet: "../images/alert-icon.png",
     bulletColor: '#e91e63',
-    bulletSize: 10,
+    bulletSize: 15,
     bulletOffset:4,
     bulletHitAreaSize: 30,
     balloon: {
@@ -171,7 +171,7 @@ var chart__ImpsTime = AmCharts.makeChart("chart--execImpsAgg", {
   listeners: [{
     event: "clickGraphItem",
     method: function(e){
-      console.log('EVENT', e);
+      $('.chart__error').fadeToggle(500);
     }
   }]
 });

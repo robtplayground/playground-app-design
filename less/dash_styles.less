@@ -595,10 +595,11 @@ a[href="http://www.amcharts.com/javascript-charts/"]{
 	height:14em;
 	padding: 1em;
 	border: 1px solid @midgrey;
-	background: @white;
+	background: rgba(255,255,255,0.97);
 	border-radius: 0.5rem 0rem 0.5rem 0.5rem;
 	box-shadow: 2px 2px 8px rgba(0,0,0,0.4);
 	z-index: 10;
+	display:none;
 	&:before{
 		content:'';
 		display: block;
@@ -1282,11 +1283,17 @@ body.report {
 		border-radius: 0;
 		max-width: 1000px;
 		padding:0;
-		transition: transform 0.5s ease;
+		&:focus{
+			outline: none;
+		}
 		svg{
+			transition: all 0.5s ease;
 			fill: @white;
 			height: 70%;
 			width: 10%;
+			body.side &{
+				fill: @pgxyz-pink;
+			}
 		}
 		h3{
 			font-size: @size-0;
@@ -1298,9 +1305,6 @@ body.report {
 			font-size: @size-0;
 			margin:0;
 			line-height: 2rem;
-		}
-		body.side &{
-			transform: translateX(-3rem);
 		}
 	}
 

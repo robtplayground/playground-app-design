@@ -143,10 +143,15 @@ $(document).ready(function() {
 });
 
 $('.show-filter').click(function() {
-  $('body').addClass('side');
+  $('body').toggleClass('side');
   $('#radio0').prop('checked', 'checked');
-})
+});
 
 $('.close-filter').click(function() {
   $('body').removeClass('side');
-})
+});
+
+$('.chart__error-button').click(function(){
+  $('.chart__error').fadeToggle(500);
+  chart__ImpsTime.chartCursor.showCursorAt('2017-08-09');
+});

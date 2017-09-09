@@ -2036,10 +2036,11 @@ a[href="http://www.amcharts.com/javascript-charts/"] {
   height: 14em;
   padding: 1em;
   border: 1px solid #aaaaaa;
-  background: #ffffff;
+  background: rgba(255, 255, 255, 0.97);
   border-radius: 0.5rem 0rem 0.5rem 0.5rem;
   box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
   z-index: 10;
+  display: none;
 }
 .chart__error:before {
   content: '';
@@ -2609,12 +2610,18 @@ body.report .report {
   border-radius: 0;
   max-width: 1000px;
   padding: 0;
-  transition: transform 0.5s ease;
+}
+.filter-actions .show-filter:focus {
+  outline: none;
 }
 .filter-actions .show-filter svg {
+  transition: all 0.5s ease;
   fill: #ffffff;
   height: 70%;
   width: 10%;
+}
+body.side .filter-actions .show-filter svg {
+  fill: #e91e63;
 }
 .filter-actions .show-filter h3 {
   font-size: 1rem;
@@ -2626,9 +2633,6 @@ body.report .report {
   font-size: 1rem;
   margin: 0;
   line-height: 2rem;
-}
-body.side .filter-actions .show-filter {
-  transform: translateX(-3rem);
 }
 .filter-actions .actions {
   display: flex;
