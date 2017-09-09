@@ -2082,6 +2082,7 @@ a[href="http://www.amcharts.com/javascript-charts/"] {
   display: flex;
   align-items: center;
   background: #fafafa;
+  height: 5rem;
 }
 .greeting-text {
   font-weight: 300;
@@ -2507,11 +2508,14 @@ span.select2-selection.select2-selection--single {
   width: 2.5rem;
   height: 100%;
 }
-.campaigns__count h3 {
-  padding-left: 3rem;
+.campaigns__count {
+  display: inline-block;
+  padding-left: 2rem;
   font-weight: 400;
+  width: 50%;
+  font-size: 1.44rem;
 }
-.campaigns__count h3 span {
+.campaigns__count span {
   font-size: 1.3em;
   color: #e91e63;
   margin: 0 0.2em;
