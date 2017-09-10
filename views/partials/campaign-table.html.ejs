@@ -1,4 +1,4 @@
-<table class="campaign__table  <%= cp.id %> <% if (cp.id === 'cp_gopro'){ %> collapse <%} %>">
+<table class="campaign__table  <%= cp.id %> collapse">
   <thead class="campaign__table__head"><tr >
     <td class="campaign__expand">
     </td>
@@ -67,14 +67,14 @@
   <% let crtvs = creatives.filter(cr => cr.campaign === cp.id); %>
   <% crtvs.forEach(function(cr){  %>
 
-  <tr class="creative-row">
+  <tr class="creative-row creative-<%= cr.id %>">
     <td colspan="6" class="creative">
 
       <div class="creative-wrapper">
 
        <!-- start creative -->
 
-      <table class="creative__table" style="border: 2px solid <%= cr.format.color %>">
+      <table class="creative__table " style="border: 2px solid <%= cr.format.color %>">
         <thead>
         <tr class="creative__title" style="background-color: <%= cr.format.color %> ">
           <th class="creative__title__thumb">

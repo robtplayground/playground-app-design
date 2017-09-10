@@ -1442,6 +1442,7 @@ button.icon-only svg {
   right: 10px !important;
   border-radius: 15px !important;
   height: 60px !important;
+  display: none !important;
 }
 .app__svg-icons {
   display: none;
@@ -1585,6 +1586,9 @@ body {
   height: 30vw;
   border: 1px solid black;
   padding: 1rem 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 .login__box h1 {
   text-align: center;
@@ -1608,6 +1612,7 @@ body {
 .login__box a {
   font-size: 0.833rem;
   margin-left: 11rem;
+  width: 12em;
 }
 .charts {
   display: flex;
@@ -1627,7 +1632,8 @@ body {
   flex: 1 0;
   margin: 0;
   padding: 1rem;
-  width: 22rem;
+  width: 23rem;
+  background: #efefef;
 }
 .data-filter button.close-filter {
   outline: none;
@@ -1667,6 +1673,12 @@ body.side .data-filter button.close-filter {
   text-transform: uppercase;
   font-size: 1.2rem;
   font-weight: 700;
+}
+.data-filter.fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 99;
 }
 .filter__date-slider {
   width: 100%;
@@ -1745,7 +1757,13 @@ body.side .data-filter button.close-filter {
   color: white;
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   z-index: 10;
+  height: 7rem;
+}
+.campaign-details .campaign__table {
+  margin-bottom: 0;
+  margin-top: 0;
 }
 .campaign-details .campaign__expand svg {
   fill: white !important;
@@ -1770,7 +1788,7 @@ body.side .data-filter button.close-filter {
   width: 100%;
   height: 100%;
   background: #333333;
-  transform-origin: 50% 33%;
+  transform-origin: 50% 50%;
 }
 .campaign-details .campaign__actions svg {
   display: none;
@@ -1796,10 +1814,14 @@ body.side .data-filter button.close-filter {
   justify-content: center;
   width: 33%;
   text-align: center;
+  cursor: pointer;
 }
 .filter__treemap .dm {
   height: 50%;
   background: #ee4c83;
+}
+.filter__treemap .dm.active {
+  background: #883753;
 }
 .filter__treemap .smh {
   height: 50%;
@@ -1854,13 +1876,14 @@ body.side .data-filter button.close-filter {
   text-transform: uppercase;
 }
 .chart__circle {
+  transition: all 0.6s ease-in;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   width: 9rem;
   height: 9rem;
-  background: #0078d8;
+  background-color: #0078d8;
   color: white;
   font-size: 2.074rem;
   border-radius: 100%;
@@ -1991,17 +2014,17 @@ a[href="http://www.amcharts.com/javascript-charts/"] {
   width: calc(100% - 2rem);
 }
 .chart__comment {
-  position: absolute;
   width: 15em;
   color: #e91e63;
   text-decoration: underline;
   text-decoration-style: dotted;
   line-height: 1.5em;
+  text-shadow: 0 0 10px #ffffff, 0 0 10px #ffffff, 0 0 10px #ffffff, 0 0 10px #ffffff;
 }
-.amcharts-balloon-div span {
+.amcharts-balloon-div span.offset {
   display: block;
-  transform: translate(-0.5em, -6em);
-  width: 10em;
+  transform: translate(-0.5em, -4em);
+  width: 12em;
   line-height: 1.5em;
 }
 .amcharts-graph-line circle {
@@ -2058,14 +2081,38 @@ a[href="http://www.amcharts.com/javascript-charts/"] {
 .chart__error h6 {
   margin: 0;
   font-size: 1rem;
-  color: red;
+  color: #e91e63;
 }
 .chart__error p {
   line-height: 1.2em;
 }
+.chart__error p.remedy {
+  position: relative;
+  padding-left: 1.2em;
+}
+.chart__error p.remedy:before {
+  position: absolute;
+  content: '';
+  display: block;
+  background-image: url(../images/pink-star.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 0.8em;
+  height: 0.8em;
+  left: 0;
+  top: 0.1em;
+}
 .chart__error p.date {
-  font-size: 0.833rem;
+  font-size: 1rem;
   color: #aaaaaa;
+}
+.chart__error__content {
+  position: absolute;
+  top: 1em;
+  left: 1em;
+  width: calc(100% - 2em);
+  height: calc(100% - 2em);
+  overflow-y: scroll;
 }
 .chart--impsDel .chart__legend__left:before {
   position: relative;
@@ -2145,7 +2192,7 @@ a[href="http://www.amcharts.com/javascript-charts/"] {
   display: flex;
   align-items: center;
   background: #fafafa;
-  height: 5rem;
+  height: 7rem;
 }
 .greeting-text {
   font-weight: 300;
@@ -2205,7 +2252,7 @@ td {
   background: rgba(255, 255, 255, 0.9);
   color: #222222;
   z-index: 10;
-  bottom: -160%;
+  bottom: -190%;
   box-shadow: 5px 5px 8px rgba(0, 0, 0, 0.4);
   transform: translateX(-25%);
   overflow: visible;
@@ -2289,6 +2336,7 @@ td {
 }
 .campaign__table .campaign__actions svg {
   fill: #ffffff;
+  margin-bottom: 1em;
 }
 .campaign__table .campaign__progress .chart-container {
   height: 4rem;
@@ -2659,13 +2707,15 @@ body.side .filter-actions .show-filter svg {
 }
 .spinner {
   position: absolute;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   background: rgba(255, 255, 255, 0.7);
-  z-index: 10;
+  z-index: 100;
   display: none;
 }
 .spinner svg {
@@ -2673,6 +2723,23 @@ body.side .filter-actions .show-filter svg {
   width: 4rem;
   height: 4rem;
   transform-origin: center;
+}
+.spinner > svg {
+  margin-bottom: 15rem;
+}
+.spinner div {
+  border: 1px solid #aaaaaa;
+  background: #ffffff;
+  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.5);
+  width: 50vw;
+  height: 25vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.spinner div p {
+  margin-bottom: 2rem;
 }
 body.loading .spinner {
   display: flex;
@@ -2728,4 +2795,25 @@ body.loading .spinner {
 }
 .chart--execImpsAgg.SSM_same .marker.marker2 {
   left: 50.5%;
+}
+.creative-SS_Males_Black {
+  display: none;
+}
+.login-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  border-radius: 2em;
+  width: 5rem;
+  height: 2rem;
+}
+[data-placement="SSM_same_DM"] {
+  display: none !important;
+}
+button {
+  outline: none !important;
+}
+.campaigns-body {
+  justify-content: flex-start !important;
 }

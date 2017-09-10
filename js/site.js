@@ -75,11 +75,11 @@ var timeline = new TimelineMax({paused:true});
 
 timeline
 .set('.campaign-details', {
-  y: '115px'
+  y: '160px'
 })
 .set('.campaign-details .background', {
   scaleX: 0.8,
-  scaleY: 0.62
+  scaleY: 0.84
 })
 .set('.filter-actions', {
   opacity:0,
@@ -102,7 +102,7 @@ timeline
   ease: Power4.easeIn
 }, 'move')
 .to('.campaign__table', 0.5, {
-  y: '30px',
+  y: '20px',
   ease: Power4.easeIn
 }, 'move')
 .to('.campaign__table', 0.5, {
@@ -133,6 +133,7 @@ $(document).ready(function() {
   // }
 
   if(page === 'report'){
+    // $('.campaign-details').css('display', 'flex');
     timeline.play();
   }
 
@@ -152,6 +153,30 @@ $('.close-filter').click(function() {
 });
 
 $('.chart__error-button').click(function(){
-  $('.chart__error').fadeToggle(500);
-  chart__ImpsTime.chartCursor.showCursorAt('2017-08-09');
+  $('.chart__error').toggleClass('visible').fadeToggle(500);
+  chart__ImpsTime.chartCursor.showCursorAt('2017-08-08');
+});
+
+$('.chart__error.visible').click(function(){
+  alert('clicked');
+  $(this).removeClass('visible').fadeOut(500);
+});
+
+// fix filters at header
+
+$(window).scroll(function(){
+  var filter = $('.data-filter'),
+      scroll = $(window).scrollTop();
+
+  if (scroll >= 165 && $('body').hasClass('side')) filter.addClass('fixed');
+  else filter.removeClass('fixed');
+});
+
+$('.filter__treemap .dm').click(function(){
+  $(this).addClass('active');
+  updateAllCharts('SSM_same_DM');
+});
+
+$('.download-file').click(function(){
+  $('.spinner').css('display', 'flex');
 });

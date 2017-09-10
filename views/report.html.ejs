@@ -5,45 +5,87 @@
 
 <div class="campaign-details">
   <div class="background"></div>
-  <table class="campaign__table  <%= cp.id %>">
+  <table class="campaign__table  <%= cp.id %> collapse">
+  <thead class="campaign__table__head"><tr>
+    <td class="campaign__expand">
+    </td>
+    <td class="campaign__brand">
+      Brand
+    </td>
+    <td class="campaign__name grid3">
+      Name
+    </td>
+    <td class="campaign__dates grid2">
+      Dates
+    </td>
+    <td class="campaign__progress grid3">
+      Progress
+    </td>
+    <td class="campaign__actions table__actions">
+    </td>
+  </tr>
+</thead>
+<tbody>
+  <tr class="campaign__title">
+  <td class="campaign__expand" data-cp="<%= cp.id %>">
+    <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
+      <use x="0" y="0" href="#arrow-left-head"></use>
+      <use x="0" y="0" href="#arrow-left-stem"></use>
+    </svg>
+  </td>
+    <td class="campaign__brand">
+      GoPro
+    </td>
+    <td class="campaign__name grid3">
+      Hero5 Mark II
+    </td>
+    <td class="campaign__dates grid2">
+      Tue 1 Aug - Sat 30 Sep
+    </td>
+    <td class="campaign__progress grid3">
 
-    <tr class="campaign__title">
-      <td class="campaign__expand" data-cp="<%= cp.id %>">
-        <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
-          <use x="0" y="0" href="#arrow-left-head"></use>
-          <use x="0" y="0" href="#arrow-left-stem"></use>
-        </svg>
-      </td>
-      <td class="campaign__brand">
-        <%= cp.brand %>
-      </td>
-      <td class="campaign__name grid3">
-        <%= cp.name %>
-      </td>
-      <td class="campaign__dates grid2">
-        <%= moment(cp.dates.start).format('ddd D MMM') %> - <%= moment(cp.dates.end).format('ddd D MMM') %>
-      </td>
-      <td class="campaign__progress grid3">
 
-        <% var dur = duration(cp.dates); %>
-        <% var cur = moment(new Date()).diff(cp.dates.start, 'days'); %>
-        <% var percent = (cur / dur * 100) > 0 ? (cur / dur * 100) : 0; %>
-        <% var progString = cur <= 0 ? (cur * -1) + ' days til start' : cur + ' / ' + dur + ' days';  %>
 
-        <div class="chart__progress-bar">
-          <span class="chart__progress-bar__prog" style="width: <%= percent %>%; background: #e91e63;">
-            <span class="chart__progress-bar__text"><%= progString %></span>
-          </span>
 
-        </div>
-      </td>
-      <td class="campaign__actions table__actions">
-        <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
-          <use x="0" y="0" href="#menu"></use>
-        </svg>
-      </td>
-    </tr>
+
+
+      <div class="chart__progress-bar">
+        <span class="chart__progress-bar__prog" style="width: 66.66666666666666%; background: #e91e63;">
+          <span class="chart__progress-bar__text">40 / 60 days</span>
+        </span>
+
+      </div>
+    </td>
+    <td class="campaign__actions table__actions">
+      <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
+        <use x="0" y="0" href="#menu"></use>
+      </svg>
+      <div class="table__actions__menu">
+        <ul>
+          <li>Edit Campaign</li>
+          <li>Report</li>
+          <li>Clone</li>
+          <li>Archive</li>
+        </ul>
+      </div>
+    </td>
+  </tr>
+
+</tbody>
+
+
   </table>
+</div>
+
+<div class="spinner">
+  <div>
+    <h3>Downloading Report</h3>
+    <p><%= cp.name%>.xlxs</p>
+    <svg class="spinner__icon" viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
+      <use x="0" y="0" href="#spinner"></use>
+    </svg>
+  </div>
+
 </div>
 
   <div class="main grid">
@@ -201,13 +243,6 @@
       <div class="grid-cell grid4 error-chart">
         <div class="chart chart--impsDel">
           <h3>Delivery</h3>
-          <div class="chart__error-button"></div>
-          <div class="chart__error">
-            <p class="note">Executed Impressions below benchmark due to 100% Fallback: non-certified article pages on Bauer sites.</p>
-            <h6 class="optim">Optimisations</h6>
-            <p class="remedy">Scot Liddell corrected the tag to reinstate impressions</p>
-            <p class="date">15 Aug 2017</p>
-          </div>
           <div class="chart__render" id="chart--impsDel"></div>
           <div class="chart__render" id="chart--impsDelBench"></div>
           <div class="chart__legend">
@@ -224,6 +259,19 @@
 
           <div class="chart__controls">
             <h3>Impressions</h3>
+            <div class="chart__error-button"></div>
+            <div class="chart__error">
+              <div class="chart__error__content">
+                <p class="date">8 Aug 2017</p>
+                <p class="note">Executed Impressions below benchmark due to 100% Fallback: non-certified article pages on Bauer sites.</p>
+                <h6 class="optim">Optimisations</h6>
+                <p class="remedy">Scot Liddell corrected the tag to reinstate impressions</p>
+                <p class="date">25 Aug 2017</p>
+                <p class="note">Retargetted audience towards improving Engagement Rate</p>
+                <h6 class="optim">Optimisations</h6>
+                <p class="remedy">Scot Liddell corrected the tag to reinstate impressions</p>
+              </div>
+            </div>
             <select class="chart__select">
             <option value="Cumulative">Cumulative</option>
             <option value="Individual">Individual</option>

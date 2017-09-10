@@ -36,6 +36,17 @@ superSkin = {
   }
 };
 
+generic = {
+	name: 'generic',
+	color: "#e91e63",
+  bm: {
+    viewability: 63,
+    engagementRate: 0.92,
+    ativ: 9.2,
+		engagedCompletionRate: 15.1
+  }
+};
+
 topTail = {
 	name: 'top-and-tail',
 	color: "#5d3289",
@@ -385,6 +396,19 @@ creatives = [
     features: ['expand-frame', 'video'],
 		campaign: "cp_gopro"
 },
+	{
+		id: 'SS_Males_Black',
+		name: 'GoPro Hero5 Males Festival SS',
+		content: 'GoPro Hero5 Males Festival',
+		thumb: 'thumb-gopro-males.png',
+		author: 'Steve Nash',
+		status: 'active',
+		statusIcon: 'lock',
+		modified: new Date(2017, 7, 1),
+		format: generic,
+    features: ['expand-frame', 'video'],
+		campaign: "cp_gopro"
+},
 {
 		id: 'SS_Females',
 		name: 'GoPro Hero5 Females Travel SS',
@@ -554,7 +578,9 @@ const makePlacement = function(options){
 
 /***** ERRORS  *****/
 
-var errorPath_execImps1_8Aug = [200, 200, 200, 200, 200, 200, 200, 200, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100];
+var errorPath_execImps1_8Aug = [200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100];
+
+var errorPath_DM = [200, 200, 200, 200, 200, 200, 200, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100];
 
 var errorPath_viewb26_30July = [100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 139, 139, 143, 138, 137, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100];
 
@@ -584,6 +610,39 @@ SSM_same = makePlacement({
 		},
 		engagements: {
 			differences: errorPath_eng1Jul_30Aug
+		},
+		execImps: {
+			differences: errorPath_execImps1_8Aug
+		}
+	},
+  audience: {
+		shortName: 'Male AU Metro Tech',
+    gender: 'male',
+    age: {
+      from: 18,
+      to: 44
+    },
+    interests: ['Entertainment', 'Tech', 'Lifestyle', 'News' ],
+    locations: ['AU Metro']
+  }
+});
+
+SSM_same_DM = makePlacement({
+	id: 'SSM_same_DM',
+	name: '146560594_Airwave_GoPro_Target_MalesMetro18-44',
+	bookedImps: 200000,
+	campaign: 'cp_gopro',
+	creative: 'SS_Males_Black',
+	dates: {
+		start: new Date(2017, 7, 1),
+		end: new Date(2017, 8, 30)
+	},
+	errors: {
+		reqImps: {
+			differences: errorPath_DM
+		},
+		viewImps: {
+			differences: errorPath_viewb26_30July
 		},
 		execImps: {
 			differences: errorPath_execImps1_8Aug
@@ -913,7 +972,7 @@ Lamb1 = makePlacement({
 });
 
 // placements = [SSM_same, SSM_opp, SSF_same, SSF_opp, TTM_same, TTM_opp, TTF_same, TTF_opp, HT_mac_1, SP_Snacks1, SP_Snacks2, Lamb1];
-placements = [SSM_same, SSF_same, TTM_same, TTF_same, HT_mac_1, SP_Snacks1, SP_Snacks2, Lamb1];
+placements = [SSM_same, SSM_same_DM, SSF_same, TTM_same, TTF_same, HT_mac_1, SP_Snacks1, SP_Snacks2, Lamb1];
 
 module.exports = {
 	fm: {

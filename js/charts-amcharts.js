@@ -1,10 +1,13 @@
 const goproDates = listDates(gopro.dates); // array of dates
-console.log('dates', goproDates);
+// console.log('dates', goproDates);
 const gopro_pments = placements.filter(pl => pl.campaign === 'cp_gopro');
 
 
+var commentVals = [];
+var comments = [];
 
 // ** EXECUTED IMPS  ** //
+
 
 var impsData = {
   current: 'init'
@@ -13,8 +16,6 @@ gopro_pments.forEach(function(pl) {
   // for every date
   var colorsE = [];
   var colorsV = [];
-  var comments = [];
-  var commentVals = [];
   while (colorsE.length < goproDates.length) {
     colorsE = colorsE.concat([getColor(pl)])
   };
@@ -58,11 +59,13 @@ gopro_pments.forEach(function(pl) {
   ]);
 });
 
-console.log('IMPS DATA', impsData);
+// console.log('IMPS DATA', impsData);
 
-impsData.SSM_same[8].comment = 'Corrected tag';
-impsData.SSM_same[8].commentVal = 0;
-impsData.SSM_same[35].commentVal = 0;
+impsData.SSM_same[7].comment = 'Corrected Publisher tag';
+impsData.SSM_same[7].commentVal = 0;
+impsData.SSM_same[27].comment = 'Retarget audience';
+impsData.SSM_same[27].commentVal = 0;
+impsData.SSM_same[41].comment = 'Reorganised supply';
 impsData.SSM_same[41].commentVal = 0;
 
 // console.log(impsData);
@@ -75,7 +78,7 @@ impsData.init.forEach(function(dateEntry) {
   dateEntry.viewImpsAgg = 0;
 });
 
-console.log('IMPSDATA', impsData);
+// console.log('IMPSDATA', impsData);
 
 // SERIAL CHART
 var chart__ImpsTime = AmCharts.makeChart("chart--execImpsAgg", {
@@ -137,7 +140,7 @@ var chart__ImpsTime = AmCharts.makeChart("chart--execImpsAgg", {
     title: "comments",
     valueField: "commentVal",
     lineAlpha: 0,
-    customBullet: "../images/alert-icon.png",
+    customBullet: "../images/pink-star.png",
     bulletColor: '#e91e63',
     bulletSize: 15,
     bulletOffset:4,
@@ -149,12 +152,12 @@ var chart__ImpsTime = AmCharts.makeChart("chart--execImpsAgg", {
       fillColor: 'transparent',
       color: impsData.SSM_same[0].colorE,
       hideBalloonTime: 1000, // 1 second
-      // fixedPosition: true,
+      fixedPosition: true,
     },
     balloonFunction: function(graphItem, graph){
       if(graphItem.dataContext.comment !== ' '){
         // console.log(graphItem);
-        return '<span class="chart__comment">' + graphItem.dataContext.comment + ': Click for more info</span>';
+        return '<span class="offset chart__comment">' + graphItem.dataContext.comment + '<br/> Click for more info</span>';
       }
     }
   }],
@@ -171,7 +174,7 @@ var chart__ImpsTime = AmCharts.makeChart("chart--execImpsAgg", {
   listeners: [{
     event: "clickGraphItem",
     method: function(e){
-      $('.chart__error').fadeToggle(500);
+      $('.chart__error').addClass('visible').fadeToggle(500);
     }
   }]
 });
@@ -465,6 +468,9 @@ var chart__impsDel = AmCharts.makeChart('chart--impsDel', {
     x: '0%',
     y: '55%'
   }],
+  balloon:{
+    enabled: false
+  }
   // listeners: [{
   //   event: "rendered",
   //   method: function(e){
@@ -511,6 +517,7 @@ var chart__impsDelBench = AmCharts.makeChart('chart--impsDelBench', {
 
 function totalsChart(containerID, initValue, initPG, initIAB) {
   this.containerID = containerID;
+  console.log(containerID);
   // countup(target, startVal, endVal, decimals, duration, {options})
   this.value = new CountUp(containerID + "_value", 0, initValue, 1, 2, {
     useEasing: false,
@@ -535,6 +542,7 @@ function totalsChart(containerID, initValue, initPG, initIAB) {
     this.value.update(data.value);
     this.pgBench.update(data.pgBench);
     this.iabBench.update(data.iabBench);
+    $('#' + this.containerID + ' .chart__circle').css('background-color', data.color);
   };
   this.startCount = function() {
     // countUp method start()
@@ -543,7 +551,7 @@ function totalsChart(containerID, initValue, initPG, initIAB) {
     this.iabBench.start(this.callback);
   };
   this.callback = function() {
-    console.log('add Plus or Minus signs + formatting?', this.value);
+    // console.log('add Plus or Minus signs + formatting?', this.value);
   };
 }
 
@@ -574,7 +582,7 @@ ativAvData.init = {
   iabBench: 0
 };
 
-console.log(ativAvData);
+console.log('ativAvData', ativAvData);
 
 var chart__ativAv = new totalsChart('chart--ativAv', ativAvData.init.value, ativAvData.init.pgBench, ativAvData.init.iabBench);
 
@@ -675,6 +683,14 @@ gopro_pments.forEach(function(pl) {
     {
       name: 'colorC',
       values: colorsC
+    },
+    {
+      name: 'commentVal',
+      values: commentVals
+    },
+    {
+      name: 'comment',
+      values: comments
     }
   ]);
 });
@@ -689,7 +705,14 @@ engData.init.forEach(function(dateEntry) {
   dateEntry.colorC = "transparent";
 });
 
+engData.SSM_same[7].comment = 'Corrected Publisher tag';
+engData.SSM_same[7].commentVal = 0;
+engData.SSM_same[27].comment = 'Retarget audience';
+engData.SSM_same[27].commentVal = 0;
+engData.SSM_same[41].comment = 'Reorganised supply';
+engData.SSM_same[41].commentVal = 0;
 
+// console.log('commentVals', commentVals);
 
 var chart__erTime = AmCharts.makeChart("chart--erTime", {
   dataObject: engData,
@@ -728,6 +751,33 @@ var chart__erTime = AmCharts.makeChart("chart--erTime", {
     lineColorField: "colorC",
     fillColorsField: "colorC",
     fillAlphas: 0.3
+  },{
+    type: "line", // try to change it to "column"
+    title: "comments",
+    valueField: "commentVal",
+    lineColor: "#e91e63",
+    lineAlpha: 0,
+    customBullet: "../images/pink-star.png",
+    bulletColor: '#e91e63',
+    bulletSize: 15,
+    bulletOffset:4,
+    bulletHitAreaSize: 30,
+    visibleInLegend: false,
+    balloon: {
+      textAlign: "left",
+      borderThickness: 0,
+      // fillColor: impsData.SSM_same[0].colorE,
+      fillColor: 'transparent',
+      color: "blue",
+      hideBalloonTime: 1000, // 1 second
+      // fixedPosition: true,
+    },
+    balloonFunction: function(graphItem, graph){
+      if(graphItem.dataContext.comment !== ' '){
+        // console.log(graphItem);
+        return '<span class="chart__comment">' + graphItem.dataContext.comment + '<br/> Click for more info</span>';
+      }
+    }
   }],
   chartScrollbar: {},
   chartCursor: {
@@ -962,7 +1012,7 @@ pcHeatData.init = [{
   },
 ];
 
-console.log('pcHeatData', pcHeatData);
+// console.log('pcHeatData', pcHeatData);
 
 var chart__pcHeat = AmCharts.makeChart("chart--passiveCHeat", {
   dataObject: pcHeatData,
@@ -1021,6 +1071,11 @@ var totalsCharts = [chart__ativAv, chart__engagedC, chart__erAv];
 
 $('.filter__placement-select label').click(function() {
   var plID = $(this).data('placement');
+  if(plID !== 'SSM_same'){
+    $('.chart__error-button').css('display', 'none');
+  }else{
+    $('.chart__error-button').css('display', 'block');
+  }
   updateAllCharts(plID);
 });
 

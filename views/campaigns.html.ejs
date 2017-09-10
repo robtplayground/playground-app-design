@@ -3,9 +3,9 @@
   <% var active = campaigns.filter(cp => moment(cp.dates.start).diff(new Date()) < 0); %>
     <% var pending = campaigns.filter(cp => moment(cp.dates.start).diff(new Date()) > 0); %>
 
-      <div class="app__body">
+      <div class="app__body campaigns-body">
 
-        <div class="campaign-details"></div>
+        <!-- <div class="campaign-details"></div> -->
 
         <div class="campaigns">
 
