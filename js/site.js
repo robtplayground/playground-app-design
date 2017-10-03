@@ -175,6 +175,7 @@ $(window).scroll(function(){
 $('.filter__treemap .dm').click(function(){
   $(this).addClass('active');
   updateAllCharts('SSM_same_DM');
+  $('.filter-actions .split').html('<span class="split-type">Domain </span><span class="split-value">Daily Mail</span>');
 });
 
 $('.download-file').click(function(){

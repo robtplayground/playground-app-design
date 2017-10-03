@@ -2705,6 +2705,12 @@ body.side .filter-actions .show-filter svg {
 .filter.split-by.domain .filter__treemap {
   display: flex;
 }
+.split-type {
+  color: #f27ba3;
+}
+.split-value {
+  font-size: 0.8em;
+}
 .spinner {
   position: absolute;
   width: 100vw;
@@ -2816,4 +2822,29 @@ button {
 }
 .campaigns-body {
   justify-content: flex-start !important;
+}
+.creative__title__actions {
+  position: relative;
+}
+.creative__title__actions.table__actions__menu {
+  display: none;
+}
+.creative__title__actions.table__actions:hover .table__actions__menu {
+  display: none;
+}
+.creative-SS_Females .creative__title__actions.table__actions:hover .table__actions__menu {
+  display: block;
+}
+.creative__title__actions .table__actions__menu {
+  transform: translateX(-19%);
+  border: 1px solid #0078d8;
+  font-weight: 400;
+  color: #0078d8;
+  background: #f2f9ff;
+}
+.creative__title__actions .table__actions__menu .inactive {
+  color: #ababab;
+}
+.creative__title__actions .table__actions__menu .inactive:hover {
+  color: #ababab;
 }

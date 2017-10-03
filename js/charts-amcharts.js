@@ -364,7 +364,10 @@ var impsDelBenchData = {
   current: 'init'
 };
 gopro_pments.forEach(function(pl) {
-  var currentDur = moment(new Date()).diff(moment(pl.dates.start), 'days');
+
+  // fixed date for this one at 15/9/2017, but this would fuck up other comparisons... would need to address this if it ever goes to production
+
+  var currentDur = moment(new Date(2017, 9-1, 15)).diff(moment(pl.dates.start), 'days');
   var impsDel = pl.data.execImpsAgg[currentDur - 1];
   var impsBooked = pl.bookedImps;
   var impsBookedDaily = impsBooked / duration(pl.dates);
@@ -672,10 +675,10 @@ gopro_pments.forEach(function(pl) {
     values: listDates(gopro.dates)
   }, [{
       name: 'engagementRate',
-      values: placements[0].data.engagementRate
+      values: pl.data.engagementRate
     }, {
       name: 'clickthroughRate',
-      values: placements[0].data.clickRate
+      values: pl.data.clickRate
     }, {
       name: 'colorE',
       values: colorsE
@@ -1100,11 +1103,12 @@ function updateAllCharts(pment_ID) {
     if(chartsRendered < amCharts.length){
       var chart = amCharts[chartsRendered];
       var data = chart.dataObject[pment_ID];
-      // var chartDiv = chart.containerDiv.offsetParent.id;
+      var chartDiv = chart.containerDiv.offsetParent.id;
       // console.log(chartDiv);
-      // if( chartDiv === "chart--execImpsAgg"){
-      //   $('.chart--execImpsAgg').attr('class', 'chart chart--execImpsAgg ' + pment.id);
-      // }
+      if( chartDiv === "chart--erTime"){
+        console.log('new Engagement data', data);
+        // $('.chart--execImpsAgg').attr('class', 'chart chart--execImpsAgg ' + pment.id);
+      }
       chartsRendered++;
       chart.animateData(data, {
         duration: 500,
