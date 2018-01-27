@@ -1,0 +1,8 @@
+<section class="footer-links">
+  <% if (pageData.previous) { %>
+  <a class="grid-cell previous" href="/<%= pageData.previous.id %>"><%= pageData.previous.title %></a>
+  <% } %>
+  <% if (pageData.next) { %>
+  <a class="grid-cell next" href="/<%= pageData.next.id %>"><%= pageData.next.title %></a>
+  <% } %>
+</section>
