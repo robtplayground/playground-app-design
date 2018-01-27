@@ -1,5 +1,5 @@
 
-@fontFamily: Roboto, Helvetica, Arial, sans-serif;
+@fontFamily: Ubuntu, Helvetica, Arial, sans-serif;
 
 body{
 	font-family: @fontFamily;
@@ -259,13 +259,20 @@ label:hover:before {
 
 
 button{
-	border: 0;
-	border-radius: 5em;
-	height: 2em;
+	border: 1px solid @white;
+	border-radius: 0.3em;
+	height: 2.5em;
 	width: auto;
 	display:flex;
 	align-items:center;
-	padding: 0 1em;
+	padding: 0 2em;
+	color: @white;
+	background: transparent;
+	text-transform: uppercase;
+	&:hover{
+		background: @pgxyz-pink;
+		border:0;
+	}
 	svg{
 		width: 1.5em;
 		height: 1.5em;

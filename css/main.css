@@ -1170,7 +1170,7 @@ table .grid12 {
   z-index: -1;
 }
 body {
-  font-family: Roboto, Helvetica, Arial, sans-serif;
+  font-family: Ubuntu, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 h1 {
@@ -1414,13 +1414,20 @@ label:hover:before {
   transform: scale(1);
 }
 button {
-  border: 0;
-  border-radius: 5em;
-  height: 2em;
+  border: 1px solid #ffffff;
+  border-radius: 0.3em;
+  height: 2.5em;
   width: auto;
   display: flex;
   align-items: center;
-  padding: 0 1em;
+  padding: 0 2em;
+  color: #ffffff;
+  background: transparent;
+  text-transform: uppercase;
+}
+button:hover {
+  background: #e91e63;
+  border: 0;
 }
 button svg {
   width: 1.5em;
@@ -2191,10 +2198,11 @@ a[href="http://www.amcharts.com/javascript-charts/"] {
   height: 100%;
   display: flex;
   align-items: center;
-  background: #fafafa;
   height: 7rem;
 }
 .greeting-text {
+  display: flex;
+  justify-content: space-between;
   font-weight: 300;
   font-size: 2.489rem;
   padding-left: 3rem;
@@ -2205,7 +2213,6 @@ a[href="http://www.amcharts.com/javascript-charts/"] {
   fill: #222222;
   display: flex;
   align-items: center;
-  justify-content: space-between;
   height: 5rem;
   padding-right: 1rem;
 }
@@ -2225,6 +2232,9 @@ a[href="http://www.amcharts.com/javascript-charts/"] {
   padding: 0.2em 0.5em;
   width: 15rem;
 }
+.greeting-comments label {
+  margin-right: 0.8rem;
+}
 table,
 td {
   position: relative;
@@ -2233,7 +2243,7 @@ td {
 }
 .table__actions {
   text-align: right !important;
-  padding-right: 1em;
+  padding-right: 0.8em;
   width: 10%;
   cursor: pointer;
 }
@@ -2244,6 +2254,9 @@ td {
 }
 .table__actions:hover .table__actions__menu {
   display: block;
+}
+.table__actions button {
+  display: inline-block;
 }
 .table__actions__menu {
   position: absolute;
@@ -2389,11 +2402,12 @@ td {
 }
 .creative-wrapper {
   max-height: 1000px;
-  overflow: hidden;
+  overflow: visible;
   transition: all 1s ease-out;
 }
 .collapse .creative-wrapper {
   max-height: 0;
+  overflow: hidden;
 }
 .creative__title {
   background: #0078d8;
@@ -2405,12 +2419,48 @@ td {
   padding-left: 1em;
 }
 .creative__title__thumb {
-  padding-left: 0.3em;
+  padding-left: 0.6em;
   padding-bottom: 0.3em;
 }
 .creative__title__thumb img {
   display: block;
-  width: 3.5rem;
+  width: 3rem;
+}
+.creative__title__thumb:hover img {
+  border: 1px solid #ffffff;
+}
+.creative__title__thumb:hover .creative__title__thumb__hover {
+  display: block;
+}
+.creative__title__thumb__hover {
+  display: none;
+  z-index: 200;
+  position: absolute;
+  top: -3rem;
+  left: 5rem;
+  width: 10rem;
+  height: 10rem;
+  border-radius: 0.3rem;
+  border: 1px solid #ffffff;
+  background-size: cover;
+  box-shadow: 5px 5px 5px 1px rgba(0, 0, 0, 0.1);
+}
+.creative__title__thumb__hover:before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 4.15rem;
+  left: -0.85rem;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0.5rem 0.85rem 0.5rem 0;
+  border-color: transparent #ffffff transparent transparent;
+}
+.creative__title__thumb__hover img {
+  position: relative;
+  display: block;
+  width: 100%;
 }
 .creative__title__format {
   position: relative;
@@ -2592,7 +2642,6 @@ span.select2-selection.select2-selection--single {
 }
 .sort-group {
   display: flex;
-  justify-content: space-between;
   padding-right: 1rem;
   align-items: center;
 }
@@ -2602,6 +2651,9 @@ span.select2-selection.select2-selection--single {
 }
 .sort-group .select2:focus {
   outline: none;
+}
+.sort-group label {
+  margin-right: 0.6rem;
 }
 .expand-buttons {
   display: flex;
@@ -2614,17 +2666,20 @@ span.select2-selection.select2-selection--single {
   background: transparent;
   padding: 0;
   width: 8rem;
+  color: #222222;
+  text-transform: capitalize;
 }
 .expand-buttons button svg {
   width: 2.5rem;
   height: 100%;
 }
 .campaigns__count {
-  display: inline-block;
   padding-left: 2rem;
   font-weight: 400;
   width: 50%;
   font-size: 1.44rem;
+  text-align: right;
+  padding-right: 3rem;
 }
 .campaigns__count span {
   font-size: 1.3em;
@@ -2847,4 +2902,17 @@ button {
 }
 .creative__title__actions .table__actions__menu .inactive:hover {
   color: #ababab;
+}
+.breadcrumbs {
+  font-size: 1rem;
+  left: 0;
+  align-self: flex-start;
+  height: 2rem;
+  padding: 1rem 4rem;
+  color: #ee4c83;
+}
+.breadcrumbs__arrow {
+  margin: 0 0.5rem;
+  display: inline-block;
+  font-size: 0.7em;
 }

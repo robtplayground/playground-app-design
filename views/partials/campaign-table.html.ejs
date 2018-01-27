@@ -38,7 +38,7 @@
     <td class="campaign__progress grid3">
 
       <% var dur = duration(cp.dates); %>
-      <% var cur = moment(new Date()).diff(cp.dates.start, 'days'); %>
+      <% var cur = moment(fakeToday).diff(cp.dates.start, 'days'); %>
       <% var percent = (cur / dur * 100) > 0 ? (cur / dur * 100) : 0; %>
       <% var progString = cur <= 0 ? (cur * -1) + ' days til start' : cur + ' / ' + dur + ' days';  %>
 
@@ -50,17 +50,7 @@
       </div>
     </td>
     <td class="campaign__actions table__actions">
-      <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
-        <use x="0" y="0" href="#menu"></use>
-      </svg>
-      <div class="table__actions__menu">
-        <ul>
-          <li>Edit Campaign</li>
-          <li>Report</li>
-          <li>Clone</li>
-          <li>Archive</li>
-        </ul>
-      </div>
+      <button>View</button>
     </td>
   </tr>
 
@@ -79,6 +69,9 @@
         <tr class="creative__title" style="background-color: <%= cr.format.color %> ">
           <th class="creative__title__thumb">
             <img src="/images/<%= cr.thumb %>" alt="">
+            <div class="creative__title__thumb__hover" style="background-image: url('/images/<%= cr.preview %>')">
+
+            </div>
           </th>
           <th class="creative__title__format">
             <svg viewBox="0 0 980 300" preserveAspectRatio="xMidYMid meet">

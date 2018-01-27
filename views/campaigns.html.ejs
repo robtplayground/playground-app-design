@@ -1,16 +1,20 @@
 <% include partials/header.html.ejs %>
 
-  <% var active = campaigns.filter(cp => moment(cp.dates.start).diff(new Date()) < 0); %>
-    <% var pending = campaigns.filter(cp => moment(cp.dates.start).diff(new Date()) > 0); %>
+<% var fakeToday = new Date(2017, 9-1, 15); %>
+
+  <% var active = campaigns.filter(cp => moment(cp.dates.start).diff(fakeToday) < 0); %>
+    <% var pending = campaigns.filter(cp => moment(cp.dates.start).diff(fakeToday) > 0); %>
 
       <div class="app__body campaigns-body">
+
+        <div class="breadcrumbs">Campaigns <span class="breadcrumbs__arrow">&#9654;</span>  All</div>
 
         <!-- <div class="campaign-details"></div> -->
 
         <div class="campaigns">
 
           <div class="campaigns-welcome grid">
-            <h1 class="greeting-text grid-cell grid12">Welcome Rob! <div class="campaigns__count">You have <span><%= active.length %></span> active campaign and <span><%= pending.length %></span> pending campaigns</div></h1>
+            <h1 class="greeting-text grid-cell grid12">All Campaigns<div class="campaigns__count">You have <span><%= active.length %></span> active campaign and <span><%= pending.length %></span> pending campaigns</div></h1>
 
 
           </div>
@@ -35,16 +39,17 @@
             </div>
 
             <div class="greeting-comments grid-cell grid3">
+              <label for="campaign-sort">Search</label>
               <input type="search" placeholder="search campaigns, creatives...">
             </div>
 
 
             <div class="sort-group grid-cell grid2">
-              <label for="campaign-sort">Sort by:</label>
+              <label for="campaign-sort">Order</label>
 
               <select id="campaign-sort" class="data-filter__group-select">
-          <option value="Delivery">Campaign</option>
-          <option value="Audience" selected>Placement</option>
+          <option selected value="Delivery">Campaign</option>
+          <option value="Audience">Placement</option>
           <option value="Category">Format</option>
           <option value="Format">Features</option>
         </select>

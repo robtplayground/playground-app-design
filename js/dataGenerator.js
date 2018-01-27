@@ -13,6 +13,11 @@ const {
 	extend
 } = require( "./helpers.js" );
 
+
+// FREEZE CURRENT DAY IN time, have done this at a few places in the project...
+
+var fakeToday = new Date(2017, 9-1, 15);
+
 // BENCHMARKS
 
 iab = {
@@ -388,6 +393,7 @@ creatives = [
 		name: 'GoPro Hero5 Males Festival SS',
 		content: 'GoPro Hero5 Males Festival',
 		thumb: 'thumb-gopro-males.png',
+		preview: 'preview-gopro-males.png',
 		author: 'Steve Nash',
 		status: 'active',
 		statusIcon: 'lock',
@@ -401,6 +407,7 @@ creatives = [
 		name: 'GoPro Hero5 Males Festival SS',
 		content: 'GoPro Hero5 Males Festival',
 		thumb: 'thumb-gopro-males.png',
+		preview: 'thumb-gopro-males.png',
 		author: 'Steve Nash',
 		status: 'active',
 		statusIcon: 'lock',
@@ -414,6 +421,7 @@ creatives = [
 		name: 'GoPro Hero5 Females Travel SS',
 		content: 'GoPro Hero5 Females Travel',
 		thumb: 'thumb-gopro-females.png',
+		preview: 'preview-gopro-females.png',
 		author: 'Vinko Kraljevic',
 		status: 'active',
 		statusIcon: 'lock',
@@ -427,6 +435,7 @@ creatives = [
 		name: 'GoPro Hero5 Males Festival TT',
 		content: 'GoPro Hero5 Males Festival',
 		thumb: 'thumb-gopro-males.png',
+		preview: 'thumb-gopro-males.png',
 		author: 'Rob Thwaites',
 		status: 'active',
 		statusIcon: 'lock',
@@ -440,6 +449,7 @@ creatives = [
 		name: 'GoPro Hero5 Females Travel TT',
 		content: 'GoPro Hero5 Females Travel',
 		thumb: 'thumb-gopro-females.png',
+		preview: 'thumb-gopro-females.png',
 		author: 'Rob Thwaites',
 		status: 'active',
 		statusIcon: 'lock',
@@ -453,6 +463,7 @@ creatives = [
 		name: 'HT Chicken Tenders Anim HT',
 		content: 'HT Chicken Tenders Anim',
 		thumb: 'thumb-maccers.png',
+		preview: 'thumb-maccers.png',
 		author: 'Steve Nash',
 		status: 'Awaiting Approval',
 		statusIcon: 'clock',
@@ -465,6 +476,7 @@ creatives = [
 		id: 'SP_Snacks',
 		name: 'Woolies Snackfood Combos SP',
 		thumb: 'thumb-woolies.png',
+		preview: 'thumb-woolies.png',
 		author: 'Steve Nash',
 		status: 'Awaiting Approval',
 		statusIcon: 'clock',
@@ -478,6 +490,7 @@ creatives = [
 		id: 'SW_Lamb_1',
 		name: 'Woolies Leg Lamb Special SP',
 		thumb: 'thumb-woolies.png',
+		preview: 'thumb-woolies.png',
 		author: 'Vinko Kraljevic',
 		status: 'Editable',
 		statusIcon: 'pencil',
@@ -519,7 +532,7 @@ const makePlacement = function(options){
 	var videoViewableImps = VIDEO_VIEWABLE_IMPS(engagements);
 	var video = VIDEO_METRICS(engagements);
 
-	var delPerc = Math.round(total(executedImps, {start: options.dates.start, end: new Date()}, campaign) / options.bookedImps * 100);
+	var delPerc = Math.round(total(executedImps, {start: options.dates.start, end: fakeToday}, campaign) / options.bookedImps * 100);
 	var viewAv;
 	var engAv;
 	var ctrAv;
