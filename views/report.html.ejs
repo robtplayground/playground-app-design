@@ -4,9 +4,9 @@
 
 <div class="app__body">
 
-  <div class="breadcrumbs">Campaigns <span class="breadcrumbs__arrow">&#9654;</span>GoPro - Hero 5 Mark II</div>
+  <div class="breadcrumbs dark">Campaigns <span class="breadcrumbs__arrow">&#9654;</span>GoPro - Hero 5 Mark II</div>
 
-  <div class="page-title grid">
+  <div class="page-title dark grid">
 
     <h1 class="greeting-text grid-cell grid2" data-label="Brand">GoPro</h1>
     <h1 class="greeting-text grid-cell grid3" data-label="Name">Hero 5 Mark II</h1>
@@ -22,7 +22,32 @@
 
   </div>
 
-<div class="spinner">
+  <div class="content-buttons grid">
+
+    <div class="current-view grid-cell grid2">
+
+    </div>
+    <p class="group-value grid-cell grid3" data-label="Placement">14sfjhajsh hajka_sdfsdfsd_asf</p>
+    <p class="split-value grid-cell grid4" data-label="Category">Entertainment</p>
+    <div class="content-buttons-right grid-cell grid3">
+      <button class="">
+        <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
+          <use x="0" y="0" href="#download-file" />
+        </svg>
+        Download
+      </button>
+
+      <button class="">
+        <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
+          <use x="0" y="0" href="#comments" />
+        </svg>
+        View Notes
+      </button>
+
+    </div>
+  </div>
+
+<!-- <div class="spinner">
   <div>
     <h3>Downloading Report</h3>
     <p><%= cp.name%>.xlsx</p>
@@ -31,146 +56,118 @@
     </svg>
   </div>
 
+</div> -->
+
+<div class="data-filter">
+
+  <button class="show-filter">
+    <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
+      <use x="0" y="0" href="#gear" />
+    </svg>
+    <div class="show-filter__label">
+      <div class="show-filter__label__anim">
+        <span>Current View</span>
+        <span>Change View</span>
+      </div>
+    </div>
+  </button>
+
+
+    <h1>Change View</h1>
+
+    <div class="filter filter__date-picker">
+      <div class="input__wrapper">
+        <label for="group-by">Date Range:</label>
+
+      <input type="text" placeholder="<%= moment(cp.dates.start).format('D/M/YYYY') %> – <%= moment(cp.dates.end).format('D/M/YYYY') %>">
+      <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMax meet">
+        <use x="0" y="0" href="#calendar" />
+      </svg>
+
+    </div>
+  </div>
+
+    <div class="filter group-by placement">
+
+      <div class="input__wrapper">
+        <label for="group-by">Group by:</label>
+
+          <select id="group-by" class="filter__group-select">
+            <option value="campaign">Campaign</option>
+            <option value="placement" selected>Placement</option>
+            <option value="format">Format</option>
+            <option value="features">Features</option>
+          </select>
+
+      </div>
+
+
+      <div class="filter__placement-select">
+
+        <% let gopro_pments = placements.filter(pl => pl.campaign === 'cp_gopro'); %>
+        <% gopro_pments.forEach(function(pl, index){ %>
+
+          <input type="radio" id="radio<%= index %>" name="placement-select"/>
+          <label for="radio<%= index %>" data-placement="<%= pl.id %>" name="choose-placement"><span></span><%- pl.name %></label>
+
+        <% }); %>
+
+      </div>
+
+      <div class="filter__format-select">
+
+          <input type="radio" id="radio10" name="format-select" selected/>
+          <label for="radio10" data-placement="SSM_same" name="choose-format" selected><span></span>Super Skin</label>
+
+          <input type="radio" id="radio11" name="format-select"/>
+          <label for="radio11" data-placement="TTM_same" name="choose-format"><span></span>Top and Tail</label>
+
+      </div>
+
+    </div>
+
+    <div class="filter split-by none">
+
+      <div class="input__wrapper">
+        <label for="split-by">Split by:</label>
+          <select id="split-by" class="filter__split-select">
+          <option value="none" selected>None</option>
+          <option value="location">Audience: Location</option>
+          <option value="gender">Audience: Gender</option>
+          <option value="domain">Site: Domain</option>
+          <option value="category">Site: Category</option>
+        </select>
+
+      </div>
+
+
+
+      <div id="treemap" class="filter__treemap">
+
+        <div class="dm">Daily Mail</div>
+        <div class="smh">SMH</div>
+        <div class="elle">Elle</div>
+        <div class="roar">The Roar</div>
+        <div class="bm">Big Mobile</div>
+        <div class="giz">Gizmodo</div>
+        <div class="junk">Junkee</div>
+        <div class="cnet">CNet</div>
+        <div class="huff">Huffington Post</div>
+        <div class="mix">In The Mix</div>
+      </div>
+
+    </div>
+
+
 </div>
 
   <div class="main grid">
 
     <div class="sidebar grid-cell grid3 no-gutter">
 
-      <div class="data-filter">
-        <!-- <div class="grid-cell"> -->
-
-          <!-- <div class="filter__date-slider" id="slider"></div> -->
-
-          <h1>Change View</h1>
-
-          <button class="close-filter">
-            <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
-              <use x="0" y="0" href="#close" />
-            </svg>
-
-          </button>
-
-
-          <div class="filter filter__date-picker">
-            <div class="input__wrapper">
-              <label for="group-by">Date Range:</label>
-
-            <input type="text" placeholder="<%= moment(cp.dates.start).format('D/M/YYYY') %> – <%= moment(cp.dates.end).format('D/M/YYYY') %>">
-            <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMax meet">
-              <use x="0" y="0" href="#calendar" />
-            </svg>
-
-          </div>
-        </div>
-
-          <div class="filter group-by placement">
-
-            <div class="input__wrapper">
-              <label for="group-by">Group by:</label>
-
-                <select id="group-by" class="filter__group-select">
-                  <option value="campaign">Campaign</option>
-                  <option value="placement" selected>Placement</option>
-                  <option value="format">Format</option>
-                  <option value="features">Features</option>
-                </select>
-
-            </div>
-
-
-            <div class="filter__placement-select">
-
-              <% let gopro_pments = placements.filter(pl => pl.campaign === 'cp_gopro'); %>
-              <% gopro_pments.forEach(function(pl, index){ %>
-
-                <input type="radio" id="radio<%= index %>" name="placement-select"/>
-                <label for="radio<%= index %>" data-placement="<%= pl.id %>" name="choose-placement"><span></span><%- pl.name %></label>
-
-              <% }); %>
-
-            </div>
-
-            <div class="filter__format-select">
-
-                <input type="radio" id="radio10" name="format-select" selected/>
-                <label for="radio10" data-placement="SSM_same" name="choose-format" selected><span></span>Super Skin</label>
-
-                <input type="radio" id="radio11" name="format-select"/>
-                <label for="radio11" data-placement="TTM_same" name="choose-format"><span></span>Top and Tail</label>
-
-            </div>
-
-          </div>
-
-          <div class="filter split-by none">
-
-            <div class="input__wrapper">
-              <label for="split-by">Split by:</label>
-                <select id="split-by" class="filter__split-select">
-                <option value="none" selected>None</option>
-                <option value="location">Audience: Location</option>
-                <option value="gender">Audience: Gender</option>
-                <option value="domain">Site: Domain</option>
-                <option value="category">Site: Category</option>
-              </select>
-
-            </div>
-
-
-
-            <div id="treemap" class="filter__treemap">
-
-              <div class="dm">Daily Mail</div>
-              <div class="smh">SMH</div>
-              <div class="elle">Elle</div>
-              <div class="roar">The Roar</div>
-              <div class="bm">Big Mobile</div>
-              <div class="giz">Gizmodo</div>
-              <div class="junk">Junkee</div>
-              <div class="cnet">CNet</div>
-              <div class="huff">Huffington Post</div>
-              <div class="mix">In The Mix</div>
-            </div>
-
-          </div>
-
-
-      </div>
-
     </div>
 
     <div class="content grid">
-
-      <div class="content-buttons grid">
-        <div class="current-view">
-          <button class="show-filter">
-            <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
-              <use x="0" y="0" href="#gear" />
-            </svg>
-            <!-- Change View -->
-          </button>
-          <p class="group-value" data-label="Placement">14sfjhajsh hajka_sdfsdfsd_asf</p>
-          <p class="split-value" data-label="Category">Entertainment</p>
-
-        </div>
-        <div class="content-buttons-right">
-          <button class="">
-            <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
-              <use x="0" y="0" href="#download-file" />
-            </svg>
-            Download
-          </button>
-
-          <button class="">
-            <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
-              <use x="0" y="0" href="#comments" />
-            </svg>
-            View Notes
-          </button>
-
-        </div>
-      </div>
 
       <div id="accord__head--del" class="accordion-header">
         <svg viewBox="0 0 300 300" preserveAspectRatio="xMinYMid meet">
