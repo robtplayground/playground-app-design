@@ -186,3 +186,9 @@ $('.filter__treemap .dm').click(function(){
 $('.download-file').click(function(){
   $('.spinner').css('display', 'flex');
 });
+
+
+$('.accordion-header').click(function(){
+  $(this).toggleClass('hide');
+  $(this).next('.accordion-content').toggleClass('hidden');
+});

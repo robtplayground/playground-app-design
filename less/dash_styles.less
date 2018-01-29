@@ -367,6 +367,7 @@ body{
 }
 
 .chart__circle{
+	position:relative;
 	transition: all 0.6s ease-in;
 	.flex-center;
 	flex-direction: column;
@@ -380,7 +381,20 @@ body{
 }
 
 .chart__circle__value{
-	color: white
+	color: white;
+	position: relative;
+	margin-left: -0.25em;
+	&:after{
+		content: attr(data-unit);
+		position: absolute;
+		right:-1em;
+		top:0.2em;
+		font-size: 0.5em;
+		font-weight: 500;
+		text-align: center;
+		width: 1em;
+		height: 1em;
+	}
 }
 
 
@@ -1631,4 +1645,55 @@ button{
 	margin: 0 0.5rem;
 	display: inline-block;
 	font-size: 0.7em;
+}
+
+.accordion-header{
+	display:flex;
+	width:100%;
+	height:auto;
+}
+
+.accordion-header{
+	justify-content: flex-start;
+	padding:1rem;
+	font-size: 2rem;
+	font-weight: 500;
+	// text-transform: uppercase;
+	// background: @midgrey;
+	color:@darkgrey;
+	cursor: pointer;
+	margin-top: 1.5rem;
+	svg{
+		fill: @black;
+		height: 2.5rem;
+		transform: translate(-0.4em,0em)
+	}
+	.plus{
+		display:none;
+	}
+	.minus{
+		display:block;
+	}
+	&.hide{
+		.plus{
+			display:block;
+		}
+		.minus{
+			display:none;
+		}
+	}
+}
+
+.accordion-content{
+	display:flex;
+	flex-wrap: wrap;
+	width:100%;
+	height:auto;
+	padding-left: 2.5rem;
+	max-height: 700px;
+	overflow:hidden;
+	transition: all 0.3s ease-out;
+}
+.accordion-content.hidden{
+	max-height: 0px;
 }
