@@ -406,6 +406,7 @@ body{
 	flex-wrap: wrap;
 	display: flex !important;
 	transition: width 0.5s ease;
+	background: @palegrey;
 }
 
 .sidebar{
@@ -457,7 +458,7 @@ a[href="http://www.amcharts.com/javascript-charts/"]{
 	height: 20rem;
 	border-radius: 0.5rem;
 	border: 1px solid @lightgrey;
-	background: @palegrey;
+	background: @white;
 	overflow:hidden;
 
 	&:before{
@@ -783,20 +784,44 @@ a[href="http://www.amcharts.com/javascript-charts/"]{
 	}
 }
 
-.campaigns-welcome{
+.page-title{
 	height: 100%;
 	display:flex;
-	align-items: center;
+	align-items: flex-end;
 	// background: @palegrey;
-	height: 7rem;
-}
-
-.greeting-text{
-	display:flex;
-	justify-content: space-between;
-		font-weight: 300;
-		font-size: @size-5;
-		padding-left: 3rem;
+	height: 9rem;
+	padding-left: 3rem;
+	h1{
+			font-weight: 300;
+			font-size: @size-5;
+	}
+	> *{
+		display:flex;
+		align-items:center;
+		height: 40% !important;
+		overflow: visible;
+		top: -40%;
+		&:after{
+			content: attr(data-label);
+			position: absolute;
+			display:block;
+			font-size: 0.9rem;
+			top:4rem;
+			left:0;
+			padding:0;
+			margin:0;
+			font-weight: 400;
+			width: 2rem;
+			height: 1rem;
+			line-height: 1em;
+			text-transform: uppercase;
+			flex:none;
+			bottom:-1.5rem;
+			left:0.2rem;
+			color: @midgrey;
+			margin:0;
+		}
+	}
 }
 
 .greeting-comments{
@@ -853,6 +878,12 @@ table, td{
 	}
 	button{
 		display: inline-block;
+		border: 1px solid @white;
+		border-radius: 0.3em;
+		&:hover{
+			background: @pgxyz-pink;
+			border:0;
+		}
 	}
 }
 
@@ -966,9 +997,11 @@ table, td{
 
 	&.collapse{
 		tr:not(.campaign__title){
-			height:0 !important;
+			transition: height 0s 0.3s linear;
+			height:0;
 			td.creative{
-				height:0 !important;
+				transition: height 0s 0.3s linear;
+			height:0;
 			}
 		}
 		use.plus{
@@ -1034,14 +1067,14 @@ table, td{
 }
 
 .creative-wrapper{
-	max-height: 1000px;
+	max-height: 200px;
 	overflow:visible;
-	transition: all 1s ease-out;
+	transition: max-height 0.7s ease-in-out;
 }
 
 
 .collapse .creative-wrapper{
-	max-height: 0;
+	max-height: 0px;
 	overflow: hidden;
 }
 
@@ -1383,72 +1416,95 @@ body.report {
 	}
 }
 
-.filter-actions{
+.content-buttons{
 	position: relative;
 	display:flex;
 	align-items: center;
 	width: 100%;
-	height: 3rem;
-	background: #666;
-	color:white;
-	fill:@white;
+	height: 8rem;
+	color:@midgrey;
+	fill:@pgxyz-pink;
 	overflow: hidden;
+	justify-content: space-between;
+	// border-bottom: 1px solid @midgrey;
+	button{
+		color: @pgxyz-pink;
+		font-size: 0.9em;
+		font-weight: 500;
+	}
+	button svg{
+		color:@midgrey;
+		fill:@pgxyz-pink;
+		height: 80%;
+		margin-right: 0.5rem;
+		// width: 4rem;
+	}
+	> * {
+		display:flex;
+		justify-content: flex-start;
+	}
+}
 
+.content-buttons-right{
+	justify-content: flex-end;
+	padding-right: 2.5rem;
+	button{
+		// padding:0;
+	}
+}
 
 .show-filter{
-		display:block;
-		width: 40%;
-		height: 100%;
-		display:flex;
-		align-items: center;
-		// background: #888;
-		// box-shadow: 0.2em .2em 0.5em rgba(0,0,0,0.3);
-		border-radius: 0;
-		max-width: 1000px;
-		padding:0;
-		&:focus{
-			outline: none;
-		}
-		svg{
-			transition: all 0.5s ease;
-			fill: @white;
-			height: 70%;
-			width: 10%;
-			body.side &{
-				fill: @pgxyz-pink;
-			}
-		}
-		h3{
-			font-size: @size-0;
-			margin: 0 0.5rem 0 1rem;
-			text-transform: uppercase;
-			line-height: 2rem;
-		}
-		p{
-			font-size: @size-0;
-			margin:0;
-			line-height: 2rem;
-		}
-	}
+	width: 2rem;
+	height: 100%;
+	padding: 0 0 0 0rem;
+	margin-right: 0.3rem;
+}
 
-	.actions{
-		display: flex;
-		width:auto;
-		justify-content: flex-end;
-		height: 100%;
-		width: 60%;
-		button{
-			background:transparent;
-			width: 4rem;
-			height: 100%;
+.current-view{
+	padding-left: 1.4rem;
+	p{
+		position: relative;
+		font-size: 1.6rem;
+		margin:0 0.2rem;
+		color: @darkgrey;
+		font-weight: 300;
+		&:after{
+			content: attr(data-label);
+			position: absolute;
+			display:block;
+			font-size: 0.95rem;
+			top:2.5rem;
+			left:0;
 			padding:0;
-			svg{
-				width:100%;
-				height:65%;
-			}
+			margin:0;
+			font-weight: 400;
+			width: 2rem;
+			height: 1rem;
+			line-height: 1em;
+			text-transform: uppercase;
+			flex:none;
+			bottom:-1.5rem;
+			left:0.2rem;
+			color: @midgrey;
+			margin:0;
+		}
+		&.split-value{
+			margin-left: 1.5rem;
 		}
 	}
+	button, svg{
+		fill: @pgxyz-pink;
+	}
+}
 
+.content-buttons-right{
+	svg{
+		width: 4rem;
+		padding: 0 0 0 1.5rem;
+	}
+	button{
+		padding: 0.3em 0;
+	}
 }
 
 .filter.split-by{
@@ -1464,12 +1520,6 @@ body.report {
 	}
 }
 
-.split-type{
-	color: lighten(@pgxyz-pink, 20%);
-}
-.split-value{
-	font-size: 0.8em;
-}
 
 .spinner{
 	position: absolute;
@@ -1655,18 +1705,19 @@ button{
 
 .accordion-header{
 	justify-content: flex-start;
-	padding:1rem;
-	font-size: 2rem;
+	padding-left:1.8rem;
+	padding-bottom: 1rem;
+	font-size: 1.5rem;
 	font-weight: 500;
 	// text-transform: uppercase;
 	// background: @midgrey;
-	color:@darkgrey;
+	// color:@pgxyz-pink;
 	cursor: pointer;
 	margin-top: 1.5rem;
 	svg{
-		fill: @black;
-		height: 2.5rem;
-		transform: translate(-0.4em,0em)
+		fill: @pgxyz-pink;
+		height: 2rem;
+		transform: translate(-0.35em,0em)
 	}
 	.plus{
 		display:none;
@@ -1689,7 +1740,7 @@ button{
 	flex-wrap: wrap;
 	width:100%;
 	height:auto;
-	padding-left: 2.5rem;
+	padding: 0rem 1.5rem 2rem 3rem;
 	max-height: 700px;
 	overflow:hidden;
 	transition: all 0.3s ease-out;

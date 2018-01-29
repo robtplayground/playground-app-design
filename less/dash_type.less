@@ -67,6 +67,7 @@ body{
 	h3{
 		font-size: @size-2;
 		line-height: ceil(@size-2);
+		font-weight: 300;
 	}
 	h4, .size-1{
 		font-size: @size-1;
@@ -259,8 +260,7 @@ label:hover:before {
 
 
 button{
-	border: 1px solid @white;
-	border-radius: 0.3em;
+	border:0;
 	height: 2.5em;
 	width: auto;
 	display:flex;
@@ -269,10 +269,6 @@ button{
 	color: @white;
 	background: transparent;
 	text-transform: uppercase;
-	&:hover{
-		background: @pgxyz-pink;
-		border:0;
-	}
 	svg{
 		width: 1.5em;
 		height: 1.5em;

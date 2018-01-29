@@ -1184,6 +1184,7 @@ h2 {
 h3 {
   font-size: 1.44rem;
   line-height: 2rem;
+  font-weight: 300;
 }
 h4,
 .size-1 {
@@ -1214,6 +1215,7 @@ p.xsmall {
   h3 {
     font-size: 1.266rem;
     line-height: 2rem;
+    font-weight: 300;
   }
   h4,
   .size-1 {
@@ -1245,6 +1247,7 @@ p.xsmall {
   h3 {
     font-size: 1.138rem;
     line-height: 2rem;
+    font-weight: 300;
   }
   h4,
   .size-1 {
@@ -1414,8 +1417,7 @@ label:hover:before {
   transform: scale(1);
 }
 button {
-  border: 1px solid #ffffff;
-  border-radius: 0.3em;
+  border: 0;
   height: 2.5em;
   width: auto;
   display: flex;
@@ -1424,10 +1426,6 @@ button {
   color: #ffffff;
   background: transparent;
   text-transform: uppercase;
-}
-button:hover {
-  background: #e91e63;
-  border: 0;
 }
 button svg {
   width: 1.5em;
@@ -1919,6 +1917,7 @@ body.side .data-filter button.close-filter {
   flex-wrap: wrap;
   display: flex !important;
   transition: width 0.5s ease;
+  background: #fafafa;
 }
 .sidebar {
   width: 0 !important;
@@ -1943,7 +1942,7 @@ a[href="http://www.amcharts.com/javascript-charts/"] {
   height: 20rem;
   border-radius: 0.5rem;
   border: 1px solid #efefef;
-  background: #fafafa;
+  background: #ffffff;
   overflow: hidden;
 }
 .chart:before {
@@ -2208,18 +2207,42 @@ a[href="http://www.amcharts.com/javascript-charts/"] {
 .campaigns th {
   height: 3rem;
 }
-.campaigns-welcome {
+.page-title {
   height: 100%;
   display: flex;
-  align-items: center;
-  height: 7rem;
+  align-items: flex-end;
+  height: 9rem;
+  padding-left: 3rem;
 }
-.greeting-text {
-  display: flex;
-  justify-content: space-between;
+.page-title h1 {
   font-weight: 300;
   font-size: 2.489rem;
-  padding-left: 3rem;
+}
+.page-title > * {
+  display: flex;
+  align-items: center;
+  height: 40% !important;
+  overflow: visible;
+  top: -40%;
+}
+.page-title > *:after {
+  content: attr(data-label);
+  position: absolute;
+  display: block;
+  font-size: 0.9rem;
+  top: 4rem;
+  left: 0;
+  padding: 0;
+  font-weight: 400;
+  width: 2rem;
+  height: 1rem;
+  line-height: 1em;
+  text-transform: uppercase;
+  flex: none;
+  bottom: -1.5rem;
+  left: 0.2rem;
+  color: #aaaaaa;
+  margin: 0;
 }
 .greeting-comments {
   position: relative;
@@ -2271,6 +2294,12 @@ td {
 }
 .table__actions button {
   display: inline-block;
+  border: 1px solid #ffffff;
+  border-radius: 0.3em;
+}
+.table__actions button:hover {
+  background: #e91e63;
+  border: 0;
 }
 .table__actions__menu {
   position: absolute;
@@ -2370,10 +2399,12 @@ td {
   margin: 0.2rem 0 0 0.2rem;
 }
 .campaign__table.collapse tr:not(.campaign__title) {
-  height: 0 !important;
+  transition: height 0s 0.3s linear;
+  height: 0;
 }
 .campaign__table.collapse tr:not(.campaign__title) td.creative {
-  height: 0 !important;
+  transition: height 0s 0.3s linear;
+  height: 0;
 }
 .campaign__table.collapse use.plus {
   display: block;
@@ -2415,12 +2446,12 @@ td {
   padding-left: 0.7em;
 }
 .creative-wrapper {
-  max-height: 1000px;
+  max-height: 200px;
   overflow: visible;
-  transition: all 1s ease-out;
+  transition: max-height 0.7s ease-in-out;
 }
 .collapse .creative-wrapper {
-  max-height: 0;
+  max-height: 0px;
   overflow: hidden;
 }
 .creative__title {
@@ -2707,78 +2738,90 @@ body.report .report {
   width: 100%;
   margin-top: 6rem;
 }
-.filter-actions {
+.content-buttons {
   position: relative;
   display: flex;
   align-items: center;
   width: 100%;
-  height: 3rem;
-  background: #666;
-  color: white;
-  fill: #ffffff;
+  height: 8rem;
+  color: #aaaaaa;
+  fill: #e91e63;
   overflow: hidden;
+  justify-content: space-between;
 }
-.filter-actions .show-filter {
-  display: block;
-  width: 40%;
-  height: 100%;
+.content-buttons button {
+  color: #e91e63;
+  font-size: 0.9em;
+  font-weight: 500;
+}
+.content-buttons button svg {
+  color: #aaaaaa;
+  fill: #e91e63;
+  height: 80%;
+  margin-right: 0.5rem;
+}
+.content-buttons > * {
   display: flex;
-  align-items: center;
-  border-radius: 0;
-  max-width: 1000px;
+  justify-content: flex-start;
+}
+.content-buttons-right {
+  justify-content: flex-end;
+  padding-right: 2.5rem;
+}
+.show-filter {
+  width: 2rem;
+  height: 100%;
+  padding: 0 0 0 0rem;
+  margin-right: 0.3rem;
+}
+.current-view {
+  padding-left: 1.4rem;
+}
+.current-view p {
+  position: relative;
+  font-size: 1.6rem;
+  margin: 0 0.2rem;
+  color: #333333;
+  font-weight: 300;
+}
+.current-view p:after {
+  content: attr(data-label);
+  position: absolute;
+  display: block;
+  font-size: 0.95rem;
+  top: 2.5rem;
+  left: 0;
   padding: 0;
+  font-weight: 400;
+  width: 2rem;
+  height: 1rem;
+  line-height: 1em;
+  text-transform: uppercase;
+  flex: none;
+  bottom: -1.5rem;
+  left: 0.2rem;
+  color: #aaaaaa;
+  margin: 0;
 }
-.filter-actions .show-filter:focus {
-  outline: none;
+.current-view p.split-value {
+  margin-left: 1.5rem;
 }
-.filter-actions .show-filter svg {
-  transition: all 0.5s ease;
-  fill: #ffffff;
-  height: 70%;
-  width: 10%;
-}
-body.side .filter-actions .show-filter svg {
+.current-view button,
+.current-view svg {
   fill: #e91e63;
 }
-.filter-actions .show-filter h3 {
-  font-size: 1rem;
-  margin: 0 0.5rem 0 1rem;
-  text-transform: uppercase;
-  line-height: 2rem;
-}
-.filter-actions .show-filter p {
-  font-size: 1rem;
-  margin: 0;
-  line-height: 2rem;
-}
-.filter-actions .actions {
-  display: flex;
-  width: auto;
-  justify-content: flex-end;
-  height: 100%;
-  width: 60%;
-}
-.filter-actions .actions button {
-  background: transparent;
+.content-buttons-right svg {
   width: 4rem;
-  height: 100%;
-  padding: 0;
+  padding: 0 0 0 1.5rem;
 }
-.filter-actions .actions button svg {
-  width: 100%;
-  height: 65%;
+.content-buttons-right button {
+  padding: 0.3em 0;
 }
 .filter.split-by.none .filter__treemap {
   display: none;
 }
 .filter.split-by.domain .filter__treemap {
   display: flex;
-}
-.split-type {
-  color: #f27ba3;
-}
-.split-value {
-  font-size: 0.8em;
 }
 .spinner {
   position: absolute;
@@ -2937,17 +2980,17 @@ button {
 }
 .accordion-header {
   justify-content: flex-start;
-  padding: 1rem;
-  font-size: 2rem;
+  padding-left: 1.8rem;
+  padding-bottom: 1rem;
+  font-size: 1.5rem;
   font-weight: 500;
-  color: #333333;
   cursor: pointer;
   margin-top: 1.5rem;
 }
 .accordion-header svg {
-  fill: #222222;
-  height: 2.5rem;
-  transform: translate(-0.4em, 0em);
+  fill: #e91e63;
+  height: 2rem;
+  transform: translate(-0.35em, 0em);
 }
 .accordion-header .plus {
   display: none;
@@ -2966,7 +3009,7 @@ button {
   flex-wrap: wrap;
   width: 100%;
   height: auto;
-  padding-left: 2.5rem;
+  padding: 0rem 1.5rem 2rem 3rem;
   max-height: 700px;
   overflow: hidden;
   transition: all 0.3s ease-out;

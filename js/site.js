@@ -142,7 +142,7 @@ $(document).ready(function() {
 
   }
 
-  $('.menu__' + page).addClass('current').siblings().removeClass('current');
+  // $('.menu__' + page).addClass('current').siblings().removeClass('current');
 
   // $('#radio1').attr('selected');
 

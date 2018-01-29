@@ -2,80 +2,25 @@
 
 <% var cp = campaigns.filter(cp => cp.id === 'cp_gopro')[0]; %>
 
+<div class="app__body">
 
-<div class="campaign-details">
-  <div class="background"></div>
-  <table class="campaign__table  <%= cp.id %> collapse">
-  <thead class="campaign__table__head"><tr>
-    <td class="campaign__expand">
-    </td>
-    <td class="campaign__brand">
-      Brand
-    </td>
-    <td class="campaign__name grid3">
-      Name
-    </td>
-    <td class="campaign__dates grid2">
-      Dates
-    </td>
-    <td class="campaign__progress grid3">
-      Progress
-    </td>
-    <td class="campaign__actions table__actions">
-    </td>
-  </tr>
-</thead>
-<tbody>
-  <tr class="campaign__title">
-  <td class="campaign__expand" data-cp="<%= cp.id %>">
-    <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
-      <use x="0" y="0" href="#arrow-left-head"></use>
-      <use x="0" y="0" href="#arrow-left-stem"></use>
-    </svg>
-  </td>
-    <td class="campaign__brand">
-      GoPro
-    </td>
-    <td class="campaign__name grid3">
-      Hero5 Mark II
-    </td>
-    <td class="campaign__dates grid2">
-      Tue 1 Aug - Sat 30 Sep
-    </td>
-    <td class="campaign__progress grid3">
+  <div class="breadcrumbs">Campaigns <span class="breadcrumbs__arrow">&#9654;</span>GoPro - Hero 5 Mark II</div>
 
+  <div class="page-title grid">
 
-
-
-
-
+    <h1 class="greeting-text grid-cell grid2" data-label="Brand">GoPro</h1>
+    <h1 class="greeting-text grid-cell grid3" data-label="Name">Hero 5 Mark II</h1>
+    <h3 class="grid-cell grid3 campaign__dates" data-label="Dates">Tue 1 Aug - Sat 30 Sep</h3>
+    <div class="grid-cell grid4 campaign__progress" data-label="Progress">
       <div class="chart__progress-bar">
         <span class="chart__progress-bar__prog" style="width: 66.66666666666666%; background: #e91e63;">
           <span class="chart__progress-bar__text">40 / 60 days</span>
         </span>
 
       </div>
-    </td>
-    <td class="campaign__actions table__actions">
-      <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
-        <use x="0" y="0" href="#menu"></use>
-      </svg>
-      <div class="table__actions__menu">
-        <ul>
-          <li>Edit Campaign</li>
-          <li>Report</li>
-          <li>Clone</li>
-          <li>Archive</li>
-        </ul>
-      </div>
-    </td>
-  </tr>
+    </div>
 
-</tbody>
-
-
-  </table>
-</div>
+  </div>
 
 <div class="spinner">
   <div>
@@ -195,48 +140,36 @@
 
     </div>
 
-    <div class="content grid-cell grid9 no-gutter">
+    <div class="content grid">
 
-      <div class="filter-actions">
-
-        <div class="show-filter">
-
-          <h3>Current View:</h3>
-          <p class="group">Placement</p>
-
-          <h3>Split:</h3>
-          <p class="split">None</p>
-
-        </div>
-
-        <div class="actions">
-
+      <div class="content-buttons grid">
+        <div class="current-view">
           <button class="show-filter">
             <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
-              <use x="0" y="0" href="#filter3" />
+              <use x="0" y="0" href="#gear" />
             </svg>
+            <!-- Change View -->
           </button>
+          <p class="group-value" data-label="Placement">14sfjhajsh hajka_sdfsdfsd_asf</p>
+          <p class="split-value" data-label="Category">Entertainment</p>
 
-          <button class="schedule">
-            <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
-              <use x="0" y="0" href="#clock" />
-            </svg>
-          </button>
-
-          <button class="download-file">
+        </div>
+        <div class="content-buttons-right">
+          <button class="">
             <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
               <use x="0" y="0" href="#download-file" />
             </svg>
+            Download
           </button>
 
-          <!-- <button class="menu">
+          <button class="">
             <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
-              <use x="0" y="0" href="#menu" />
+              <use x="0" y="0" href="#comments" />
             </svg>
-          </button> -->
+            View Notes
+          </button>
 
         </div>
-
       </div>
 
       <div id="accord__head--del" class="accordion-header">
@@ -443,6 +376,8 @@
 
 
   </div>
+
+</div>
 
 
 
