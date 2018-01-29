@@ -71,60 +71,61 @@ $('.login__box .button').click(function(e) {
 
 });
 
-var timeline = new TimelineMax({paused:true});
-
-timeline
-.set('.campaign-details', {
-  y: '160px'
-})
-.set('.campaign-details .background', {
-  scaleX: 0.8,
-  scaleY: 0.84
-})
-.set('.filter-actions', {
-  opacity:0,
-  y:'-100%'
-})
-.set('.chart', {
-  opacity:0,
-  scale: 0.8
-})
-.to('.campaign-details .background', 0.5, {
-  scaleX: 1,
-  ease: Power4.easeIn
-})
-.to('.campaign-details .background', 0.2, {
-  scaleY: 1,
-  ease: Power4.easeIn
-},)
-.to('.campaign-details', 0.5, {
-  y: 0,
-  ease: Power4.easeIn
-}, 'move')
-.to('.campaign__table', 0.5, {
-  y: '20px',
-  ease: Power4.easeIn
-}, 'move')
-.to('.campaign__table', 0.5, {
-  y: '0px',
-  ease: Back.easeOut.config(3)
-}, 'filter-in')
-.set('.filter-actions', {
-  opacity: 1
-}, 'filter-in')
-.to('.filter-actions', 0.4, {
-  y: '0%'
-}, 'filter-in+=0.1')
-.staggerTo('.chart', 0.2, {
-  scale:1,
-  opacity:1
-}, 0.1)
-.call(updateAllCharts, ['SSM_same'])
-;
+// var timeline = new TimelineMax({paused:true});
+//
+// timeline
+// .set('.campaign-details', {
+//   y: '160px'
+// })
+// .set('.campaign-details .background', {
+//   scaleX: 0.8,
+//   scaleY: 0.84
+// })
+// .set('.filter-actions', {
+//   opacity:0,
+//   y:'-100%'
+// })
+// .set('.chart', {
+//   opacity:0,
+//   scale: 0.8
+// })
+// .to('.campaign-details .background', 0.5, {
+//   scaleX: 1,
+//   ease: Power4.easeIn
+// })
+// .to('.campaign-details .background', 0.2, {
+//   scaleY: 1,
+//   ease: Power4.easeIn
+// },)
+// .to('.campaign-details', 0.5, {
+//   y: 0,
+//   ease: Power4.easeIn
+// }, 'move')
+// .to('.campaign__table', 0.5, {
+//   y: '20px',
+//   ease: Power4.easeIn
+// }, 'move')
+// .to('.campaign__table', 0.5, {
+//   y: '0px',
+//   ease: Back.easeOut.config(3)
+// }, 'filter-in')
+// .set('.filter-actions', {
+//   opacity: 1
+// }, 'filter-in')
+// .to('.filter-actions', 0.4, {
+//   y: '0%'
+// }, 'filter-in+=0.1')
+// .staggerTo('.chart', 0.2, {
+//   scale:1,
+//   opacity:1
+// }, 0.1)
+// .call(updateAllCharts, ['SSM_same'])
+// ;
 
 $(document).ready(function() {
   var page = document.location.href.split('/')[3];
   $('body').addClass(page);
+
 
   // if(page === 'campaigns'){
   //   var header = $('.campaign__table.cp_gopro').clone();
@@ -134,7 +135,11 @@ $(document).ready(function() {
 
   if(page === 'report'){
     // $('.campaign-details').css('display', 'flex');
-    timeline.play();
+    // timeline.play();
+    setTimeout(function(){
+      updateAllCharts('SSM_same');
+    }, 500);
+
   }
 
   $('.menu__' + page).addClass('current').siblings().removeClass('current');

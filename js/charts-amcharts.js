@@ -520,7 +520,7 @@ var chart__impsDelBench = AmCharts.makeChart('chart--impsDelBench', {
 
 function totalsChart(containerID, initValue, initPG, initIAB) {
   this.containerID = containerID;
-  console.log(containerID);
+  // console.log(containerID);
   // countup(target, startVal, endVal, decimals, duration, {options})
   this.value = new CountUp(containerID + "_value", 0, initValue, 1, 2, {
     useEasing: false,
@@ -585,7 +585,7 @@ ativAvData.init = {
   iabBench: 0
 };
 
-console.log('ativAvData', ativAvData);
+// console.log('ativAvData', ativAvData);
 
 var chart__ativAv = new totalsChart('chart--ativAv', ativAvData.init.value, ativAvData.init.pgBench, ativAvData.init.iabBench);
 
@@ -617,6 +617,36 @@ engagedCData.init = {
 };
 
 var chart__engagedC = new totalsChart('chart--engagedC', engagedCData.init.value, engagedCData.init.pgBench, engagedCData.init.iabBench);
+
+// Passive COMPLETIONS
+
+var passiveCData = {
+  current: 'init'
+};
+
+gopro_pments.forEach(function(pl) {
+
+  var plFormat = getFormat(pl);
+
+  passiveCData[pl.id] = {
+    value: average(pl.data.passiveCompletionRate, pl.dates, gopro).toFixed(1),
+    color: plFormat.color,
+    pgBench: plFormat.bm.passiveCompletionRate,
+    iabBench: fm.iab.bm.passiveCompletionRate
+  };
+
+  // console.log('PASSIVE COMPLETIONS DATA', passiveCData);
+
+});
+
+passiveCData.init = {
+  value: 0,
+  color: '#000000',
+  pgBench: 0,
+  iabBench: 0
+};
+
+var chart__passiveC = new totalsChart('chart--passiveC', passiveCData.init.value, passiveCData.init.pgBench, passiveCData.init.iabBench);
 
 
 
@@ -885,7 +915,7 @@ ecHeatData.init = [{
   },
 ];
 
-console.log('ecHeatData', ecHeatData);
+// console.log('ecHeatData', ecHeatData);
 
 var chart__ecHeat = AmCharts.makeChart("chart--engagedCHeat", {
   dataObject: ecHeatData,
@@ -1070,7 +1100,7 @@ var chart__pcHeat = AmCharts.makeChart("chart--passiveCHeat", {
 
 var amCharts = [chart__impsDel, chart__impsDelBench, chart__ImpsTime, chart__vAv, chart__vAvBench, chart__erTime, chart__ecHeat, chart__pcHeat];
 
-var totalsCharts = [chart__ativAv, chart__engagedC, chart__erAv];
+var totalsCharts = [chart__erAv, chart__ativAv, chart__engagedC, chart__passiveC];
 
 $('.filter__placement-select label').click(function() {
   var plID = $(this).data('placement');
@@ -1105,17 +1135,17 @@ function updateAllCharts(pment_ID) {
       var data = chart.dataObject[pment_ID];
       var chartDiv = chart.containerDiv.offsetParent.id;
       // console.log(chartDiv);
-      if( chartDiv === "chart--erTime"){
-        console.log('new Engagement data', data);
+      // if( chartDiv === "chart--erTime"){
+        // console.log('new Engagement data', data);
         // $('.chart--execImpsAgg').attr('class', 'chart chart--execImpsAgg ' + pment.id);
-      }
+      // }
       chartsRendered++;
       chart.animateData(data, {
         duration: 500,
         complete: renderCharts
       });
     }else{
-      console.log('ALL CHARTS LOADED');
+      // console.log('ALL CHARTS LOADED');
       // chart__ImpsTime.chartCursor.showCursorAt('2017-08-09');
     }
   }
@@ -1134,5 +1164,6 @@ function updateAllCharts(pment_ID) {
 
   chart__ativAv.updateCount(ativAvData[pment_ID]);
   chart__engagedC.updateCount(engagedCData[pment_ID]);
+  chart__passiveC.updateCount(passiveCData[pment_ID]);
   chart__erAv.updateCount(erAvData[pment_ID]);
 }

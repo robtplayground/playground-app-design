@@ -26,7 +26,8 @@ iab = {
 		viewability: 28,
     engagementRate: 0.5,
     ativ: 3,
-		engagedCompletionRate: 4.1
+		engagedCompletionRate: 4.1,
+		passiveCompletionRate: 40.3
 	}
 };
 
@@ -37,7 +38,8 @@ superSkin = {
     viewability: 63,
     engagementRate: 0.92,
     ativ: 9.2,
-		engagedCompletionRate: 15.1
+		engagedCompletionRate: 15.1,
+		passiveCompletionRate: 60.2
   }
 };
 
@@ -48,7 +50,8 @@ generic = {
     viewability: 63,
     engagementRate: 0.92,
     ativ: 9.2,
-		engagedCompletionRate: 15.1
+		engagedCompletionRate: 15.1,
+		passiveCompletionRate: 80.4
   }
 };
 
@@ -59,7 +62,8 @@ topTail = {
     viewability: 82,
     engagementRate: 0.55,
     ativ: 14,
-		engagedCompletionRate: 14.1
+		engagedCompletionRate: 14.1,
+		passiveCompletionRate: 71.3
   }
 };
 
@@ -70,7 +74,8 @@ hangTime = {
     viewability: 61,
     engagementRate: 3,
     ativ: 3.65,
-		engagedCompletionRate: 14.1
+		engagedCompletionRate: 14.1,
+		passiveCompletionRate: 59.2
   }
 };
 
@@ -81,7 +86,8 @@ sidePush= {
     viewability: 87,
     engagementRate: 0.9,
     ativ: 7,
-		engagedCompletionRate: 14.1
+		engagedCompletionRate: 14.1,
+		passiveCompletionRate: 80.2
   }
 };
 
@@ -92,7 +98,8 @@ subWay = {
     viewability: 90,
     engagementRate: 1,
     ativ: 20,
-		engagedCompletionRate: 14.1
+		engagedCompletionRate: 14.1,
+		passiveCompletionRate: 65.3
   }
 };
 
@@ -214,7 +221,7 @@ function PASSIVE_COMPLETIONS(array){
 	var values = array.slice();
 	values.forEach(function(value, i){
 		if(value != 0){
-			var newValue = value/2;
+			var newValue = value * 100;
 	    values.splice(i, 1, newValue);
 		}
   });
