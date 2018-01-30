@@ -61,11 +61,11 @@ gopro_pments.forEach(function(pl) {
 
 // console.log('IMPS DATA', impsData);
 
-impsData.SSM_same[7].comment = 'Corrected Publisher tag';
+impsData.SSM_same[7].comment = '8 Aug: Corrected Publisher tag';
 impsData.SSM_same[7].commentVal = 0;
-impsData.SSM_same[27].comment = 'Retarget audience';
+impsData.SSM_same[27].comment = '28 Aug: Retarget audience';
 impsData.SSM_same[27].commentVal = 0;
-impsData.SSM_same[41].comment = 'Reorganised supply';
+impsData.SSM_same[41].comment = '11 Sept: New supply Daily Mail';
 impsData.SSM_same[41].commentVal = 0;
 
 // console.log(impsData);
@@ -116,7 +116,7 @@ var chart__ImpsTime = AmCharts.makeChart("chart--execImpsAgg", {
       color: impsData.SSM_same[0].colorE,
     },
     balloonFunction: function(graphItem, graph){
-        return '<span class="offset">EXECUTED: ' + graphItem.values.value + '</span>';
+        return '<span class="offset offset2">EXECUTED: ' + graphItem.values.value + '</span>';
       }
     },{
     type: "line", // try to change it to "column"
@@ -142,8 +142,8 @@ var chart__ImpsTime = AmCharts.makeChart("chart--execImpsAgg", {
     lineAlpha: 0,
     customBullet: "../images/pink-star.png",
     bulletColor: '#e91e63',
-    bulletSize: 15,
-    bulletOffset:4,
+    bulletSize: 22,
+    bulletOffset:14,
     bulletHitAreaSize: 30,
     balloon: {
       textAlign: "left",
@@ -157,7 +157,7 @@ var chart__ImpsTime = AmCharts.makeChart("chart--execImpsAgg", {
     balloonFunction: function(graphItem, graph){
       if(graphItem.dataContext.comment !== ' '){
         // console.log(graphItem);
-        return '<span class="offset chart__comment">' + graphItem.dataContext.comment + '<br/> Click for more info</span>';
+        return '<span class="chart__comment">' + graphItem.dataContext.comment + '</span>';
       }
     }
   }],
@@ -174,7 +174,7 @@ var chart__ImpsTime = AmCharts.makeChart("chart--execImpsAgg", {
   listeners: [{
     event: "clickGraphItem",
     method: function(e){
-      $('.chart__error').addClass('visible').fadeToggle(500);
+      $('.chart__error').toggleClass('visible');
     }
   }]
 });
@@ -738,7 +738,7 @@ engData.init.forEach(function(dateEntry) {
   dateEntry.colorC = "transparent";
 });
 
-engData.SSM_same[7].comment = 'Corrected Publisher tag';
+engData.SSM_same[7].comment = '8 Aug: Corrected Publisher tag';
 engData.SSM_same[7].commentVal = 0;
 engData.SSM_same[27].comment = 'Retarget audience';
 engData.SSM_same[27].commentVal = 0;
@@ -784,34 +784,36 @@ var chart__erTime = AmCharts.makeChart("chart--erTime", {
     lineColorField: "colorC",
     fillColorsField: "colorC",
     fillAlphas: 0.3
-  },{
-    type: "line", // try to change it to "column"
-    title: "comments",
-    valueField: "commentVal",
-    lineColor: "#e91e63",
-    lineAlpha: 0,
-    customBullet: "../images/pink-star.png",
-    bulletColor: '#e91e63',
-    bulletSize: 15,
-    bulletOffset:4,
-    bulletHitAreaSize: 30,
-    visibleInLegend: false,
-    balloon: {
-      textAlign: "left",
-      borderThickness: 0,
-      // fillColor: impsData.SSM_same[0].colorE,
-      fillColor: 'transparent',
-      color: "blue",
-      hideBalloonTime: 1000, // 1 second
-      // fixedPosition: true,
-    },
-    balloonFunction: function(graphItem, graph){
-      if(graphItem.dataContext.comment !== ' '){
-        // console.log(graphItem);
-        return '<span class="chart__comment">' + graphItem.dataContext.comment + '<br/> Click for more info</span>';
-      }
-    }
-  }],
+  },
+  // {
+  //   type: "line", // try to change it to "column"
+  //   title: "comments",
+  //   valueField: "commentVal",
+  //   lineColor: "#e91e63",
+  //   lineAlpha: 0,
+  //   customBullet: "../images/pink-star.png",
+  //   bulletColor: '#e91e63',
+  //   bulletSize: 30,
+  //   bulletOffset:4,
+  //   bulletHitAreaSize: 30,
+  //   visibleInLegend: false,
+  //   balloon: {
+  //     textAlign: "left",
+  //     borderThickness: 0,
+  //     // fillColor: impsData.SSM_same[0].colorE,
+  //     fillColor: 'transparent',
+  //     color: "blue",
+  //     hideBalloonTime: 1000, // 1 second
+  //     // fixedPosition: true,
+  //   },
+  //   balloonFunction: function(graphItem, graph){
+  //     if(graphItem.dataContext.comment !== ' '){
+  //       // console.log(graphItem);
+  //       return '<span class="chart__comment">' + graphItem.dataContext.comment + '</span>';
+  //     }
+  //   }
+  // }
+],
   chartScrollbar: {},
   chartCursor: {
     cursorPosition: "mouse",

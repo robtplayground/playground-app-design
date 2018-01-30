@@ -159,14 +159,12 @@ $('.close-filter').click(function() {
   $('body').removeClass('side');
 });
 
-$('.chart__error-button').click(function(){
-  $('.chart__error').toggleClass('visible').fadeToggle(500);
-  chart__ImpsTime.chartCursor.showCursorAt('2017-08-08');
-});
-
-$('.chart__error.visible').click(function(){
-  alert('clicked');
-  $(this).removeClass('visible').fadeOut(500);
+$('.chart__error, .notes-button').click(function(){
+  $('.chart__error').toggleClass('visible');
+  $('.chart__comment').parent().css({
+    'overflow': 'visible'
+  });
+  // chart__ImpsTime.chartCursor.showCursorAt('2017-08-08');
 });
 
 // fix filters at header

@@ -8,6 +8,10 @@
 
   <div class="page-title dark grid">
 
+    <!-- <svg class="notes-icon" viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
+      <use x="0" y="0" href="#comments" />
+    </svg> -->
+
     <h1 class="greeting-text grid-cell grid2" data-label="Brand">GoPro</h1>
     <h1 class="greeting-text grid-cell grid3" data-label="Name">Hero 5 Mark II</h1>
     <h3 class="grid-cell grid3 campaign__dates" data-label="Dates">Tue 1 Aug - Sat 30 Sep</h3>
@@ -37,7 +41,7 @@
         Download
       </button>
 
-      <button class="">
+      <button class="notes-button">
         <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
           <use x="0" y="0" href="#comments" />
         </svg>
@@ -180,6 +184,31 @@
 
     </div>
 
+    <div class="chart__error">
+
+      <svg class="notes-icon" viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
+        <use x="0" y="0" href="#comments" />
+      </svg>
+      <div class="chart__error__content">
+        <h1>Notes</h1>
+        <div class="note__container">
+          <p class="date">On 25 Aug 2017, <span style="font-weight:700">Scot Liddell</span> wrote:</p>
+          <p class="note">Retargetted audience towards improving Engagement Rate</p>
+          <p class="remedy">Optimisations: Scot Liddell corrected the tag to reinstate impressions</p>
+        </div>
+        <div class="note__container note__active">
+          <p class="date">On 8 Aug 2017, <span style="font-weight:700">Scot Liddell</span> wrote:</p>
+          <p class="note">Executed Impressions below benchmark due to 100% Fallback: non-certified article pages on Bauer sites.</p>
+          <p class="remedy">Optimisations: Scot Liddell corrected the tag to reinstate impressions</p>
+        </div>
+        <div class="note__container" style="border:0">
+          <button>Add Note</button>
+
+        </div>
+
+      </div>
+    </div>
+
     <div class="content grid">
 
       <div id="accord__head--del" class="accordion-header">
@@ -194,6 +223,7 @@
       <div class="grid-cell grid4 error-chart">
         <div class="chart chart--impsDel">
           <h3>Delivery</h3>
+          <div class="chart__error-button"></div>
           <div class="chart__render" id="chart--impsDel"></div>
           <div class="chart__render" id="chart--impsDelBench"></div>
           <div class="chart__legend">
@@ -211,18 +241,7 @@
           <div class="chart__controls">
             <h3>Impressions</h3>
             <div class="chart__error-button"></div>
-            <div class="chart__error">
-              <div class="chart__error__content">
-                <p class="date">8 Aug 2017</p>
-                <p class="note">Executed Impressions below benchmark due to 100% Fallback: non-certified article pages on Bauer sites.</p>
-                <h6 class="optim">Optimisations</h6>
-                <p class="remedy">Scot Liddell corrected the tag to reinstate impressions</p>
-                <p class="date">25 Aug 2017</p>
-                <p class="note">Retargetted audience towards improving Engagement Rate</p>
-                <h6 class="optim">Optimisations</h6>
-                <p class="remedy">Scot Liddell corrected the tag to reinstate impressions</p>
-              </div>
-            </div>
+
             <select class="chart__select">
             <option value="Cumulative">Cumulative</option>
             <option value="Individual">Individual</option>
@@ -336,6 +355,11 @@
 
       <div class="grid-cell grid8">
         <div class="chart">
+          <div class="chart__controls">
+            <h3>Engagement Rate / Time</h3>
+
+          </div>
+
           <div id="chart--erTime" class="chart__render"></div>
         </div>
       </div>

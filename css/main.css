@@ -1967,7 +1967,7 @@ body.side .show-filter .show-filter-bg.pink {
 }
 .chart h3 {
   position: absolute;
-  top: 0;
+  top: 0.6rem;
   width: 100%;
   text-align: center;
   font-weight: 400;
@@ -2067,8 +2067,8 @@ a[href="http://www.amcharts.com/javascript-charts/"] {
   font-size: 0.833rem;
   border: 1px solid #222222;
   border-radius: 100%;
-  top: 0;
-  right: 0;
+  top: 0.6rem;
+  right: 0.6rem;
   z-index: 10;
   margin: 0.6em;
 }
@@ -2145,18 +2145,26 @@ a[href="http://www.amcharts.com/javascript-charts/"] {
   width: calc(100% - 2rem);
 }
 .chart__comment {
-  width: 15em;
+  display: block;
+  width: 10em;
+  /* background: lime; */
+  transition: none;
+  font-size: 0.9rem;
   color: #e91e63;
-  text-decoration: underline;
-  text-decoration-style: dotted;
   line-height: 1.5em;
   text-shadow: 0 0 10px #ffffff;
+  padding: 1em;
+  border-radius: 5px;
+  transform: translate(-1.3em, -2.2em);
 }
 .amcharts-balloon-div span.offset {
   display: block;
   transform: translate(-0.5em, -4em);
   width: 12em;
   line-height: 1.5em;
+}
+.amcharts-balloon-div span.offset2 {
+  transform: translate(-0.5em, -4.5em);
 }
 .amcharts-graph-line circle {
   cursor: pointer;
@@ -2174,8 +2182,8 @@ a[href="http://www.amcharts.com/javascript-charts/"] {
 }
 .chart__error-button {
   position: absolute;
-  top: 2px;
-  right: 4px;
+  top: 0.8rem;
+  right: 0.8rem;
   height: 2em;
   width: 2em;
   background: url(../images/alert-icon.png);
@@ -2183,31 +2191,29 @@ a[href="http://www.amcharts.com/javascript-charts/"] {
   z-index: 10;
 }
 .chart__error {
+  transform: translateX(100%);
+  transition: transform 0.3s ease-in;
   position: absolute;
-  right: 1em;
-  top: 3.5em;
-  width: 18em;
-  height: 14em;
-  padding: 1em;
-  border: 1px solid #aaaaaa;
-  background: rgba(255, 255, 255, 0.97);
-  border-radius: 0.5rem 0rem 0.5rem 0.5rem;
-  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
-  z-index: 10;
-  display: none;
+  right: 0em;
+  top: 0rem;
+  width: 26rem;
+  height: 100%;
+  padding: 1em 4em;
+  border: 1px solid #efefef;
+  background: #ffffff;
+  z-index: 20;
 }
-.chart__error:before {
-  content: '';
-  display: block;
-  position: absolute;
-  top: -1.5em;
-  right: -1px;
-  width: 1.5em;
-  height: 1.5em;
-  background: url(../images/bubble-stem.svg);
-  background-size: contain;
-  background-position: bottom right;
-  background-repeat: no-repeat;
+.chart__error.visible {
+  transform: translateX(0%);
+  transition: transform 0.3s ease-out;
+}
+.chart__error .notes-icon {
+  fill: #e91e63;
+}
+.chart__error h1 {
+  padding: 0;
+  margin: 0;
+  font-weight: 300;
 }
 .chart__error h6 {
   margin: 0;
@@ -2215,35 +2221,45 @@ a[href="http://www.amcharts.com/javascript-charts/"] {
   color: #e91e63;
 }
 .chart__error p {
-  line-height: 1.2em;
+  line-height: 1.5em;
 }
 .chart__error p.remedy {
   position: relative;
-  padding-left: 1.2em;
+  padding-bottom: 2rem;
 }
-.chart__error p.remedy:before {
-  position: absolute;
-  content: '';
+.chart__error p.remedy:after {
+  content: 'Reply';
+  text-transform: uppercase;
   display: block;
-  background-image: url(../images/pink-star.png);
+  font-weight: 500;
+  background-image: url('/images/reply.png');
+  background-position: left top;
+  background-size: auto 100%;
   background-repeat: no-repeat;
-  background-size: contain;
-  width: 0.8em;
-  height: 0.8em;
-  left: 0;
-  top: 0.1em;
+  padding-left: 2rem;
+  margin-top: 1rem;
+  color: #e91e63;
 }
 .chart__error p.date {
-  font-size: 1rem;
+  font-size: 1.2rem;
   color: #aaaaaa;
+  padding: 1rem 0;
+}
+.chart__error button {
+  background-color: #e91e63;
+  border-radius: 5px;
+  margin-top: 2rem;
 }
 .chart__error__content {
   position: absolute;
-  top: 1em;
-  left: 1em;
-  width: calc(100% - 2em);
-  height: calc(100% - 2em);
-  overflow-y: scroll;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0rem;
+}
+.chart__error__content h1 {
+  padding: 1rem 2rem;
 }
 .chart--impsDel .chart__legend__left:before {
   position: relative;
@@ -2850,6 +2866,7 @@ span.select2-selection.select2-selection--single {
 }
 .report {
   width: 1422px;
+  overflow-x: hidden;
 }
 body.report .report {
   width: 100%;
@@ -2934,7 +2951,12 @@ p.split-value:after {
 }
 .content-buttons-right {
   justify-content: flex-end;
+  align-items: center;
   padding-right: 2.5rem;
+  height: 5rem;
+}
+.content-buttons-right button {
+  transform: translateY(0.8em);
 }
 .current-view {
   height: 100%;
@@ -3161,4 +3183,41 @@ button {
 }
 .accordion-content.hidden {
   max-height: 0px;
+}
+#chart--erTime.chart__render {
+  top: 10%;
+  height: 89%;
+}
+.notes-icon {
+  position: absolute;
+  display: block;
+  fill: #ffffff;
+  top: 1.5rem;
+  right: 1.5rem;
+  width: 2rem;
+  height: 2rem !important;
+  z-index: 10;
+}
+.note__container {
+  position: relative;
+  overflow: hidden;
+  padding: 0 2rem;
+  border-bottom: 1px solid #efefef;
+}
+.note__active {
+  animation: none;
+}
+.visible .note__active {
+  animation: colorflash 1s ease-in 0.3s forwards;
+}
+@keyframes colorflash {
+  0% {
+    background-color: #fff;
+  }
+  10% {
+    background-color: #fbd8e4;
+  }
+  100% {
+    background-color: #fff;
+  }
 }
