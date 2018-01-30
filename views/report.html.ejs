@@ -27,8 +27,8 @@
     <div class="current-view grid-cell grid2">
 
     </div>
-    <p class="group-value grid-cell grid3" data-label="Placement">14sfjhajsh hajka_sdfsdfsd_asf</p>
-    <p class="split-value grid-cell grid4" data-label="Category">Entertainment</p>
+    <p class="group-value grid-cell grid3" data-label="">All Impressions</p>
+    <p class="split-value grid-cell grid4" data-label=""></p>
     <div class="content-buttons-right grid-cell grid3">
       <button class="">
         <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
@@ -100,14 +100,14 @@
     </div>
   </div>
 
-    <div class="filter group-by placement">
+    <div class="filter group-by none">
 
       <div class="input__wrapper">
         <h3>View</h3>
 
           <select id="group-by" class="filter__group-select">
-            <option value="campaign">Campaign</option>
-            <option value="placement" selected>Placement</option>
+            <option value="campaign" selected>Campaign</option>
+            <option value="placement" >Placement</option>
             <option value="format">Format</option>
             <option value="features">Features</option>
           </select>
@@ -115,7 +115,7 @@
       </div>
 
 
-      <div class="filter__placement-select">
+      <div class="filter filter__placement-select none">
 
         <% let gopro_pments = placements.filter(pl => pl.campaign === 'cp_gopro'); %>
         <% gopro_pments.forEach(function(pl, index){ %>
@@ -127,7 +127,7 @@
 
       </div>
 
-      <div class="filter__format-select">
+      <!-- <div class="filter__format-select">
 
           <input type="radio" id="radio10" name="format-select" selected/>
           <label for="radio10" data-placement="SSM_same" name="choose-format" selected><span></span>Super Skin</label>
@@ -135,7 +135,7 @@
           <input type="radio" id="radio11" name="format-select"/>
           <label for="radio11" data-placement="TTM_same" name="choose-format"><span></span>Top and Tail</label>
 
-      </div>
+      </div> -->
 
     </div>
 
@@ -157,16 +157,16 @@
 
       <div id="treemap" class="filter__treemap">
 
-        <div class="dm">Daily Mail</div>
-        <div class="smh">SMH</div>
-        <div class="elle">Elle</div>
-        <div class="roar">The Roar</div>
-        <div class="bm">Big Mobile</div>
-        <div class="giz">Gizmodo</div>
-        <div class="junk">Junkee</div>
-        <div class="cnet">CNet</div>
-        <div class="huff">Huffington Post</div>
-        <div class="mix">In The Mix</div>
+        <div class="dm">Technology</div>
+        <div class="smh">Entertainment</div>
+        <div class="elle">Lifestyle</div>
+        <div class="roar">Sport</div>
+        <div class="bm">Gaming</div>
+        <div class="giz">Travel</div>
+        <div class="junk">Food</div>
+        <div class="cnet">News</div>
+        <div class="huff">Sex</div>
+        <div class="mix">Other</div>
       </div>
 
     </div>

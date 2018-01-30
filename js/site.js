@@ -52,11 +52,13 @@ $('.table__actions__menu').click(function() {
 $('.filter__group-select').on('change', function(e) {
   var val = $(this).val();
   $('.group-by').attr('class', 'filter group-by ' + val);
+  $('p.group-value').attr('data-label', val);
 });
 
 $('.filter__split-select').on('change', function(e) {
   var val = $(this).val();
   $('.filter.split-by').attr('class', 'filter split-by ' + val);
+  $('p.split-value').attr('data-label', val);
 });
 
 // $('#slider').dateRangeSlider();
@@ -180,7 +182,7 @@ $(window).scroll(function(){
 $('.filter__treemap .dm').click(function(){
   $(this).addClass('active');
   updateAllCharts('SSM_same_DM');
-  $('.filter-actions .split').html('<span class="split-type">Domain </span><span class="split-value">Daily Mail</span>');
+  $('p.split-value').text('Technology');
 });
 
 $('.download-file').click(function(){

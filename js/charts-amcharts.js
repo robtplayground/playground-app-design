@@ -1104,6 +1104,7 @@ var totalsCharts = [chart__erAv, chart__ativAv, chart__engagedC, chart__passiveC
 
 $('.filter__placement-select label').click(function() {
   var plID = $(this).data('placement');
+  $('p.group-value').text('146560600_Airwave_GoPro_Target_FemalesMetro18-44');
   if(plID !== 'SSM_same'){
     $('.chart__error-button').css('display', 'none');
   }else{

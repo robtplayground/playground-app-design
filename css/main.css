@@ -1663,7 +1663,7 @@ body:not(.side) .fixed .show-filter {
   margin-right: 1rem !important;
   width: 1rem;
   position: absolute;
-  left: 0.8rem;
+  left: 1.5rem;
   top: 50%;
   margin-top: -0.7rem;
 }
@@ -1676,11 +1676,11 @@ body:not(.side) .fixed .show-filter {
   left: 0;
   fill: #efefef;
   transition: all 0.3s ease 0.5s;
-  transform: translateX(-20%);
+  transform: translateX(-5%);
 }
 body.side .show-filter .show-filter-bg {
   transition: none;
-  transform: translateX(-75%);
+  transform: translateX(-70%);
 }
 .show-filter .show-filter-bg.pink {
   fill: #fef8fa;
@@ -1705,7 +1705,7 @@ body.side .show-filter .show-filter-bg.pink {
   height: 1rem;
   position: relative;
   width: 8rem;
-  left: 0.7rem;
+  left: 1.7rem;
   max-width: 20rem;
   overflow: hidden;
   margin-right: 1rem;
@@ -1773,9 +1773,8 @@ body.side .show-filter .show-filter-bg.pink {
 }
 .data-filter .select2-container .select2-selection--single {
   height: 2.5rem;
-}
-.data-filter .select2-container .select2-selection--single {
-  line-height: 2.5rem;
+  padding-top: 0.2rem;
+  line-height: 4rem;
 }
 .filter__date-slider {
   width: 100%;
@@ -1895,7 +1894,7 @@ body.side .show-filter .show-filter-bg.pink {
 }
 .filter__treemap {
   height: 25rem;
-  font-size: 0.694rem;
+  font-size: 0.833rem;
   font-weight: 700;
   display: flex;
   flex-direction: column;
@@ -1916,8 +1915,13 @@ body.side .show-filter .show-filter-bg.pink {
   height: 50%;
   background: #ee4c83;
 }
-.filter__treemap .dm.active {
+.filter__treemap .active {
   background: #883753;
+}
+.filter__treemap .active ~ * {
+  background: #aaaaaa !important;
+  border: 1px solid #efefef !important;
+  color: #efefef !important;
 }
 .filter__treemap .smh {
   height: 50%;
@@ -2896,12 +2900,17 @@ body.side .content-buttons:before {
 p.group-value,
 p.split-value {
   position: relative;
-  display: flex;
+  display: block;
   align-items: center;
   font-size: 1.6rem;
   color: #333333;
   font-weight: 300;
   height: 100%;
+  padding-top: 3.5rem;
+  padding-right: 2rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 p.group-value:after,
 p.split-value:after {
@@ -2909,7 +2918,7 @@ p.split-value:after {
   position: absolute;
   display: block;
   font-size: 0.95rem;
-  top: 5rem;
+  top: 5.5rem;
   left: 0;
   padding: 0;
   font-weight: 400;
@@ -2944,7 +2953,13 @@ p.split-value:after {
 .filter.split-by.none .filter__treemap {
   display: none;
 }
-.filter.split-by.domain .filter__treemap {
+.filter.split-by.category .filter__treemap {
+  display: flex;
+}
+.filter.group-by.none .filter__placement-select {
+  display: none;
+}
+.filter.group-by.category .filter__placement-select {
   display: flex;
 }
 .spinner {

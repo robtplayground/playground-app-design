@@ -92,7 +92,7 @@ body{
 		margin-right: 1rem !important;
 		width: 1rem;
 		position: absolute;
-		left:0.8rem;
+		left:1.5rem;
 		top: 50%;
 		margin-top: -0.7rem;
 		// flex:1 0;
@@ -107,10 +107,10 @@ body{
 		left:0;
 		fill: @lightgrey;
 		transition: all 0.3s ease 0.5s;
-		transform: translateX(-20%);
+		transform: translateX(-5%);
 		body.side &{
 			transition: none;
-			transform: translateX(-75%);
+			transform: translateX(-70%);
 		}
 		&.pink{
 			fill: lighten(@pgxyz-pink, 47%);
@@ -140,7 +140,7 @@ body{
 	height: 1rem;
 	position: relative;
 	width:8rem;
-	left: 0.7rem;
+	left: 1.7rem;
 	max-width:20rem;
 	// background:lime;
 	overflow:hidden;
@@ -215,9 +215,8 @@ body{
 
 	.select2-container .select2-selection--single {
 		height: 2.5rem;
-	}
-	.select2-container .select2-selection--single {
-		line-height: 2.5rem;
+		padding-top: 0.2rem;
+		line-height: 4rem;
 	}
 }
 
@@ -396,7 +395,7 @@ body{
 
 .filter__treemap{
 	height: 25rem;
-	font-size: @size-xsmall;
+	font-size: @size-small;
 	font-weight: 700;
 	display: flex;
   flex-direction: column;
@@ -416,8 +415,13 @@ body{
 		height: 50%;
 		background: mix(@palePink, @palegrey, 100%);
 	}
-	.dm.active{
+	.active{
 		background: mix(@palePink, @black, 50%);
+		~ *{
+			background: @midgrey !important;
+			border: 1px solid @lightgrey !important;
+			color: @lightgrey  !important;
+		}
 	}
 	.smh{
 		height: 50%;
@@ -1599,18 +1603,23 @@ body.report {
 
 p.group-value, p.split-value{
 	position: relative;
-	display:flex;
+	display:block;
 	align-items:center;
 	font-size: 1.6rem;
 	color: @darkgrey;
 	font-weight: 300;
 	height:100%;
+	padding-top: 3.5rem;
+	padding-right: 2rem;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 	&:after{
 		content: attr(data-label);
 		position: absolute;
 		display:block;
 		font-size: 0.95rem;
-		top:5rem;
+		top:5.5rem;
 		left:0;
 		padding:0;
 		margin:0;
@@ -1661,8 +1670,21 @@ p.group-value, p.split-value{
 			display:none;
 		}
 	}
-	&.domain{
+	&.category{
 		.filter__treemap{
+			display:flex;
+		}
+	}
+}
+
+.filter.group-by{
+	&.none{
+		.filter__placement-select{
+			display:none;
+		}
+	}
+	&.category{
+		.filter__placement-select{
 			display:flex;
 		}
 	}
