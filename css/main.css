@@ -1705,7 +1705,7 @@ body.side .show-filter .show-filter-bg.pink {
   height: 1rem;
   position: relative;
   width: 8rem;
-  left: 1.7rem;
+  left: 1.8rem;
   max-width: 20rem;
   overflow: hidden;
   margin-right: 1rem;
@@ -1769,7 +1769,7 @@ body.side .show-filter .show-filter-bg.pink {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 99;
+  z-index: 100;
 }
 .data-filter .select2-container .select2-selection--single {
   height: 2.5rem;
@@ -1967,13 +1967,23 @@ body.side .show-filter .show-filter-bg.pink {
 }
 .chart h3 {
   position: absolute;
-  top: 0.6rem;
+  top: 1rem;
   width: 100%;
-  text-align: center;
-  font-weight: 400;
+  text-align: left;
+  font-weight: 500;
   font-size: 1rem;
-  margin: 0.5rem 0 1rem;
+  margin: 0rem 0 1rem;
   text-transform: uppercase;
+  padding-left: 3.8rem;
+  color: #aaaaaa;
+}
+.chart h3 svg {
+  position: absolute;
+  width: 2.5rem;
+  height: 2.5rem;
+  top: -0.2rem;
+  left: 0.8rem;
+  fill: #aaaaaa;
 }
 .chart__circle {
   position: relative;
@@ -2134,13 +2144,12 @@ a[href="http://www.amcharts.com/javascript-charts/"] {
 }
 .chart--execImpsAgg h3 {
   position: absolute;
-  top: 0.5rem;
   width: 100%;
   margin: 0;
 }
 .chart--execImpsAgg .chart__render {
   position: relative;
-  height: 85%;
+  height: 80%;
   top: 15%;
   width: calc(100% - 2rem);
 }
@@ -2270,9 +2279,13 @@ a[href="http://www.amcharts.com/javascript-charts/"] {
   margin-right: 0.5em;
   top: 0.4em;
   background: red;
+  border-radius: 50%;
 }
 #chart--impsDelBench {
   pointer-events: none;
+}
+.box {
+  border-radius: 50%;
 }
 .chart--vAv .chart__legend__left .legend__value,
 .chart--vAv .chart__legend__right .legend__value {
@@ -2865,7 +2878,7 @@ span.select2-selection.select2-selection--single {
   margin: 0 0.2em;
 }
 .report {
-  width: 1422px;
+  width: 1425px;
   overflow-x: hidden;
 }
 body.report .report {
@@ -3176,7 +3189,7 @@ button {
   flex-wrap: wrap;
   width: 100%;
   height: auto;
-  margin: 0rem 1.5rem 2rem 3rem;
+  margin: 0rem 1.5rem 2rem 2rem;
   max-height: 700px;
   overflow: hidden;
   transition: all 0.3s ease-out;
@@ -3220,4 +3233,7 @@ button {
   100% {
     background-color: #fff;
   }
+}
+.amcharts-scrollbar-horizontal {
+  display: none;
 }
