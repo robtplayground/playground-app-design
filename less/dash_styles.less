@@ -976,6 +976,8 @@ a[href="http://www.amcharts.com/javascript-charts/"]{
 		font-weight: 700;
 		margin: 0 1rem;
 		text-transform: uppercase;
+		transform: translateY(1rem);
+		// color: @midgrey;
 	}
 	display: flex;
 	flex-direction: column;
@@ -1782,16 +1784,17 @@ p.group-value, p.split-value{
 
 .spinner{
 	position: absolute;
-	width: 100vw;
+	width: 100%;
 	height: 100vh;
 	top:0;
 	left:0;
 	display:flex;
 	justify-content: center;
 	align-items: center;
-	background: rgba(255, 255, 255, 0.7);
+	background: rgba(255, 255, 255, 0.9);
 	z-index: 100;
-	display:none;
+	pointer-events:none;
+	opacity:0;
 	svg{
 		fill: @pgxyz-pink;
 		width: 4rem;
@@ -1980,7 +1983,7 @@ button{
 	padding-top: 1.5rem;
 	border-top: 1px solid @lightgrey;
 	svg{
-		fill: @pgxyz-pink;
+		fill: @black;
 		height: 2rem;
 		transform: translate(-0.35em,0em)
 	}
