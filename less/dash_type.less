@@ -127,6 +127,21 @@ a{
 		height: 2rem;
 	}
 }
+input[type="text"]{
+	box-sizing: border-box;
+	cursor: pointer;
+	display: block;
+	height: 2.5rem;
+	user-select: none;
+	-webkit-user-select: none;
+	background-color: #fff;
+	border: 1px solid #d8d8d8;
+	border-radius: 4px;
+	padding: 1rem;
+}
+input[disabled]::placeholder{
+	color: @lightgrey;
+}
 
 
 // CHECKBOXES
@@ -145,7 +160,7 @@ a{
 	height: 1.5rem;
 	line-height: 1.5rem;
   cursor: pointer;
-	margin-bottom: 0.5rem;
+	margin-bottom: 1rem;
 }
 
 /* checkbox aspect */
@@ -154,7 +169,7 @@ a{
   content: '';
   position: absolute;
   left: 0; top: 0;
-  width: 1.25em; height: 1.25em;
+  width: 1.4em; height: 1.4em;
   border: 2px solid #ccc;
   background: #fff;
   border-radius: 4px;
@@ -165,10 +180,10 @@ a{
 [type="checkbox"]:checked + label:after {
   content: '✔';
   position: absolute;
-  top: .1em; left: .3em;
-  font-size: 1.3em;
+  top: .35em; left: .3em;
+  font-size: 1em;
   line-height: 0.8;
-  color: @darkgrey;
+  color: @pgxyz-pink;
   transition: all .2s;
 }
 /* checked mark aspect changes */

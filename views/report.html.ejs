@@ -41,7 +41,7 @@
         <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
           <use x="0" y="0" href="#comments" />
         </svg>
-        View Notes
+        Notes
       </button>
 
     </div>
@@ -61,8 +61,18 @@
 <div class="data-filter">
 
   <button class="show-filter">
-    <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
-      <use x="0" y="0" href="#gear" />
+
+    <svg class="show-filter-bg grey" viewBox="0 0 400 200" preserveAspectRatio="xMaxYMid meet">
+      <use  x="0" y="0" href="#show-filter" />
+    </svg>
+
+    <svg class="show-filter-bg pink" viewBox="0 0 400 200" preserveAspectRatio="xMaxYMid meet">
+      <use  x="0" y="0" href="#show-filter" />
+    </svg>
+
+    <svg id="show-filter-icons" viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
+      <use id="gear" x="0" y="0" href="#gear" />
+      <use id="close" x="0" y="0" href="#close" />
     </svg>
     <div class="show-filter__label">
       <div class="show-filter__label__anim">
@@ -77,9 +87,12 @@
 
     <div class="filter filter__date-picker">
       <div class="input__wrapper">
-        <label for="group-by">Date Range:</label>
+        <h3>Date Range</h3>
 
-      <input type="text" placeholder="<%= moment(cp.dates.start).format('D/M/YYYY') %> – <%= moment(cp.dates.end).format('D/M/YYYY') %>">
+        <input type="checkbox" id="campaign-dates" name="campain-dates" checked/>
+        <label for="campaign-dates">Use Campaign Dates</label>
+
+      <input type="text" placeholder="<%= moment(cp.dates.start).format('D/M/YYYY') %> – <%= moment(cp.dates.end).format('D/M/YYYY') %>" disabled>
       <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMax meet">
         <use x="0" y="0" href="#calendar" />
       </svg>
@@ -90,7 +103,7 @@
     <div class="filter group-by placement">
 
       <div class="input__wrapper">
-        <label for="group-by">Group by:</label>
+        <h3>View</h3>
 
           <select id="group-by" class="filter__group-select">
             <option value="campaign">Campaign</option>
@@ -129,7 +142,7 @@
     <div class="filter split-by none">
 
       <div class="input__wrapper">
-        <label for="split-by">Split by:</label>
+        <h3>Split</h3>
           <select id="split-by" class="filter__split-select">
           <option value="none" selected>None</option>
           <option value="location">Audience: Location</option>

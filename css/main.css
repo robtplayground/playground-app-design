@@ -1294,6 +1294,21 @@ a {
   width: 70%;
   height: 2rem;
 }
+input[type="text"] {
+  box-sizing: border-box;
+  cursor: pointer;
+  display: block;
+  height: 2.5rem;
+  user-select: none;
+  -webkit-user-select: none;
+  background-color: #fff;
+  border: 1px solid #d8d8d8;
+  border-radius: 4px;
+  padding: 1rem;
+}
+input[disabled]::placeholder {
+  color: #efefef;
+}
 /* Base for label styling */
 [type="checkbox"]:not(:checked),
 [type="checkbox"]:checked {
@@ -1308,7 +1323,7 @@ a {
   height: 1.5rem;
   line-height: 1.5rem;
   cursor: pointer;
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
 }
 /* checkbox aspect */
 [type="checkbox"]:not(:checked) + label:before,
@@ -1317,8 +1332,8 @@ a {
   position: absolute;
   left: 0;
   top: 0;
-  width: 1.25em;
-  height: 1.25em;
+  width: 1.4em;
+  height: 1.4em;
   border: 2px solid #ccc;
   background: #fff;
   border-radius: 4px;
@@ -1329,11 +1344,11 @@ a {
 [type="checkbox"]:checked + label:after {
   content: '✔';
   position: absolute;
-  top: .1em;
+  top: .35em;
   left: .3em;
-  font-size: 1.3em;
+  font-size: 1em;
   line-height: 0.8;
-  color: #333333;
+  color: #e91e63;
   transition: all .2s;
 }
 /* checked mark aspect changes */
@@ -1628,6 +1643,91 @@ body {
 .sidebar {
   background: #efefef;
 }
+.show-filter {
+  position: absolute;
+  display: block;
+  left: 100%;
+  top: 0;
+  width: auto;
+  height: 8rem;
+  padding: 0 0 0 0rem;
+  padding-left: 1.4rem;
+  z-index: 20;
+  color: #e91e63;
+  fill: #e91e63;
+}
+body:not(.side) .fixed .show-filter {
+  display: none;
+}
+.show-filter #show-filter-icons {
+  margin-right: 1rem !important;
+  width: 1rem;
+  position: absolute;
+  left: 0.8rem;
+  top: 50%;
+  margin-top: -0.7rem;
+}
+.show-filter .show-filter-bg {
+  position: absolute;
+  z-index: 0;
+  width: auto;
+  height: 100%;
+  top: 0;
+  left: 0;
+  fill: #efefef;
+  transition: all 0.3s ease 0.5s;
+  transform: translateX(-20%);
+}
+body.side .show-filter .show-filter-bg {
+  transition: none;
+  transform: translateX(-75%);
+}
+.show-filter .show-filter-bg.pink {
+  fill: #fef8fa;
+}
+body.side .show-filter .show-filter-bg.pink {
+  opacity: 0;
+}
+.show-filter use {
+  transition: transform 0.3s ease;
+  transform-origin: 50% 50%;
+}
+.show-filter #close {
+  transform: scale(0);
+}
+.side .show-filter #close {
+  transform: scale(1);
+}
+.side .show-filter #gear {
+  transform: scale(0);
+}
+.show-filter__label {
+  height: 1rem;
+  position: relative;
+  width: 8rem;
+  left: 0.7rem;
+  max-width: 20rem;
+  overflow: hidden;
+  margin-right: 1rem;
+  transition: max-width 0s linear 0.5s;
+}
+.show-filter__label span {
+  display: block;
+}
+.side .show-filter__label {
+  transition: none;
+  max-width: 0rem;
+}
+.show-filter__label__anim {
+  transition: transform 0.3s ease 0.3s;
+}
+.show-filter .show-filter__label__anim {
+  transition: none;
+}
+.show-filter:hover .show-filter__label__anim {
+  transition: transform 0.3s ease;
+  transform: translateY(-50%);
+}
 .data-filter {
   position: absolute;
   left: 0;
@@ -1638,11 +1738,12 @@ body {
   flex-direction: column;
   flex: 1 0;
   margin: 0;
-  padding: 1rem;
+  padding: 2.5rem 2rem 1rem 2rem;
   width: 25%;
+  height: 100%;
   background: #efefef;
-  transition: all 0.5s ease;
-  transform: translateX(0%);
+  transition: transform 0.5s ease;
+  transform: translateX(-100%);
 }
 .data-filter input {
   width: auto;
@@ -1651,18 +1752,18 @@ body {
   margin-right: 0.5em;
 }
 .data-filter h1 {
-  margin: 0;
-  font-size: 1.2rem;
+  font-size: 1.728rem;
   line-height: 1em;
-  padding-left: 0.2em;
+  font-weight: 300;
 }
-.data-filter h2 {
-  text-transform: uppercase;
+.data-filter h3 {
+  font-weight: 500;
   font-size: 1.2rem;
-  font-weight: 700;
+  margin: 1.5rem 0 1rem;
+  color: #e91e63;
 }
-.data-filter.side {
-  transform: translateX(-100%);
+.side .data-filter {
+  transform: translateX(0%);
 }
 .data-filter.fixed {
   position: fixed;
@@ -1670,12 +1771,17 @@ body {
   left: 0;
   z-index: 99;
 }
+.data-filter .select2-container .select2-selection--single {
+  height: 2.5rem;
+}
+.data-filter .select2-container .select2-selection--single {
+  line-height: 2.5rem;
+}
 .filter__date-slider {
   width: 100%;
   overflow: visible;
 }
 .filter {
-  border-top: 1px solid #aaaaaa;
   margin: 1rem 0 0.5rem;
 }
 .filter:first-of-type {
@@ -1686,18 +1792,19 @@ body {
   position: relative;
 }
 .filter__date-picker input {
-  position: relative;
-  display: block;
   width: 100%;
-  height: 100%;
+  background: #fff url('/images/calendar.png');
+  background-size: auto 80%;
+  background-repeat: no-repeat;
+  background-position: center right 0.5rem;
 }
 .filter__date-picker svg {
-  display: block;
-  width: 1.3em;
-  height: 100%;
+  display: none;
+  width: 1.5em;
+  height: 95%;
   position: absolute;
   top: 0em;
-  right: 0.2em;
+  right: 0.6em;
 }
 .filter .select2-container,
 .filter .select2-dropdown {
@@ -1730,12 +1837,11 @@ body {
   display: none;
 }
 .input__wrapper label {
-  font-size: 0.833rem;
-  font-weight: bold;
+  font-size: 1rem;
+  font-weight: 500;
   display: block;
   padding-left: 0.2em;
   margin: 0.8rem 0 0.5rem;
-  text-transform: uppercase;
 }
 .input__wrapper .select2 {
   width: 80%;
@@ -1903,6 +2009,22 @@ body {
   display: flex !important;
   transition: width 0.5s ease;
   background: #fafafa;
+}
+.content:after {
+  pointer-events: none;
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0) 5%);
+  z-index: 20;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+body.side .content:after {
+  opacity: 0.7;
 }
 .sidebar {
   width: 0 !important;
@@ -2723,7 +2845,7 @@ span.select2-selection.select2-selection--single {
   margin: 0 0.2em;
 }
 .report {
-  width: 100%;
+  width: 1422px;
 }
 body.report .report {
   width: 100%;
@@ -2742,7 +2864,6 @@ body.report .report {
   justify-content: flex-start;
   padding-bottom: 1.5rem;
   padding-left: 2.5rem;
-  border-bottom: 1px solid #efefef;
 }
 .content-buttons button {
   color: #e91e63;
@@ -2758,6 +2879,19 @@ body.report .report {
 .content-buttons > * {
   display: flex;
   justify-content: flex-start;
+}
+body.side .content-buttons:before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 1px;
+  width: 100%;
+  height: calc(100% - 2px);
+  background-image: linear-gradient(to right, #fff 0%, rgba(255, 255, 255, 0.7) 60%, rgba(255, 255, 255, 0));
+  z-index: 1;
+}
+.fixed body.side .content-buttons:before {
+  display: none;
 }
 p.group-value,
 p.split-value {
@@ -2792,56 +2926,6 @@ p.split-value:after {
 .content-buttons-right {
   justify-content: flex-end;
   padding-right: 2.5rem;
-}
-.show-filter {
-  position: absolute;
-  left: 100%;
-  top: 0;
-  width: auto;
-  height: 8rem;
-  padding: 0 0 0 0rem;
-  background: #fef4f7;
-  padding-left: 1.4rem;
-  z-index: 20;
-  color: #e91e63;
-  fill: #e91e63;
-}
-.show-filter:before {
-  content: '';
-  position: absolute;
-  left: 100%;
-  top: 1px;
-  width: 10rem;
-  height: calc(100% - 2px);
-  background-image: linear-gradient(to right, #fff, rgba(255, 255, 255, 0));
-  z-index: 1;
-}
-.show-filter:after {
-  content: '';
-  position: absolute;
-  right: -1rem;
-  top: 0;
-  width: 0;
-  height: 0;
-  border-top: 4rem solid transparent;
-  border-left: 1rem solid #fef4f7;
-  border-bottom: 4rem solid transparent;
-  z-index: 5;
-}
-.show-filter svg {
-  margin-right: 1rem !important;
-}
-.show-filter__label {
-  height: 1rem;
-  position: relative;
-  width: 13rem;
-  width: 90%;
-  overflow: hidden;
-  margin-right: 1rem;
-  max-width: 0;
-}
-.show-filter__label span {
-  display: block;
 }
 .current-view {
   height: 100%;
@@ -3030,7 +3114,8 @@ button {
   font-size: 1.5rem;
   font-weight: 400;
   cursor: pointer;
-  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #efefef;
 }
 .accordion-header svg {
   fill: #e91e63;
@@ -3054,7 +3139,7 @@ button {
   flex-wrap: wrap;
   width: 100%;
   height: auto;
-  padding: 0rem 1.5rem 2rem 3rem;
+  margin: 0rem 1.5rem 2rem 3rem;
   max-height: 700px;
   overflow: hidden;
   transition: all 0.3s ease-out;
