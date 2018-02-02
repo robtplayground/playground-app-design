@@ -73,6 +73,16 @@ $('.login__box .button').click(function(e) {
 
 });
 
+$('.go-to-reporting').click(function(e) {
+
+  $('body').addClass('loading');
+
+  setTimeout(function() {
+    document.location.href = '/report';
+  }, 1000);
+
+});
+
 // var timeline = new TimelineMax({paused:true});
 //
 // timeline

@@ -2594,7 +2594,7 @@ td {
 }
 .creative-wrapper {
   max-height: 200px;
-  overflow: visible;
+  overflow: hidden;
   transition: max-height 0.7s ease-in-out;
 }
 .collapse .creative-wrapper {
@@ -2611,6 +2611,7 @@ td {
   padding-left: 1em;
 }
 .creative__title__thumb {
+  cursor: pointer;
   padding-left: 0.6em;
   padding-bottom: 0.3em;
 }
@@ -2621,15 +2622,15 @@ td {
 .creative__title__thumb:hover img {
   border: 1px solid #ffffff;
 }
-.creative__title__thumb:hover .creative__title__thumb__hover {
+.creative-SS_Males .creative__title__thumb:hover .creative__title__thumb__hover {
   display: block;
 }
 .creative__title__thumb__hover {
   display: none;
   z-index: 200;
-  position: absolute;
-  top: -3rem;
-  left: 5rem;
+  position: fixed;
+  top: 24.5rem;
+  left: 9rem;
   width: 10rem;
   height: 10rem;
   border-radius: 0.3rem;
@@ -2879,7 +2880,7 @@ span.select2-selection.select2-selection--single {
   margin: 0 0.2em;
 }
 .report {
-  width: 1680px;
+  width: 1438px;
   overflow-x: hidden;
 }
 body.report .report {
@@ -3036,7 +3037,7 @@ p.split-value:after {
   margin-bottom: 2rem;
 }
 body.loading .spinner {
-  display: flex;
+  opacity: 1;
 }
 .spinner__icon {
   animation: spin 1s steps(8, end) infinite;

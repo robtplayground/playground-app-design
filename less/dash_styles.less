@@ -1293,7 +1293,7 @@ table, td{
 
 .creative-wrapper{
 	max-height: 200px;
-	overflow:visible;
+	overflow:hidden;
 	transition: max-height 0.7s ease-in-out;
 }
 
@@ -1316,6 +1316,7 @@ table, td{
 }
 
 .creative__title__thumb{
+	cursor:pointer;
 	padding-left: 0.6em;
 	padding-bottom: 0.3em;
 	img{
@@ -1329,24 +1330,25 @@ table, td{
 			border: 1px solid @white;
 		}
 
-		.creative__title__thumb__hover{
-			display:block;
-		}
 	}
+}
+
+.creative-SS_Males .creative__title__thumb:hover .creative__title__thumb__hover{
+	display:block;
 }
 
 .creative__title__thumb__hover{
 	display:none;
-	z-index:200;
-	position: absolute;
-	top:-3rem;
-	left: 5rem;
+	z-index: 200;
+	position: fixed;
+	top: 24.5rem;
+	left: 9rem;
 	width: 10rem;
 	height: 10rem;
-	border-radius:0.3rem;
-	border: 1px solid @white;
+	border-radius: 0.3rem;
+	border: 1px solid #ffffff;
 	background-size: cover;
-	box-shadow: 5px 5px 5px 1px rgba(0,0,0,0.1);
+	box-shadow: 5px 5px 5px 1px rgba(0, 0, 0, 0.1);
 	&:before{
 		content:'';
 		display:block;
@@ -1629,7 +1631,7 @@ span.select2-selection.select2-selection--single {
 }
 
 .report{
-	width:1680px;
+	width:1438px;
 	overflow-x:hidden;
 }
 body.report {
@@ -1822,7 +1824,7 @@ p.group-value, p.split-value{
 
 body.loading{
 	.spinner{
-		display:flex;
+		opacity:1;
 	}
 }
 
