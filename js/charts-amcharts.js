@@ -522,19 +522,19 @@ function totalsChart(containerID, initValue, initPG, initIAB) {
   this.containerID = containerID;
   // console.log(containerID);
   // countup(target, startVal, endVal, decimals, duration, {options})
-  this.value = new CountUp(containerID + "_value", 0, initValue, 1, 2, {
+  this.value = new CountUp(containerID + "_value", 0, initValue, 1, 1, {
     useEasing: false,
     useGrouping: true,
     separator: ',',
     decimal: '.'
   });
-  this.pgBench = new CountUp(containerID + "_pgBench", 0, initPG, 1, 2, {
+  this.pgBench = new CountUp(containerID + "_pgBench", 0, initPG, 1, 1, {
     useEasing: false,
     useGrouping: true,
     separator: ',',
     decimal: '.'
   });
-  this.iabBench = new CountUp(containerID + "_iabBench", 0, initIAB, 1, 2, {
+  this.iabBench = new CountUp(containerID + "_iabBench", 0, initIAB, 1, 1, {
     useEasing: false,
     useGrouping: true,
     separator: ',',
@@ -1100,9 +1100,11 @@ var chart__pcHeat = AmCharts.makeChart("chart--passiveCHeat", {
 
 // push data to all charts on click
 
-var amCharts = [chart__impsDel, chart__impsDelBench, chart__ImpsTime, chart__vAv, chart__vAvBench, chart__erTime, chart__ecHeat, chart__pcHeat];
+// var amCharts = [chart__impsDel, chart__impsDelBench, chart__ImpsTime, chart__vAv, chart__vAvBench, chart__erTime, chart__ecHeat, chart__pcHeat];
+//
+// var totalsCharts = [chart__erAv, chart__ativAv, chart__engagedC, chart__passiveC];
 
-var totalsCharts = [chart__erAv, chart__ativAv, chart__engagedC, chart__passiveC];
+var allCharts = [chart__impsDel, chart__impsDelBench, chart__ImpsTime, chart__vAv, chart__vAvBench,  chart__ativAv, chart__passiveC, chart__erAv, chart__erTime, chart__engagedC, chart__pcHeat, chart__ecHeat];
 
 $('.filter__placement-select label').click(function() {
   var plID = $(this).data('placement');
@@ -1133,40 +1135,70 @@ function updateAllCharts(pment_ID) {
   renderCharts();
 
   function renderCharts(){
-    if(chartsRendered < amCharts.length){
-      var chart = amCharts[chartsRendered];
-      var data = chart.dataObject[pment_ID];
-      var chartDiv = chart.containerDiv.offsetParent.id;
-      // console.log(chartDiv);
-      // if( chartDiv === "chart--erTime"){
-        // console.log('new Engagement data', data);
-        // $('.chart--execImpsAgg').attr('class', 'chart chart--execImpsAgg ' + pment.id);
-      // }
+
+    if(chartsRendered < allCharts.length){
+      var chart = allCharts[chartsRendered];
       chartsRendered++;
-      chart.animateData(data, {
-        duration: 500,
-        complete: renderCharts
-      });
+      // console.log('CURRENT CHART: ', chart);
+      if(chart.amString){ // its an amChart
+
+        var data = chart.dataObject[pment_ID];
+        var chartDiv = chart.containerDiv.offsetParent.id;
+        console.log('amChart rendering', chartDiv);
+
+        if(chartDiv === 'chart--impsDel'){
+          // update labels on imspDel chart
+          chart__impsDel.allLabels[0].text = Math.round(impsDelData[pment_ID][0].value);
+          chart__impsDel.allLabels[2].text = Math.round(impsDelData[pment_ID][0].impsDel).toLocaleString();
+          $('.chart--impsDel .chart__legend__left span').text(impsDelBenchData[pment_ID][1].label);
+        }
+
+        if(chartDiv === 'chart--vAv'){
+          // upadte Viewability labels
+          chart__vAv.allLabels[0].text = vAvData[pment_ID][0].value;
+          $('#chart--vAv_pgBench .legend__label').text(plFormat.name);
+          $('#chart--vAv_pgBench .legend__label .box').css('background', plColor);
+          $('#chart--vAv_pgBench .legend__value').text(vAvBenchLabels[pment_ID].formatViewb + '%');
+          $('#chart--vAv_iabBench .legend__value').text(vAvBenchLabels[pment_ID].iabBench + '%');
+        }
+
+        // console.log(chartDiv);
+        // if( chartDiv === "chart--erTime"){
+          // console.log('new Engagement data', data);
+          // $('.chart--execImpsAgg').attr('class', 'chart chart--execImpsAgg ' + pment.id);
+        // }
+
+        chart.animateData(data, {
+          duration: 300,
+          complete: renderCharts
+        });
+      } else{
+        console.log('countup chart', chart);
+        if(chart.containerID === "chart--ativAv"){
+          chart__ativAv.updateCount(ativAvData[pment_ID]);
+          setTimeout(renderCharts, 1000);
+        }
+
+        if(chart.containerID === "chart--passiveC"){
+          chart__passiveC.updateCount(passiveCData[pment_ID]);
+          setTimeout(renderCharts, 1000);
+        }
+
+        if(chart.containerID === "chart--erAv"){
+          chart__erAv.updateCount(erAvData[pment_ID]);
+          setTimeout(renderCharts, 1000);
+        }
+
+        if(chart.containerID === "chart--engagedC"){
+          chart__engagedC.updateCount(engagedCData[pment_ID]);
+          setTimeout(renderCharts, 1000);
+        }
+      }
     }else{
-      // console.log('ALL CHARTS LOADED');
+      console.log('ALL CHARTS LOADED');
       // chart__ImpsTime.chartCursor.showCursorAt('2017-08-09');
     }
   }
 
 
-  chart__vAv.allLabels[0].text = vAvData[pment_ID][0].value;
-  chart__impsDel.allLabels[0].text = Math.round(impsDelData[pment_ID][0].value);
-  chart__impsDel.allLabels[2].text = Math.round(impsDelData[pment_ID][0].impsDel).toLocaleString();
-  $('.chart--impsDel .chart__legend__left span').text(impsDelBenchData[pment_ID][1].label);
-
-  $('#chart--vAv_pgBench .legend__label').text(plFormat.name);
-  $('#chart--vAv_pgBench .legend__label .box').css('background', plColor);
-  $('#chart--vAv_pgBench .legend__value').text(vAvBenchLabels[pment_ID].formatViewb + '%');
-  $('#chart--vAv_iabBench .legend__value').text(vAvBenchLabels[pment_ID].iabBench + '%');
-
-
-  chart__ativAv.updateCount(ativAvData[pment_ID]);
-  chart__engagedC.updateCount(engagedCData[pment_ID]);
-  chart__passiveC.updateCount(passiveCData[pment_ID]);
-  chart__erAv.updateCount(erAvData[pment_ID]);
 }

@@ -419,7 +419,7 @@ creatives = [
 		status: 'active',
 		statusIcon: 'lock',
 		modified: new Date(2017, 7, 1),
-		format: generic,
+		format: topTail,
     features: ['expand-frame', 'video'],
 		campaign: "cp_gopro"
 },
